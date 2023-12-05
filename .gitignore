@@ -1,12 +1,1 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-*.obj
-*.tlog
-/WorldEditor/WorldEditor/Release/GD_WorldEditor.res
-/WorldEditor/WorldEditor/Release/GD_WorldEditor.vcxproj.FileListAbsolute.txt
-/WorldEditor/WorldEditor/Release/vc141.pdb
-/WorldEditor/WorldEditor/Release/GD_WorldEditor.Build.CppClean.log
-/WorldEditor/WorldEditor/Release/GD_WorldEditor.log
-/WorldEditor/WorldEditor/Release/GD_WorldEditor.pch
+/.gitignore
