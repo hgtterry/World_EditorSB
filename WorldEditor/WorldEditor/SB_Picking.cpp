@@ -39,6 +39,8 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
 
     pentity = NULL;
 
+    closest_distance = 0;
+
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
@@ -83,8 +85,7 @@ void SB_Picking::Mouse_Pick_Entity()
 {
     Clear_Picking_Data();
 
-    HitVertices = Ogre::Vector3(0, 0, 0);
-
+    // --------------------------------------------------------------
     Ogre::RenderWindow* rw = App->CLSB_Ogre->mWindow;
     Ogre::Camera* camera = App->CLSB_Ogre->mCamera;
 
@@ -95,15 +96,91 @@ void SB_Picking::Mouse_Pick_Entity()
 
     Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
 
-    Ogre::uint32 queryMask = -1;
-    Ogre::Vector3 result = Ogre::Vector3(0,0,0);
-    Ogre::MovableObject* target = NULL;
-    float closest_distance = 0;
+    Pl_Entity_Name = "-----";
 
-    if (raycast(ray, result, target, closest_distance, queryMask))
+    Ogre::uint32 queryMask = -1;
+    Ogre::Vector3 result = Ogre::Vector3(0, 0, 0);
+    Ogre::MovableObject* target = NULL;
+    closest_distance = 0;
+
+    Pl_Entity_Name = " ";
+    App->CLSB_Ogre->OgreListener->Selected_Object_Name[0] = 0;
+
+    Ogre::SceneNode* mNode;
+
+    Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
+    if (raycast(ray2, result, target, closest_distance, queryMask))
     {
-        App->Beep_Win();
-        //App->CLSB_Grid->Sight_Node->setPosition(result);
+        //App->Beep_Win();
+
+        mNode = pentity->getParentSceneNode();
+        Pl_Entity_Name = pentity->getName();
+
+        char buff[255];
+        strcpy(buff, Pl_Entity_Name.c_str());
+
+        //App->CL_Vm_ImGui->Show_Object_Selection = 1;
+
+        bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+        if (test == 1)
+        {
+            Pl_Entity_Name = "---------";
+        }
+        else
+        {
+            bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
+            if (test == 1)
+            {
+                Pl_Entity_Name = "Player_1";
+
+                return;
+            }
+            else
+            {
+                char* pdest;
+                int IntNum = 0;
+
+                strcpy(buff, Pl_Entity_Name.c_str());
+                pdest = strstr(buff, "GDEnt_");
+                if (pdest != NULL)
+                {
+                    sscanf((buff + 6), "%i", &IntNum);
+
+                   // App->SBC_Markers->MarkerBB_Addjust(IntNum);
+
+                    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
+
+                   // App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+
+                    return;
+
+                }
+
+                pdest = strstr(buff, "Area_");
+                if (pdest != NULL)
+                {
+                    sscanf((buff + 5), "%i", &IntNum);
+
+                    //App->SBC_Markers->MarkerBB_Addjust(IntNum);
+
+                    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->B_Area[IntNum]->Area_Name);
+
+                    //App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+
+                    return;
+                }
+
+            }
+        }
+
+    }
+    else
+    {
+        Pl_Entity_Name = "---------";
+        strcpy(TextureName, "None 2");
+        Selected_Ok = 0;
     }
 
 }
@@ -120,12 +197,12 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
         mRaySceneQuery->setRay(ray);
         mRaySceneQuery->setSortByDistance(true);
         mRaySceneQuery->setQueryMask(queryMask);
-        // execute the query, returns a vector of hits
+        
         if (mRaySceneQuery->execute().size() <= 0)
         {
-            // raycast did not hit an objects bounding box
             return (false);
         }
+
     }
     else
     {
@@ -134,12 +211,6 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
         return (false);
     }
 
-     // at this point we have raycast to a series of different objects bounding boxes.
-     // we need to test these different objects to see which is the first polygon hit.
-     // there are some minor optimizations (distance based) that mean we wont have to
-     // check all of the objects most of the time, but the worst case scenario is that
-     // we need to test every triangle of every object.
-     //Ogre::Ogre::Real closest_distance = -1.0f;
     closest_distance = -1.0f;
     Ogre::Vector3 closest_result;
     Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
@@ -196,7 +267,6 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                 }
             }
 
-            // free the verticies and indicies memory
             delete[] vertices;
             delete[] indices;
 
@@ -213,13 +283,11 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
     // return the result
     if (closest_distance >= 0.0f)
     {
-        // raycast success
         result = closest_result;
         return (true);
     }
     else
     {
-        // raycast failed
         return (false);
     }
 }

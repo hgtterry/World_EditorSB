@@ -78,17 +78,17 @@ public:
 
 	Ogre::SceneNode*		DummyNode;
 
-	Ogre::Entity*		Crosshair_Ent; 
-	Ogre::SceneNode*	Crosshair_Node;
+	Ogre::Entity*			Crosshair_Ent; 
+	Ogre::SceneNode*		Crosshair_Node;
 
-	Ogre::Entity*		Selection_Ent; 
-	Ogre::SceneNode*	Selection_Node;
+	Ogre::Entity*			Selection_Ent; 
+	Ogre::SceneNode*		Selection_Node;
 
-	Ogre::Entity*		Sight_Entity;
-	Ogre::SceneNode*	Sight_Node;
+	Ogre::Entity*			Sight_Entity;
+	Ogre::SceneNode*		Sight_Node;
 
-	Ogre::ManualObject* FaceManual;
-	Ogre::SceneNode* FaceNode;
+	Ogre::ManualObject*		FaceManual;
+	Ogre::SceneNode*		FaceNode;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

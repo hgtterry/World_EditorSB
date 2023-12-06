@@ -37,11 +37,16 @@ private:
 	
 	void Clear_Picking_Data();
 
+	Ogre::String Pl_Entity_Name;
+
+	float closest_distance;
+
 	char FaceMaterial[MAX_PATH];
 	char TextureName[MAX_PATH];
 	int Face_Index;
 	int SubMesh_Face;
 	int Sub_Mesh_Count;
+	
 	bool Selected_Ok;
 
 	size_t Total_vertex_count;
@@ -53,6 +58,5 @@ private:
 
 	Ogre::MovableObject* pentity;
 
-	Ogre::Vector3 HitVertices;
 };
 
