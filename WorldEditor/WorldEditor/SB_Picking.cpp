@@ -38,6 +38,13 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     mRaySceneQuery->setSortByDistance(true);
 
     pentity = NULL;
+
+    Total_vertex_count = 0;
+    Total_index_count = 0;
+    Face_Index = 0;
+    Sub_Mesh_Count = 0;
+    SubMesh_Face = 0;
+    Selected_Ok = 0;
 }
 
 SB_Picking::~SB_Picking()
