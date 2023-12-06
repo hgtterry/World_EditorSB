@@ -35,6 +35,19 @@ private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 	void GetMeshInformation(const Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, Ogre::uint32*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
 	
+	void Clear_Picking_Data();
+
+	char FaceMaterial[MAX_PATH];
+	char TextureName[MAX_PATH];
+	int Face_Index;
+	int SubMesh_Face;
+	int Sub_Mesh_Count;
+	bool Selected_Ok;
+
+	size_t Total_vertex_count;
+	size_t Total_index_count;
+
+
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;
 

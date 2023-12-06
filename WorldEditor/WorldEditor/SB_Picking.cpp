@@ -49,10 +49,33 @@ SB_Picking::~SB_Picking()
 }
 
 // *************************************************************************
+// *		  Clear_Picking_Data:- Terry and Hazel Flanigan 2023	   	   *
+// *************************************************************************
+void SB_Picking::Clear_Picking_Data()
+{
+    Total_vertex_count = 0;
+    Total_index_count = 0;
+    Face_Index = 0;
+    Sub_Mesh_Count = 0;
+    SubMesh_Face = 0;
+    Selected_Ok = 0;
+ 
+    App->CLSB_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
+    App->CLSB_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
+    App->CLSB_Grid->HitVertices[2] = Ogre::Vector3(0, 0, 0);
+
+    App->CLSB_Grid->HitFaceUVs[0] = Ogre::Vector2(0, 0);
+    App->CLSB_Grid->HitFaceUVs[1] = Ogre::Vector2(0, 0);
+    App->CLSB_Grid->HitFaceUVs[2] = Ogre::Vector2(0, 0);
+}
+
+// *************************************************************************
 // *		Mouse_Pick_Entity::Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Picking::Mouse_Pick_Entity()
 {
+    Clear_Picking_Data();
+
     HitVertices = Ogre::Vector3(0, 0, 0);
 
     Ogre::RenderWindow* rw = App->CLSB_Ogre->mWindow;

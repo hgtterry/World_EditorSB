@@ -41,6 +41,9 @@ public:
 	void Reset_View(void);
 	void Load_Gizmo(void);
 
+	Ogre::Vector3 HitVertices[2];
+	Ogre::Vector2 HitFaceUVs[2];
+
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;
 	Ogre::ColourValue ColourHairX;

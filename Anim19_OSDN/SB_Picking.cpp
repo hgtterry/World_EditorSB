@@ -286,7 +286,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         Face_Index = i;
 
-                        /*App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
+                        App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
                         App->SBC_Grid->HitVertices[1] = vertices[indices[i + 1]];
                         App->SBC_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
@@ -296,11 +296,11 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         App->SBC_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
                         App->SBC_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
 
-                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];*/
+                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
-                        //Get_Material_Data();
+                        Get_Material_Data();
                   
-                        //App->SBC_Grid->FaceNode->setVisible(true);
+                        App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
             }
