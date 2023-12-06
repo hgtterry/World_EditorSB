@@ -1148,6 +1148,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					{
 						App->CLSB_Mesh_Mgr->Update_World();
 					}
+
 					break;
 				}
 

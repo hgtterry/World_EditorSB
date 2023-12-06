@@ -467,6 +467,12 @@ void A_TextureDialog::Apply_Texture()
 	}
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+	{
+		App->CLSB_Mesh_Mgr->Update_World();
+	}
+
 }
 
 // *************************************************************************
