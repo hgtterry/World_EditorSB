@@ -1426,6 +1426,8 @@ bool SB_Mesh_Mgr::Update_World()
 	App->CLSB_ImGui->Updating_F = 1;
 	App->CLSB_Ogre->RenderFrame();
 	App->CLSB_Ogre->RenderFrame();
+	App->CLSB_Ogre->RenderFrame();
+	App->CLSB_Ogre->RenderFrame();
 
 	WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);

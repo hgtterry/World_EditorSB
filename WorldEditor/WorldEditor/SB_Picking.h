@@ -36,7 +36,10 @@ public:
 	float closest_distance;
 
 	char FaceMaterial[MAX_PATH];
-	char TextureName[MAX_PATH];
+	//char TextureName[MAX_PATH];
+
+	char TextureName2[MAX_PATH];
+
 	int Face_Index;
 	int SubMesh_Face;
 	int Sub_Mesh_Count;

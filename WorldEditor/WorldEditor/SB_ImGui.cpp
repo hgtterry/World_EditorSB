@@ -47,7 +47,7 @@ SB_ImGui::SB_ImGui()
 	StartPos = 0;
 	
 	Updating_F = 0;
-	Show_Object_Selection = 0;
+	Show_Face_Selection = 0;
 	Show_Model_Data_F = 0;
 	Show_Camera_Pos_F = 0;
 	Show_BB_Data_F = 0;
@@ -147,7 +147,7 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 		Updating_GUI();
 	}
 
-	if (Show_Object_Selection == 1)
+	if (Show_Face_Selection == 1)
 	{
 		Face_Selection();
 	}
@@ -808,7 +808,7 @@ void SB_ImGui::Face_Selection(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(230, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Selection_Data", &Show_Object_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Selection_Data", &Show_Face_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
@@ -829,7 +829,7 @@ void SB_ImGui::Face_Selection(void)
 		ImGui::Text("");
 
 		ImGui::Text("Distance: = %f", App->CLSB_Picking->closest_distance);
-		ImGui::Text("Type: = %s", App->CLSB_Picking->TextureName);
+		//ImGui::Text("Type: = %s", App->CLSB_Picking->TextureName);
 
 		if (App->CLSB_Picking->TextCords)
 		{
@@ -847,7 +847,7 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
 			ImGui::Text("");
 			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
-			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName);
+			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
 		}
 
 		//if (ImGui::Button("Test"))

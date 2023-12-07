@@ -266,12 +266,12 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 			{
 				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
-					App->CLSB_ImGui->Show_Object_Selection = 0;
+					App->CLSB_ImGui->Show_Face_Selection = 0;
 					App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
 				}
 				else
 				{
-					App->CLSB_ImGui->Show_Object_Selection = 1;
+					App->CLSB_ImGui->Show_Face_Selection = 1;
 					App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
 				}
 
