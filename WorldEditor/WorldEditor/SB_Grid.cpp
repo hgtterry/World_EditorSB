@@ -278,7 +278,7 @@ void SB_Grid::Face_Update(bool Create)
 {
 	if (Create == 1)
 	{
-		FaceManual = App->CLSB_Ogre->mSceneMgr->createManualObject("HairManual");
+		FaceManual = App->CLSB_Ogre->mSceneMgr->createManualObject("FaceManual");
 		FaceManual->setDynamic(true);
 		FaceManual->setRenderQueueGroup(RENDER_QUEUE_MAX);
 	}

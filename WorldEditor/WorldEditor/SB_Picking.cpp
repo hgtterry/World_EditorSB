@@ -113,77 +113,78 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
     if (raycast(ray2, result, target, closest_distance, queryMask))
     {
+  
         //App->Beep_Win();
 
-        mNode = pentity->getParentSceneNode();
-        Pl_Entity_Name = pentity->getName();
+    //    mNode = pentity->getParentSceneNode();
+    //    Pl_Entity_Name = pentity->getName();
 
-        char buff[255];
-        strcpy(buff, Pl_Entity_Name.c_str());
+    //    char buff[255];
+    //    strcpy(buff, Pl_Entity_Name.c_str());
 
-        //App->CL_Vm_ImGui->Show_Object_Selection = 1;
+    //    //App->CL_Vm_ImGui->Show_Object_Selection = 1;
 
-        bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
-        if (test == 1)
-        {
-            Pl_Entity_Name = "---------";
-        }
-        else
-        {
-            bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
-            if (test == 1)
-            {
-                Pl_Entity_Name = "Player_1";
+    //    bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+    //    if (test == 1)
+    //    {
+    //        //Pl_Entity_Name = "---------";
+    //    }
+    //    else
+    //    {
+    //        bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
+    //        if (test == 1)
+    //        {
+    //            //Pl_Entity_Name = "Player_1";
 
-                return;
-            }
-            else
-            {
-                char* pdest;
-                int IntNum = 0;
+    //            return;
+    //        }
+    //        else
+    //        {
+    //            char* pdest;
+    //            int IntNum = 0;
 
-                strcpy(buff, Pl_Entity_Name.c_str());
-                pdest = strstr(buff, "GDEnt_");
-                if (pdest != NULL)
-                {
-                    sscanf((buff + 6), "%i", &IntNum);
+    //            strcpy(buff, Pl_Entity_Name.c_str());
+    //            pdest = strstr(buff, "GDEnt_");
+    //            if (pdest != NULL)
+    //            {
+    //               // sscanf((buff + 6), "%i", &IntNum);
 
-                   // App->SBC_Markers->MarkerBB_Addjust(IntNum);
+    //               // App->SBC_Markers->MarkerBB_Addjust(IntNum);
 
-                    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
-                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
+    //               // App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+    //               // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
 
-                   // App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+    //               // App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 
-                    return;
+    //                return;
 
-                }
+    //            }
 
-                pdest = strstr(buff, "Area_");
-                if (pdest != NULL)
-                {
-                    sscanf((buff + 5), "%i", &IntNum);
+    //            //pdest = strstr(buff, "Area_");
+    //            //if (pdest != NULL)
+    //            //{
+    //            //    sscanf((buff + 5), "%i", &IntNum);
 
-                    //App->SBC_Markers->MarkerBB_Addjust(IntNum);
+    //            //    //App->SBC_Markers->MarkerBB_Addjust(IntNum);
 
-                    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
-                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->B_Area[IntNum]->Area_Name);
+    //            //    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+    //            //   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->B_Area[IntNum]->Area_Name);
 
-                    //App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+    //            //    //App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 
-                    return;
-                }
+    //            //    return;
+    //            //}
 
-            }
-        }
+    //        }
+     //}
 
     }
-    else
-    {
-        Pl_Entity_Name = "---------";
-        strcpy(TextureName, "None 2");
-        Selected_Ok = 0;
-    }
+    //else
+    //{
+    //    Pl_Entity_Name = "---------";
+    //    strcpy(TextureName, "None 2");
+    //    Selected_Ok = 0;
+    //}
 
 }
 
@@ -195,7 +196,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 	target = NULL;
 	bool ParticleFound = 0;
 	Pl_Entity_Name = "---------";
-
+    
 	if (mRaySceneQuery != NULL)
 	{
 		mRaySceneQuery->setRay(ray);
@@ -222,8 +223,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 	Ogre::Vector3 closest_result;
 	Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
 
-
-
+ 
 	for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
 	{
 		strcpy(TextureName, "None");
@@ -268,7 +268,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 					{
 						// this is the closest so far, save it off
 						closest_distance = hit.second;
-						new_closest_found = true;
+						//new_closest_found = true;
 
 						Face_Index = i;
 
@@ -284,7 +284,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
 						SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
-						Get_Material_Data();
+						//Get_Material_Data();
 
 						App->CLSB_Grid->FaceNode->setVisible(true);
 					}
