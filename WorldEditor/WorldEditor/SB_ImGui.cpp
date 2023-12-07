@@ -47,7 +47,7 @@ SB_ImGui::SB_ImGui()
 	StartPos = 0;
 	
 	Updating_F = 0;
-
+	Show_Object_Selection = 0;
 	Show_Model_Data_F = 0;
 	Show_Camera_Pos_F = 0;
 	Show_BB_Data_F = 0;
@@ -793,6 +793,67 @@ void SB_ImGui::Dialog_Float(void)
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
+	}
+}
+
+// *************************************************************************
+// *			Face_Selection:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Face_Selection(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(230, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Selection_Data", &Show_Object_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Selected Object");
+		ImGui::Separator();
+
+		ImGui::Text("Internal Name: = %s", App->CLSB_Picking->Pl_Entity_Name.c_str());
+		ImGui::Text("Object Name: = %s", App->CLSB_Ogre->OgreListener->Selected_Object_Name);
+
+		ImGui::Text("");
+		ImGui::Text("Sub Meshes: = %i", App->CLSB_Picking->Sub_Mesh_Count);
+		ImGui::Text("Total Vertices: = %i", App->CLSB_Picking->Total_vertex_count);
+		ImGui::Text("Total Indices: = %i", App->CLSB_Picking->Total_index_count);
+		ImGui::Text("Total Faces: = %i", App->CLSB_Picking->Total_index_count / 3);
+
+		ImGui::Text("");
+
+		ImGui::Text("Distance: = %f", App->CLSB_Picking->closest_distance);
+		ImGui::Text("Type: = %s", App->CLSB_Picking->TextureName);
+
+		if (App->CLSB_Picking->TextCords)
+		{
+			int Face_Index = App->CLSB_Picking->Face_Index;
+
+			ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Face);
+			ImGui::Text("Face Index: = %i", Face_Index / 3);
+			ImGui::Text("");
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[0].x, App->CLSB_Grid->HitVertices[0].y, App->CLSB_Grid->HitVertices[0].z);
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[1].x, App->CLSB_Grid->HitVertices[1].y, App->CLSB_Grid->HitVertices[1].z);
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[2].x, App->CLSB_Grid->HitVertices[2].y, App->CLSB_Grid->HitVertices[2].z);
+			ImGui::Text("");
+			ImGui::Text("UV1: = %f %f", App->CLSB_Grid->HitFaceUVs[0].x, App->CLSB_Grid->HitFaceUVs[0].y);
+			ImGui::Text("UV2: = %f %f", App->CLSB_Grid->HitFaceUVs[1].x, App->CLSB_Grid->HitFaceUVs[1].y);
+			ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
+			ImGui::Text("");
+			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
+			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName);
+		}
+
+		//if (ImGui::Button("Test"))
+		//{
+		//	if (App->CL_Picking->Selected_Ok == 1)
+		//	{
+		//		//App->CL_Picking->Set_Face_UV();
+		//	}
+		//}
+
+		ImGui::End();
 	}
 }
 

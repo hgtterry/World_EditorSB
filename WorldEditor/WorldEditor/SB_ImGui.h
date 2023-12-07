@@ -50,6 +50,7 @@ public:
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
 	void BackGround_Render_Loop(void);
+	void Face_Selection(void);
 
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
@@ -60,6 +61,7 @@ public:
 	bool Show_BB_Data_F;
 
 	bool Show_Textures_F;
+	bool Show_Object_Selection;
 
 	float PosX;
 	float PosY;

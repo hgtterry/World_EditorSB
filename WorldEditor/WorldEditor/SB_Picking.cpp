@@ -69,6 +69,8 @@ void SB_Picking::Clear_Picking_Data()
     SubMesh_Face = 0;
     Selected_Ok = 0;
  
+    pentity = NULL;
+
     App->CLSB_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
     App->CLSB_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
     App->CLSB_Grid->HitVertices[2] = Ogre::Vector3(0, 0, 0);
@@ -186,116 +188,169 @@ void SB_Picking::Mouse_Pick_Entity()
 }
 
 // *************************************************************************
-// *					             raycast		                	   *
+// *		        raycast:- Terry and Hazel Flanigan 2022		       	   *
 // *************************************************************************
 bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
-    target = NULL;
+	target = NULL;
+	bool ParticleFound = 0;
+	Pl_Entity_Name = "---------";
 
-    if (mRaySceneQuery != NULL)
+	if (mRaySceneQuery != NULL)
+	{
+		mRaySceneQuery->setRay(ray);
+		mRaySceneQuery->setSortByDistance(true);
+		// mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+		mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+		// execute the query, returns a vector of hits
+		if (mRaySceneQuery->execute().size() <= 0)
+		{
+			// raycast did not hit an objects bounding box
+			Selected_Ok = 0;
+			Pl_Entity_Name = "---------";
+			return (false);
+		}
+	}
+	else
+	{
+		App->Say("No Ray Query");
+		Selected_Ok = 0;
+		return (false);
+	}
+
+	closest_distance = -1.0f;
+	Ogre::Vector3 closest_result;
+	Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
+
+
+
+	for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
+	{
+		strcpy(TextureName, "None");
+		// stop checking if we have found a raycast hit that is closer
+		// than all remaining entities
+		if ((closest_distance >= 0.0f) &&
+			(closest_distance < query_result[qr_idx].distance))
+		{
+			//strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
+			break;
+		}
+
+		// only check this result if its a hit against an entity
+		if ((query_result[qr_idx].movable != NULL) &&
+			(query_result[qr_idx].movable->getMovableType().compare("Entity") == 0) &&
+			ParticleFound == 0)
+		{
+			// get the entity to check
+			strcpy(TextureName, "Entity");
+
+			pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
+
+			// get the mesh information
+			GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
+				pentity->getParentNode()->_getDerivedPosition(),
+				pentity->getParentNode()->_getDerivedOrientation(),
+				pentity->getParentNode()->_getDerivedScale());
+
+			// test for hitting individual triangles on the mesh
+			bool new_closest_found = false;
+			for (size_t i = 0; i < Total_index_count; i += 3)
+			{
+				// check for a hit against this triangle
+				std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
+					vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
+
+				// if it was a hit check if its the closest
+				if (hit.first)
+				{
+					if ((closest_distance < 0.0f) ||
+						(hit.second < closest_distance))
+					{
+						// this is the closest so far, save it off
+						closest_distance = hit.second;
+						new_closest_found = true;
+
+						Face_Index = i;
+
+						App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
+						App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
+						App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];
+
+						App->CLSB_Grid->Face_Update2();
+
+						App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+						App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+						App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
+
+						SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+
+						Get_Material_Data();
+
+						App->CLSB_Grid->FaceNode->setVisible(true);
+					}
+				}
+			}
+
+			// free the verticies and indicies memory
+			delete[] vertices;
+			delete[] indices;
+			delete[] TextCords;
+			delete[] Sub_Mesh_Indexs;
+
+			// if we found a new closest raycast for this object, update the
+			// closest_result before moving on to the next object.
+			if (new_closest_found)
+			{
+				target = pentity;
+
+				Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
+				closest_result = ray.getPoint(closest_distance);
+			}
+		}
+
+	}
+
+	// return the result
+	if (closest_distance >= 0.0f)
+	{
+		// raycast success
+		result = closest_result;
+		Selected_Ok = 1;
+		return (true);
+	}
+	else
+	{
+		// raycast failed
+		Selected_Ok = 0;
+		Pl_Entity_Name = "---------";
+		return (false);
+	}
+}
+
+// *************************************************************************
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+void SB_Picking::Get_Material_Data()
+{
+    int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
+    if (SubMesh_Face > test)
     {
-        mRaySceneQuery->setRay(ray);
-        mRaySceneQuery->setSortByDistance(true);
-        mRaySceneQuery->setQueryMask(queryMask);
-        
-        if (mRaySceneQuery->execute().size() <= 0)
-        {
-            return (false);
-        }
-
+        //App->Say("Sub Mesh Out of bounds");
     }
     else
     {
-
-        App->Say("No Ray Query");
-        return (false);
-    }
-
-    closest_distance = -1.0f;
-    Ogre::Vector3 closest_result;
-    Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
-    for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
-    {
-        // stop checking if we have found a raycast hit that is closer
-        // than all remaining entities
-        if ((closest_distance >= 0.0f) &&
-            (closest_distance < query_result[qr_idx].distance))
-        {
-            break;
-        }
-
-        // only check this result if its a hit against an entity
-        if ((query_result[qr_idx].movable != NULL) &&
-            (query_result[qr_idx].movable->getMovableType().compare("Entity") == 0))
-        {
-            // get the entity to check
-            pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
-
-            // mesh data to retrieve
-            size_t vertex_count;
-            size_t index_count;
-            Ogre::Vector3* vertices;
-            Ogre::uint32* indices;
-
-            // get the mesh information
-            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(), vertex_count, vertices, index_count, indices,
-                pentity->getParentNode()->_getDerivedPosition(),
-                pentity->getParentNode()->_getDerivedOrientation(),
-                pentity->getParentNode()->_getDerivedScale());
-
-            // test for hitting individual triangles on the mesh
-            bool new_closest_found = false;
-            for (size_t i = 0; i < index_count; i += 3)
-            {
-                // check for a hit against this triangle
-                std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
-                    vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
-
-                // if it was a hit check if its the closest
-                if (hit.first)
-                {
-                    if ((closest_distance < 0.0f) ||
-                        (hit.second < closest_distance))
-                    {
-                        // this is the closest so far, save it off
-                        closest_distance = hit.second;
-                        new_closest_found = true;
-
-                        float X = vertices[indices[i]].x;
-                        //HitVertices.x = (Ogre::Real(vertices[indices[i]]));
-                    }
-                }
-            }
-
-            delete[] vertices;
-            delete[] indices;
-
-            // if we found a new closest raycast for this object, update the
-            // closest_result before moving on to the next object.
-            if (new_closest_found)
-            {
-                target = pentity;
-                closest_result = ray.getPoint(closest_distance);
-            }
-        }
-    }
-
-    // return the result
-    if (closest_distance >= 0.0f)
-    {
-        result = closest_result;
-        return (true);
-    }
-    else
-    {
-        return (false);
+        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+        Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
+        strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
     }
 }
 
 // *************************************************************************
 // *					      GetMeshInformation		              	   *
 // *************************************************************************
-void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_count,Ogre::Vector3*& vertices,size_t& index_count,Ogre::uint32*& indices,const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
+void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale)
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -303,7 +358,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
     size_t next_offset = 0;
     size_t index_offset = 0;
 
-    vertex_count = index_count = 0;
+    Total_vertex_count = Total_index_count = 0;
 
     // Calculate how many vertices and indices we're going to need
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
@@ -315,23 +370,24 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
         {
             if (!added_shared)
             {
-                vertex_count += mesh->sharedVertexData->vertexCount;
+                Total_vertex_count += mesh->sharedVertexData->vertexCount;
                 added_shared = true;
             }
         }
         else
         {
-            vertex_count += submesh->vertexData->vertexCount;
+            Total_vertex_count += submesh->vertexData->vertexCount;
         }
 
         // Add the indices
-        index_count += submesh->indexData->indexCount;
+        Total_index_count += submesh->indexData->indexCount;
     }
 
-
     // Allocate space for the vertices and indices
-    vertices = new Ogre::Vector3[vertex_count];
-    indices = new Ogre::uint32[index_count];
+    vertices = new Ogre::Vector3[Total_vertex_count];
+    indices = new Ogre::uint32[Total_index_count];
+    TextCords = new Ogre::Vector2[Total_vertex_count];
+    Sub_Mesh_Indexs = new Ogre::uint32[Total_index_count];
 
     added_shared = false;
 
@@ -359,10 +415,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
             unsigned char* vertex =
                 static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
 
-            // There is _no_ baseVertexPointerToElement() which takes an Ogre::Ogre::Real or a double
-            //  as second argument. So make it float, to avoid trouble when Ogre::Ogre::Real will
-            //  be comiled/typedefed as double:
-            //      Ogre::Ogre::Real* pOgre::Real;
+
             float* pReal;
 
             for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
@@ -377,7 +430,6 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
             vbuf->unlock();
             next_offset += vertex_data->vertexCount;
         }
-
 
         Ogre::IndexData* index_data = submesh->indexData;
         size_t numTris = index_data->indexCount / 3;
@@ -409,5 +461,46 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
 
         ibuf->unlock();
         current_offset = next_offset;
+    }
+
+    // Texture Cords UVS
+    int textoffsset = 0;
+
+    for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+
+        Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+
+        if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+        {
+            if (submesh->useSharedVertices)
+            {
+                added_shared = true;
+                shared_offset = current_offset;
+            }
+
+            const Ogre::VertexElement* texElem = vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_TEXTURE_COORDINATES);
+
+            Ogre::HardwareVertexBufferSharedPtr vbufText =
+                vertex_data->vertexBufferBinding->getBuffer(texElem->getSource());
+
+            byte* vertexText = (byte*)vbufText->lock(Ogre::HardwareBuffer::HBL_NORMAL);
+            float* pRealText;
+
+            for (ulong j = 0; j < vertex_data->vertexCount; ++j, vertexText += vbufText->getVertexSize())
+            {
+                texElem->baseVertexPointerToElement(vertexText, &pRealText);
+
+                TextCords[textoffsset].x = pRealText[0];
+                TextCords[textoffsset].y = pRealText[1];
+
+                Sub_Mesh_Indexs[textoffsset] = i;
+
+                textoffsset++;
+            }
+
+            vbufText->unlock();
+        }
     }
 }

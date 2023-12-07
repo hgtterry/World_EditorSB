@@ -31,12 +31,6 @@ public:
 
 	void SB_Picking::Mouse_Pick_Entity();
 
-private:
-	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
-	void GetMeshInformation(const Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, Ogre::uint32*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
-	
-	void Clear_Picking_Data();
-
 	Ogre::String Pl_Entity_Name;
 
 	float closest_distance;
@@ -46,17 +40,26 @@ private:
 	int Face_Index;
 	int SubMesh_Face;
 	int Sub_Mesh_Count;
-	
+
 	bool Selected_Ok;
+
+	Ogre::Vector3* vertices;
+	Ogre::Vector2* TextCords;
+	Ogre::uint32* indices;
+	Ogre::uint32* Sub_Mesh_Indexs;
 
 	size_t Total_vertex_count;
 	size_t Total_index_count;
 
+private:
+	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
+	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	void Get_Material_Data();
+	void Clear_Picking_Data();
 
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;
 
 	Ogre::MovableObject* pentity;
-
 };
 
