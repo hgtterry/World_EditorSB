@@ -146,6 +146,11 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	{
 		Updating_GUI();
 	}
+
+	if (Show_Object_Selection == 1)
+	{
+		Face_Selection();
+	}
 	
 }
 

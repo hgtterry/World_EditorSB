@@ -955,7 +955,10 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
 				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
 
-				App->CLSB_Picking->Mouse_Pick_Entity();
+				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+				{
+					App->CLSB_Picking->Mouse_Pick_Entity();
+				}
 				
 				SetCapture(App->ViewGLhWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
