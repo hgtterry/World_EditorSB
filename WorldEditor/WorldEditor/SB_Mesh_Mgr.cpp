@@ -495,6 +495,7 @@ void SB_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 // *************************************************************************
 void SB_Mesh_Mgr::Set_RenderMode_NoRender()
 {
+	// Index 3
 	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
@@ -504,6 +505,7 @@ void SB_Mesh_Mgr::Set_RenderMode_NoRender()
 // *************************************************************************
 void SB_Mesh_Mgr::Set_RenderMode_Compiled()
 {
+	// Index 0
 	App->CLSB_Export_Ogre3D->World_Node->setVisible(true);
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
