@@ -169,7 +169,12 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_CB_RENDERMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+		App->CLSB_Mesh_Mgr->Populate_RenderMode_Combo(CB_hWnd); // Populate Combo
 
 		HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
 		if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
@@ -436,6 +441,15 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Set_RenderModes_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
+{
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre3d");
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }
 
 // *************************************************************************
