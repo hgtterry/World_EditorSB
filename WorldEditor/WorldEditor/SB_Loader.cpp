@@ -75,7 +75,7 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 		return;
 	}
 
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+	App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 
 	App->CLSB_Model->Set_Equity();
 
@@ -150,7 +150,7 @@ bool SB_Loader::Load_File_Wepf()
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+	App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 
 	App->CLSB_Camera_EQ->Reset_Orientation();
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
@@ -770,7 +770,7 @@ bool SB_Loader::RFActor_Loader(void)
 
 	App->CLSB_Genesis3D->LoadActor();
 
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Actor;
+	App->CLSB_Model->Render_Type = Enums::LoadedFile_Actor;
 
 	App->CLSB_Model->Set_Equity();
 

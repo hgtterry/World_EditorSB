@@ -211,7 +211,7 @@ void SB_Dimensions::ImGui_Position(void)
 
 	Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
 
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 	{
 		Pos.x = App->CLSB_Model->Centre.x;
 		Pos.y = App->CLSB_Model->Centre.y;

@@ -40,7 +40,7 @@ SB_Model::SB_Model(void)
 	XBrushCount = 0;
 	BrushCount = 0;
 
-	Model_Type = Enums::LoadedFile_None;
+	Render_Type = Enums::LoadedFile_None;
 
 	strcpy(FileName, "No Model Loaded");
 	strcpy(Path_FileName, "No Model Loaded");
@@ -81,7 +81,7 @@ SB_Model::~SB_Model(void)
 void SB_Model::Reset_Class(void)
 {
 	Model_Loaded = 0;
-	Model_Type = Enums::LoadedFile_None;
+	Render_Type = Enums::LoadedFile_None;
 
 	int Count = 0;
 	int Index = GroupCount;

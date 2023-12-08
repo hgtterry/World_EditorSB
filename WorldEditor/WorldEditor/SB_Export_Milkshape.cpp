@@ -87,7 +87,7 @@ bool SB_Export_Milkshape::Export_To_Milk()
 	CreateDirectory(OutputFolder, NULL);
 
 
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 	{
 		Write_MILK_File();
 		Export_Textures();

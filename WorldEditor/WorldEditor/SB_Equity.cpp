@@ -202,7 +202,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == ID_MODE_GROUPS)
 		{
-			App->CLSB_Model->Model_Type = Enums::Render_Groups;
+			App->CLSB_Model->Render_Type = Enums::Render_Groups;
 			App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
 			return TRUE;
 		}
@@ -1101,7 +1101,7 @@ void SB_Equity::Do_Equity()
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+	App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 	App->CLSB_Model->Model_Loaded = 1;
 
@@ -1181,7 +1181,7 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+		App->CLSB_Model->Render_Type = Enums::LoadedFile_Brushes;
 
 		ShowWindow(App->ListPanel, false);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
@@ -1243,7 +1243,7 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		App->CLSB_Model->Model_Type = Enums::LoadedFile_None;
+		App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
 
 		ShowWindow(App->ListPanel, true);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);

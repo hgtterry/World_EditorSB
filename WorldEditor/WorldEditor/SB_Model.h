@@ -151,7 +151,7 @@ public:
 	int GroupCount;
 	int TextureCount;
 	int MotionCount;
-	int Model_Type;
+	int Render_Type;
 	int BoneCount;
 	int NormalsCount;
 	int XBrushCount;

@@ -247,23 +247,25 @@ void SB_Render::Render_Loop()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
-		if (App->CLSB_Model->Model_Type == Enums::Render_Groups)
+		if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
 		{
 			Assimp_Render_Textures();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
 		{
+
+			//Brush_Render_Group_Texture();
 			//WE_Render_By_Texture();
 
-			/*if (Render_Brush_Group_Flag == 1)
+			if (Render_Brush_Group_Flag == 1)
 			{
 				Brush_Render_Group_Texture();
 			}
 			else
 			{
 				Brush_Render_Brush_Texture();
-			}*/
+			}
  
  
 			//XBrush_Render_Textures();
@@ -276,17 +278,17 @@ void SB_Render::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
 		{
 			RF_Render_Faces();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Faces();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
 		{
 			//Brushes_Render_Faces();
 			//XBrushes_Render_Faces();
@@ -298,17 +300,17 @@ void SB_Render::Render_Loop()
 	// ---------------------- Points
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
 	{
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
 		{
 			RF_Render_Points();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Points();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
 		{
 			Brush_Render_Points();
 		}
@@ -318,17 +320,17 @@ void SB_Render::Render_Loop()
 	// ---------------------- Normals
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowNormals == 1)
 	{
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
 		{
 			RF_Render_Normals();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Normals();
 		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
 		{
 			//Brush_Render_Normals();
 		}

@@ -87,7 +87,7 @@ void SB_Export_Object::Write_ObjectFile(void)
 	{
 		return;
 	}
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 	{
 		Write_ObjectFile_Commit();
 	}

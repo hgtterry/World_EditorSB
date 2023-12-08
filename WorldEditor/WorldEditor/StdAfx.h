@@ -86,6 +86,7 @@ namespace Enums
 
 	enum RenderMode
 	{
+		Render_Nothing = -1,
 		Render_Brushes = 0,
 		Render_Groups = 1,
 		Render_Ogre = 2,
