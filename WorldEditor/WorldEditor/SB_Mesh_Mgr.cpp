@@ -570,6 +570,9 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	{
 		sprintf(buf, "%s %i", "Total Sub Meshs - ", App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities());
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Model->Ogre_Face_Count);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);	
 	}
 
 	// ------------------- Groups
@@ -577,12 +580,18 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	{
 		sprintf(buf, "%s %i", "Total Groups - ", App->CLSB_Model->GroupCount);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Mesh_Mgr->ActualFaceCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
 	// ------------------- Brushes
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
 	{
 		sprintf(buf, "%s %i", "Total Brushes - ", App->CLSB_Model->BrushCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Model->Ogre_Face_Count);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
@@ -691,6 +700,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
+	// ------------------- Groups
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
 	{
 		sprintf(buf, "Group Name %s", App->CLSB_Model->Group[Index]->GroupName);
@@ -711,8 +721,8 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		sprintf(buf, "Mat File Name %s", App->CLSB_Model->Group[Index]->Text_FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Faces2 %i", App->CLSB_Mesh_Mgr->ActualFaceCount);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		//sprintf(buf, "Faces2 %i", App->CLSB_Mesh_Mgr->ActualFaceCount);
+		//SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
@@ -775,6 +785,7 @@ void SB_Mesh_Mgr::Delete_Brush_List()
 	}
 
 	App->CLSB_Model->BrushCount = 0;
+	App->CLSB_Model->Brush_Face_Count = 0;
 
 }
 
@@ -1126,12 +1137,14 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 	int FaceIndex = 0;
 	// -----------------------------------  Faces
 
+	App->CLSB_Model->Brush_Face_Count = App->CLSB_Model->Brush_Face_Count + num_faces;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]); //4
+		
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;

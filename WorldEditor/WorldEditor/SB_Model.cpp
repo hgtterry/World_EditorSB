@@ -27,6 +27,12 @@ distribution.
 
 SB_Model::SB_Model(void)
 {
+	Ogre_Vertice_Count = 0;
+	Ogre_Face_Count = 0;
+
+	Brush_Vertice_Count = 0;
+	Brush_Face_Count = 0;
+
 	VerticeCount = 0;
 	FaceCount = 0;
 	GroupCount = 0;

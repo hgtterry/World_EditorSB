@@ -235,6 +235,7 @@ void SB_Export_Ogre3D::Set_World_Paths(void)
 void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 {
 	Set_World_Paths();
+	App->CLSB_Model->Ogre_Face_Count = 0;
 
 	if (Create == 1)
 	{
@@ -259,6 +260,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
+	int TotalFaces = 0;
 
 	while (Count < GroupCountTotal)
 	{
@@ -271,6 +273,8 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 		FaceCount = 0;
 		FaceIndex = 0;
+		
+		TotalFaces = TotalFaces + App->CLSB_Model->Group[Count]->GroupFaceCount;
 
 		while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
 		{
@@ -312,6 +316,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		Count++;
 	}
 
+	App->CLSB_Model->Ogre_Face_Count = TotalFaces;
 	
 	if (World_Manual->getNumSections() == 0)
 	{

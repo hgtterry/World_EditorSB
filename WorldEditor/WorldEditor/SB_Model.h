@@ -146,6 +146,12 @@ public:
 
 	bool Model_Loaded;
 
+	int Ogre_Vertice_Count;
+	int Ogre_Face_Count;
+
+	int Brush_Vertice_Count;
+	int Brush_Face_Count;
+
 	int VerticeCount;
 	int FaceCount;
 	int GroupCount;
