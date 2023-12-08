@@ -446,6 +446,16 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 					App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
 				}
 
+				if (Index == 1) // Groups
+				{
+					App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
+				}
+
+				if (Index == 2) // Brushes
+				{
+					App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
+				}
+
 				if (Index == 3) // No Render
 				{
 					App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
@@ -491,22 +501,42 @@ void SB_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 }
 
 // *************************************************************************
-// *	  	Set_RenderMode_NoRender:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-void SB_Mesh_Mgr::Set_RenderMode_NoRender()
-{
-	// Index 3
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
-	Update_Brush_List(Mesh_Viewer_HWND);
-}
-
-// *************************************************************************
 // *	  	Set_RenderMode_Compiled:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Mesh_Mgr::Set_RenderMode_Compiled()
 {
 	// Index 0
 	App->CLSB_Export_Ogre3D->World_Node->setVisible(true);
+	Update_Brush_List(Mesh_Viewer_HWND);
+}
+
+// *************************************************************************
+// *	  	Set_RenderMode_Groups:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_RenderMode_Groups()
+{
+	// Index 1
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	Update_Brush_List(Mesh_Viewer_HWND);
+}
+
+// *************************************************************************
+// *	  	Set_RenderMode_Brushes:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_RenderMode_Brushes()
+{
+	// Index 2
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	Update_Brush_List(Mesh_Viewer_HWND);
+}
+
+// *************************************************************************
+// *	  	Set_RenderMode_NoRender:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_RenderMode_NoRender()
+{
+	// Index 3
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
 
@@ -522,8 +552,44 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0) // Compiled
 	{
-		sprintf(buf, "%s","Compiled");
-		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		//sprintf(buf, "%s","Compiled");
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int Count = 0;
+		while (Count < App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities())
+		{
+			sprintf(buf, "%s %i", "Sub mesh - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+	}
+
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1) // Groups
+	{
+		//sprintf(buf, "%s", "Groups");
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		
+		int Count = 0;
+		while (Count < App->CLSB_Model->GroupCount)
+		{
+			sprintf(buf, "%s %i", "Group - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+	}
+
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2) // Brushes
+	{
+		//sprintf(buf, "%s", "Brushes");
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int Count = 0;
+		while (Count < App->CLSB_Model->BrushCount)
+		{
+			sprintf(buf, "%s %i", "Brushes - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
 	}
 
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3) // No Render
@@ -1332,7 +1398,7 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 	App->CLSB_Model->FaceCount = mTotalVertices;
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
-	Update_Brush_List(Mesh_Viewer_HWND);
+	//Update_Brush_List(Mesh_Viewer_HWND);
 
 	return true;
 }

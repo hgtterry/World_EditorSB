@@ -37,6 +37,7 @@ public:
 	bool Clean_Direcory();
 
 	Ogre::SceneNode* World_Node;
+	Ogre::Entity* World_Ent;
 
 private:
 
@@ -77,6 +78,5 @@ private:
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 
-	Ogre::Entity* World_Ent;
 };
 
