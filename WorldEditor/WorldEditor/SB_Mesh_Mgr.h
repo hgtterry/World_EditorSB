@@ -79,5 +79,6 @@ private:
 	bool Brush_Flag;
 	bool Group_Flag;
 
+	bool Dialog_Active;
 };
 

@@ -42,6 +42,7 @@ public:
 
 	bool Toggle_Tabs_Camera_Flag;
 	bool Toggle_Camera_Model_Flag;;
+	bool Toggle_MeshManager_Flag;
 
 	HWND Tabs_TB_hWnd_Eq;
 	HWND Test_TB_hWnd;
