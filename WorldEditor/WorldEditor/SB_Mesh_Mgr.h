@@ -70,6 +70,8 @@ private:
 	int Get_Adjusted_Index(int RealIndex);
 
 	void Populate_RenderMode_Combo(HWND DropHwnd);
+	void Set_RenderMode_NoRender();
+	void Set_RenderMode_Compiled();
 
 	int mAdjusedIndex_Store[500];
 	int mBrush_Index;
@@ -77,7 +79,7 @@ private:
 
 	int	mBrushCount;
 	int	mSubBrushCount;
-
+	int Selected_Render_Mode;
 	bool Brush_Flag;
 	bool Group_Flag;
 

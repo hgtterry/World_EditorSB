@@ -121,6 +121,8 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 	Group_Flag = 0;
 	Dialog_Active = 0;
 
+	Selected_Render_Mode = 0;
+
 	Mesh_Viewer_HWND = nullptr;
 }
 
@@ -421,6 +423,39 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_RENDERMODE)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				if (Index == -1)
+				{
+					return 1;
+				}
+
+				App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
+				
+				if (Index == 0) // Compiled
+				{
+					App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
+				}
+
+				if (Index == 3) // No Render
+				{
+					App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
+				}
+			}
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Mesh_Mgr->Dialog_Active = 0;
@@ -444,12 +479,33 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 }
 
 // *************************************************************************
-// *	  		Set_RenderModes_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *	  	Populate_RenderMode_Combo:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
 void SB_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 {
-	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre3d");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Compiled");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Groups");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Brushes");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"No Render");
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *	  	Set_RenderMode_NoRender:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_RenderMode_NoRender()
+{
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	Update_Brush_List(Mesh_Viewer_HWND);
+}
+
+// *************************************************************************
+// *	  	Set_RenderMode_Compiled:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_RenderMode_Compiled()
+{
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(true);
+	Update_Brush_List(Mesh_Viewer_HWND);
 }
 
 // *************************************************************************
@@ -462,7 +518,19 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	char buf[MAX_PATH];
 	int Count = 0;
 
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0) // Compiled
+	{
+		sprintf(buf, "%s","Compiled");
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3) // No Render
+	{
+		sprintf(buf, "%s", "No Render");
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	/*if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 	{
 		while (Count < App->CLSB_Model->BrushCount)
 		{
@@ -480,7 +548,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
-	}
+	}*/
 }
 
 // *************************************************************************
@@ -492,7 +560,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 	char buf[MAX_PATH];
 
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+	/*if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 	{
 		sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -539,9 +607,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 		sprintf(buf, "Faces2 %i", App->CLSB_Mesh_Mgr->ActualFaceCount);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	}
-
-	
+	}*/	
 }
 
 //---------------------------------------------------------------------------------------------------------------------
