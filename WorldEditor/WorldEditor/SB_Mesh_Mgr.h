@@ -59,6 +59,7 @@ private:
 
 	static signed int Brush_CSG_Callback(const Brush* pBrush, void* lParam);
 
+	void Update_World_Model_Info(HWND hDlg);
 	void UpdateBrushData(HWND hDlg, int Index);
 	void Update_Brush_List(HWND hDlg);
 

@@ -158,7 +158,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -556,6 +557,44 @@ void SB_Mesh_Mgr::Set_RenderMode_NoRender()
 }
 
 // *************************************************************************
+// *		Update_World_Model_Info:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+
+	// ------------------- Compiled
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
+	{
+		sprintf(buf, "%s %i", "Total Sub Meshs - ", App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities());
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// ------------------- Groups
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
+	{
+		sprintf(buf, "%s %i", "Total Groups - ", App->CLSB_Model->GroupCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// ------------------- Brushes
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
+	{
+		sprintf(buf, "%s %i", "Total Brushes - ", App->CLSB_Model->BrushCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// ------------------- No Render
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
+	{
+
+	}
+
+}
+
+// *************************************************************************
 // *		Update_Brush_List:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
 void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
@@ -576,7 +615,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount,buf,10));
+		Update_World_Model_Info(hDlg);
 	}
 
 	// ------------------- Groups
@@ -591,7 +630,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount, buf, 10));
+		Update_World_Model_Info(hDlg);
 	}
 
 	// ------------------- Brushes
@@ -606,7 +645,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount, buf, 10));
+		Update_World_Model_Info(hDlg);	
 	}
 
 	// ------------------- No Render
@@ -615,7 +654,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		sprintf(buf, "%s", "No Render");
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(0, buf, 10));
+		Update_World_Model_Info(hDlg);
 	}
 }
 
@@ -700,7 +739,6 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 		App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(Index);
 	}
-
 }
 
 //---------------------------------------------------------------------------------------------------------------------

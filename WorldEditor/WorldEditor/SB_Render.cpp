@@ -278,42 +278,42 @@ void SB_Render::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+		/*if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
 		{
 			RF_Render_Faces();
-		}
+		}*/
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
+		//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Faces();
 		}
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
-		{
-			//Brushes_Render_Faces();
-			//XBrushes_Render_Faces();
-			Brushes_Render_Faces_XX();
-		}
+		//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+		//{
+		//	//Brushes_Render_Faces();
+		//	//XBrushes_Render_Faces();
+		//	Brushes_Render_Faces_XX();
+		//}
 	}
 
 
 	// ---------------------- Points
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
 	{
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+		/*if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
 		{
 			RF_Render_Points();
 		}
 
 		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
-		{
+		{*/
 			Assimp_Render_Points();
-		}
+		/*}
 
 		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
 		{
 			Brush_Render_Points();
-		}
+		}*/
 
 	}
 
