@@ -171,6 +171,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_STBRUSHINDEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_CB_RENDERMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
@@ -205,6 +207,15 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STBRUSHINDEX) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -416,7 +427,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Ogre->RenderListener->Selected_Group = Index;
 			}
 
-			SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index, buff, 10));
+			//SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index, buff, 10));
 
 			App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, Index);
 
@@ -548,75 +559,60 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	char buf[MAX_PATH];
-	int Count = 0;
-
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0) // Compiled
+	
+	// ------------------- Compiled
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
 	{
-		//sprintf(buf, "%s","Compiled");
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+		int SubCount = App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
 		int Count = 0;
-		while (Count < App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities())
+		while (Count < SubCount)
 		{
 			sprintf(buf, "%s %i", "Sub mesh - ", Count);
 			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
+
+		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount,buf,10));
 	}
 
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1) // Groups
+	// ------------------- Groups
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
 	{
-		//sprintf(buf, "%s", "Groups");
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-		
+		int SubCount = App->CLSB_Model->GroupCount;
 		int Count = 0;
-		while (Count < App->CLSB_Model->GroupCount)
+		while (Count < SubCount)
 		{
 			sprintf(buf, "%s %i", "Group - ", Count);
 			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
+
+		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount, buf, 10));
 	}
 
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2) // Brushes
+	// ------------------- Brushes
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
 	{
-		//sprintf(buf, "%s", "Brushes");
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+		int SubCount = App->CLSB_Model->BrushCount;
 		int Count = 0;
-		while (Count < App->CLSB_Model->BrushCount)
+		while (Count < SubCount)
 		{
 			sprintf(buf, "%s %i", "Brushes - ", Count);
 			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
+
+		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(SubCount, buf, 10));
 	}
 
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3) // No Render
+	// ------------------- No Render
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
 	{
 		sprintf(buf, "%s", "No Render");
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	}
 
-	/*if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
-	{
-		while (Count < App->CLSB_Model->BrushCount)
-		{
-			sprintf(buf, "%i %s", Count, App->CLSB_Model->B_Brush[Count]->Brush_Name);
-			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-			Count++;
-		}
+		SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(0, buf, 10));
 	}
-
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
-	{
-		while (Count < App->CLSB_Model->GroupCount)
-		{
-			sprintf(buf, "%i %s", Count, App->CLSB_Model->Group[Count]->GroupName);
-			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-			Count++;
-		}
-	}*/
 }
 
 // *************************************************************************
@@ -627,6 +623,30 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	char buf[MAX_PATH];
+
+	// ------------------- Compiled
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
+	{
+		App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
+
+		Ogre::SubMesh const* subMesh = App->CLSB_Export_Ogre3D->World_Ent->getSubEntity(Index)->getSubMesh();
+		
+		int FaceCount = subMesh->indexData->indexCount;
+		sprintf(buf, "Face Count - %i", FaceCount/3);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int VerticesCount = subMesh->vertexData->vertexCount;
+		sprintf(buf, "Vertices Count - %i", VerticesCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		Ogre::String MatName = subMesh->getMaterialName();
+		sprintf(buf, "Material Name - %s", MatName.c_str());
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(MatName));
+		sprintf(buf, "Texture Name - %s", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
 
 	/*if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 	{
