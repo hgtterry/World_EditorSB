@@ -84,8 +84,9 @@ private:
 	int	mBrushCount;
 	int	mSubBrushCount;
 	int Selected_Render_Mode;
-	bool Brush_Flag;
-	bool Group_Flag;
+	
+	bool Picking_Active_Flag;
+	bool Show_Data_Flag;
 
 	bool Dialog_Active;
 };
