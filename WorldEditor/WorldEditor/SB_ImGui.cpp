@@ -806,7 +806,7 @@ void SB_ImGui::Dialog_Float(void)
 // *************************************************************************
 void SB_ImGui::Face_Selection(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(30, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Selection_Data", &Show_Face_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{

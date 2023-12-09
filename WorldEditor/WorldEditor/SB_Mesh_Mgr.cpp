@@ -294,11 +294,13 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				App->CLSB_ImGui->Show_Face_Selection = 0;
 				App->CLSB_Mesh_Mgr->Show_Data_Flag = 0;
+				App->CLSB_FileView->Show_FileView(1);
 			}
 			else
 			{
 				App->CLSB_ImGui->Show_Face_Selection = 1;
 				App->CLSB_Mesh_Mgr->Show_Data_Flag = 1;
+				App->CLSB_FileView->Show_FileView(0);
 			}
 			return TRUE;
 		}
