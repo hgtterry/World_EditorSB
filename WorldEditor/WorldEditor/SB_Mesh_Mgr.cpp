@@ -124,6 +124,10 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 
 	Selected_Render_Mode = 0;
 
+	Compiled_List_Index = 0;
+	Groups_List_Index = 0;
+	Brushes_List_Index = 0;
+
 	Mesh_Viewer_HWND = nullptr;
 }
 
@@ -191,7 +195,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 		App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
-		App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, 0);
+		App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
 
 		App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
 
@@ -223,14 +227,32 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BTJUSTBRUSH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Brush);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTJUSTBRUSH));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Brush);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_LOOKAT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_LOOKAT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 		
@@ -240,13 +262,6 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
-
-		/*if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
 
 		if (some_item->idFrom == IDC_BT_PICKSELECT && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -395,17 +410,35 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 				return 1;
 			}
 
-			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
 			{
 				App->CLSB_Ogre->RenderListener->Selected_Brush_Index = Index;
 				App->CLSB_Ogre->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
 			}
 
-			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
+			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
 			{
 				App->CLSB_Ogre->RenderListener->Selected_Group = Index;
 			}
 
+			// ------------------- Compiled
+			if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
+			{
+				App->CLSB_Mesh_Mgr->Compiled_List_Index = Index;
+			}
+
+			// ------------------- Groups
+			if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
+			{
+				App->CLSB_Mesh_Mgr->Groups_List_Index = Index;
+			}
+
+			// ------------------- Brushes
+			if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
+			{
+				App->CLSB_Mesh_Mgr->Brushes_List_Index = Index;
+			}
+			
 			App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, Index);
 
 			return TRUE;
@@ -429,19 +462,25 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 				App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
 				
-				if (Index == 0) // Compiled
+				if (Index == Enums::Mesh_Mgr_Compiled) // Compiled
 				{
 					App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
+
+					EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
+					EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
 				}
 
-				if (Index == 1) // Groups
+				if (Index == Enums::Mesh_Mgr_Groups) // Groups
 				{
 					App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
 				}
 
-				if (Index == 2) // Brushes
+				if (Index == Enums::Mesh_Mgr_Brushes) // Brushes
 				{
 					App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
+
+					EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
+					EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
 				}
 
 				if (Index == 3) // No Render
@@ -542,7 +581,7 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	char buf[MAX_PATH];
 
 	// ------------------- Compiled
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
 		sprintf(buf, "%s %i", "Total Sub Meshs - ", App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities());
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -552,7 +591,7 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	}
 
 	// ------------------- Groups
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
 	{
 		sprintf(buf, "%s %i", "Total Groups - ", App->CLSB_Model->GroupCount);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -562,7 +601,7 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	}
 
 	// ------------------- Brushes
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
 	{
 		sprintf(buf, "%s %i", "Total Brushes - ", App->CLSB_Model->BrushCount);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -589,7 +628,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	char buf[MAX_PATH];
 	
 	// ------------------- Compiled
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
 		int SubCount = App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
 		int Count = 0;
@@ -601,10 +640,13 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		}
 
 		Update_World_Model_Info(hDlg);
+		UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Compiled_List_Index, (LPARAM)0);
+
 	}
 
 	// ------------------- Groups
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
 	{
 		int SubCount = App->CLSB_Model->GroupCount;
 		int Count = 0;
@@ -616,10 +658,12 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		}
 
 		Update_World_Model_Info(hDlg);
+		UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Groups_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Groups_List_Index, (LPARAM)0);
 	}
 
 	// ------------------- Brushes
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
 	{
 		int SubCount = App->CLSB_Model->BrushCount;
 		int Count = 0;
@@ -630,7 +674,9 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		Update_World_Model_Info(hDlg);	
+		Update_World_Model_Info(hDlg);
+		UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Brushes_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Brushes_List_Index, (LPARAM)0);
 	}
 
 	// ------------------- No Render
@@ -640,6 +686,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		Update_World_Model_Info(hDlg);
+		UpdateBrushData(hDlg, -1);
 	}
 }
 
@@ -653,7 +700,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	char buf[MAX_PATH];
 
 	// ------------------- Compiled
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 0)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
 		App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
 
@@ -677,7 +724,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	}
 
 	// ------------------- Groups
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 1)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
 	{
 		sprintf(buf, "Group Name %s", App->CLSB_Model->Group[Index]->GroupName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -701,7 +748,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		//SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 2)
+	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
 	{
 		sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);

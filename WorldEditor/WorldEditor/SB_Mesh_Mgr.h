@@ -85,6 +85,10 @@ private:
 	int	mSubBrushCount;
 	int Selected_Render_Mode;
 	
+	int Compiled_List_Index;
+	int Groups_List_Index;
+	int Brushes_List_Index;
+
 	bool Picking_Active_Flag;
 	bool Show_Data_Flag;
 

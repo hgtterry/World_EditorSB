@@ -84,6 +84,14 @@ namespace Enums
 		CamModel = 4
 	};
 
+	enum Mesh_Mgr
+	{
+		Mesh_Mgr_None = -1,
+		Mesh_Mgr_Compiled = 0,
+		Mesh_Mgr_Groups = 1,
+		Mesh_Mgr_Brushes = 2
+	};
+
 	enum RenderMode
 	{
 		Render_Nothing = -1,
