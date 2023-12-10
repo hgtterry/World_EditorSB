@@ -822,9 +822,9 @@ void SB_ImGui::Face_Selection(void)
 
 		ImGui::Text("");
 		ImGui::Text("Sub Meshes: = %i", App->CLSB_Picking->Sub_Mesh_Count);
-		ImGui::Text("Total Vertices: = %i", App->CLSB_Picking->Total_vertex_count);
-		ImGui::Text("Total Indices: = %i", App->CLSB_Picking->Total_index_count);
-		ImGui::Text("Total Faces: = %i", App->CLSB_Picking->Total_index_count / 3);
+		ImGui::Text("Total Vertices: = %i", App->CLSB_Picking->Total_Vertices_count_Actual);
+		ImGui::Text("Total Indices: = %i", App->CLSB_Picking->Total_index_count_Actual);
+		ImGui::Text("Total Faces: = %i", App->CLSB_Picking->Total_index_count_Actual / 3);
 
 		ImGui::Text("");
 
@@ -838,25 +838,17 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Face);
 			ImGui::Text("Face Index: = %i", Face_Index / 3);
 			ImGui::Text("");
-			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[0].x, App->CLSB_Grid->HitVertices[0].y, App->CLSB_Grid->HitVertices[0].z);
+			/*ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[0].x, App->CLSB_Grid->HitVertices[0].y, App->CLSB_Grid->HitVertices[0].z);
 			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[1].x, App->CLSB_Grid->HitVertices[1].y, App->CLSB_Grid->HitVertices[1].z);
 			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[2].x, App->CLSB_Grid->HitVertices[2].y, App->CLSB_Grid->HitVertices[2].z);
 			ImGui::Text("");
 			ImGui::Text("UV1: = %f %f", App->CLSB_Grid->HitFaceUVs[0].x, App->CLSB_Grid->HitFaceUVs[0].y);
 			ImGui::Text("UV2: = %f %f", App->CLSB_Grid->HitFaceUVs[1].x, App->CLSB_Grid->HitFaceUVs[1].y);
 			ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
-			ImGui::Text("");
+			ImGui::Text("");*/
 			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
 			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
 		}
-
-		//if (ImGui::Button("Test"))
-		//{
-		//	if (App->CL_Picking->Selected_Ok == 1)
-		//	{
-		//		//App->CL_Picking->Set_Face_UV();
-		//	}
-		//}
 
 		ImGui::End();
 	}

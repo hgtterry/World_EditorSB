@@ -54,11 +54,18 @@ public:
 	size_t Total_vertex_count;
 	size_t Total_index_count;
 
+	int Total_index_count_Actual;
+	int Total_Vertices_count_Actual;
+
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
 	void Get_Material_Data();
 	void Clear_Picking_Data();
+
+	int Get_SubMesh_Count();
+	int Get_Total_Indices();
+	int Get_Total_Vertices();
 
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;

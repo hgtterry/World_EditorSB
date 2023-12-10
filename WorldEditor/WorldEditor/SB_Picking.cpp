@@ -181,7 +181,7 @@ void SB_Picking::Mouse_Pick_Entity()
     }
     else
     {
-        Pl_Entity_Name = "---------";
+       // Pl_Entity_Name = "---------";
         //strcpy(TextureName, "None 2");
         Selected_Ok = 0;
     }
@@ -193,6 +193,9 @@ void SB_Picking::Mouse_Pick_Entity()
 // *************************************************************************
 bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
+    Total_index_count_Actual = 0;
+    Total_Vertices_count_Actual = 0;
+
 	target = NULL;
 	bool ParticleFound = 0;
 	Pl_Entity_Name = "---------";
@@ -285,6 +288,10 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
 						Get_Material_Data();
 
+                        Sub_Mesh_Count = Get_SubMesh_Count();
+                        Total_index_count_Actual = Get_Total_Indices();
+                        Total_Vertices_count_Actual = Get_Total_Vertices();
+
 						App->CLSB_Grid->FaceNode->setVisible(true);
 					}
 				}
@@ -302,7 +309,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 			{
 				target = pentity;
 
-				Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+				//Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
 
 				closest_result = ray.getPoint(closest_distance);
 			}
@@ -378,10 +385,12 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
         else
         {
             Total_vertex_count += submesh->vertexData->vertexCount;
+           
         }
 
         // Add the indices
         Total_index_count += submesh->indexData->indexCount;
+  
     }
 
     // Allocate space for the vertices and indices
@@ -390,6 +399,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
     TextCords = new Ogre::Vector2[Total_vertex_count];
     Sub_Mesh_Indexs = new Ogre::uint32[Total_index_count];
 
+   // App->Say_Int(Total_index_count);
     added_shared = false;
 
     // Run through the submeshes again, adding the data into the arrays
@@ -504,4 +514,69 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
             vbufText->unlock();
         }
     }
+}
+
+// *************************************************************************
+// *		Get_SubMesh_Count:- Terry and Hazel Flanigan 2023          	   *
+// *************************************************************************
+int SB_Picking::Get_SubMesh_Count()
+{
+    return ((Ogre::Entity*)pentity)->getNumSubEntities();;
+}
+
+// *************************************************************************
+// *		Get_Total_Indices:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+int SB_Picking::Get_Total_Indices()
+{
+    Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
+
+    int TotalIndices = 0;
+    int Count = 0;
+    int SubMeshes = mesh->getNumSubMeshes();
+    
+    while (Count < SubMeshes)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
+        TotalIndices += submesh->indexData->indexCount;
+
+        Count++;
+    }
+
+    return TotalIndices;
+}
+
+// *************************************************************************
+// *		Get_Total_Vertices:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+int SB_Picking::Get_Total_Vertices()
+{
+    Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
+
+    bool added_shared = false;
+    int TotalVertices = 0;
+    int Count = 0;
+    int SubMeshes = mesh->getNumSubMeshes();
+   
+    while (Count < SubMeshes)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
+
+        if (submesh->useSharedVertices)
+        {
+            if (!added_shared)
+            {
+                TotalVertices += mesh->sharedVertexData->vertexCount;
+                added_shared = true;
+            }
+        }
+        else
+        {
+            TotalVertices += submesh->vertexData->vertexCount;
+        }
+
+        Count++;
+    }
+
+    return TotalVertices;
 }
