@@ -47,6 +47,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Sub_Mesh_Count = 0;
     SubMesh_Index = 0;
     Selected_Ok = 0;
+    Left_MouseDown = 0;
 
     Local_Face = 0;
 }
@@ -273,15 +274,18 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 						
 						Face_Index = i;
 
-						App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
-						App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
-						App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];
+                        if (Left_MouseDown == 1)
+                        {
+                            App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
+                            App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                            App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
-						App->CLSB_Grid->Face_Update2();
+                            App->CLSB_Grid->Face_Update2();
 
-						App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
-						App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-						App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
+                            App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+                            App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+                            App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
+                        }
 
 						SubMesh_Index = Sub_Mesh_Indexs[Face_Index];
 

@@ -902,7 +902,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				POINT p;
 				GetCursorPos(&p);
-				ScreenToClient(App->MainHwnd, &p);
+				//ScreenToClient(App->MainHwnd, &p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
 				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
@@ -932,6 +932,20 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 			ReleaseCapture();
 			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
+
+			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Picking->Mouse_Pick_Entity();
+
+				char JustName[200];
+				int len = strlen(App->CLSB_Picking->TextureName2);
+				strcpy(JustName, App->CLSB_Picking->TextureName2);
+				JustName[len - 4] = 0;
+
+				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
+
+			}
+
 			return 1;
 		}
 
@@ -957,7 +971,11 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
+					App->CLSB_Picking->Left_MouseDown = 1;
+
 					App->CLSB_Picking->Mouse_Pick_Entity();
+
+					App->CLSB_Picking->Left_MouseDown = 0;
 				}
 				
 				SetCapture(App->ViewGLhWnd);// Bernie

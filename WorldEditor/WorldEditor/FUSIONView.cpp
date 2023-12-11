@@ -1428,7 +1428,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point) // hgtterry Mouse Right
 
 		if (mViewIs3d && !IsKeyDown(VK_CONTROL))
 		{
-			App->Beep_Win();
+			//App->Beep_Win();
 			App->CLSB_Doc->SelectTextureFromFace3D (point, VCam);
 		}
 

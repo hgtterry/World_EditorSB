@@ -617,9 +617,9 @@ void CFusionApp::OnFileOpen()
 void CFusionApp::CloseDocument()
 {
 	// If the current document is unmodified and has no brushes, wipe it
-	CFusionDoc* pDoc = GetActiveFusionDoc();
-	this->pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSE, 0);
-	Debug
+	//CFusionDoc* pDoc = GetActiveFusionDoc();
+	//this->pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSE, 0);
+	//Debug
 	/*if (pDoc && (pDoc->IsModified() == FALSE) && BrushList_Count(Level_GetBrushes(pDoc->pLevel), BRUSH_COUNT_ALL) == 0)
 	{
 		this->pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSE, 0);

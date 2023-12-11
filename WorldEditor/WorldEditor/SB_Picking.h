@@ -45,6 +45,7 @@ public:
 	int Sub_Mesh_Count;
 
 	bool Selected_Ok;
+	bool Left_MouseDown;
 
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;
