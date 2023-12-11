@@ -47,6 +47,8 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
     Selected_Ok = 0;
+
+    Local_Face = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -291,6 +293,8 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         Sub_Mesh_Count = Get_SubMesh_Count();
                         Total_index_count_Actual = Get_Total_Indices();
                         Total_Vertices_count_Actual = Get_Total_Vertices();
+
+                        Local_Face = Get_Local_Face(SubMesh_Face);
 
 						App->CLSB_Grid->FaceNode->setVisible(true);
 					}
@@ -579,4 +583,29 @@ int SB_Picking::Get_Total_Vertices()
     }
 
     return TotalVertices;
+}
+
+// *************************************************************************
+// *		    Get_Local_Face:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+int SB_Picking::Get_Local_Face(int SelectedGroup)
+{
+    Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
+
+    bool added_shared = false;
+    int TotalFaces = 0;
+    int Count = 0;
+    int SubMeshes = mesh->getNumSubMeshes();
+
+    while (Count < SelectedGroup)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
+        TotalFaces += submesh->indexData->indexCount;
+
+        Count++;
+    }
+
+    int Result = (Face_Index / 3) - (TotalFaces / 3);
+
+    return Result;
 }
