@@ -401,50 +401,7 @@ BOOL CMainFrame::CreateStyleBar()
 		TRACE0("Failed to create stylebar\n");
 		return FALSE;       // fail to create
 	}
-/*
-	// Create the combo box
-	m_wndBrushToolBar.SetButtonInfo(20, ID_AXIS_X, TBBS_SEPARATOR, 110);
 
-	// Design guide advises 12 pixel gap between combos and buttons
-	m_wndBrushToolBar.SetButtonInfo(19, ID_SEPARATOR, TBBS_SEPARATOR, 12);
-	CRect rect;
-	m_wndBrushToolBar.GetItemRect(20, &rect);
-	rect.top = 3;
-	rect.bottom = rect.top + nDropHeight;
-	if (!m_wndBrushToolBar.m_comboBox.Create(
-			CBS_DROPDOWNLIST|WS_VISIBLE|WS_TABSTOP,
-			rect, &m_wndBrushToolBar, ID_TOOLBAR_COMBOBOX))
-	{
-		TRACE0("Failed to create combo-box\n");
-		return FALSE;
-	}
-
-	//  Create a font for the combobox
-	LOGFONT logFont;
-	memset(&logFont, 0, sizeof(logFont));
-
-	if (!::GetSystemMetrics(SM_DBCSENABLED))
-	{
-		// Since design guide says toolbars are fixed height so is the font.
-#ifndef _MAC
-		logFont.lfHeight = -12;
-#else
-		logFont.lfHeight = -14;     // looks better than 12 on Mac
-#endif
-		logFont.lfWeight = FW_BOLD;
-		logFont.lfPitchAndFamily = VARIABLE_PITCH | FF_SWISS;
-		lstrcpy(logFont.lfFaceName, "MS Sans Serif");
-		if (!m_wndBrushToolBar.m_font.CreateFontIndirect(&logFont))
-			TRACE0("Could Not create font for combo\n");
-		else
-			m_wndBrushToolBar.m_comboBox.SetFont(&m_wndBrushToolBar.m_font);
-	}
-	else
-	{
-		m_wndBrushToolBar.m_font.Attach(::GetStockObject(SYSTEM_FONT));
-		m_wndBrushToolBar.m_comboBox.SetFont(&m_wndBrushToolBar.m_font);
-	}
-*/
 	return TRUE;
 }
 
@@ -478,6 +435,14 @@ BOOL CMainFrame::CreateGroupBar()
 		TRACE0("Failed to create combo-box\n");
 		return FALSE;
 	}
+
+	/*if (!m_wndGroupBar.m_Button.Create("poo",
+		WS_VISIBLE,
+		rect, &m_wndGroupBar, ID_BUTTON))
+	{
+		TRACE0("Failed to create combo-box\n");
+		return FALSE;
+	}*/
 
 	//  Create a font for the combobox
 	LOGFONT logFont;

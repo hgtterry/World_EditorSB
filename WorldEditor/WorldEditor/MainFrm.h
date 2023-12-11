@@ -37,6 +37,7 @@ class CStyleBar : public CToolBar
 {
 public:
 	CComboBox   m_comboBox;
+	CButton		m_Button;
 	CFont       m_font;
 };
 
