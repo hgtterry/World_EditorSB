@@ -41,7 +41,7 @@ public:
 	char TextureName2[MAX_PATH];
 
 	int Face_Index;
-	int SubMesh_Face;
+	int SubMesh_Index;
 	int Sub_Mesh_Count;
 
 	bool Selected_Ok;

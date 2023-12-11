@@ -152,7 +152,7 @@ public:
 	void RotateSelectedBrushes(geVec3d const *v);
 	void RotateSelectedBrushesDirect(geVec3d const *v);
 
-	void SelectTextureFromFace3D(CPoint point, ViewVars *v);
+
 	void PlaceTemplateEntity3D(CPoint point, ViewVars *v);
 	void MoveToNearest(void);
 

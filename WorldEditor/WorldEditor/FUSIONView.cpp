@@ -989,7 +989,7 @@ void CFusionView::DoneMovingBrushes ()
 
 
 #pragma warning (disable:4100)
-void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
+void CFusionView::OnLButtonUp(UINT nFlags, CPoint point) // hgtterry Left Mouse Button Up
 {
 	BOOL ThisIsCaptured = (this == GetCapture ());
 	if ((!ThisIsCaptured) && (point.y < 0))
@@ -1218,7 +1218,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 
 
 #pragma warning (disable:4100)
-void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
+void CFusionView::OnLButtonDown(UINT nFlags, CPoint point) // hgtterry Left Mouse Down
 {
 
 	/*
@@ -1277,13 +1277,13 @@ void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if (!RMouseButtonDown)
 	{
-/*
-		if ((mViewIs3d == FALSE) && (AdjustMode == ADJUST_MODE_FACE))
+
+	/*	if ((mViewIs3d == FALSE) && (AdjustMode == ADJUST_MODE_FACE))
 		{
 			::MessageBeep( (uint32)-1 ) ;
 			return ;
-		}
-*/
+		}*/
+
 
 		BeganWithPan = SpaceIsDown;
 
@@ -1401,7 +1401,7 @@ void CFusionView::OnRButtonDown(UINT nFlags, CPoint point)
 #pragma warning (default:4100)
 
 #pragma warning (disable:4100)
-void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
+void CFusionView::OnRButtonUp(UINT nFlags, CPoint point) // hgtterry Mouse Right Button Up
 {
 	BOOL ThisIsCaptured = (this == GetCapture ());
 	if ((!ThisIsCaptured) && (point.y < 0))
@@ -1428,7 +1428,8 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 
 		if (mViewIs3d && !IsKeyDown(VK_CONTROL))
 		{
-			pDoc->SelectTextureFromFace3D (point, VCam);
+			App->Beep_Win();
+			App->CLSB_Doc->SelectTextureFromFace3D (point, VCam);
 		}
 
 		pDoc->SetModifiedFlag();

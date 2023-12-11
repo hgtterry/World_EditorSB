@@ -45,7 +45,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
-    SubMesh_Face = 0;
+    SubMesh_Index = 0;
     Selected_Ok = 0;
 
     Local_Face = 0;
@@ -68,7 +68,7 @@ void SB_Picking::Clear_Picking_Data()
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
-    SubMesh_Face = 0;
+    SubMesh_Index = 0;
     Selected_Ok = 0;
  
     pentity = NULL;
@@ -267,13 +267,10 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 				// if it was a hit check if its the closest
 				if (hit.first)
 				{
-					if ((closest_distance < 0.0f) ||
-						(hit.second < closest_distance))
+					if ((closest_distance < 0.0f) || (hit.second < closest_distance))
 					{
-						// this is the closest so far, save it off
 						closest_distance = hit.second;
-						//new_closest_found = true;
-
+						
 						Face_Index = i;
 
 						App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
@@ -286,7 +283,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 						App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
 						App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
 
-						SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+						SubMesh_Index = Sub_Mesh_Indexs[Face_Index];
 
 						Get_Material_Data();
 
@@ -294,14 +291,13 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         Total_index_count_Actual = Get_Total_Indices();
                         Total_Vertices_count_Actual = Get_Total_Vertices();
 
-                        Local_Face = Get_Local_Face(SubMesh_Face);
+                        Local_Face = Get_Local_Face(SubMesh_Index);
 
 						App->CLSB_Grid->FaceNode->setVisible(true);
 					}
 				}
 			}
 
-			// free the verticies and indicies memory
 			delete[] vertices;
 			delete[] indices;
 			delete[] TextCords;
@@ -321,7 +317,6 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
 	}
 
-	// return the result
 	if (closest_distance >= 0.0f)
 	{
 		// raycast success
@@ -345,17 +340,16 @@ void SB_Picking::Get_Material_Data()
 {
     int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
 
-    if (SubMesh_Face > test)
+    if (SubMesh_Index > test)
     {
-        //App->Say("Sub Mesh Out of bounds");
+        App->Say("Sub Mesh Out of bounds");
     }
     else
     {
-        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Index)->getMaterialName().c_str());
         Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
         strcpy(TextureName2, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-        //App->Say(TextureName);
     }
 }
 

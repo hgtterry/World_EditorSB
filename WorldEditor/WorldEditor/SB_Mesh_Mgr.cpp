@@ -748,6 +748,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		//SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
+	// ------------------- Brushes
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
 	{
 		sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
@@ -765,7 +766,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		{
 			int TextureID = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID;
 
-			sprintf(buf, "Text_ID %i %s", TextureID, TextureName2[TextureID]);
+			sprintf(buf, "Text_ID %i %s %i", TextureID, TextureName2[TextureID], App->CLSB_Model->B_Brush[Index]->Face_Data[Count].WE_Face_Index);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
@@ -1174,6 +1175,7 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
 
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].WE_Face_Index = i;
 			FaceIndex++;
 		}
 

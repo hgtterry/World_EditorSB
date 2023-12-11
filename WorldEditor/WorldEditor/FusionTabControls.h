@@ -47,7 +47,6 @@ class CFusionTabControls : public CTabCtrl
 {
 // Construction
 public:
-	void	SelectTexture(int SelNum);
 	void DisableAllTabDialogs();
 	const char *GetCurrentTexture();
 	WINDOWPLACEMENT m_WindowPlacement;

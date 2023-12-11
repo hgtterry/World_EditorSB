@@ -2324,3 +2324,73 @@ void SB_Doc::SelectAllFacesInBrushes(void)
     UpdateSelected();
     ConfigureCurrentTool();
 }
+
+typedef struct
+{
+    geVec3d	vp, wp;
+    geFloat	MinBDist, CurDist;
+    Face* HitFace, * CurFace;
+    Brush* CurBrush;
+    CFusionDoc* pDoc;
+} SelectBrush3DCBData;
+
+static geBoolean SelectBrush3DCB(Brush* b, void* lParam)
+{
+    SelectBrush3DCBData* pData = (SelectBrush3DCBData*)lParam;
+
+    if (pData->pDoc->BrushIsVisible(b))
+    {
+        if (!(Brush_IsSubtract(b)))
+        {
+            Face* HitFace;
+            float CurDist;
+
+            HitFace = Brush_RayCast(b, &pData->vp, &pData->wp, &CurDist);
+            if (HitFace != NULL)
+            {
+                pData->HitFace = HitFace;
+                if (CurDist < pData->MinBDist)
+                {
+                    pData->CurDist = CurDist;
+                    pData->MinBDist = pData->CurDist;
+                    pData->CurBrush = b;
+                    pData->CurFace = pData->HitFace;
+                }
+            }
+        }
+    }
+    return	GE_TRUE;
+}
+
+// *************************************************************************
+// * Genesis3D   SelectTextureFromFace3D:- Terry and Hazel Flanigan 2023   *
+// *************************************************************************
+void SB_Doc::SelectTextureFromFace3D(CPoint point, ViewVars* v)
+{
+    App->Get_Current_Document();
+
+    BrushList* BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+    SelectBrush3DCBData	bdat;
+
+    Render_ViewToWorld(v, point.x, point.y, &bdat.vp);
+    Render_BackRotateVector(v, &bdat.vp, &bdat.wp);
+    Render_GetCameraPos(v, &bdat.vp);
+
+    bdat.MinBDist = 999999.0f;
+    bdat.CurBrush = NULL;
+    bdat.pDoc = App->m_pDoc;
+    BrushList_EnumCSGBrushes(BList, &bdat, SelectBrush3DCB);
+
+    if (bdat.CurBrush)
+    {
+        if (bdat.CurFace)
+        {
+            char TextName[MAX_PATH];
+            strcpy(TextName, Face_GetTextureName(bdat.CurFace));
+           
+            App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
+
+        }
+    }
+
+}

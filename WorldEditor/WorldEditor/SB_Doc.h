@@ -99,6 +99,7 @@ public:
 	void LinkViewports();
 	void UpdateAfterWadChange();
 	void SelectAllFacesInBrushes(void);
+	void SelectTextureFromFace3D(CPoint point, ViewVars* v);
 
 	// ----------------------------------------------------------- Varibles
 

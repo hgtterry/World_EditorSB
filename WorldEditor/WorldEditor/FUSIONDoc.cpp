@@ -2586,7 +2586,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
                         Face_SetSelected (fsData.pFoundFace, GE_TRUE);
                         SelFaceList_Add (App->CLSB_Doc->pSelFaces, fsData.pFoundFace);
 
-                        SelectTextureFromFace3D(point, v);
+                        App->CLSB_Doc->SelectTextureFromFace3D(point, v);
                         //App->Say("k");
                     }
                     // Deselect any brush that doesn't have selected faces
@@ -2622,36 +2622,6 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
         UpdateBrushAttributesDlg ();
     }
 */
-}
-
-//selects the texture of the face clicked (doesn't select the face)
-void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
-{
-    BrushList	*BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
-    SelectBrush3DCBData	bdat;
-
-    Render_ViewToWorld(v, point.x, point.y, &bdat.vp);
-    Render_BackRotateVector(v, &bdat.vp, &bdat.wp);
-    Render_GetCameraPos(v, &bdat.vp);
-
-    bdat.MinBDist	=999999.0f;
-    bdat.CurBrush	=NULL;
-    bdat.pDoc		= this;
-    BrushList_EnumCSGBrushes(BList, &bdat, SelectBrush3DCB);
-    
-    if(bdat.CurBrush)
-    {
-        if(bdat.CurFace)
-        {
-            char TextName[MAX_PATH];
-            strcpy(TextName, Face_GetTextureName(bdat.CurFace));
-            App->CLSB_Doc->mpMainFrame->m_wndTabControls->SelectTexture(Face_GetTextureDibId(bdat.CurFace));
-           
-            App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
-
-        }
-    }
-
 }
 
 void CFusionDoc::UpdateFaceAttributesDlg (void)

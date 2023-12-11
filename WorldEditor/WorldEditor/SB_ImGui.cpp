@@ -835,7 +835,7 @@ void SB_ImGui::Face_Selection(void)
 		{
 			int Face_Index = App->CLSB_Picking->Face_Index;
 
-			ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Face);
+			ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Index);
 			ImGui::Text("Face Index Global: = %i", Face_Index / 3);
 			ImGui::Text("Face Index Local: = %i", App->CLSB_Picking->Local_Face);
 			//ImGui::Text("Test: = %i", (Face_Index / 3) - App->CLSB_Picking->Local_Face);

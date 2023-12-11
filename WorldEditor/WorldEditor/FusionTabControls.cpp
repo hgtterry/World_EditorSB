@@ -121,10 +121,6 @@ const char *CFusionTabControls::GetCurrentTexture()
 	return "u";
 }
 
-void	CFusionTabControls::SelectTexture(int SelNum)
-{
-	
-}
 
 void CFusionTabControls::UpdateTextures (void)
 {
