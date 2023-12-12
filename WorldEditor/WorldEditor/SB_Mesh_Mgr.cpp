@@ -914,6 +914,7 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 {
 	mTextureCount = 0;
 	memset(mAdjusedIndex_Store, 0, 500);
+	Actual_Brush_Index = 0;
 
 	int i;
 	geBoolean* WrittenTex;
@@ -972,6 +973,8 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 
 	pBrush = BrushList_GetFirst(BList, &bi);
 
+	
+
 	while (pBrush != NULL)
 	{
 		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
@@ -983,10 +986,12 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 			}
 		}
 
-		if (!WE_Brush_Create(pBrush))
+		if (!WE_Brush_Create(pBrush, Actual_Brush_Index))
 		{
 			return GE_FALSE;
 		}
+
+		
 
 		pBrush = BrushList_GetNext(&bi);
 
@@ -997,7 +1002,10 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 		else
 		{
 			mBrushCount++;
+			Actual_Brush_Index++;
 		}
+
+		
 	}
 
 	mSubBrushCount = 0;
@@ -1013,7 +1021,7 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 // *************************************************************************
 // *			WE_Brush_Create:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
+bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
 	assert(ofile);
 	assert(b);
@@ -1032,7 +1040,7 @@ bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
+				return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				mBrushCount--;
@@ -1042,12 +1050,14 @@ bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
+			return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
 		break;
 	default:
 		assert(0);		// invalid brush type
 		break;
 	}
+
+	
 
 	return GE_TRUE;
 }
@@ -1055,7 +1065,7 @@ bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 // *************************************************************************
 // *		WE_FaceList_Create:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
 
 	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
@@ -1181,6 +1191,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].WE_Face_Index = i;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].Global_Face = Global_Faces_Index;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].Actual_Brush_Index = Actual_Brush_Index;
+
 			FaceIndex++;
 			Global_Faces_Index++;
 		}
@@ -1631,6 +1643,10 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
 				
 				App->CLSB_Model->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
+
+				int Brush_Index = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].Actual_Brush_Index;
+				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
+
 				FaceIndexNum++;
 				ActualFaceCount++;
 

@@ -71,6 +71,7 @@ private:
 	int Get_Total_Indices();
 	int Get_Total_Vertices();
 	int Get_Local_Face(int SelectedGroup);
+	void Select_Brush(int Index, bool Clear);
 
 	
 

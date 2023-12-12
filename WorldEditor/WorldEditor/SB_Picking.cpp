@@ -108,7 +108,6 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::MovableObject* target = NULL;
     closest_distance = 0;
 
-    Pl_Entity_Name = " ";
     App->CLSB_Ogre->OgreListener->Selected_Object_Name[0] = 0;
 
     Ogre::SceneNode* mNode;
@@ -116,77 +115,32 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
     if (raycast(ray2, result, target, closest_distance, queryMask))
     {
-  
+
         //App->Beep_Win();
 
         mNode = pentity->getParentSceneNode();
         Pl_Entity_Name = pentity->getName();
 
         char buff[255];
+        char* pdest;
+
         strcpy(buff, Pl_Entity_Name.c_str());
-
-        //App->CL_Vm_ImGui->Show_Object_Selection = 1;
-
-        bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
-        if (test == 1)
+        pdest = strstr(buff, "GDEnt_");
+        if (pdest != NULL)
         {
-            //Pl_Entity_Name = "---------";
+            App->Beep_Win();
+            return;
         }
         else
         {
-            bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
-            if (test == 1)
-            {
-                //Pl_Entity_Name = "Player_1";
+			if (Left_MouseDown == 1)
+			{
+				Render_Selection();
 
-                return;
-            }
-            else
-            {
-                char* pdest;
-                int IntNum = 0;
-
-                strcpy(buff, Pl_Entity_Name.c_str());
-                pdest = strstr(buff, "GDEnt_");
-                if (pdest != NULL)
-                {
-                   // sscanf((buff + 6), "%i", &IntNum);
-
-                   // App->SBC_Markers->MarkerBB_Addjust(IntNum);
-
-                   // App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
-                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
-
-                   // App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
-
-                    return;
-
-                }
-
-                pdest = strstr(buff, "Area_");
-                if (pdest != NULL)
-                {
-                    sscanf((buff + 5), "%i", &IntNum);
-
-                    //App->SBC_Markers->MarkerBB_Addjust(IntNum);
-
-                    App->CLSB_Ogre->OgreListener->Selected_Entity_Index = IntNum;
-                   // strcpy(App->CLSB_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->B_Area[IntNum]->Area_Name);
-
-                    //App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
-
-                    return;
-                }
-
-            }
-     }
-
-    }
-    else
-    {
-       // Pl_Entity_Name = "---------";
-        //strcpy(TextureName, "None 2");
-        Selected_Ok = 0;
+				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
+				Select_Brush(Index, 1);
+			}
+        }
     }
 
 }
@@ -296,17 +250,6 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         Total_Vertices_count_Actual = Get_Total_Vertices();
 
                         Local_Face = Get_Local_Face(SubMesh_Index);
-
-                       /* App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
-                        App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                        App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];*/
-
-                       // App->Say_Int(Sub_Mesh_Count);
-
-                        if (Left_MouseDown == 1)
-                        {
-                            Render_Selection();
-                        }
 
 					}
 				}
@@ -645,4 +588,48 @@ int SB_Picking::Get_Local_Face(int SelectedGroup)
     int Result = (Face_Index / 3) - (TotalFaces / 3);
 
     return Result;
+}
+
+// *************************************************************************
+// *	        	Select_Brush:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Picking::Select_Brush(int Index, bool Clear)
+{
+    App->Get_Current_Document();
+
+    Brush* Selected_Brush;
+
+    int			c;
+    geBoolean	bChanged = FALSE;
+
+    c = App->CL_World->Get_Brush_Count();
+
+    if (c > 0)
+    {
+        if (Clear == 1)
+        {
+            App->CLSB_Doc->ResetAllSelections();
+            App->CLSB_Doc->UpdateSelected();
+        }
+
+        Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
+
+        SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
+
+       /* if (Clear == 1)
+        {
+            Update_Dlg_Controls();
+            App->CLSB_TopTabs->Update_Dlg_Controls();
+        }*/
+
+        //m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
+        bChanged = GE_TRUE;
+    }
+
+
+    if (bChanged)
+    {
+        App->CLSB_Doc->UpdateSelected();
+        App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    }
 }

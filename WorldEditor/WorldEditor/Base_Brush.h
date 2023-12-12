@@ -1,7 +1,7 @@
 #pragma once
 
 typedef struct vertex_type3{ float x, y, z; }vertex_type3;
-typedef struct polygon_type3{ int a, b, c, Group, TextID, WE_Face_Index,Global_Face; }polygon_type3;
+typedef struct polygon_type3{ int a, b, c, Group, TextID, WE_Face_Index,Global_Face, Actual_Brush_Index; }polygon_type3;
 typedef struct mapcoord_type3 { float u, v; }mapcoord_type3;
 typedef struct normal_type3 { float x, y, z; }normal_type3;
 

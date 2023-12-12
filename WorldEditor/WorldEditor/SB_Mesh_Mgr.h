@@ -67,8 +67,8 @@ private:
 
 	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);
-	bool WE_Brush_Create(const Brush* b);
-	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+	bool WE_Brush_Create(const Brush* b , int Actual_Brush_Index);
+	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	int Get_Adjusted_Index(int RealIndex);
 
@@ -87,6 +87,8 @@ private:
 	int	mSubBrushCount;
 	int Selected_Render_Mode;
 	
+	int Actual_Brush_Index;
+
 	int Compiled_List_Index;
 	int Groups_List_Index;
 	int Brushes_List_Index;
