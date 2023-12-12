@@ -766,7 +766,10 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		{
 			int TextureID = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID;
 
-			sprintf(buf, "Text_ID %i %s %i", TextureID, TextureName2[TextureID], App->CLSB_Model->B_Brush[Index]->Face_Data[Count].WE_Face_Index);
+			int WE_Face = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].WE_Face_Index;
+			int Global_Face = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].Global_Face;
+
+			sprintf(buf, "Text_ID %i %s %i %i", TextureID, TextureName2[TextureID], WE_Face, Global_Face);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
@@ -810,6 +813,7 @@ void SB_Mesh_Mgr::Delete_Brush_List()
 
 	App->CLSB_Model->BrushCount = 0;
 	App->CLSB_Model->Brush_Face_Count = 0;
+	Global_Faces_Index = 0;
 
 }
 
@@ -1176,7 +1180,9 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
 
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].WE_Face_Index = i;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].Global_Face = Global_Faces_Index;
 			FaceIndex++;
+			Global_Faces_Index++;
 		}
 
 		num_verts += curnum_verts;

@@ -51,6 +51,8 @@ public:
 	char TextureName2[20][MAX_PATH];
 	int IsTextureAlpha[20];
 
+	int Global_Faces_Index;
+
 	HWND Mesh_Viewer_HWND;
 
 private:

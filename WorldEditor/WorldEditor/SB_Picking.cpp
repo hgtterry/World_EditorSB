@@ -276,15 +276,15 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         if (Left_MouseDown == 1)
                         {
-                            App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
+                           /* App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
                             App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                            App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];
+                            App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];*/
 
-                            App->CLSB_Grid->Face_Update2();
+                           // App->CLSB_Grid->Face_Update2();
 
-                            App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+                            /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
                             App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-                            App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
+                            App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
                         }
 
 						SubMesh_Index = Sub_Mesh_Indexs[Face_Index];
@@ -297,7 +297,17 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         Local_Face = Get_Local_Face(SubMesh_Index);
 
-						App->CLSB_Grid->FaceNode->setVisible(true);
+                       /* App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
+                        App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                        App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];*/
+
+                       // App->Say_Int(Sub_Mesh_Count);
+
+                        if (Left_MouseDown == 1)
+                        {
+                            Render_Selection();
+                        }
+
 					}
 				}
 			}
@@ -335,6 +345,35 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 		Pl_Entity_Name = "---------";
 		return (false);
 	}
+}
+
+// *************************************************************************B
+// *************************************************************************
+void SB_Picking::Render_Selection()
+{
+    int A = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].a;
+    int B = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].b;
+    int C = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].c;
+
+    App->CLSB_Grid->HitVertices[0].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].x;
+    App->CLSB_Grid->HitVertices[0].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].y;
+    App->CLSB_Grid->HitVertices[0].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].z;
+
+    App->CLSB_Grid->HitVertices[1].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].x;
+    App->CLSB_Grid->HitVertices[1].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].y;
+    App->CLSB_Grid->HitVertices[1].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].z;
+
+    App->CLSB_Grid->HitVertices[2].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].x;
+    App->CLSB_Grid->HitVertices[2].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].y;
+    App->CLSB_Grid->HitVertices[2].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].z;
+
+
+    /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+    App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+    App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
+
+    App->CLSB_Grid->Face_Update2();
+    App->CLSB_Grid->FaceNode->setVisible(true);
 }
 
 // *************************************************************************

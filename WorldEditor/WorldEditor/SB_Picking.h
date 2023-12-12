@@ -65,11 +65,14 @@ private:
 	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
 	void Get_Material_Data();
 	void Clear_Picking_Data();
+	void Render_Selection();
 
 	int Get_SubMesh_Count();
 	int Get_Total_Indices();
 	int Get_Total_Vertices();
 	int Get_Local_Face(int SelectedGroup);
+
+	
 
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;
