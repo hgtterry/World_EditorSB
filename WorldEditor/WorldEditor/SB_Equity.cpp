@@ -243,6 +243,21 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_DEBUG_SHOWPICKINGDATA)
+		{
+			if (App->CLSB_ImGui->Show_Face_Selection == 1)
+			{
+				App->CLSB_ImGui->Show_Face_Selection = 0;
+				App->CLSB_FileView->Show_FileView(1);
+			}
+			else
+			{
+				App->CLSB_ImGui->Show_Face_Selection = 1;
+				App->CLSB_FileView->Show_FileView(0);
+			}
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
 		{
 			App->CLSB_Loader->Load_ActorWorld();

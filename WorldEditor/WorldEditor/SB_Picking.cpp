@@ -616,11 +616,14 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
 
         SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
-       /* if (Clear == 1)
+        if (Clear == 1)
         {
-            Update_Dlg_Controls();
-            App->CLSB_TopTabs->Update_Dlg_Controls();
-        }*/
+            /*App->CL_TabsControl->Select_Brushes_Tab(0);
+            App->CL_TabsGroups_Dlg->Get_Index(Selected_Brush);
+
+            App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+            App->CLSB_TopTabs->Update_Dlg_Controls();*/
+        }
 
         //m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
         bChanged = GE_TRUE;

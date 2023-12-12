@@ -41,6 +41,7 @@ SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 	Toggle_Tabs_Camera_Flag = 1;
 	Toggle_MeshManager_Flag = 0;
 
+	Picking_Active_Flag = 0;
 }
 
 SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
@@ -348,6 +349,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BT_TT_RESETCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_ZEROCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERASPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -430,6 +432,14 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_CAMERA_PICK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Picking_Active_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -473,6 +483,21 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_CAMERA_PICK)
+		{
+			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 1;
+			}
+			return 1;
+		}
+		
 		return FALSE;
 	}
 

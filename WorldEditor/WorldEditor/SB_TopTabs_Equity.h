@@ -60,7 +60,7 @@ private:
 	bool Toggle_Tabs_Test_Flag;
 	bool Toggle_Dimensions_Flag;
 	bool Toggle_Camera_Free_Flag;
-
+	bool Picking_Active_Flag;
 };
 
 
