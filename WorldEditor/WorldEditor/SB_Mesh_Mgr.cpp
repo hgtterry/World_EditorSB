@@ -1178,6 +1178,7 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 	App->CLSB_Model->Brush_Face_Count = App->CLSB_Model->Brush_Face_Count + num_faces;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Picking_Data.resize(num_faces);
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -1191,8 +1192,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].WE_Face_Index = i;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].Global_Face = Global_Faces_Index;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].Actual_Brush_Index = Actual_Brush_Index;
-
+			
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Picking_Data[FaceIndex].Actual_Brush_Index = Actual_Brush_Index;
 			FaceIndex++;
 			Global_Faces_Index++;
 		}
@@ -1644,7 +1645,7 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				
 				App->CLSB_Model->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
 
-				int Brush_Index = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].Actual_Brush_Index;
+				int Brush_Index = App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
 				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
 
 				FaceIndexNum++;

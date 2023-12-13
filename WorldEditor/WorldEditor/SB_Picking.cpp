@@ -35,7 +35,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
         App->Say("No Ray Query");
         return;
     }
-    mRaySceneQuery->setSortByDistance(true);
+   // mRaySceneQuery->setSortByDistance(true,0);
 
     pentity = NULL;
 
@@ -48,8 +48,9 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     SubMesh_Index = 0;
     Selected_Ok = 0;
     Left_MouseDown = 0;
-
+    SubMesh_Index_Fault = 0;
     Local_Face = 0;
+    Got_Mesh_Flag = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -89,7 +90,7 @@ void SB_Picking::Clear_Picking_Data()
 void SB_Picking::Mouse_Pick_Entity()
 {
     Clear_Picking_Data();
-
+    Total_index_count = 0;
     // --------------------------------------------------------------
     Ogre::RenderWindow* rw = App->CLSB_Ogre->mWindow;
     Ogre::Camera* camera = App->CLSB_Ogre->mCamera;
@@ -160,7 +161,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 	if (mRaySceneQuery != NULL)
 	{
 		mRaySceneQuery->setRay(ray);
-		mRaySceneQuery->setSortByDistance(true);
+		mRaySceneQuery->setSortByDistance(true,2);
 		// mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
 		mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
 		// execute the query, returns a vector of hits
@@ -205,71 +206,73 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
 			pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
 
-			// get the mesh information
-			GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
-				pentity->getParentNode()->_getDerivedPosition(),
-				pentity->getParentNode()->_getDerivedOrientation(),
-				pentity->getParentNode()->_getDerivedScale());
+            char buff[255];
+            char* pdest;
+            strcpy(buff, pentity->getName().c_str());
+            pdest = strstr(buff, "Ogre/MO");
+            if (pdest != NULL)
+            {
+               //App->Say(pentity->getName().c_str());
+          
+              // if (Got_Mesh_Flag == 0)
+                {
+                    GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
+                        pentity->getParentNode()->_getDerivedPosition(),
+                        pentity->getParentNode()->_getDerivedOrientation(),
+                        pentity->getParentNode()->_getDerivedScale());
 
-			// test for hitting individual triangles on the mesh
-			bool new_closest_found = false;
-			for (size_t i = 0; i < Total_index_count; i += 3)
-			{
-				// check for a hit against this triangle
-				std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
-					vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
+                    //Got_Mesh_Flag = 1;
+                }
 
-				// if it was a hit check if its the closest
-				if (hit.first)
-				{
-					if ((closest_distance < 0.0f) || (hit.second < closest_distance))
-					{
-						closest_distance = hit.second;
-						
-						Face_Index = i;
+                // test for hitting individual triangles on the mesh
+                bool new_closest_found = false;
+                for (size_t i = 0; i < Total_index_count; i += 3)
+                {
+                    // check for a hit against this triangle
+                    std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
+                        vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
 
-                        if (Left_MouseDown == 1)
+                    // if it was a hit check if its the closest
+                    if (hit.first)
+                    {
+                        if ((closest_distance < 0.0f) || (hit.second < closest_distance))
                         {
-                           /* App->CLSB_Grid->HitVertices[0] = vertices[indices[i]];
-                            App->CLSB_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                            App->CLSB_Grid->HitVertices[2] = vertices[indices[i + 2]];*/
+                            closest_distance = hit.second;
 
-                           // App->CLSB_Grid->Face_Update2();
+                            Face_Index = i;
 
-                            /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
-                            App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-                            App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
+                            SubMesh_Index = Sub_Mesh_Indexs[Face_Index];
+
+                            bool test = Get_Material_Data();
+                            if (test == 1)
+                            {
+                                Sub_Mesh_Count = Get_SubMesh_Count();
+                                Total_index_count_Actual = Get_Total_Indices();
+                                Total_Vertices_count_Actual = Get_Total_Vertices();
+
+                                Local_Face = Get_Local_Face(SubMesh_Index);
+                            }
+
                         }
+                    }
+                }
 
-						SubMesh_Index = Sub_Mesh_Indexs[Face_Index];
+                delete[] vertices;
+                delete[] indices;
+                delete[] TextCords;
+                delete[] Sub_Mesh_Indexs;
 
-						Get_Material_Data();
+                // if we found a new closest raycast for this object, update the
+                // closest_result before moving on to the next object.
+                if (new_closest_found)
+                {
+                    target = pentity;
 
-                        Sub_Mesh_Count = Get_SubMesh_Count();
-                        Total_index_count_Actual = Get_Total_Indices();
-                        Total_Vertices_count_Actual = Get_Total_Vertices();
+                    //Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
 
-                        Local_Face = Get_Local_Face(SubMesh_Index);
-
-					}
-				}
-			}
-
-			delete[] vertices;
-			delete[] indices;
-			delete[] TextCords;
-			delete[] Sub_Mesh_Indexs;
-
-			// if we found a new closest raycast for this object, update the
-			// closest_result before moving on to the next object.
-			if (new_closest_found)
-			{
-				target = pentity;
-
-				//Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
-
-				closest_result = ray.getPoint(closest_distance);
-			}
+                    closest_result = ray.getPoint(closest_distance);
+                }
+            }
 		}
 
 	}
@@ -294,49 +297,60 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 // *************************************************************************
 void SB_Picking::Render_Selection()
 {
-    int A = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].a;
-    int B = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].b;
-    int C = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].c;
+    if (SubMesh_Index_Fault == 0)
+    {
+        int A = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].a;
+        int B = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].b;
+        int C = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].c;
 
-    App->CLSB_Grid->HitVertices[0].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].x;
-    App->CLSB_Grid->HitVertices[0].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].y;
-    App->CLSB_Grid->HitVertices[0].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].z;
+        App->CLSB_Grid->HitVertices[0].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].x;
+        App->CLSB_Grid->HitVertices[0].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].y;
+        App->CLSB_Grid->HitVertices[0].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].z;
 
-    App->CLSB_Grid->HitVertices[1].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].x;
-    App->CLSB_Grid->HitVertices[1].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].y;
-    App->CLSB_Grid->HitVertices[1].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].z;
+        App->CLSB_Grid->HitVertices[1].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].x;
+        App->CLSB_Grid->HitVertices[1].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].y;
+        App->CLSB_Grid->HitVertices[1].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].z;
 
-    App->CLSB_Grid->HitVertices[2].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].x;
-    App->CLSB_Grid->HitVertices[2].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].y;
-    App->CLSB_Grid->HitVertices[2].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].z;
+        App->CLSB_Grid->HitVertices[2].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].x;
+        App->CLSB_Grid->HitVertices[2].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].y;
+        App->CLSB_Grid->HitVertices[2].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].z;
 
 
-    /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
-    App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-    App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
+        /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+        App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+        App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
-    App->CLSB_Grid->Face_Update2();
-    App->CLSB_Grid->FaceNode->setVisible(true);
+        App->CLSB_Grid->Face_Update2();
+        App->CLSB_Grid->FaceNode->setVisible(true);
+    }
 }
 
 // *************************************************************************
 // *		  Get_Material_Data:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-void SB_Picking::Get_Material_Data()
+bool SB_Picking::Get_Material_Data()
 {
+    SubMesh_Index_Fault = 0;
     int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
 
     if (SubMesh_Index > test)
     {
-        App->Say("Sub Mesh Out of bounds");
+        char buff[200];
+        itoa(SubMesh_Index, buff, 10);
+        App->Say("Sub Mesh Out of bounds", buff);
+        SubMesh_Index_Fault = 1;
+        return 0;
     }
     else
     {
         strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Index)->getMaterialName().c_str());
         Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
         strcpy(TextureName2, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
+        SubMesh_Index_Fault = 0;
+        return 1;
     }
+
+    return 0;
 }
 
 // *************************************************************************
@@ -381,7 +395,9 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
     vertices = new Ogre::Vector3[Total_vertex_count];
     indices = new Ogre::uint32[Total_index_count];
     TextCords = new Ogre::Vector2[Total_vertex_count];
-    Sub_Mesh_Indexs = new Ogre::uint32[Total_index_count];
+    Sub_Mesh_Indexs = new Ogre::uint32[Total_vertex_count];
+
+    memset(Sub_Mesh_Indexs, 0, Total_vertex_count);
 
    // App->Say_Int(Total_index_count);
     added_shared = false;
@@ -463,6 +479,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
 
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
+       
         Ogre::SubMesh* submesh = mesh->getSubMesh(i);
 
         Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
