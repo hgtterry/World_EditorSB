@@ -469,16 +469,16 @@ bool SB_Render::Brush_Textured_Parts_XX(int Count)
 
 	if (App->CLSB_Model->B_Brush[Count]->Face_Count > 0)
 	{
-		OldId = App->CLSB_Model->B_Brush[Count]->Face_Data[0].TextID;
-		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[0].TextID]);
+		OldId = App->CLSB_Model->B_Brush[Count]->Picking_Data[0].TextID;
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Picking_Data[0].TextID]);
 	}
 
 	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 	{
-		if (OldId > App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID || OldId < App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID)
+		if (OldId > App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID || OldId < App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID)
 		{
-			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID]);
-			OldId = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID;
+			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID]);
+			OldId = App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID;
 		}
 
 		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
@@ -543,7 +543,7 @@ bool SB_Render::WE_Render_By_Texture()
 		FaceCount = 0;
 		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 		{
-			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
+			if (App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
 			{
 				
 				A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
