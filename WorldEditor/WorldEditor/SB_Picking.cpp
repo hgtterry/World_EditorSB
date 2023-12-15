@@ -140,6 +140,10 @@ void SB_Picking::Mouse_Pick_Entity()
 
 				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
 				Select_Brush(Index, 1);
+
+                App->CLSB_Doc->Select_Face_In_Selected_Brush(0);
+                
+
 			}
         }
     }
@@ -630,6 +634,7 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         }
 
         Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
+       // int nFaces = Brush_GetNumFaces(Selected_Brush);
 
         SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
@@ -651,5 +656,6 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
     {
         App->CLSB_Doc->UpdateSelected();
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
     }
 }

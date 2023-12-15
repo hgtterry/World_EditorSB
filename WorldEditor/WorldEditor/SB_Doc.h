@@ -88,6 +88,9 @@ public:
 
 	void SetAllFacesTextureScale(geFloat ScaleVal);
 	void SelectGroupBrushes(BOOL Select, int WhichGroup);
+	void SelectAllFacesInBrushes(void);
+	void Select_Face_In_Selected_Brush(int Face_Index);
+	void SelectTextureFromFace3D(CPoint point, ViewVars* v);
 
 	void ShearSelected(float dx, float dy, int sides, int inidx);
 	void ResizeSelected(float dx, float dy, int sides, int inidx);
@@ -98,9 +101,7 @@ public:
 	void OnLinkviewports();
 	void LinkViewports();
 	void UpdateAfterWadChange();
-	void SelectAllFacesInBrushes(void);
-	void SelectTextureFromFace3D(CPoint point, ViewVars* v);
-
+	
 	// ----------------------------------------------------------- Varibles
 
 	CMainFrame* mpMainFrame;
