@@ -76,6 +76,7 @@ SB_ImGui::SB_ImGui()
 	m_Dialog_Float = 10.222;
 
 	Show_Textures_F = 0;
+	Show_Brush_Data_F = 0;
 
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
@@ -848,6 +849,24 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Text("UV2: = %f %f", App->CLSB_Grid->HitFaceUVs[1].x, App->CLSB_Grid->HitFaceUVs[1].y);
 			ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
 			ImGui::Text("");*/
+		}
+
+		if (ImGui::Button("Brush_Data"))
+		{
+			if (Show_Brush_Data_F == 1)
+			{
+				Show_Brush_Data_F = 0;
+			}
+			else
+			{
+				Show_Brush_Data_F = 1;
+			}
+		}
+
+		if (Show_Brush_Data_F == 1)
+		{
+			ImGui::Text("Brush Name: = %s", App->CLSB_Picking->Selected_Brush_Name);
+			ImGui::Text("Face Count: = %i", App->CLSB_Picking->Selected_Brush_Face_Count);
 			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
 			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
 		}

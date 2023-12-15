@@ -89,7 +89,6 @@ public:
 	void SetAllFacesTextureScale(geFloat ScaleVal);
 	void SelectGroupBrushes(BOOL Select, int WhichGroup);
 	void SelectAllFacesInBrushes(void);
-	void Select_Face_In_Selected_Brush(int Face_Index);
 	void SelectTextureFromFace3D(CPoint point, ViewVars* v);
 
 	void ShearSelected(float dx, float dy, int sides, int inidx);

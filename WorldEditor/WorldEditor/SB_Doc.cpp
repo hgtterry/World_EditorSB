@@ -2325,40 +2325,6 @@ void SB_Doc::SelectAllFacesInBrushes(void)
     ConfigureCurrentTool();
 }
 
-// *************************************************************************
-// *    Select_Face_In_Selected_Brush:- Terry and Hazel Flanigan 2023      *
-// *************************************************************************
-void SB_Doc::Select_Face_In_Selected_Brush(int Face_Index)
-{
-   /* Face* pFace;
-    pFace = Brush_SelectFirstFace(App->CLSB_Doc->CurBrush);
-    SelBrushList_Add(App->CLSB_Doc->pSelBrushes, App->CLSB_Doc->CurBrush);
-
-    SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
-
-    App->CLSB_Doc->UpdateSelected();
-    App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
-
-    SelectAllFacesInBrushes();
-
-    int nSelectedFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
-
-    Face* pFace;
-    pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, 2 - 1);
-
-    App->CLSB_Doc->ResetAllSelectedFaces();
-
-    Face_SetSelected(pFace, GE_TRUE);
-
-    SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
-
-    App->CLSB_Doc->UpdateSelected();
-    App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-    
-    //App->Say_Int(nSelectedFaces);
-}
-
 typedef struct
 {
     geVec3d	vp, wp;

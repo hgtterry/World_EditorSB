@@ -41,6 +41,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
 
     closest_distance = 0;
 
+    Selected_Brush_Face_Count = 0;
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
@@ -140,9 +141,7 @@ void SB_Picking::Mouse_Pick_Entity()
 
 				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
 				Select_Brush(Index, 1);
-
-                App->CLSB_Doc->Select_Face_In_Selected_Brush(0);
-                
+                Select_Face_In_Brush(2);
 
 			}
         }
@@ -616,6 +615,8 @@ int SB_Picking::Get_Local_Face(int SelectedGroup)
 // *************************************************************************
 void SB_Picking::Select_Brush(int Index, bool Clear)
 {
+    strcpy(Selected_Brush_Name, "-------");
+
     App->Get_Current_Document();
 
     Brush* Selected_Brush;
@@ -634,7 +635,8 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         }
 
         Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
-       // int nFaces = Brush_GetNumFaces(Selected_Brush);
+       
+        strcpy(Selected_Brush_Name,App->CL_Brush->Brush_GetName(Selected_Brush));
 
         SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
@@ -658,4 +660,46 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
     }
+}
+
+// *************************************************************************
+// *         Select_Face_In_Brush:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+void SB_Picking::Select_Face_In_Brush(int Face_Index)
+{
+    /* Face* pFace;
+     pFace = Brush_SelectFirstFace(App->CLSB_Doc->CurBrush);
+     SelBrushList_Add(App->CLSB_Doc->pSelBrushes, App->CLSB_Doc->CurBrush);
+
+     SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
+
+     App->CLSB_Doc->UpdateSelected();
+     App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
+
+    Selected_Brush_Face_Count = 0;
+
+    App->CLSB_Doc->SelectAllFacesInBrushes();
+
+    Selected_Brush_Face_Count = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
+
+    if (Face_Index > Selected_Brush_Face_Count)
+    {
+        App->Say("Face Index Out of Bounds");
+        return;
+    }
+
+    Face* pFace;
+    pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, Face_Index - 1);
+
+    App->CLSB_Doc->ResetAllSelectedFaces();
+
+    Face_SetSelected(pFace, GE_TRUE);
+
+    SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
+
+    App->CLSB_Doc->UpdateSelected();
+    App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+
+    //App->Say_Int(nSelectedFaces);
 }

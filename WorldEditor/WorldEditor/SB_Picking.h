@@ -49,6 +49,9 @@ public:
 	bool SubMesh_Index_Fault;
 	bool Got_Mesh_Flag;
 
+	int Selected_Brush_Face_Count;
+	char Selected_Brush_Name[MAX_PATH];
+
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;
 	Ogre::uint32* indices;
@@ -74,7 +77,7 @@ private:
 	int Get_Total_Vertices();
 	int Get_Local_Face(int SelectedGroup);
 	void Select_Brush(int Index, bool Clear);
-
+	void Select_Face_In_Brush(int Face_Index);
 	
 
 	Ogre::SceneManager* mSceneMgr;

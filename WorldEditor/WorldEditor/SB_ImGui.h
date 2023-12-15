@@ -61,6 +61,7 @@ public:
 	bool Show_BB_Data_F;
 
 	bool Show_Textures_F;
+	bool Show_Brush_Data_F;
 	bool Show_Face_Selection;
 
 	float PosX;
