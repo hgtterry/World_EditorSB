@@ -85,6 +85,11 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 	{
 		if (Show == 1)
 		{
+			if (App->CLSB_ImGui->Show_Face_Selection == 1)
+			{
+				ShowWindow(App->ListPanel, false);
+			}
+
 			EquitySB_Dialog_Visible = 1;
 			ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		}
@@ -103,6 +108,13 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 
 			App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
 			RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
+			{
+				App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+				App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
+				EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
+			}
 		}
 	}
 	else

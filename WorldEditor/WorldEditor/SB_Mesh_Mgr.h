@@ -53,6 +53,8 @@ public:
 
 	int Global_Faces_Index;
 
+	bool Brush_Viewer_Dialog_Active;
+
 	HWND Mesh_Viewer_HWND;
 
 private:
@@ -95,7 +97,5 @@ private:
 
 	bool Picking_Active_Flag;
 	bool Show_Data_Flag;
-
-	bool Dialog_Active;
 };
 

@@ -809,7 +809,7 @@ void SB_ImGui::Face_Selection(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Selection_Data", &Show_Face_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Selection_Data", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize)) // | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -869,6 +869,13 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Text("Face Count: = %i", App->CLSB_Picking->Selected_Brush_Face_Count);
 			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
 			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
+		}
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Face_Selection = 0;
+			ShowWindow(App->ListPanel, true);
+			ImGui::End();
 		}
 
 		ImGui::End();
