@@ -85,7 +85,7 @@ bool SB_Ogre::InitOgre(void)
 	App->CLSB_Grid->Grid_Update(1);
 	App->CLSB_Grid->Hair_Update(1);
 	App->CLSB_Grid->Load_Gizmo();
-	App->CLSB_Grid->Face_Update(1);
+	//App->CLSB_Grid->Face_Update(1);
 
 	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 

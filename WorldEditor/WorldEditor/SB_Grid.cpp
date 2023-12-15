@@ -38,8 +38,8 @@ SB_Grid::SB_Grid(void)
 	HairManual = NULL;
 	HairNode = NULL;
 
-	FaceManual = NULL;
-	FaceNode = NULL;
+	//FaceManual = NULL;
+	//FaceNode = NULL;
 
 	DummyNode = NULL;
 
@@ -274,51 +274,51 @@ void SB_Grid::Load_Gizmo(void)
 // *************************************************************************
 // *	  		Face_Update:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void SB_Grid::Face_Update(bool Create)
-{
-	if (Create == 1)
-	{
-		FaceManual = App->CLSB_Ogre->mSceneMgr->createManualObject("FaceManual");
-		FaceManual->setDynamic(true);
-		FaceManual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-	}
+//void SB_Grid::Face_Update(bool Create)
+//{
+	//if (Create == 1)
+	//{
+	//	FaceManual = App->CLSB_Ogre->mSceneMgr->createManualObject("FaceManual");
+	//	FaceManual->setDynamic(true);
+	//	FaceManual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	//}
 
-	FaceManual->clear();
-	FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_STRIP);
+	//FaceManual->clear();
+	//FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_STRIP);
 
-	// X Axis
-	FaceManual->position(HitVertices[0]);
-	FaceManual->colour(FaceColour);
+	//// X Axis
+	//FaceManual->position(HitVertices[0]);
+	//FaceManual->colour(FaceColour);
 
-	FaceManual->position(HitVertices[1]);
-	FaceManual->colour(FaceColour);
+	//FaceManual->position(HitVertices[1]);
+	//FaceManual->colour(FaceColour);
 
-	FaceManual->position(HitVertices[2]);
-	FaceManual->colour(FaceColour);
+	//FaceManual->position(HitVertices[2]);
+	//FaceManual->colour(FaceColour);
 
-	FaceManual->position(HitVertices[0]);
-	FaceManual->colour(FaceColour);
+	//FaceManual->position(HitVertices[0]);
+	//FaceManual->colour(FaceColour);
 
-	FaceManual->end();
+	//FaceManual->end();
 
-	if (Create == 1)
-	{
-		FaceNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		FaceNode->attachObject(FaceManual);
+	//if (Create == 1)
+	//{
+	//	FaceNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//	FaceNode->attachObject(FaceManual);
 
-		FaceNode->setPosition(0, 0, 0);
-		FaceNode->setVisible(false);
-		//FaceNode->setScale(Scale_X, Scale_Y, Scale_Z);
-	}
-}
+	//	FaceNode->setPosition(0, 0, 0);
+	//	FaceNode->setVisible(false);
+	//	//FaceNode->setScale(Scale_X, Scale_Y, Scale_Z);
+	//}
+//}
 
 // *************************************************************************
 // *	  		Face_Update2:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Grid::Face_Update2()
-{
+//void SB_Grid::Face_Update2()
+//{
 
-	FaceManual->beginUpdate(0);
+	/*FaceManual->beginUpdate(0);
 
 	FaceManual->position(HitVertices[0]);
 
@@ -327,8 +327,8 @@ void SB_Grid::Face_Update2()
 	FaceManual->position(HitVertices[2]);
 
 	FaceManual->position(HitVertices[0]);
-	FaceManual->end();
-}
+	FaceManual->end();*/
+//}
 
 
 

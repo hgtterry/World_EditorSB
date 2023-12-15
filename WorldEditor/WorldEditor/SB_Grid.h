@@ -38,8 +38,8 @@ public:
 	void Grid_SetVisible(bool Option);
 	void Hair_SetVisible(bool Option);
 
-	void Face_Update(bool Create);
-	void Face_Update2();
+	//void Face_Update(bool Create);
+	//void Face_Update2();
 
 	void Reset_View(void);
 	void Load_Gizmo(void);
@@ -87,8 +87,8 @@ public:
 	Ogre::Entity*			Sight_Entity;
 	Ogre::SceneNode*		Sight_Node;
 
-	Ogre::ManualObject*		FaceManual;
-	Ogre::SceneNode*		FaceNode;
+	//Ogre::ManualObject*		FaceManual;
+	//Ogre::SceneNode*		FaceNode;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

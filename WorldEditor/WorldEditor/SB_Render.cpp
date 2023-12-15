@@ -87,6 +87,7 @@ void SB_Render::Reset_Class(void)
 	Hair_1RotY = 0;
 	Hair_1RotZ = 0;
 
+	Show_Marker_Face = 0;
 	ShowFaces = 1;
 	ShowTextured = 0;
 	ShowFaces = 0;
@@ -366,6 +367,12 @@ void SB_Render::Render_Loop()
 	if (Show_Crosshair == 1)
 	{
 		RenderCrossHair();
+	}
+
+	// ---------------------- Face Marker
+	if (Show_Marker_Face == 1)
+	{
+		Marker_Face_Selection();
 	}
 
 
@@ -1754,4 +1761,28 @@ bool SB_Render::RenderByTexture()
 	//glDisable(GL_ALPHA_TEST);
 
 	return 1;
+}
+
+// *************************************************************************
+// *					Assimp_Face_Parts Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Marker_Face_Selection()
+{
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3f(1, 1, 0);
+	glLineWidth(2);
+
+	glBegin(GL_POLYGON);
+
+	glVertex3fv(&App->CLSB_Grid->HitVertices[0].x);
+	glVertex3fv(&App->CLSB_Grid->HitVertices[1].x);
+	glVertex3fv(&App->CLSB_Grid->HitVertices[2].x);
+	
+	glEnd();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
 }

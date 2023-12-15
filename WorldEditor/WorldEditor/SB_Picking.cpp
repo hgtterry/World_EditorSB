@@ -143,6 +143,7 @@ void SB_Picking::Mouse_Pick_Entity()
 				Select_Brush(Index, 1);
                 Select_Face_In_Brush(2);
 
+                App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
 			}
         }
     }
@@ -323,8 +324,8 @@ void SB_Picking::Render_Selection()
         App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
         App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
-        App->CLSB_Grid->Face_Update2();
-        App->CLSB_Grid->FaceNode->setVisible(true);
+       // App->CLSB_Grid->Face_Update2();
+       // App->CLSB_Grid->FaceNode->setVisible(true);
     }
 }
 
