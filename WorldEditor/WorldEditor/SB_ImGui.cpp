@@ -809,6 +809,8 @@ void SB_ImGui::Face_Selection(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 200));
+
 	if (!ImGui::Begin("Selection_Data", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize)) // | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
@@ -874,6 +876,7 @@ void SB_ImGui::Face_Selection(void)
 		if (ImGui::Button("Close"))
 		{
 			Show_Face_Selection = 0;
+			ImGui::PopStyleColor();
 			ShowWindow(App->ListPanel, true);
 			ImGui::End();
 		}

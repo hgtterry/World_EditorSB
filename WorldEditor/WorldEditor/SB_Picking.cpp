@@ -36,7 +36,15 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
         return;
     }
    // mRaySceneQuery->setSortByDistance(true,0);
+   
+    Pl_Entity_Name = "-- NA --";
+    strcpy(FaceMaterial, " -- NA --");
+    strcpy(Selected_Brush_Name, " -- NA --");
+    strcpy(TextureName2, " -- NA --");
 
+    Total_Vertices_count_Actual = -1;
+    Total_index_count_Actual = -1;
+    closest_distance = -1;
     pentity = NULL;
 
     closest_distance = 0;
@@ -45,7 +53,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
-    Sub_Mesh_Count = 0;
+    Sub_Mesh_Count = -1;
     SubMesh_Index = 0;
     Selected_Ok = 0;
     Left_MouseDown = 0;
@@ -67,10 +75,15 @@ SB_Picking::~SB_Picking()
 // *************************************************************************
 void SB_Picking::Clear_Picking_Data()
 {
+    Pl_Entity_Name = "-- NA --";
+    strcpy(FaceMaterial, " -- NA --");
+    strcpy(Selected_Brush_Name, " -- NA --");
+    strcpy(TextureName2, " -- NA --");
+
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
-    Sub_Mesh_Count = 0;
+    Sub_Mesh_Count = -1;
     SubMesh_Index = 0;
     Selected_Ok = 0;
  

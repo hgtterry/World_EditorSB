@@ -95,6 +95,9 @@ SB_OgreListener::SB_OgreListener(void)
 
 	m_pDoc = NULL;
 	m_pMainFrame = NULL;
+
+
+	strcpy(Selected_Object_Name, "-- NA --"); // Needs Moving
 }
 
 SB_OgreListener::~SB_OgreListener(void)
