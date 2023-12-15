@@ -425,11 +425,13 @@ LRESULT CALLBACK SB_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wPara
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		if (App->CLSB_Dialogs->mWhatList == 0)
 		{
+			SetWindowText(hDlg, "World Information");
 			App->CLSB_Dialogs->List_SceneData(hDlg);
 		}
 
@@ -460,6 +462,13 @@ LRESULT CALLBACK SB_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wPara
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}

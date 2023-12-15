@@ -1258,7 +1258,7 @@ void SB_File_WE::Close_File()
 
 	Reset_View(1.0); // Needs Looking at
 
-	App->m_pDoc->SetTitle(PathFileName_3dt);
+	App->m_pDoc->SetTitle("No Title");
 	App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
 	App->CL_World->Set_Paths();

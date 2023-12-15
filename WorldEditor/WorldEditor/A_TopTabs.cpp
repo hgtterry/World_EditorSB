@@ -578,7 +578,8 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TBF_QUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_TABS_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -602,6 +603,13 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TABS_WORLDINFO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -631,9 +639,14 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				return TRUE;
 			}
 
+			if (LOWORD(wParam) == IDC_BT_TABS_WORLDINFO)
+			{
+				App->CLSB_Dialogs->Start_ListData(0);
+				return TRUE;
+			}
+
 			break;
 		}
-
 	}
 
 	return FALSE;
@@ -661,8 +674,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-		
-		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_NEWVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_WETEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -683,13 +694,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_BT_TB_NEWVIEW && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TB_WORLDINFO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -723,12 +727,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDC_BT_TB_NEWVIEW)
 		{
 			App->CL_Main_View->Start_Main_View_Dlg();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TB_WORLDINFO)
-		{
-			App->CLSB_Dialogs->Start_ListData(0);
 			return TRUE;
 		}
 

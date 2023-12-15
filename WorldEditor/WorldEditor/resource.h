@@ -881,6 +881,7 @@
 #define IDC_BT_PICKSELECT               1575
 #define IDC_BT_SHOWDATA                 1576
 #define IDC_BT_CAMERA_PICK              1577
+#define IDC_BT_TABS_WORLDINFO           1578
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1107,7 +1108,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        356
 #define _APS_NEXT_COMMAND_VALUE         33103
-#define _APS_NEXT_CONTROL_VALUE         1578
+#define _APS_NEXT_CONTROL_VALUE         1579
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
