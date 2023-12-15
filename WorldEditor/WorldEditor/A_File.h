@@ -46,7 +46,9 @@ public:
 	bool Open_3dt_File();
 
 	void Reset_View(float Zoom);
+
 	bool New_File();
+	void Close_File();
 
 	void AddZeroEntityToLevel(void);
 

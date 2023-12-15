@@ -1212,3 +1212,58 @@ bool SB_File_WE::New_File()
 	return 1;
 }
 
+// *************************************************************************
+// *			Close_File:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_File_WE::Close_File()
+{
+	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
+	{
+		char Text[200];
+		strcpy(Text, "Save Changes To ");
+		strcat(Text, App->CL_World->mCurrent_3DT_File);
+
+		App->CLSB_Dialogs->YesNoCancel("File has been Modified", Text);
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 1)
+		{
+			App->CLSB_File_WE->Save_Document();
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 2)
+		{
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 3)
+		{
+			return;
+		}
+	}
+
+	App->CLSB_Doc->SelectAll();
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+	// Delete All Bruses and Faces
+	App->CLSB_Doc->DeleteCurrentThing();
+
+	App->m_pDoc->SetTitle("No Title");
+	strcpy(FileName_3dt, "No Title.3dt");
+	strcpy(PathFileName_3dt, "No Title.3dt");
+
+	App->CL_World->Reset_Editor();
+
+	App->CLSB_Camera_WE->Reset_Camera_Position();
+	App->CLSB_Camera_WE->Reset_Camera_Angles();
+
+	Reset_View(1.0); // Needs Looking at
+
+	App->m_pDoc->SetTitle(PathFileName_3dt);
+	App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
+
+	App->CL_World->Set_Paths();
+
+	App->CLSB_Doc->IsNewDocument = 0;
+	App->m_pDoc->SetModifiedFlag(0);
+}
+
