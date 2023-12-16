@@ -102,6 +102,7 @@ void A_World::Reset_Editor(void)
 // *************************************************************************
 void A_World::Set_Current_3DT_Paths(void)
 {
+	
 	CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	char mFileName[MAX_PATH];
@@ -111,7 +112,9 @@ void A_World::Set_Current_3DT_Paths(void)
 
 	Get_FileName_FromPath(mCurrent_3DT_PathAndFile,mCurrent_3DT_PathAndFile);
 
-	strcpy(mCurrent_3DT_File,JustFileName);
+	strcpy(mCurrent_3DT_File, JustFileName);
+
+	strcpy(mCurrent_Title,JustFileName);
 
 	strcpy(mFileName, mCurrent_3DT_File);
 	strcpy(mPath_FileName, mCurrent_3DT_Path);

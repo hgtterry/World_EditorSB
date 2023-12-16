@@ -179,7 +179,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
-	// Delete All Bruses and Faces
+	// Delete All Brushes and Faces
 	App->CLSB_Doc->DeleteCurrentThing();
 	
 	App->m_pDoc->SetTitle(" ");
@@ -220,7 +220,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 bool SB_File_WE::Open_3dt_File()
 {
 	Load_File(PathFileName_3dt);
-
+	
 	App->m_pDoc->SetTitle(PathFileName_3dt);
 	App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
@@ -914,7 +914,7 @@ void SB_File_WE::Save_As_Document()
 
 	if (test == 0)
 	{
-		App->Say("Canceld");
+		App->Say("Cancelled");
 		return;
 	}
 
