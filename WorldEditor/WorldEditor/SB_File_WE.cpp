@@ -23,7 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
-#include "A_File.h"
+#include "SB_File_WE.h"
 
 //#include "level.h"
 #include "EntTypeName.h"

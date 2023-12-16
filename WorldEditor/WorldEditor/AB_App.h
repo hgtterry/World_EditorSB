@@ -52,7 +52,7 @@ distribution.
 #include "A_CreateStaircaseDialog.h"
 #include "A_Camera.h"
 #include "A_TopTabs.h"
-#include "A_File.h"
+#include "SB_File_WE.h"
 #include "A_Brush.h"
 
 #include "A_MainView.h"
