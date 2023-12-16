@@ -499,9 +499,15 @@ LRESULT CALLBACK SB_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wPara
 void SB_Dialogs::List_SceneData(HWND hDlg)
 {
 
-	char buf[255];
+	char buf[MAX_PATH];
 
-	sprintf(buf, "%s", "3DT File--------------------------------");
+	sprintf(buf, "%s", " --------------------------------3DT File--------------------------------");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%s", "Title = ", App->CL_World->mCurrent_Title);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s%s", "File = ", App->CL_World->mCurrent_3DT_File);
@@ -513,15 +519,14 @@ void SB_Dialogs::List_SceneData(HWND hDlg)
 	sprintf(buf, "%s%s", "Path and File = ", App->CL_World->mCurrent_3DT_PathAndFile);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	//--------------------------------
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
 	sprintf(buf, "%s", "    ");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	// ----------------------------------------- TXL_FilePath
-	sprintf(buf, "%s", "TXL File --------------------------------");
+	sprintf(buf, "%s", " --------------------------------TXL File --------------------------------");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "    ");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "File = %s", App->CL_World->mCurrent_TXL_FileName);

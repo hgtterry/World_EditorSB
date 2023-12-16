@@ -23,13 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
 class A_Dialogs  
 {
 public:
 	A_Dialogs();
-	virtual ~A_Dialogs();
+	~A_Dialogs();
 
 	bool Show_About_Dlg();
 

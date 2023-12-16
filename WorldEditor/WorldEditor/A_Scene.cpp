@@ -30,6 +30,7 @@ distribution.
 
 A_World::A_World()
 {
+	strcpy(mCurrent_Title, "No Title");
 
 	Last_Saved_EBR_Path[0] = 0;
 	

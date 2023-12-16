@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Copyright (c) 2023 Equity_ME World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
@@ -21,18 +23,12 @@ misrepresented as being the original software.
 distribution.
 */
 
-#if !defined(AFX_A_SCENE_H__129C9FEB_647C_4B27_A8D9_5D36E52F7013__INCLUDED_)
-#define AFX_A_SCENE_H__129C9FEB_647C_4B27_A8D9_5D36E52F7013__INCLUDED_
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
 class A_World  
 {
 public:
 	A_World();
-	virtual ~A_World();
+	~A_World();
+
 
 	void Get_Current_Document();
 	void Set_Paths(void);
@@ -42,7 +38,7 @@ public:
 	void Level_SetTxlPath(char* Path);
 	void Reset_Editor(void);
 
-	// Brush Percific
+	// Brush Specific
 	int Get_Brush_Count();
 	Brush* Get_Brush_ByIndex(int Index);
 	int Get_Brush_Index_By_Name(char* BrushName);
@@ -50,6 +46,8 @@ public:
 
 
 	char Last_Saved_EBR_Path[MAX_PATH];
+
+	char mCurrent_Title[MAX_PATH];
 	char mCurrent_3DT_File[MAX_PATH];
 	char mCurrent_3DT_Path[MAX_PATH];
 	char mCurrent_3DT_PathAndFile[MAX_PATH];
@@ -61,7 +59,5 @@ public:
 protected:
 
 	CFusionDoc			*m_pDoc;
-
 };
 
-#endif // !defined(AFX_A_SCENE_H__129C9FEB_647C_4B27_A8D9_5D36E52F7013__INCLUDED_)
