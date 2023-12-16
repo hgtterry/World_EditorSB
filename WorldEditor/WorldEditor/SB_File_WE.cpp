@@ -144,7 +144,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 	// Check Old File is not Modified
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
-		char Text[200];
+		char Text[MAX_PATH];
 		strcpy(Text, "Save Changes To ");
 		strcat(Text, App->CL_World->mCurrent_3DT_File);
 
@@ -200,18 +200,17 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
 		App->CLSB_Doc->Lock_AllTextures();
-	
-		App->Say("Loaded", PathFileName_3dt);
 
-		//MessageBox(App->MainHwnd, PathFileName_3dt, "Loaded",MB_OK);
+		return 1;
 	}
 	else
 	{
 		App->Say("Can not Open File", PathFileName_3dt);
+
+		return 0;
 	}
 
-	
-	return 1;
+	return 0;
 }
 
 // *************************************************************************
@@ -1219,7 +1218,7 @@ void SB_File_WE::Close_File()
 {
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
-		char Text[200];
+		char Text[MAX_PATH];
 		strcpy(Text, "Save Changes To ");
 		strcat(Text, App->CL_World->mCurrent_3DT_File);
 
@@ -1265,5 +1264,7 @@ void SB_File_WE::Close_File()
 
 	App->CLSB_Doc->IsNewDocument = 0;
 	App->m_pDoc->SetModifiedFlag(0);
+
+	App->CLSB_Panels->Set_Aplication_Dialogs_Off();
 }
 

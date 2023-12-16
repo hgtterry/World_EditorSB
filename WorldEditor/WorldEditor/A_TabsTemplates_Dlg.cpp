@@ -180,6 +180,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 			App->CL_World->Reset_Editor();
 
 			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
+			App->CLSB_Panels->Set_Aplication_Dialogs_On();
 
 			return 1;
 		}

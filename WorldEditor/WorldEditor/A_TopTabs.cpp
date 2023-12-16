@@ -145,28 +145,68 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TB_TEXTURED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Textured_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_TEXTURED));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Textured_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_WIRED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Wired_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_WIRED));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Wired_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_SELECTALL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_SELECTALL));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_DESELECTALL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_DESELECTALL));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -174,7 +214,17 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TB_MODIFY && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_BrushModify_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_MODIFY));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_BrushModify_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -188,28 +238,68 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TB_TEST2 && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Test_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_TEST2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Test_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_EQUITY && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Equity_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_EQUITY));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Equity_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_FACES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Faces_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_FACES));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Faces_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TB_CAMERA && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Camera_Flag);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_CAMERA));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Camera_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -633,9 +723,16 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				
 				App->CLSB_File_WE->Quick_load_Flag = 1;
 
-				App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
+				bool Test = App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
 				
 				App->CLSB_File_WE->Quick_load_Flag = 0;
+
+				if (Test == 1)
+				{
+					App->Say("Loaded", App->CLSB_File_WE->PathFileName_3dt);
+					App->CLSB_Panels->Set_Aplication_Dialogs_On();
+				}
+
 				return TRUE;
 			}
 

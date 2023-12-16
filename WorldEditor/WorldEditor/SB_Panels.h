@@ -29,6 +29,9 @@ public:
 	SB_Panels();
 	~SB_Panels();
 
+	void Set_Aplication_Dialogs_Off(void);
+	void Set_Aplication_Dialogs_On(void);
+
 	void Centre_QC_Dialog();
 	void Move_FileView_Window(void);
 	void MovePhysicsView(void);

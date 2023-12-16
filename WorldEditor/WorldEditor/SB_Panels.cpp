@@ -105,5 +105,43 @@ void SB_Panels::Place_GlobalGroups(void)
 
 	SetWindowPos(App->CLSB_Properties->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
 
+// *************************************************************************
+// *		Set_Aplication_Dialogs_Off:- Terry and Hazel Flanigan 2023     *
+// *************************************************************************
+void SB_Panels::Set_Aplication_Dialogs_Off(void)
+{
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEXTURED), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_WIRED), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_SELECTALL), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_DESELECTALL), false);
+
+	// ------------------ Top Tabs
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_EQUITY), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_MODIFY), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_FACES), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_CAMERA), false);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEST2), false);
+
+	// ------------------ Viewer Manager
+	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), false);
+	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_EXPORT), false);
+}
+
+// *************************************************************************
+// *		Set_Aplication_Dialogs_On:- Terry and Hazel Flanigan 2023     *
+// *************************************************************************
+void SB_Panels::Set_Aplication_Dialogs_On(void)
+{
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEXTURED), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_WIRED), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_SELECTALL), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_DESELECTALL), true);
+
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_EQUITY), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_MODIFY), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_FACES), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_CAMERA), true);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEST2), true);
 }
