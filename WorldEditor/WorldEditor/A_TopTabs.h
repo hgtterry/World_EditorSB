@@ -44,6 +44,7 @@ public:
 
 	void Show_BrushPanel();
 
+	bool Header_File_Flag;
 	bool Header_BrushModify_Flag;
 	bool Textured_Flag;
 	bool Brush_Select_Flag;
@@ -82,7 +83,6 @@ private:
 
 	bool Quick_Command_Started;
 
-	bool Header_File_Flag;
 	bool Header_Test_Flag;
 	bool Header_Equity_Flag;
 	bool Header_Faces_Flag;

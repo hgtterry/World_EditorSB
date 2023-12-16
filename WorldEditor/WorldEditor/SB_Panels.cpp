@@ -127,6 +127,13 @@ void SB_Panels::Set_Aplication_Dialogs_Off(void)
 	// ------------------ Viewer Manager
 	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), false);
 	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_EXPORT), false);
+
+	App->CLSB_TopTabs->Reset_Tabs_Buttons();
+	App->CLSB_TopTabs->Header_File_Flag = 1;
+	RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	ShowWindow(App->CLSB_TopTabs->File_Panel_Hwnd, SW_SHOW);
+
+	App->CLSB_TopTabs->Update_Dlg_Controls();
 }
 
 // *************************************************************************

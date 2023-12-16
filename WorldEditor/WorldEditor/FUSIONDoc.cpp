@@ -4790,7 +4790,8 @@ void CFusionDoc::OnFileImport()
         {
             App->CL_TextureDialog->Fill_ListBox();
         }
-
+       
+        App->CLSB_Panels->Set_Aplication_Dialogs_On();
     }
 }
 
