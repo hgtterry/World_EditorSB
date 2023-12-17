@@ -182,6 +182,8 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
 			App->CLSB_Panels->Set_Aplication_Dialogs_On();
 
+			App->File_Loaded_Flag = 1;
+
 			return 1;
 		}
 

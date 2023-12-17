@@ -1266,5 +1266,7 @@ void SB_File_WE::Close_File()
 	App->m_pDoc->SetModifiedFlag(0);
 
 	App->CLSB_Panels->Set_Aplication_Dialogs_Off();
+
+	App->File_Loaded_Flag = 0;
 }
 

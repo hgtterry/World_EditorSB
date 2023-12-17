@@ -2225,8 +2225,12 @@ void CFusionView::OnUpdateDeselectall(CCmdUI* pCmdUI)
 
 void CFusionView::OnSelectall() 
 {
-	App->CLSB_Doc->SelectAll () ;
-	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	bool test = App->Check_World_Loaded();
+	if (test == 1)
+	{
+		App->CLSB_Doc->SelectAll();
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	}
 }
 
 void CFusionView::OnUpdateSelectall(CCmdUI* pCmdUI) 

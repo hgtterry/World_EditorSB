@@ -161,6 +161,7 @@ SB_App::SB_App()
 	Debug_File = 0;
 	Just_Equity = 0;
 	Centre_Debug = 1;
+	File_Loaded_Flag = 0;
 
 	hMenu_WE = NULL;
 
@@ -960,5 +961,19 @@ void SB_App::Enable_Dialogs(bool Enable)
 	EnableWindow(CLSB_ViewMgrDlg->MgrDlg_hWnd, Enable);
 	EnableWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, Enable);
 	EnableWindow(App->CL_TabsControl->Tabs_Control_Hwnd, Enable);
+}
+
+// *************************************************************************
+// *			Check_World_Loaded:- Terry and Hazel Flanigan 2023         *
+// *************************************************************************
+bool SB_App::Check_World_Loaded(void)
+{
+	if (App->File_Loaded_Flag == 0)
+	{
+		App->Say("No World Loaded", "Please Load A World");
+		return 0;
+	}
+	
+	return 1;
 }
 

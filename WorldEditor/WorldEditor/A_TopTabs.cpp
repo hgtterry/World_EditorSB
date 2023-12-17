@@ -731,6 +731,8 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				{
 					App->Say("Loaded", App->CLSB_File_WE->PathFileName_3dt);
 					App->CLSB_Panels->Set_Aplication_Dialogs_On();
+
+					App->File_Loaded_Flag = 1;
 				}
 
 				return TRUE;

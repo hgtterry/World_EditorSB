@@ -226,6 +226,7 @@ public:
 	void Debug_Message(char* Message, bool NewLine);
 	void Debug_Int(int Value, bool NewLine);
 	void Debug_Float(float Value, bool NewLine);
+	bool Check_World_Loaded(void);
 
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
@@ -286,6 +287,8 @@ public:
 	bool Debug_File;
 	bool Just_Equity;
 	bool Centre_Debug;
+
+	bool File_Loaded_Flag;
 
 	HCURSOR CUR;
 
