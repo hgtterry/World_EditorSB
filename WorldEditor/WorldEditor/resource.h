@@ -1099,6 +1099,7 @@
 #define ID_MODE_OGRE                    33100
 #define ID_BUTTON                       33101
 #define ID_DEBUG_SHOWPICKINGDATA        33102
+#define ID_TOOLS_TXLEDITOR              33103
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1107,7 +1108,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        356
-#define _APS_NEXT_COMMAND_VALUE         33103
+#define _APS_NEXT_COMMAND_VALUE         33104
 #define _APS_NEXT_CONTROL_VALUE         1579
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

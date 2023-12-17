@@ -95,7 +95,7 @@ BEGIN_MESSAGE_MAP(CFusionView, CCaptionView)
 	ON_UPDATE_COMMAND_UI(ID_SELECTALL, OnUpdateSelectall)
 	ON_COMMAND(ID_EDIT_SELECT_BRUSH_ALL, OnSelectAllBrushes)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_BRUSH_ALL, OnUpdateSelectAllBrushes)
-	ON_COMMAND(ID_TOOLS_SCALEWORLD, OnToolsScaleworld)
+
 	ON_COMMAND(ID_TOOLS_SETTEXTURESCALE, OnToolsSettexturescale)
 	ON_COMMAND(ID_TOOLS_NEXTBRUSH, OnToolsNextbrush)
 	ON_COMMAND(ID_TOOLS_PREVBRUSH, OnToolsPrevbrush)
@@ -2293,11 +2293,6 @@ LRESULT CFusionView::OnCompileDone (WPARAM wParam, LPARAM lParam)
 		}
 	}
 	return 0;
-}
-
-void CFusionView::OnToolsScaleworld() 
-{
-	App->Say("Deleted");
 }
 
 void CFusionView::OnToolsSettexturescale() 

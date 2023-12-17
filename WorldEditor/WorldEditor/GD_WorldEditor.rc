@@ -1298,9 +1298,7 @@ BEGIN
     END
     POPUP "&Tools"
     BEGIN
-        MENUITEM "&Compile...",                 ID_COMPILE
-        MENUITEM SEPARATOR
-        MENUITEM "&Scale World...",             ID_TOOLS_SCALEWORLD
+        MENUITEM "Txl Editor",                  ID_TOOLS_TXLEDITOR
         MENUITEM SEPARATOR
         MENUITEM "&Options...",                 IDM_PREFERENCES
     END
@@ -1316,8 +1314,6 @@ BEGIN
     BEGIN
         MENUITEM "Set_View",                    ID_DEBUG_SETVIEW
         MENUITEM "Face Properties",             ID_EQUITYSB_FACEPROPERTIES
-        MENUITEM SEPARATOR
-        MENUITEM "Txl Editor",                  ID_EQUITYSB_TXLEDITOR
         MENUITEM SEPARATOR
         MENUITEM "Zero Camera",                 ID_EQUITYSB_ZEROCAMERA, INACTIVE
         MENUITEM "PreferencesWE",               ID_EQUITYSB_PREFERENCESWE
@@ -2360,12 +2356,12 @@ BEGIN
     PUSHBUTTON      "3D",IDC_BT_LOWERRIGHT,35,26,25,22
     PUSHBUTTON      "",IDC_BT_LOWERLEFT,8,26,25,22
     PUSHBUTTON      "",IDC_BT_UPPERRIGHT,35,2,25,22
-    PUSHBUTTON      "Restore",IDC_BT_RESTORE,5,74,57,14
-    PUSHBUTTON      "Preview",IDC_BT_PREVIEW,8,49,52,19
+    PUSHBUTTON      "Restore",IDC_BT_RESTORE,5,50,57,14
+    PUSHBUTTON      "Preview",IDC_BT_PREVIEW,7,84,52,19
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,5,107,58,1
     PUSHBUTTON      "Selected",IDC_BT_SELECTED,5,111,57,14
     PUSHBUTTON      "Update",IDC_BT_VIEWUPDATE,5,127,57,14
-    PUSHBUTTON      "Link Views",IDC_BT_LINKVIEWS,5,90,57,14
+    PUSHBUTTON      "Link Views",IDC_BT_LINKVIEWS,5,66,57,14
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,5,147,58,1
     PUSHBUTTON      "Export",IDC_BT_EXPORT,5,150,57,14
 END

@@ -321,7 +321,6 @@ protected:
 	afx_msg void OnUpdateEditPaste(CCmdUI* pCmdUI);
 	afx_msg void OnEditCut();
 	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
-	afx_msg void OnCompile();
 	afx_msg void OnUpdateBrushSubtractfromworld(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateToolsBrushShowassociatedentity(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateEntitiesEditor(CCmdUI* pCmdUI);

@@ -121,7 +121,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
     ON_COMMAND(ID_EDIT_CUT, OnEditCut)
     ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
-    ON_COMMAND(ID_COMPILE, OnCompile)
+    
     ON_UPDATE_COMMAND_UI(ID_BRUSH_SUBTRACTFROMWORLD, OnUpdateBrushSubtractfromworld)
     ON_UPDATE_COMMAND_UI(ID_ENTITIES_EDITOR, OnUpdateEntitiesEditor)
     ON_COMMAND(ID_NEW_LIB_OBJECT, OnNewLibObject)
@@ -2841,7 +2841,11 @@ void CFusionDoc::SetupDefaultFilename (void)
 // *************************************************************************
 void CFusionDoc::Save_SB()
 {
-    App->CLSB_File_WE->Save_Document();
+    bool Test = App->Check_World_Loaded();
+    if (Test == 1)
+    {
+        App->CLSB_File_WE->Save_Document();
+    }
 }
 
 // *************************************************************************
@@ -2849,7 +2853,11 @@ void CFusionDoc::Save_SB()
 // *************************************************************************
 void CFusionDoc::Save_As_SB()
 {
-    App->CLSB_File_WE->Save_As_Document();
+    bool Test = App->Check_World_Loaded();
+    if (Test == 1)
+    {
+        App->CLSB_File_WE->Save_As_Document();
+    }
 }
 
 // *************************************************************************
@@ -4080,11 +4088,6 @@ geBoolean CFusionDoc::WriteLevelToMap
     return GE_TRUE;
 }
 
-
-void CFusionDoc::OnCompile() 
-{
-    App->Say("Deleted");
-}
 
 void CFusionDoc::CompileDone (CompilerErrorEnum CompileRslt)
 {

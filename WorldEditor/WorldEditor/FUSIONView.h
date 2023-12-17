@@ -135,7 +135,7 @@ protected:
 	afx_msg void OnUpdateSelectall(CCmdUI* pCmdUI);
 	afx_msg void OnSelectAllBrushes();
 	afx_msg void OnUpdateSelectAllBrushes(CCmdUI* pCmdUI);
-	afx_msg void OnToolsScaleworld();
+	
 	afx_msg void OnToolsSettexturescale();
 	afx_msg void OnToolsNextbrush();
 	afx_msg void OnToolsPrevbrush();
