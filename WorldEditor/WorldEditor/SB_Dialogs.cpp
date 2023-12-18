@@ -504,6 +504,9 @@ void SB_Dialogs::List_SceneData(HWND hDlg)
 	sprintf(buf, "%s", " --------------------------------3DT File--------------------------------");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s %i", "File Loaded",App->File_Loaded_Flag);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	sprintf(buf, "%s", "    ");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
