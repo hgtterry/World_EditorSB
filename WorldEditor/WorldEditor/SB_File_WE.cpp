@@ -201,6 +201,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_Doc->Lock_AllTextures();
 
+		App->File_Loaded_Flag = 1;
 		return 1;
 	}
 	else

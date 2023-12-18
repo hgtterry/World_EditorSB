@@ -502,10 +502,22 @@ void SB_Dialogs::List_SceneData(HWND hDlg)
 
 	char buf[MAX_PATH];
 
-	sprintf(buf, "%s", " --------------------------------3DT File--------------------------------");
+	sprintf(buf, "%s", " -------------------------------- World --------------------------------");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s %i", "File Loaded",App->File_Loaded_Flag);
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "File Loaded", App->File_Loaded_Flag);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "Brush Count",App->CL_Brush->Get_Brush_Count());
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	
+	sprintf(buf, "%s", " -------------------------------- 3DT File --------------------------------");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s", "    ");
@@ -527,7 +539,7 @@ void SB_Dialogs::List_SceneData(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	// ----------------------------------------- TXL_FilePath
-	sprintf(buf, "%s", " --------------------------------TXL File --------------------------------");
+	sprintf(buf, "%s", " -------------------------------- TXL File --------------------------------");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s", "    ");
