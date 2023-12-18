@@ -163,6 +163,7 @@ SB_App::SB_App()
 	Centre_Debug = 1;
 	File_Loaded_Flag = 0;
 
+
 	hMenu_WE = NULL;
 
 	MainHwnd = NULL;
