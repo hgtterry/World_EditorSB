@@ -64,9 +64,6 @@ void F_View::OnDraw(UINT mViewType,ViewVars *VCam,CDC *c)
 	//App->Wait_For_Key(100);
 
 
-
-
-
 	CMainFrame *m_pMainFrame;
 	m_pMainFrame		=(CMainFrame *)AfxGetMainWnd(); // MFC POO
 	m_pDoc = (CFusionDoc*)m_pMainFrame->GetCurrentDoc();
@@ -464,7 +461,6 @@ static geBoolean BrushDrawSheetFacesOrtho(Brush *pBrush, void *lParam)
 // *************************************************************************
 void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry Render to views
 {
-	
 	CMainFrame *m_pMainFrame;
 	m_pMainFrame		=(CMainFrame *)AfxGetMainWnd(); // MFC POO
 

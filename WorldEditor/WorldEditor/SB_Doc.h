@@ -100,7 +100,8 @@ public:
 	void OnLinkviewports();
 	void LinkViewports();
 	void UpdateAfterWadChange();
-	
+	void RenderWorld(ViewVars* v, CDC* pDC);
+
 	// ----------------------------------------------------------- Varibles
 
 	CMainFrame* mpMainFrame;
@@ -129,6 +130,8 @@ public:
 	BOOL SelectLock, TempEnt;
 	BOOL PlaceObjectFlag;
 	DWORD SelState;
+
+	bool Render_WE_World;
 
 	GNode* mWorldBsp;
 	CEntity	mRegularEntity;

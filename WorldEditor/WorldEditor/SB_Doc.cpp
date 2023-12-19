@@ -40,6 +40,8 @@ SB_Doc::SB_Doc(void)
     NumSelEntities = 0;
     mCurrentGroup = 0;
 
+    Render_WE_World = 1;
+
     TempShearTemplate = NULL;
     pSelFaces = NULL;
     pSelBrushes = NULL;
@@ -2392,5 +2394,234 @@ void SB_Doc::SelectTextureFromFace3D(CPoint point, ViewVars* v)
 
         }
     }
+}
 
+#define fdoc_SHOW_ALL_GROUPS -1
+
+typedef struct tagBrushDrawData
+{
+    const Box3d* pViewBox;
+    CDC* pDC;
+    ViewVars* v;
+    int GroupId;
+    CFusionDoc* pDoc;
+    BrushFlagTest FlagTest;
+    Ogre::uint32		Color;
+} BrushDrawData;
+
+static geBoolean	IsBrushNotClipOrHint(const Brush* b)
+{
+    assert(b != NULL);
+
+    return	(Brush_IsHint(b) || Brush_IsClip(b)) ? GE_FALSE : GE_TRUE;
+}
+
+static geBoolean	BrushDrawWire3dCB(Brush* pBrush, void* lParam)
+{
+    BrushDrawData* pData = (BrushDrawData*)lParam;
+    CFusionDoc* pDoc = pData->pDoc;
+
+    if ((pData->GroupId == fdoc_SHOW_ALL_GROUPS) || (Brush_GetGroupId(pBrush) == pData->GroupId))
+    {
+        if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
+        {
+            if (pDoc->BrushIsVisible(pBrush))
+            {
+                Render_RenderBrushFaces(pData->v, pBrush, pData->Color);
+            }
+        }
+    }
+    return	GE_TRUE;
+}
+
+// *************************************************************************
+// * Genesis3D   RenderWorld:- Terry and Hazel Flanigan 2023               *
+// *************************************************************************
+void SB_Doc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
+{
+
+#define PEN_WHITE_COLOR RGB(255,255,255)
+#define PEN_CYAN_COLOR  RGB(0,255,0)
+#define PEN_BLUE_COLOR  RGB(0,0,255)
+#define PEN_PURPLE_COLOR RGB(255,0,255)
+#define PEN_YELLOW_COLOR RGB(255,255,0)
+#define PEN_HINT_COLOR  RGB(0,100,0)
+#define PEN_CLIP_COLOR  RGB(128,0,128)
+
+    int				i;
+    GNode* n;
+    ModelIterator	mi;
+    Model* pModel;
+    geBoolean		DoBlit = GE_FALSE;
+    BrushDrawData	brushDrawData;
+    BrushList* BList;
+
+
+    // Temporary Hack for not updating
+//#pragma message ("This temporary hack needs to be fixed.  Perhaps a 'force redraw' flag?")
+/*
+    if (Level_RebuildBspAlways (pLevel) == GE_FALSE)
+    {
+        return ;
+    }
+*/
+    if (App->CLSB_Doc->pLevel == NULL)
+    {
+        // must not be loaded yet...
+        return;
+    }
+
+   /* BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+    Render_UpdateViewPos(v);
+    Render_SetUpFrustum(v);
+
+    brushDrawData.pViewBox = NULL;
+    brushDrawData.pDC = pDC;
+    brushDrawData.v = v;
+    brushDrawData.pDoc = this;
+    brushDrawData.GroupId = fdoc_SHOW_ALL_GROUPS;
+    brushDrawData.FlagTest = NULL;
+    brushDrawData.Color = PEN_WHITE_COLOR;
+
+    if ((Render_GetViewType(v) & (VIEWSOLID | VIEWTEXTURE)) && App->CLSB_Doc->mWorldBsp)
+    {
+        Render_RenderTree(v, App->CLSB_Doc->mWorldBsp, pDC->m_hDC, ZFILL);
+        DoBlit = TRUE;
+    }
+    else
+    {
+        Render_ClearViewDib(v);
+        brushDrawData.FlagTest = IsBrushNotClipOrHint;
+        BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWire3dCB);
+    }*/
+    //if (bShowClipBrushes)
+    //{
+    //    brushDrawData.Color = PEN_CLIP_COLOR;
+    //    brushDrawData.FlagTest = Brush_IsClip;
+    //    BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWire3dZBufferCB);
+    //}
+    //if (bShowHintBrushes)
+    //{
+    //    brushDrawData.Color = PEN_HINT_COLOR;
+    //    brushDrawData.FlagTest = Brush_IsHint;
+    //    BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWire3dZBufferCB);
+    //}
+
+    //CEntityArray* Entities = Level_GetEntities(App->CLSB_Doc->pLevel);
+
+    //for (i = 0; i < Entities->GetSize(); i++)
+    //{
+    //    CEntity* pEnt;
+
+    //    pEnt = &(*Entities)[i];
+
+    //    if (!Render_PointInFrustum(v, &pEnt->mOrigin))
+    //        continue;
+
+    //    if (EntityIsVisible(pEnt) == GE_FALSE)
+    //        continue;
+
+    //    if (pEnt->IsSelected())
+    //        continue;
+
+    //    ::DrawEntity(pEnt, v, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+    //}
+
+    //if (!(App->CLSB_Doc->GetSelState() & NOENTITIES))
+    //{
+    //    for (i = 0; i < Entities->GetSize(); i++)
+    //    {
+    //        CEntity* pEnt = &(*Entities)[i];
+
+    //        if (!(pEnt->IsSelected() && EntityIsVisible(pEnt)))
+    //            continue;
+
+    //        if (!Render_PointInFrustum(v, &pEnt->mOrigin))
+    //            continue;
+
+    //        const geBitmap* pBitmap;
+
+    //        pBitmap = pEnt->GetBitmapPtr(Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+    //        Render_3DTextureZBufferOutline(v, &pEnt->mOrigin, pBitmap, RGB(0, 255, 255));
+    //    }
+    //}
+
+    //if (DoBlit)
+    //{
+    //    ModelInfo_Type* ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
+
+    //    //render the models
+    //    pModel = ModelList_GetFirst(ModelInfo->Models, &mi);
+    //    while (pModel != NULL)
+    //    {
+    //        n = Model_GetModelTree(pModel);
+    //        if (n != NULL)
+    //        {
+    //            Render_RenderTree(v, n, pDC->m_hDC, ZBUFFER);
+    //            DoBlit = TRUE;
+    //        }
+    //        pModel = ModelList_GetNext(ModelInfo->Models, &mi);
+    //    }
+    //}
+
+
+    //brushDrawData.FlagTest = NULL;
+    //brushDrawData.Color = PEN_CYAN_COLOR;
+
+    //int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+    //for (i = 0; i < NumSelBrushes; i++)
+    //{
+    //    Brush* pBrush;
+
+    //    pBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
+    //    // changed QD Actors
+    //    if (!bShowActors)
+    //        if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+    //            continue;
+    //    // end change
+    //    if (Brush_IsMulti(pBrush))
+    //    {
+    //        BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, ::BrushDrawWire3dCB);
+    //    }
+    //    else
+    //    {
+    //        Render_RenderBrushFaces(v, pBrush, brushDrawData.Color);
+    //    }
+    //}
+
+    //if (!(App->CLSB_Doc->GetSelState() & NOFACES))
+    //{
+    //    brushDrawData.Color = PEN_PURPLE_COLOR;
+    //    BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWireSel3dCB);
+    //}
+
+    //if ((App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE) ||
+    //    (App->CLSB_Doc->mModeTool == ID_TOOLS_CAMERA && App->CLSB_Doc->GetSelState() == NOSELECTIONS))
+    //{
+    //    brushDrawData.Color = PEN_BLUE_COLOR;
+    //    if (!App->CLSB_Doc->TempEnt)
+    //    {
+    //        if (Brush_IsMulti(App->CLSB_Doc->CurBrush))
+    //        {
+    //            BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), &brushDrawData, ::BrushDrawWire3dCB);
+    //        }
+    //        else
+    //        {
+    //            Render_RenderBrushFaces(v, App->CLSB_Doc->CurBrush, brushDrawData.Color);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (Render_PointInFrustum(v, &App->CLSB_Doc->mRegularEntity.mOrigin))
+    //        {
+    //            ::DrawEntity(&App->CLSB_Doc->mRegularEntity, v, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+    //        }
+    //    }
+    //}
+
+    ////	if (DoBlit)
+    //{
+    //    Render_BlitViewDib(v, pDC->m_hDC);
+    //}
 }
