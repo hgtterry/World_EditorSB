@@ -196,6 +196,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
 	App = new SB_App();
 	App->InitApp();
+	App->CLSB_Doc->Render_WE_World = 0; // to get 3d HWND
 
 	char AppPath[MAX_PATH];
 	::GetModuleFileName(NULL, AppPath, MAX_PATH);
@@ -375,6 +376,9 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	
 	App->CLSB_Equity->Start_Equity_Dialog_New();
+
+	//App->CLSB_Doc->Render_WE_World = 0;
+	//App->CLSB_Ogre->RenderHwnd = App->WE_3DView_Hwnd;
 	App->CLSB_Ogre->InitOgre();
 
 	int test = 0;
@@ -393,6 +397,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 
+	App->CLSB_Doc->Render_WE_World = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
 	
 	

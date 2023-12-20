@@ -814,15 +814,16 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			if (App->CLSB_Doc->Render_WE_World == 1)
+			/*if (App->CLSB_Doc->Render_WE_World == 1)
 			{
 				App->CLSB_Doc->Render_WE_World = 0;
 			}
 			else
 			{
 				App->CLSB_Doc->Render_WE_World = 1;
-			}
+			}*/
 
+			SetWindowPos(App->WE_3DView_Hwnd, NULL, 0, 0, 1000, 1000, SWP_NOZORDER);
 			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
 			return TRUE;
 		}

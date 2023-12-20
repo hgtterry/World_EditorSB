@@ -3079,35 +3079,24 @@ static void DrawEntity (CEntity *pEnt, ViewVars *v, const EntityTable *pEntityDe
 // *************************************************************************
 void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
 {
-
+    //App->Flash_Window();
+    
 	if (App->CLSB_Doc->Render_WE_World == 0)
 	{
         Render_ClearViewDib(v);
         Render_BlitViewDib(v, pDC->m_hDC);
        
-       // (FusionView((CChildFrame*)GetParentFrame())->m_wndSplitter.RefreshSplitBars();
+        App->WE_3DView_Hwnd = NULL;
+        App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
 
-       /* POSITION pos = App->m_pDoc->GetFirstViewPosition();
-        CView* pView = App->m_pDoc->GetNextView(pos);
-
-        if (pView->IsKindOf(RUNTIME_CLASS(CFusionView)))
-        {
-            CFusionView* pFusionView = (CFusionView*)pView;
-            HWND Test = pFusionView->GetWindow(ID_VIEW_TEXTUREVIEW)->GetSafeHwnd();
-
-            HWND Temp2 = NULL;
-            Temp2 = GetDlgItem(Test, ID_VIEW_TEXTUREVIEW);
-            if (Temp2)
-            {
-                Debug
-            }
-            else
-            {
-                App->Say("poo");
-            }
-
-        }*/
-
+		if (App->WE_3DView_Hwnd)
+		{
+            //SetWindowPos(Test, NULL, 0,0,1000, 1000, SWP_NOZORDER);
+		}
+		else
+		{
+			//App->Say("No HWND");
+		}
 		return;
 	}
 

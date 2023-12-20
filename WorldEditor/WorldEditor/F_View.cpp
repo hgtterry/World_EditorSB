@@ -52,12 +52,12 @@ F_View::~F_View(void)
 // *************************************************************************
 void F_View::OnDraw(UINT mViewType,ViewVars *VCam,CDC *c)
 {
-	
+	//App->Flash_Window();
 	//App->Debug_Message("F_View::OnDraw ------------------------------------------------ ", 1);
-	App->Debug_Int(mViewType, 1);
+	/*App->Debug_Int(mViewType, 1);
 	App->Debug_Int(VCam->ViewType, 1);
 	App->Debug_Int(VCam->Width, 1);
-	App->Debug_Int(VCam->Height, 1);
+	App->Debug_Int(VCam->Height, 1);*/
 
 //	App->Debug_Float(VCam->ZoomFactor, 1);
 

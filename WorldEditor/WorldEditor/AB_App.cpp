@@ -169,6 +169,7 @@ SB_App::SB_App()
 	MainHwnd = NULL;
 	ViewGLhWnd = NULL;
 	ListPanel = NULL;
+	WE_3DView_Hwnd = NULL;
 
 	Equity_Dlg_hWnd = NULL;
 

@@ -300,6 +300,7 @@ public:
 	HWND ViewGLhWnd;
 	HWND ListPanel;
 	HMENU hMenu_WE;
+	HWND WE_3DView_Hwnd;
 
 	HWND Equity_Dlg_hWnd;
 
