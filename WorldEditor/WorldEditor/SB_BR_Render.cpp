@@ -65,10 +65,55 @@ SB_BR_Render::SB_BR_Render()
 	mSceneMgrMeshView = NULL;
 	mCameraMeshView = NULL;
 	CamNode = NULL;
+
+	Render_Started = 0;
 }
 
 SB_BR_Render::~SB_BR_Render()
 {
+}
+
+// *************************************************************************
+// *			Start_RB_Window:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_BR_Render::Start_RB_Window()
+{
+	Surface_Hwnd = NULL;
+	Surface_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RB_RENDER_WIN, MeshView_3D_hWnd, (DLGPROC)RB_Window_Proc);
+	Set_Render_Window();
+	Resize_3DView();
+}
+
+// *************************************************************************
+// *		  RB_Window_Proc:- Terry and Hazel Flanigan 2023	  		   *
+// *************************************************************************
+LRESULT CALLBACK SB_BR_Render::RB_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+	case WM_NOTIFY:
+	{
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+
+		break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -80,7 +125,7 @@ bool SB_BR_Render::Set_Render_Window(void)
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
+		Ogre::StringConverter::toString((size_t)Surface_Hwnd);
 
 	MeshView_Window = App->CLSB_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 
@@ -124,9 +169,10 @@ bool SB_BR_Render::Set_Render_Window(void)
 	//App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
 
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 110));
 	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 
+	Resize_3DView();
 	// Debug Physics Shape
 	/*btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
@@ -142,7 +188,33 @@ bool SB_BR_Render::Set_Render_Window(void)
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);*/
 
+	Render_Started = 1;
+
 	return 1;
+}
+
+// *************************************************************************
+// *			Resize_3DView:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_BR_Render::Resize_3DView()
+{
+	RECT rect;
+	GetWindowRect(MeshView_3D_hWnd, &rect);
+	
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+	
+	SetWindowPos(Surface_Hwnd, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER);
+
+
+	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	{
+		MeshView_Window->windowMovedOrResized();
+		mCameraMeshView->setAspectRatio((Ogre::Real)MeshView_Window->getWidth() / (Ogre::Real)MeshView_Window->getHeight());
+		mCameraMeshView->yaw(Ogre::Radian(0));
+
+		Root::getSingletonPtr()->renderOneFrame();
+	}
 }
 
 // *************************************************************************

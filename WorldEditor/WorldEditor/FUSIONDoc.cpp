@@ -3081,25 +3081,35 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
 {
     //App->Flash_Window();
     
-	if (App->CLSB_Doc->Render_WE_World == 0)
-	{
-        Render_ClearViewDib(v);
-        Render_BlitViewDib(v, pDC->m_hDC);
-       
-        App->WE_3DView_Hwnd = NULL;
-        App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
-        App->CLSB_BR_Render->MeshView_3D_hWnd = WindowFromDC(pDC->m_hDC);
+    if (App->New_Render == 1)
+    {
+        if (App->CLSB_Doc->Render_WE_World == 0)
+        {
+            Render_ClearViewDib(v);
+            Render_BlitViewDib(v, pDC->m_hDC);
 
-		if (App->WE_3DView_Hwnd)
-		{
-            //SetWindowPos(Test, NULL, 0,0,1000, 1000, SWP_NOZORDER);
-		}
-		else
-		{
-			//App->Say("No HWND");
-		}
-		return;
-	}
+            App->WE_3DView_Hwnd = NULL;
+            App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
+            App->CLSB_BR_Render->MeshView_3D_hWnd = WindowFromDC(pDC->m_hDC);
+
+            if (App->WE_3DView_Hwnd)
+            {
+                //SetWindowPos(Test, NULL, 0,0,1000, 1000, SWP_NOZORDER);
+            }
+            else
+            {
+                //App->Say("No HWND");
+            }
+            return;
+        }
+
+        if (App->CLSB_BR_Render->Render_Started == 1)
+        {
+            App->CLSB_BR_Render->Resize_3DView();
+        }
+
+        return;
+    }
 
 #define PEN_WHITE_COLOR RGB(255,255,255)
 #define PEN_CYAN_COLOR  RGB(0,255,0)

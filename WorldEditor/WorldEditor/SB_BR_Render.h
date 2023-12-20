@@ -29,8 +29,10 @@ public:
 	SB_BR_Render();
 	~SB_BR_Render();
 
+	void Start_RB_Window();
 	bool Set_Render_Window(void);
 	void Grid_Update(bool Create);
+	void Resize_3DView();
 
 	ManualObject* GridManual;
 	SceneNode* GridNode;
@@ -51,6 +53,7 @@ public:
 	int Scale_Z;
 
 	bool ShowDivisions;
+	bool Render_Started;
 
 	Ogre::ColourValue ColourMain;
 	Ogre::ColourValue ColourHairZ;
@@ -63,5 +66,9 @@ public:
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::RenderWindow* MeshView_Window;
 	HWND MeshView_3D_hWnd;
+	HWND Surface_Hwnd;
+private:
+	static LRESULT CALLBACK RB_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

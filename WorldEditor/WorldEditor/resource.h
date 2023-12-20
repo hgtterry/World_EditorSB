@@ -175,6 +175,8 @@
 #define IDD_SB_BRUSH_VIEWER             349
 #define IDD_SB_TEXT_DIALOG              351
 #define IDD_SB_PROGRESS_BAR             354
+#define IDD_DIALOG4                     356
+#define IDD_RB_RENDER_WIN               356
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -1107,7 +1109,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        356
+#define _APS_NEXT_RESOURCE_VALUE        358
 #define _APS_NEXT_COMMAND_VALUE         33104
 #define _APS_NEXT_CONTROL_VALUE         1579
 #define _APS_NEXT_SYMED_VALUE           112

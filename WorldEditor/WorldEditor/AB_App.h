@@ -291,6 +291,7 @@ public:
 	bool Centre_Debug;
 
 	bool File_Loaded_Flag;
+	bool New_Render;
 
 	HCURSOR CUR;
 
