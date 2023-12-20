@@ -28,5 +28,40 @@ class SB_BR_Render
 public:
 	SB_BR_Render();
 	~SB_BR_Render();
+
+	bool Set_Render_Window(void);
+	void Grid_Update(bool Create);
+
+	ManualObject* GridManual;
+	SceneNode* GridNode;
+	int Division_X;
+	int Division_Y;
+	int Division_Z;
+
+	int XAxis_min;
+	int	XAxis_max;
+	int YAxis_min;
+	int	YAxis_max;
+	int ZAxis_min;
+	int	ZAxis_max;
+	int HairExtend;
+
+	int Scale_X;
+	int Scale_Y;
+	int Scale_Z;
+
+	bool ShowDivisions;
+
+	Ogre::ColourValue ColourMain;
+	Ogre::ColourValue ColourHairZ;
+	Ogre::ColourValue ColourHairX;
+	Ogre::ColourValue ColourHairY;
+	Ogre::ColourValue ColourDivision;
+
+	Ogre::SceneNode* CamNode;
+	Ogre::Camera* mCameraMeshView;
+	Ogre::SceneManager* mSceneMgrMeshView;
+	Ogre::RenderWindow* MeshView_Window;
+	HWND MeshView_3D_hWnd;
 };
 
