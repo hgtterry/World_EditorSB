@@ -107,6 +107,7 @@ distribution.
 #include "SB_Mesh_Mgr.h"
 
 #include "SB_PB.h"
+#include "SB_BR_Render.h"
 
 class SB_App
 {
@@ -192,6 +193,7 @@ public:
 	SB_Mesh_Mgr*				CLSB_Mesh_Mgr;
 
 	SB_PB*						CLSB_PB;
+	SB_BR_Render*				CLSB_BR_Render;
 
 	bool InitApp(void);
 	void InitMFC(void);

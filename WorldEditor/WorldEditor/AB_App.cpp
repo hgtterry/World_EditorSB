@@ -105,6 +105,7 @@ SB_App::SB_App()
 	CLSB_Mesh_Mgr =				nullptr;
 
 	CLSB_PB =					nullptr;
+	CLSB_BR_Render =			nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -317,7 +318,8 @@ bool SB_App::InitApp(void)
 	CLSB_Mesh_Mgr =					new SB_Mesh_Mgr();
 	
 	CLSB_PB =						new SB_PB();
-	
+	CLSB_BR_Render =				new SB_BR_Render();
+
 	InitCommonControls();
 
 	hInst =NULL;
