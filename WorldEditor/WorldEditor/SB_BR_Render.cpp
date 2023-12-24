@@ -152,12 +152,6 @@ bool SB_BR_Render::Set_Render_Window(void)
 	CamNode->attachObject(mCameraMeshView);
 
 	////-------------------------------------------- 
-
-	/*MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);
-	MvNode->setVisible(true);*/
-
 	RB_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	// add a bright light above the scene
@@ -170,6 +164,8 @@ bool SB_BR_Render::Set_Render_Window(void)
 	Ogre::Real Radius = MvEnt->getBoundingRadius();*/
 
 	Grid_Update(1);
+
+	App->CLSB_Ogre->RB_m_imgui.Init(RB_SceneMgr, Surface_Hwnd);
 
 	RB_RenderListener = new SB_BR_Listener();
 
@@ -195,6 +191,8 @@ bool SB_BR_Render::Set_Render_Window(void)
 	{
 		App->Beep_Win();
 	}
+
+	
 
 	RB_Render_Started = 1;
 

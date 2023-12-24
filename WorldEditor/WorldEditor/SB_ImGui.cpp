@@ -160,11 +160,22 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 // *************************************************************************
 void SB_ImGui::Render_FPS(void)
 {
-	if (Show_FPS == 1)
+	if (Updating_F == 1)
+		Updating_GUI();
+	
+}
+
+// *************************************************************************
+// *					Updating  Terry Flanigan				   *
+// *************************************************************************
+void SB_ImGui::Updating(void)
+{
+	if (Updating_F == 1)
 	{
-		ImGui_FPS();
+		Updating_GUI();
 	}
 }
+
 
 
 // *************************************************************************
@@ -261,8 +272,8 @@ void SB_ImGui::Updating_GUI(void)
 		ImGui::Text("Please Wait - Updating");
 		
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		Model_Data_PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Height / 2) - (Size.x / 2);
 
 		ImGui::End();
 	}
@@ -298,9 +309,8 @@ void SB_ImGui::ImGui_FPS(void)
 		
 		
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
-
 		ImGui::End();
 	}
 }

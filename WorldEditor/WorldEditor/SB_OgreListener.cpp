@@ -119,7 +119,104 @@ void SB_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 {
+	if (App->CLSB_BR_Render->RB_Render_Started == 1)
+	{
+		return true;
+	}
+
 	Update_Game_Logic(evt.timeSinceLastFrame);
+	return true;
+}
+
+// *************************************************************************
+// *			Update_Game_Logic:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
+{
+
+	if (App->CLSB_BR_Render->RB_Render_Started == 1)
+	{
+		return true;
+	}
+
+	App->CLSB_Ogre->Get_View_Height_Width();
+	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);
+		return true;
+	}
+
+	App->CLSB_ImGui->Render_FPS();
+	App->CLSB_Dimensions->Dimesions_Select();
+
+	//if (GD_Run_Physics == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->debugDrawWorld();
+	}
+
+	if (GD_Run_Physics == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
+	}
+
+	if (GD_Run_Physics == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
+
+
+		for (int j = App->CLSB_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		{
+			btCollisionObject* obj = App->CLSB_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			btTransform trans;
+
+			if (body && body->getMotionState())
+			{
+				int UI = body->getUserIndex();
+				int Index = body->getUserIndex2();
+
+
+				if (UI == Enums::Usage_Dynamic) //&& App->SBC_Scene->V_Object[Index]->Deleted == 0)
+				{
+					body->getMotionState()->getWorldTransform(trans);
+					btQuaternion orientation = trans.getRotation();
+
+					float x = trans.getOrigin().getX();
+					float y = trans.getOrigin().getY();
+					float z = trans.getOrigin().getZ();
+
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+					Ogre::Vector3 WC = App->CLSB_Object->Get_BoundingBox_World_Centre(Index);
+
+					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+				}
+
+			}
+			else
+			{
+				trans = obj->getWorldTransform();
+			}
+		}
+	}
+
+	App->CLSB_ImGui->ImGui_Editor_Loop();
+
+	if (GD_Run_Physics == 1 && App->CLSB_Scene->Player_Added == 1)
+	{
+		//App->Flash_Window();
+		btTransform trans;
+		App->CLSB_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		btQuaternion orientation = trans.getRotation();
+		App->CLSB_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CLSB_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CLSB_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	}
+
 	return true;
 }
 
@@ -128,7 +225,11 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	
+	if (App->CLSB_BR_Render->RB_Render_Started == 1)
+	{
+		return true;
+	}
+
 	OgreFrameTime = evt.timeSinceLastFrame;
 
 	App->CLSB_Ogre->m_imgui.render();
@@ -605,93 +706,6 @@ void SB_OgreListener::MoveCamera(void)
 	mCam->moveRelative(mTranslateVector); // Position Relative
 	Wheel = 0;
 
-}
-
-// *************************************************************************
-// *			Update_Game_Logic:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
-{
-
-	App->CLSB_Ogre->Get_View_Height_Width();
-	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
-
-	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
-	{
-		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);
-		return true;
-	}
-
-	App->CLSB_ImGui->Render_FPS();
-	App->CLSB_Dimensions->Dimesions_Select();
-
-	//if (GD_Run_Physics == 1)
-	{
-		App->CLSB_Bullet->dynamicsWorld->debugDrawWorld();
-	}
-
-	if (GD_Run_Physics == 1)
-	{
-		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
-	}
-
-	if (GD_Run_Physics == 1)
-	{
-		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
-
-
-		for (int j = App->CLSB_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-		{
-			btCollisionObject* obj = App->CLSB_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
-			btRigidBody* body = btRigidBody::upcast(obj);
-			btTransform trans;
-
-			if (body && body->getMotionState())
-			{
-				int UI = body->getUserIndex();
-				int Index = body->getUserIndex2();
-
-
-				if (UI == Enums::Usage_Dynamic) //&& App->SBC_Scene->V_Object[Index]->Deleted == 0)
-				{
-					body->getMotionState()->getWorldTransform(trans);
-					btQuaternion orientation = trans.getRotation();
-
-					float x = trans.getOrigin().getX();
-					float y = trans.getOrigin().getY();
-					float z = trans.getOrigin().getZ();
-
-					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
-					App->CLSB_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-
-					Ogre::Vector3 WC = App->CLSB_Object->Get_BoundingBox_World_Centre(Index);
-
-					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
-					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
-				}
-
-			}
-			else
-			{
-				trans = obj->getWorldTransform();
-			}
-		}
-	}
-
-	App->CLSB_ImGui->ImGui_Editor_Loop();
-
-	if (GD_Run_Physics == 1 && App->CLSB_Scene->Player_Added == 1)
-	{
-		//App->Flash_Window();
-		btTransform trans;
-		App->CLSB_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
-		btQuaternion orientation = trans.getRotation();
-		App->CLSB_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		App->CLSB_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-		App->CLSB_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-	}
-
-	return true;
 }
 
 // *************************************************************************

@@ -89,7 +89,14 @@ bool SB_Ogre::InitOgre(void)
 
 	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	m_imgui.Init(mSceneMgr, RenderHwnd);
+	if (App->CLSB_BR_Render->RB_Render_Started == 1)
+	{
+
+	}
+	else
+	{
+		m_imgui.Init(mSceneMgr, RenderHwnd);
+	}
 
 	createFrameListener();
 	

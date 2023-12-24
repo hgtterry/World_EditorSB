@@ -56,25 +56,31 @@ SB_BR_Listener::~SB_BR_Listener()
 // *************************************************************************
 bool SB_BR_Listener::frameStarted(const FrameEvent& evt)
 {
-	//FlashWindow(App->SBC_MeshViewer->MainDlgHwnd, true);
-	/*if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+	Get_View_Height_Width();
+	App->CLSB_Ogre->RB_m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
+	if (App->CLSB_ImGui->Updating_F == 1)
 	{
-		if (App->SBC_Equity->Use_Imgui == 1)
-		{
-			App->SBC_Equity->Get_View_Height_Width();
-			App->SBC_Equity->EB_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+		App->CLSB_ImGui->Updating();
+	}
 
-			if (App->SBC_Equity->Show_Gui_Debug == 1)
-			{
-				Render_ImGui();
-			}
-
-		}
-
-		return true;
-	}*/
-
+	//App->CLSB_ImGui->Show_FPS = 1;
+	//App->CLSB_ImGui->Render_FPS();
+	
 	return true;
+}
+
+// *************************************************************************
+// *		Get_View_Height_Width:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_BR_Listener::Get_View_Height_Width(void)
+{
+	Ogre::Viewport* vp = App->CLSB_BR_Render->RB_View_Window->getViewport(0);
+
+	View_Width = vp->getActualWidth();
+	View_Height = vp->getActualHeight();
+
+	return 1;
 }
 
 
@@ -83,6 +89,8 @@ bool SB_BR_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_BR_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
+	App->CLSB_Ogre->RB_m_imgui.render();
+
 	Camera_Mode_Free(evt.timeSinceLastFrame);
 	return 1;
 }
@@ -92,7 +100,7 @@ bool SB_BR_Listener::frameRenderingQueued(const FrameEvent& evt)
 // *************************************************************************
 void SB_BR_Listener::Camera_Mode_Free(float DeltaTime)
 {
-	//App->CL_Ogre->m_imgui.render();
+	App->CLSB_Ogre->m_imgui.render();
 
 	mRotX = 0;
 	mRotY = 0;

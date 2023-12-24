@@ -33,7 +33,7 @@ public:
 	void Updating_GUI(void);
 	void Render_FPS(void);
 	void ImGui_FPS(void);
-
+	void Updating(void);
 	void Start_Model_Data(void);
 	void Model_Data_GUI(void);
 	void Close_Model_Data(void);

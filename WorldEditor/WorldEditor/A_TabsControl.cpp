@@ -368,8 +368,15 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
 		{
+			App->CLSB_ImGui->Updating_F = 1;
+			App->CLSB_Ogre->RenderFrame();
+			App->CLSB_Ogre->RenderFrame();
+			App->CLSB_Ogre->RenderFrame();
+			App->CLSB_Ogre->RenderFrame();
+
 			App->CLSB_BR_Render->Update_Scene();
 
+			App->CLSB_ImGui->Updating_F = 0;
 			return TRUE;
 		}
 

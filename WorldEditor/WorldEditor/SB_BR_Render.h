@@ -73,6 +73,7 @@ public:
 	Ogre::RenderWindow* RB_View_Window;
 	HWND MeshView_3D_hWnd;
 	HWND Surface_Hwnd;
+
 private:
 	static LRESULT CALLBACK RB_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

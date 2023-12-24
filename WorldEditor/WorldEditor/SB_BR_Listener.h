@@ -44,6 +44,7 @@ public:
 	void Camera_Mode_Free(float DeltaTime);
 
 	void Capture_Left_Mouse_Free(void);
+	bool Get_View_Height_Width(void);
 
 	int		Wheel_Move;
 
@@ -52,6 +53,9 @@ public:
 	Radian		mRotX;
 	Radian		mRotY;
 	Vector3		mTranslateVector;
+
+	int		View_Height;
+	int		View_Width;
 
 	bool	Pl_LeftMouseDown;
 	bool	Pl_RightMouseDown;
