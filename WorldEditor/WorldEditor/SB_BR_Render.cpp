@@ -25,6 +25,7 @@ distribution.
 #include "AB_App.h"
 #include "SB_BR_Render.h"
 
+
 SB_BR_Render::SB_BR_Render()
 {
 	MeshView_3D_hWnd = nullptr;
@@ -164,9 +165,9 @@ bool SB_BR_Render::Set_Render_Window(void)
 
 	Grid_Update(1);
 
-	//RenderListener = new SB_MeshView_Listener();
+	RB_RenderListener = new SB_BR_Listener();
 
-	//App->CL_Ogre->mRoot->addFrameListener(RenderListener);
+	App->CLSB_Ogre->mRoot->addFrameListener(RB_RenderListener);
 
 
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 110));
@@ -226,14 +227,12 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_INITDIALOG:
 	{
-		App->Beep_Win();
 		return TRUE;
 	}
 
 	case WM_MOUSEWHEEL:
 	{
-		App->Beep_Win();
-		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
+		if (App->CLSB_BR_Render->RB_RenderListener->Pl_LeftMouseDown == 0)
 		{
 			{
 
@@ -241,11 +240,11 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				if (zDelta > 0)
 				{
-					App->CLSB_Ogre->OgreListener->Wheel = -1;
+					App->CLSB_BR_Render->RB_RenderListener->Wheel_Move = -1;
 				}
 				else if (zDelta < 0)
 				{
-					App->CLSB_Ogre->OgreListener->Wheel = 1;
+					App->CLSB_BR_Render->RB_RenderListener->Wheel_Move = 1;
 				}
 				return 1;
 			}
@@ -274,18 +273,18 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 				//ScreenToClient(App->MainHwnd, &p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500X = p.x;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500Y = p.y;
 
 				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_LeftMouseDown = 1;
 			}
 
 		}
@@ -299,10 +298,10 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->CLSB_BR_Render->RB_RenderListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 
-			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			/*if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 			{
 				App->CLSB_Picking->Mouse_Pick_Entity();
 
@@ -313,7 +312,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
 
-			}
+			}*/
 
 			return 1;
 		}
@@ -335,22 +334,22 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 				GetCursorPos(&p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500X = p.x;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500Y = p.y;
 
-				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+				/*if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
 					App->CLSB_Picking->Left_MouseDown = 1;
 
 					App->CLSB_Picking->Mouse_Pick_Entity();
 
 					App->CLSB_Picking->Left_MouseDown = 0;
-				}
+				}*/
 
 				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_LeftMouseDown = 1;
 
 				App->CUR = SetCursor(NULL);
 
@@ -358,7 +357,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_BR_Render->RB_RenderListener->Pl_LeftMouseDown = 1;
 			}
 		}
 
@@ -373,7 +372,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			App->CLSB_BR_Render->RB_RenderListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}

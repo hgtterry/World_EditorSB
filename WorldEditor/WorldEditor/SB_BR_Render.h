@@ -23,6 +23,8 @@ misrepresented as being the original software.
 distribution.
 */
 
+#include "SB_BR_Listener.h"
+
 class SB_BR_Render
 {
 public:
@@ -35,6 +37,7 @@ public:
 	void Resize_3DView();
 	void Switch_Proc();
 	
+	SB_BR_Listener* RB_RenderListener;
 
 	ManualObject* GridManual;
 	SceneNode* GridNode;

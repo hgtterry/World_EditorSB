@@ -27,6 +27,24 @@ distribution.
 
 SB_BR_Listener::SB_BR_Listener()
 {
+	mMoveScale = 0;
+	mMoveSensitivity = 50;
+	Wheel_Move = 0;
+
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
+
+	Pl_Cent500X = App->CursorPosX;
+	Pl_Cent500Y = App->CursorPosY;
+
+	mMoveSensitivityMouse = 50;
+
+	Pl_LeftMouseDown = 0;
+	Pl_RightMouseDown = 0;
+
+	WE_Cam = nullptr;
+	WE_Cam = App->CLSB_BR_Render->mCameraMeshView;
 }
 
 SB_BR_Listener::~SB_BR_Listener()
