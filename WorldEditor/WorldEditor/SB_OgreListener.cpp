@@ -274,6 +274,7 @@ void SB_OgreListener::Camera_Mode_Free(float DeltaTime)
 // *************************************************************************
 bool SB_OgreListener::Capture_Left_Mouse_Free(void)
 {
+	App->Flash_Window();
 	//if (!ImGui::GetIO().WantCaptureMouse)
 	//{
 	GetCursorPos(&Pl_pt);
@@ -332,6 +333,7 @@ bool SB_OgreListener::Capture_Left_Mouse_Free(void)
 // *************************************************************************
 bool SB_OgreListener::Capture_Right_Mouse_Free(void)
 {
+	
 
 	if (CameraMode == Enums::CamDetached)
 	{

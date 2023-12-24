@@ -566,3 +566,95 @@ void SB_Keyboard::Keyboard_Mode_WorldEditor(float deltaTime)
 	//	}
 	//}
 }
+
+// *************************************************************************
+// *						RB_Keyboard_Mode_Free							   *
+// *************************************************************************
+void SB_Keyboard::RB_Keyboard_Mode_Free(float deltaTime)
+{
+	// Forward
+	if (App->CLSB_BR_Render->RB_RenderListener->Wheel_Move < 0) // Mouse Wheel Forward
+	{
+		App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.z = -App->CLSB_BR_Render->RB_RenderListener->mMoveScale * 30;
+	}
+	if (GetAsyncKeyState(87) < 0) // W Key
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.z = -App->CLSB_BR_Render->RB_RenderListener->mMoveScale;
+			//App->CLSB_Camera_WE->Move_Camera_Forward(App->CLSB_Ogre->OgreListener->mMoveScale);
+		}
+	}
+
+	// Back
+	if (App->CLSB_BR_Render->RB_RenderListener->Wheel_Move > 0) // Mouse Wheel Back
+	{
+		App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.z = App->CLSB_BR_Render->RB_RenderListener->mMoveScale * 30;
+	}
+	if (GetAsyncKeyState(83) < 0) // S Key	
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.z = App->CLSB_BR_Render->RB_RenderListener->mMoveScale;
+		}
+
+	}
+
+	// Pan Down
+	if (GetAsyncKeyState(81) < 0) // Q Key	
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			Rate = (App->CLSB_BR_Render->RB_RenderListener->mMoveSensitivity / 1000) * 10; //FlyRate;
+
+			OldPos = App->CLSB_BR_Render->RB_RenderListener->WE_Cam->getPosition();
+
+			OldPos.y -= Rate;
+
+			App->CLSB_BR_Render->RB_RenderListener->WE_Cam->setPosition(OldPos);
+		}
+	}
+
+	//	Pan Up
+	if (GetAsyncKeyState(69) < 0) // E Key
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			Rate = (App->CLSB_BR_Render->RB_RenderListener->mMoveSensitivity / 1000) * 10; //FlyRate;
+
+			OldPos = App->CLSB_BR_Render->RB_RenderListener->WE_Cam->getPosition();
+
+			OldPos.y += Rate;
+
+			App->CLSB_BR_Render->RB_RenderListener->WE_Cam->setPosition(OldPos);
+		}
+	}
+
+	// Pan Left
+	if (GetAsyncKeyState(65) < 0) // A Key
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.x = -App->CLSB_BR_Render->RB_RenderListener->mMoveScale;
+		}
+	}
+
+	// Pan Right
+	if (GetAsyncKeyState(68) < 0) // D Key
+	{
+		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		{
+			App->CLSB_BR_Render->RB_RenderListener->mTranslateVector.x = App->CLSB_BR_Render->RB_RenderListener->mMoveScale;
+		}
+	}
+
+	//------------------------------------------------ Escape 
+	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
+	//{
+	//	if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+	//	{
+	//		App->CLSB_Ogre->ExitFullScreen();
+	//	}
+	//}
+
+}

@@ -3103,7 +3103,7 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
             return;
         }
 
-        if (App->CLSB_BR_Render->Render_Started == 1)
+        if (App->CLSB_BR_Render->RB_Render_Started == 1)
         {
             App->CLSB_BR_Render->Resize_3DView();
         }

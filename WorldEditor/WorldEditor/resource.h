@@ -175,7 +175,6 @@
 #define IDD_SB_BRUSH_VIEWER             349
 #define IDD_SB_TEXT_DIALOG              351
 #define IDD_SB_PROGRESS_BAR             354
-#define IDD_DIALOG4                     356
 #define IDD_RB_RENDER_WIN               356
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -341,6 +340,7 @@
 #define IDD_SB_TB_EQUITY                1146
 #define IDD_SB_YESNOCANCEL              1147
 #define IDC_STARTANGLE                  1148
+#define IDD_SB_3DSETTINGS               1148
 #define IDC_ENDANGLE                    1149
 #define IDC_STATUSPROGRESS1             1149
 #define IDC_STATUSPROGRESS2             1150
@@ -884,6 +884,8 @@
 #define IDC_BT_SHOWDATA                 1576
 #define IDC_BT_CAMERA_PICK              1577
 #define IDC_BT_TABS_WORLDINFO           1578
+#define IDC_BT_3DSETTINGS               1579
+#define IDC_BT_3DUPDATE                 1580
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1111,7 +1113,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        358
 #define _APS_NEXT_COMMAND_VALUE         33104
-#define _APS_NEXT_CONTROL_VALUE         1579
+#define _APS_NEXT_CONTROL_VALUE         1581
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

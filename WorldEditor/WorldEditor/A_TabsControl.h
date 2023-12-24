@@ -31,25 +31,29 @@ public:
 
 	void Start_Tabs_Control_Dlg();
 	void Show_Tabs_Control_Dlg(bool Show);
+	void Start_3DSettings();
+	
 	void Select_Texture_Tab(int SelNum, char* TextName);
 
 	void Enable_Tabs_Dlg(bool Enable);
 	void Select_Brushes_Tab(int SelNum);
 
 	void Hide_Dialogs();
-
+	void Show_3DSettings(bool Show);
 
 	bool f_TabsDlg_Active;
 	bool Tab_Templates_Flag;
 
 	HWND Tabs_Control_Hwnd;
+	HWND RB_3DSettings_Hwnd;
 
 private:
 
 	static LRESULT CALLBACK Tabs_Control_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	bool Tab_Texture_Flag;
 	bool Tab_Group_Flag;
+	bool Tab_3DSettings_Flag;
 
 	bool Command_Panel_Started;
 };

@@ -30,12 +30,14 @@ A_TabsControl::A_TabsControl(void)
 {
 	f_TabsDlg_Active = 0;
 	Tabs_Control_Hwnd = nullptr;
+	RB_3DSettings_Hwnd = nullptr;
 
 	Command_Panel_Started = 0;
 
 	Tab_Texture_Flag = 0;
 	Tab_Group_Flag = 0;
 	Tab_Templates_Flag = 1;
+	Tab_3DSettings_Flag = 0;
 }
 
 A_TabsControl::~A_TabsControl(void)
@@ -66,6 +68,9 @@ void A_TabsControl::Start_Tabs_Control_Dlg()
 		App->CL_TextureDialog->Start_TextureDialog();
 		App->CL_TabsGroups_Dlg->Start_GroupsDialog();
 
+		Start_3DSettings();
+		Show_3DSettings(0);
+
 		App->CL_TabsTemplates_Dlg->Start_TemplatesDialog();
 		App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
 
@@ -88,6 +93,7 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -126,6 +132,13 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_3DSETTINGS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_3DSettings_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -161,6 +174,16 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 				return TRUE;
 			}
 
+			if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
+			{
+				App->CL_TabsControl->Hide_Dialogs();
+				App->CL_TabsControl->Tab_3DSettings_Flag = 1;
+				App->CL_TabsControl->Show_3DSettings(1);
+
+				RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return TRUE;
+			}
+			
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
@@ -192,10 +215,12 @@ void A_TabsControl::Hide_Dialogs()
 	Tab_Texture_Flag = 0;
 	Tab_Group_Flag = 0;
 	Tab_Templates_Flag = 0;
+	Tab_3DSettings_Flag = 0;
 
 	App->CL_TextureDialog->Show_Dialog(false);
 	App->CL_TabsGroups_Dlg->Show_GroupsDialog(false);
 	App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(false);
+	Show_3DSettings(0);
 
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -243,4 +268,115 @@ void A_TabsControl::Enable_Tabs_Dlg(bool Enable)
 {
 	EnableWindow(Tabs_Control_Hwnd,Enable);
 }
+
+// *************************************************************************
+// *	  	Show_3DSettings:- Terry and Hazel Flanigan 2023		           *
+// *************************************************************************
+void A_TabsControl::Show_3DSettings(bool Show)
+{
+	ShowWindow(RB_3DSettings_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	  	Start_3DSettings:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_TabsControl::Start_3DSettings()
+{
+	RB_3DSettings_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)RB_3DSettings_Proc);
+
+}
+
+// *************************************************************************
+// *			 3DSettings_Proc:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_3DUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*
+		if (GetDlgItem(hDlg, IDC_ST_GD_GROUPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_3DUPDATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		/*if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DIMENSIONS));
+			if (test == 0)
+			{
+				//App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DELETEBRUSH));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
+		{
+			App->CLSB_BR_Render->Update_Scene();
+
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
+}
+
 

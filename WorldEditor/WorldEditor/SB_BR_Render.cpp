@@ -62,12 +62,12 @@ SB_BR_Render::SB_BR_Render()
 	ShowDivisions = 1;
 
 	// ------------------------------------------------ 
-	MeshView_Window = NULL;
-	mSceneMgrMeshView = NULL;
+	RB_View_Window = NULL;
+	RB_SceneMgr = NULL;
 	mCameraMeshView = NULL;
 	CamNode = NULL;
 
-	Render_Started = 0;
+	RB_Render_Started = 0;
 }
 
 SB_BR_Render::~SB_BR_Render()
@@ -81,7 +81,13 @@ void SB_BR_Render::Start_RB_Window()
 {
 	Surface_Hwnd = NULL;
 	Surface_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RB_RENDER_WIN, MeshView_3D_hWnd, (DLGPROC)RB_Window_Proc);
-	Set_Render_Window();
+	bool test = Set_Render_Window();
+	if (test == 0)
+	{
+		App->Say("Failed to Start Right Bottom Womdoe");
+		return;
+	}
+
 	Resize_3DView();
 }
 
@@ -122,27 +128,27 @@ LRESULT CALLBACK SB_BR_Render::RB_Window_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 bool SB_BR_Render::Set_Render_Window(void)
 {
-
+	
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)Surface_Hwnd);
 
-	MeshView_Window = App->CLSB_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+	RB_View_Window = App->CLSB_Ogre->mRoot->createRenderWindow("RB_ViewWin", 1024, 768, false, &options);
 
-	mSceneMgrMeshView = App->CLSB_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+	RB_SceneMgr = App->CLSB_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
-	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
+	mCameraMeshView = RB_SceneMgr->createCamera("CameraMV");
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
 	mCameraMeshView->setNearClipDistance(0.1);
 	mCameraMeshView->setFarClipDistance(8000);
 
-	Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
+	Ogre::Viewport* vp = RB_View_Window->addViewport(mCameraMeshView);
 	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
 	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
-	CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
+	CamNode = RB_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
 	CamNode->attachObject(mCameraMeshView);
 
 	////-------------------------------------------- 
@@ -152,10 +158,10 @@ bool SB_BR_Render::Set_Render_Window(void)
 	MvNode->attachObject(MvEnt);
 	MvNode->setVisible(true);*/
 
-	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+	RB_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	// add a bright light above the scene
-	Light* light = mSceneMgrMeshView->createLight();
+	Light* light = RB_SceneMgr->createLight();
 	light->setType(Light::LT_POINT);
 	light->setPosition(-10, 40, 20);
 	light->setSpecularColour(ColourValue::White);
@@ -170,28 +176,27 @@ bool SB_BR_Render::Set_Render_Window(void)
 	App->CLSB_Ogre->mRoot->addFrameListener(RB_RenderListener);
 
 
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 110));
-	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
+	//mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 
 	Resize_3DView();
-	// Debug Physics Shape
-	/*btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
-	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	
+	//App->CLSB_BR_Render->Switch_Proc();
 
-	btDebug_Manual->setDynamic(true);
-	btDebug_Manual->estimateVertexCount(2000);
+	int test = 0;
+	test = SetWindowLong(Surface_Hwnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
 
-	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1, 1);
-	btDebug_Manual->end();
+	if (!test)
+	{
+		App->Say("Cant Start Ogre Proc");
+		return 0;
+	}
+	else
+	{
+		App->Beep_Win();
+	}
 
-	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	btDebug_Node->attachObject(btDebug_Manual);*/
-
-	App->CLSB_BR_Render->Switch_Proc();
-
-	Render_Started = 1;
+	RB_Render_Started = 1;
 
 	return 1;
 }
@@ -213,12 +218,12 @@ void SB_BR_Render::Switch_Proc()
 	}
 	else
 	{
-		App->Beep_Win();
+		
 	}
 }
 
 // *************************************************************************
-// *		OgreView_3D:- Terry and Hazel Flanigan 2023 		   *
+// *		       Ogre3D_Proc:- Terry and Hazel Flanigan 2023 	    	   *
 // *************************************************************************
 LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -418,8 +423,8 @@ void SB_BR_Render::Resize_3DView()
 
 	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{
-		MeshView_Window->windowMovedOrResized();
-		mCameraMeshView->setAspectRatio((Ogre::Real)MeshView_Window->getWidth() / (Ogre::Real)MeshView_Window->getHeight());
+		RB_View_Window->windowMovedOrResized();
+		mCameraMeshView->setAspectRatio((Ogre::Real)RB_View_Window->getWidth() / (Ogre::Real)RB_View_Window->getHeight());
 		mCameraMeshView->yaw(Ogre::Radian(0));
 
 		Root::getSingletonPtr()->renderOneFrame();
@@ -436,7 +441,7 @@ void SB_BR_Render::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridManual = mSceneMgrMeshView->createManualObject("GridManual");
+		GridManual = RB_SceneMgr->createManualObject("GridManual");
 		GridManual->setRenderQueueGroup(1);
 	}
 
@@ -488,13 +493,32 @@ void SB_BR_Render::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+		GridNode = RB_SceneMgr->getRootSceneNode()->createChildSceneNode();
 		GridNode->attachObject(GridManual);
 	}
 
 	GridNode->setPosition(0, 0, 0);
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *	  		Update_Scene:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_BR_Render::Update_Scene()
+{
+	if (RB_Render_Started == 0)
+	{
+		App->CLSB_BR_Render->Start_RB_Window();
+	}
+
+	App->CLSB_BR_Render->Resize_3DView();
+
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+	App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+	App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
 }
 
 

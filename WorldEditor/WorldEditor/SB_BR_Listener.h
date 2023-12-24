@@ -41,6 +41,10 @@ public:
 	bool Capture_LeftMouse_Model(void);
 	bool Capture_RightMouse_Model(void);
 
+	void Camera_Mode_Free(float DeltaTime);
+
+	void Capture_Left_Mouse_Free(void);
+
 	int		Wheel_Move;
 
 	Ogre::Camera* WE_Cam;

@@ -729,11 +729,35 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				if (Test == 1)
 				{
+					if (App->New_Render == 1)
+					{
+						if (App->CLSB_BR_Render->RB_Render_Started == 0)
+						{
+							App->CLSB_BR_Render->Update_Scene();
+						}
+						else
+						{
+							//App->CLSB_Doc->Render_WE_World = 0;
+							//App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
+							App->CLSB_BR_Render->Resize_3DView();
+
+							App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+							App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+							App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+							App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+							App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
+							//App->CLSB_Environment->SetSky(1);
+						}
+					}
+
+
 					App->Say("Loaded", App->CLSB_File_WE->PathFileName_3dt);
 					App->CLSB_Panels->Set_Aplication_Dialogs_On();
 
 					App->File_Loaded_Flag = 1;
 				}
+
+				
 
 				return TRUE;
 			}
@@ -826,7 +850,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 			if (App->New_Render == 1)
 			{
-				if (App->CLSB_BR_Render->Render_Started == 0)
+				if (App->CLSB_BR_Render->RB_Render_Started == 0)
 				{
 					App->CLSB_BR_Render->Start_RB_Window();
 				}

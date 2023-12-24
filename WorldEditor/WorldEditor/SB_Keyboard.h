@@ -36,6 +36,8 @@ public:
 
 	void Keyboard_Mode_WorldEditor(float deltaTime);
 
+	void RB_Keyboard_Mode_Free(float deltaTime);
+
 	Ogre::Real Rate;
 	Ogre::Vector3 OldPos;
 	Ogre::Camera* mCamera;
