@@ -188,9 +188,219 @@ bool SB_BR_Render::Set_Render_Window(void)
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);*/
 
+	App->CLSB_BR_Render->Switch_Proc();
+
 	Render_Started = 1;
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  		Switch_Proc:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_BR_Render::Switch_Proc()
+{
+	
+
+	int test = 0;
+	test = SetWindowLong(Surface_Hwnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
+
+	if (!test)
+	{
+		App->Say("Cant Start Ogre Proc");
+		//return;
+	}
+	else
+	{
+		App->Beep_Win();
+	}
+}
+
+// *************************************************************************
+// *		OgreView_3D:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		App->Beep_Win();
+		return TRUE;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		App->Beep_Win();
+		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
+		{
+			{
+
+				int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+				if (zDelta > 0)
+				{
+					App->CLSB_Ogre->OgreListener->Wheel = -1;
+				}
+				else if (zDelta < 0)
+				{
+					App->CLSB_Ogre->OgreListener->Wheel = 1;
+				}
+				return 1;
+			}
+		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		App->CLSB_Ogre->m_imgui.mouseMoved();
+
+		SetFocus(App->CLSB_BR_Render->Surface_Hwnd);
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+				POINT p;
+				GetCursorPos(&p);
+				//ScreenToClient(App->MainHwnd, &p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
+				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
+
+		}
+
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+
+			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Picking->Mouse_Pick_Entity();
+
+				char JustName[200];
+				int len = strlen(App->CLSB_Picking->TextureName2);
+				strcpy(JustName, App->CLSB_Picking->TextureName2);
+				JustName[len - 4] = 0;
+
+				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
+
+			}
+
+			return 1;
+		}
+
+		return 1;
+	}
+
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+
+				POINT p;
+				GetCursorPos(&p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
+				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+				{
+					App->CLSB_Picking->Left_MouseDown = 1;
+
+					App->CLSB_Picking->Mouse_Pick_Entity();
+
+					App->CLSB_Picking->Left_MouseDown = 0;
+				}
+
+				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);// Bernie
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+
+				App->CUR = SetCursor(NULL);
+
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
+		}
+
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->CLSB_Ogre->m_imgui.mouseReleased();
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+	//case WM_KEYDOWN:
+	//	switch (wParam)
+	//	{
+	//	case 'C':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Copy_Object();
+	//			//		//		return 1;
+	//		}
+	//	case 'V':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Paste_Object();
+	//			//		//		return 1;
+	//		}
+	//		//	return 1;
+	//		//	//	// more keys here
+	//	}break;
+	}
+
+	return DefWindowProc(hDlg, message, wParam, lParam);
 }
 
 // *************************************************************************
@@ -287,3 +497,5 @@ void SB_BR_Render::Grid_Update(bool Create)
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
+
+

@@ -838,6 +838,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 				}
 			}
 
+			//App->CLSB_BR_Render->Switch_Proc();
 			//SetWindowPos(App->WE_3DView_Hwnd, NULL, 0, 0, 1000, 1000, SWP_NOZORDER);
 			//App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
 			return TRUE;

@@ -33,6 +33,8 @@ public:
 	bool Set_Render_Window(void);
 	void Grid_Update(bool Create);
 	void Resize_3DView();
+	void Switch_Proc();
+	
 
 	ManualObject* GridManual;
 	SceneNode* GridNode;
@@ -69,6 +71,6 @@ public:
 	HWND Surface_Hwnd;
 private:
 	static LRESULT CALLBACK RB_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
