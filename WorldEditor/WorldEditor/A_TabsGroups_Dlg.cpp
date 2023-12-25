@@ -28,6 +28,26 @@ distribution.
 
 #pragma warning( disable : 4101)
 
+enum BrushFlags
+{
+	BRUSH_SOLID = 0x0001,
+	BRUSH_WINDOW = 0x0002,
+	BRUSH_WAVY = 0x0004,
+	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
+	BRUSH_HOLLOWCUT = 0x0010,
+	BRUSH_TRANSLUCENT = 0x0020,
+	BRUSH_EMPTY = 0x0040,
+	BRUSH_SUBTRACT = 0x0080,
+	BRUSH_CLIP = 0x0100,
+	BRUSH_FLOCKING = 0x0200,
+	BRUSH_HOLLOW = 0x0400,
+	BRUSH_SHEET = 0x0800,
+	BRUSH_HIDDEN = 0x1000,
+	BRUSH_LOCKED = 0x2000,
+	BRUSH_HINT = 0x4000,
+	BRUSH_AREA = 0x8000
+};
+
 struct tag_BrushList
 {
 	Brush* First;
@@ -608,32 +628,29 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%s", "Brush Name ",b->Name);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	/*sprintf(buf, "%s%i", "Centre_Marker ", b->Centre_Marker);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);*/
-
-	//App->Say_Int(b->Flags);
-
-	if (b->Flags & 128)
+	// ----------------------------------- Flags
+	if (b->Flags & BRUSH_SUBTRACT)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Cut Brush");
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  BRUSH_SUBTRACT");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
-	else if (b->Flags & 1)
+	else if (b->Flags & BRUSH_SOLID)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Solid Brush");
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  BRUSH_SOLID");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
-	else if (b->Flags & 1024)
+	else if (b->Flags & BRUSH_HOLLOW)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Hollow Brush");
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  Hollow Brush");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 	else
 	{
-		sprintf(buf, "%s%d", "Type Flags ", b->Flags);
+		sprintf(buf, "%s%d%s", "Type Flags XX ", b->Flags, "  Unknown");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 	
+	// ----------------------------------- Data
 	sprintf(buf, "%s%d", "Model ID ",b->ModelId);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
@@ -643,6 +660,7 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%f", "Hull Size ",b->HullSize);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	// ----------------------------------- Type
 	if (b->Type == BRUSH_MULTI)
 	{
 		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_MULTI");
@@ -664,13 +682,6 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	// Bounding Box
-	sprintf(buf, "Max X = %f Y = %f Z = %f",b->BoundingBox.Max.X, b->BoundingBox.Max.Y, b->BoundingBox.Max.Z);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "Min X = %f Y = %f Z = %f", b->BoundingBox.Min.X, b->BoundingBox.Min.Y, b->BoundingBox.Min.Z);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
 	if (b->Type == BRUSH_MULTI)
 	{
 		return Show_Brush_ListInfo(b->BList, hDlg);
@@ -679,8 +690,17 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	{
 		return Show_Brush_Faces_Info(b->Faces,  hDlg);
 	}
+	if (b->Type == BRUSH_CSG)
+	{
+		App->Say("BRUSH_CSG");
+	}
 
-	
+	//// Bounding Box
+	//sprintf(buf, "Max X = %f Y = %f Z = %f", b->BoundingBox.Max.X, b->BoundingBox.Max.Y, b->BoundingBox.Max.Z);
+	//SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//sprintf(buf, "Min X = %f Y = %f Z = %f", b->BoundingBox.Min.X, b->BoundingBox.Min.Y, b->BoundingBox.Min.Z);
+	//SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	return 1;
 }
 
@@ -735,8 +755,11 @@ bool A_TabsGroups_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
 
 		for(i=0;i < pList->NumFaces; i++)
 		{
-			if (!Show_Face_Data(pList->Faces[i], hDlg)) return 0;
+			if (!Show_Face_Data(i,pList->Faces[i], hDlg)) return 0;
 		}
+
+		sprintf(buf, "%s", " -------------------------------------------");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
 	return 1;
@@ -745,7 +768,7 @@ bool A_TabsGroups_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
 // *************************************************************************
 // *		  Show_Face_Data:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
+bool A_TabsGroups_Dlg::Show_Face_Data(int Index, const Face *f, HWND hDlg)
 {
 	
 	char buf[MAX_PATH];
@@ -753,6 +776,9 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 	geFloat xScale, yScale, rot;
 
 	sprintf(buf, "%s", " -------------------------------------------");
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "Face Index",Index+1);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s%i", "Flags ",f->Flags);

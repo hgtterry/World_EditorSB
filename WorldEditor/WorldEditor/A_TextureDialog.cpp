@@ -197,13 +197,6 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_BT_UPDATE)
-			{
-				App->CL_TextureDialog->Fill_ListBox();
-				return TRUE;
-			}
-
-
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{

@@ -55,7 +55,7 @@ private:
 	bool Show_Brush_Info(const Brush *b, HWND hDlg);
 	bool Show_Brush_ListInfo(BrushList *BList, HWND hDlg);
 	bool Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg);
-	bool Show_Face_Data(const Face *f, HWND hDlg);
+	bool Show_Face_Data(int Index, const Face *f, HWND hDlg);
 
 	bool Properties_Dialog_Active;
 
