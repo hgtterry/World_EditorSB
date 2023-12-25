@@ -57,7 +57,9 @@ private:
 	bool Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg);
 	bool Show_Face_Data(const Face *f, HWND hDlg);
 
-	void List_SelectedBrushes(HWND hDlg);
+	bool Properties_Dialog_Active;
+
+	void Fill_Brush_Combo(HWND hDlg);
 
 	int Selected_Index;
 	Brush*	Selected_Brush;

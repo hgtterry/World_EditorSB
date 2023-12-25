@@ -34,6 +34,44 @@ struct tag_BrushList
 	Brush* Last;
 };
 
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	Plane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
+struct tag_FaceList
+{
+	int NumFaces;
+	int Limit;
+	Face** Faces;
+	geBoolean Dirty;
+	Box3d Bounds;
+};
+
 A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
 {
 	GroupsDlg_Hwnd = NULL;
@@ -41,6 +79,7 @@ A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
 
 	Selected_Index = -1;
 	Selected_Brush = NULL;
+	Properties_Dialog_Active = 0;
 }
 
 A_TabsGroups_Dlg::~A_TabsGroups_Dlg(void)
@@ -388,12 +427,20 @@ void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
 	SetDlgItemText(GroupsDlg_Hwnd, IDC_ST_GD_SELECTED, itoa(NumSelBrushes, buff, 10));
 }
 
+// ---------------      Properties     ----------------
+// ----------------------------------------------------
+// ----------------------------------------------------
+// ----------------------------------------------------
+ 
 // *************************************************************************
 // *	  	Start_Properties_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_TabsGroups_Dlg::Start_Properties_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_PROPERTIES, App->MainHwnd, (DLGPROC)Properties_Proc);
+	if (Properties_Dialog_Active == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_PROPERTIES, App->MainHwnd, (DLGPROC)Properties_Proc);
+	}
 }
 
 // *************************************************************************
@@ -406,12 +453,16 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		App->CL_TabsGroups_Dlg->Properties_Dialog_Active = 1;
 
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
-		App->CL_TabsGroups_Dlg->List_SelectedBrushes(hDlg);
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
+		App->CL_TabsGroups_Dlg->Fill_Brush_Combo(hDlg);
 		App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
 
 		return TRUE;
@@ -434,22 +485,40 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 	{
 
-		if (LOWORD(wParam) == IDC_LIST_SELECTEDBRUSHES)
+		if (LOWORD(wParam) == IDC_CB_SELECTED_BRUSH)
 		{
-		
-			int Index = SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-			if (Index == -1)
+			switch (HIWORD(wParam)) // Find out what message it was
 			{
-			
-			}
-			else
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
 			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_SELECTED_BRUSH);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				
 				App->CL_TabsGroups_Dlg->Selected_Index = Index;
-				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, Index);
+				App->CL_TabsGroups_Dlg->Selected_Brush = App->CL_Brush->Get_By_Index(Index);
 				App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
+			}
 			}
 
 			return TRUE;
@@ -458,14 +527,14 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			App->CL_TabsGroups_Dlg->Properties_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			App->CL_TabsGroups_Dlg->Properties_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -476,69 +545,29 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	return FALSE;
 }
 
-typedef struct TexInfoTag
-{
-	geVec3d VecNormal;
-	geFloat xScale, yScale;
-	int xShift, yShift;
-	geFloat	Rotate;			// texture rotation angle in degrees
-	TexInfo_Vectors TVecs;
-	int Dib;				// index into the wad
-	char Name[16];
-	geBoolean DirtyFlag;
-	geVec3d Pos;
-	int txSize, tySize;		// texture size (not currently used)
-	geXForm3d XfmFaceAngle;	// face rotation angle
-} TexInfo;
-
-typedef struct FaceTag
-{
-	int			NumPoints;
-	int			Flags;
-	Plane		Face_Plane;
-	int			LightIntensity;
-	geFloat		Reflectivity;
-	geFloat		Translucency;
-	geFloat		MipMapBias;
-	geFloat		LightXScale, LightYScale;
-	TexInfo		Tex;
-	geVec3d		*Points;
-} Face;
-
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face **Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
-
 // *************************************************************************
-// *	  List_SelectedBrushes:- Terry and Hazel Flanigan 2023			   *
+// *	  	Fill_Brush_Combo:- Terry and Hazel Flanigan 2023	    	   *
 // *************************************************************************
-void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
+void A_TabsGroups_Dlg::Fill_Brush_Combo(HWND hDlg)
 {
-	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	App->Get_Current_Document();
 
-	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+	//SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	if (NumSelBrushes == 0)
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+
+	int Count = 0;
+	Brush* b;
+	b = pList->First;
+	while (b != NULL)
 	{
-		Selected_Index = -1;
-		return;
+		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Brush->Brush_GetName(b));
+		Count++;
+		b = b->Next;
 	}
 
-	for (int i = 0; i < NumSelBrushes; ++i)
-	{
-		Brush* pBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
-		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)pBrush->Name);
-	}
-
-	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_SETCURSEL, (WPARAM) 0, (LPARAM)0);
-
-	Selected_Index = 0;
-	Selected_Brush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, 0);
+	SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_SETCURSEL, (WPARAM)Selected_Index, (LPARAM)0);
 }
 
 // *************************************************************************
@@ -579,8 +608,10 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%s", "Brush Name ",b->Name);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%i", "Centre_Marker ", b->Centre_Marker);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	/*sprintf(buf, "%s%i", "Centre_Marker ", b->Centre_Marker);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);*/
+
+	//App->Say_Int(b->Flags);
 
 	if (b->Flags & 128)
 	{
@@ -633,8 +664,6 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-
-
 	// Bounding Box
 	sprintf(buf, "Max X = %f Y = %f Z = %f",b->BoundingBox.Max.X, b->BoundingBox.Max.Y, b->BoundingBox.Max.Z);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -668,13 +697,13 @@ bool A_TabsGroups_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 	Count = BrushList_Count (BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
-		sprintf(buf, "%s%d", "Sub Brushes ", Count);
+		sprintf(buf, "%s%d", " ===== Sub Brushes ", Count);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		return 0;
 	}
 	else
 	{
-		sprintf(buf, "%s%d", "Sub Brushes ",Count-1);
+		sprintf(buf, "%s%d", " ===== Sub Brushes ",Count-1);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 	

@@ -886,6 +886,8 @@
 #define IDC_BT_TABS_WORLDINFO           1578
 #define IDC_BT_3DSETTINGS               1579
 #define IDC_BT_3DUPDATE                 1580
+#define IDC_COMBO1                      1581
+#define IDC_CB_SELECTED_BRUSH           1581
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1115,7 +1117,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        358
 #define _APS_NEXT_COMMAND_VALUE         33106
-#define _APS_NEXT_CONTROL_VALUE         1581
+#define _APS_NEXT_CONTROL_VALUE         1582
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
