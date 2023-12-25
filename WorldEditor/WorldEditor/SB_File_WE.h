@@ -42,8 +42,9 @@ public:
 	bool Start_Load(const char* FileName, bool UseDialogLoader);
 
 	bool Open_Dialog();
-
+	void Open_Example_File();
 	bool Open_3dt_File();
+	bool Check_Last_File_Modified();
 
 	void Reset_View(float Zoom);
 

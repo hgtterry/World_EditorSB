@@ -126,6 +126,9 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_ENTITIES_EDITOR, OnUpdateEntitiesEditor)
     ON_COMMAND(ID_NEW_LIB_OBJECT, OnNewLibObject)
     ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
+
+    ON_COMMAND(ID_OPENEXAMPLES_2, OnFileOpen_2Boxes)
+
     ON_COMMAND(ID_TOOLS_BRUSH_ADJUSTMENTMODE, OnToolsBrushAdjustmentmode)
     ON_COMMAND(ID_TOOLS_FACE_ADJUSTMENTMODE, OnToolsFaceAdjustmentmode)
     ON_UPDATE_COMMAND_UI(ID_BRUSH_PRIMITIVES_CUBE, OnUpdateBrushPrimitives)
@@ -4780,6 +4783,20 @@ void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
     {
         return;
     }
+}
+
+void CFusionDoc::OnFileOpen_2Boxes() // hgtterry Open 2 Boxes
+{
+    char FullPath[MAX_PATH];
+    strcpy(FullPath, App->WorldEditor_Directory);
+    strcat(FullPath, "Levels");
+    strcat(FullPath, "\\");
+    strcat(FullPath, "2_Boxes.3dt");
+    strcpy(App->CLSB_File_WE->PathFileName_3dt, FullPath);
+
+    strcpy(App->CLSB_File_WE->FileName_3dt, "2_Boxes.3dt");
+
+    App->CLSB_File_WE->Open_Example_File();
 }
 
 void CFusionDoc::OnFileImportActor()

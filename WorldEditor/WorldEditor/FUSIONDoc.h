@@ -326,6 +326,9 @@ protected:
 	afx_msg void OnUpdateEntitiesEditor(CCmdUI* pCmdUI);
 	afx_msg void OnNewLibObject();
 	afx_msg void OnFileOpen();
+
+	afx_msg void OnFileOpen_2Boxes();
+
 	afx_msg void OnToolsBrushAdjustmentmode();
 	afx_msg void OnToolsFaceAdjustmentmode();
 	afx_msg void OnUpdateBrushPrimitives(CCmdUI* pCmdUI);

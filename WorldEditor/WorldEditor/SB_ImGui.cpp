@@ -272,8 +272,17 @@ void SB_ImGui::Updating_GUI(void)
 		ImGui::Text("Please Wait - Updating");
 		
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Height / 2) - (Size.x / 2);
+
+		if (App->New_Render == 1)
+		{
+			Model_Data_PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+			Model_Data_PosY = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Height / 2) - (Size.x / 2);
+		}
+		else
+		{
+			Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.x / 2);
+		}
 
 		ImGui::End();
 	}
@@ -309,7 +318,18 @@ void SB_ImGui::ImGui_FPS(void)
 		
 		
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+
+		if (App->New_Render == 1)
+		{
+			PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}
+		else
+		{
+			PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}
+
 		PosY = 10;
 		ImGui::End();
 	}

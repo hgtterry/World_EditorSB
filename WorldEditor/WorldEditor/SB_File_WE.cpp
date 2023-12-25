@@ -141,6 +141,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 	App->Get_Current_Document();
 
+	bool test = Check_Last_File_Modified();
 	// Check Old File is not Modified
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
@@ -215,6 +216,51 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 }
 
 // *************************************************************************
+// *			Open_Example_File:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_File_WE::Open_Example_File()
+{
+	App->Get_Current_Document();
+
+	App->CLSB_Doc->SelectAll();
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+	// Delete All Brushes and Faces
+	App->CLSB_Doc->DeleteCurrentThing();
+
+	App->m_pDoc->SetTitle(" ");
+	App->m_pDoc->SetModifiedFlag(FALSE);
+
+	bool Test = Open_3dt_File();
+	if (Test == 1)
+	{
+		App->CL_World->Reset_Editor();
+
+		App->CLSB_Camera_WE->Reset_Camera_Position();
+		App->CLSB_Camera_WE->Reset_Camera_Angles();
+
+		Reset_View(1.0);
+
+		App->CLSB_Doc->IsNewDocument = 0;
+		App->m_pDoc->SetModifiedFlag(FALSE);
+
+		App->CLSB_TopTabs->Update_Dlg_Controls();
+
+		App->CLSB_Doc->Lock_AllTextures();
+
+		App->File_Loaded_Flag = 1;
+		return;
+	}
+	else
+	{
+		App->Say("Can not Open File", PathFileName_3dt);
+
+		return;
+	}
+}
+
+// *************************************************************************
 // *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_File_WE::Open_3dt_File()
@@ -260,7 +306,37 @@ bool SB_File_WE::Open_3dt_File()
 	return 1;
 }
 
+// *************************************************************************
+// *	Check_Last_File_Modified:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+bool SB_File_WE::Check_Last_File_Modified()
+{
+	// Check Old File is not Modified
+	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
+	{
+		char Text[MAX_PATH];
+		strcpy(Text, "Save Changes To ");
+		strcat(Text, App->CL_World->mCurrent_3DT_File);
 
+		App->CLSB_Dialogs->YesNoCancel("File has been Modified", Text);
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 1) // Yes
+		{
+			Save_Document();
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 2)
+		{
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 3) // Cancel
+		{
+			return 0;
+		}
+	}
+
+	return 1;
+}
 
 // *************************************************************************
 // *								Load_File 							   *

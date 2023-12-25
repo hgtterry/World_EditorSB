@@ -180,7 +180,7 @@ SB_App::SB_App()
 	m_pDoc = NULL;
 
 	Write_DebugFile = NULL;
-	New_Render = 1;
+	New_Render = 0;
 }
 
 SB_App::~SB_App()

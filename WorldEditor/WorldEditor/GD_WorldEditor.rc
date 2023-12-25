@@ -1110,6 +1110,10 @@ BEGIN
     BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        POPUP "Open Examples"
+        BEGIN
+            MENUITEM "2_Boxes",                     ID_OPENEXAMPLES_2
+        END
         MENUITEM "Close",                       ID_FILE_CLOSE33078, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "Save",                        ID_FILE_SAVESB
@@ -1451,7 +1455,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.28 - [24-12-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.28 - [25-12-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
