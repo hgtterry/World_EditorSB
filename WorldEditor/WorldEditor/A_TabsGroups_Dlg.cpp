@@ -92,7 +92,7 @@ struct tag_FaceList
 	Box3d Bounds;
 };
 
-A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
+SB_Tabs_Brushes_Dlg::SB_Tabs_Brushes_Dlg(void)
 {
 	GroupsDlg_Hwnd = NULL;
 	Groups_Dlg_Created = NULL;
@@ -102,14 +102,14 @@ A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
 	Properties_Dialog_Active = 0;
 }
 
-A_TabsGroups_Dlg::~A_TabsGroups_Dlg(void)
+SB_Tabs_Brushes_Dlg::~SB_Tabs_Brushes_Dlg(void)
 {
 }
 
 // *************************************************************************
 // *	  	Show_GroupsDialog:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Show_GroupsDialog(bool Show)
+void SB_Tabs_Brushes_Dlg::Show_GroupsDialog(bool Show)
 {
 	ShowWindow(GroupsDlg_Hwnd, Show);
 }
@@ -117,7 +117,7 @@ void A_TabsGroups_Dlg::Show_GroupsDialog(bool Show)
 // *************************************************************************
 // *	  	Start_Brush_Tabs_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Start_Brush_Tabs_Dialog()
+void SB_Tabs_Brushes_Dlg::Start_Brush_Tabs_Dialog()
 {
 	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Brush_Tabs_Proc);
 
@@ -130,7 +130,7 @@ void A_TabsGroups_Dlg::Start_Brush_Tabs_Dialog()
 // *************************************************************************
 // *			 Groups_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -316,7 +316,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Tabs_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 // *	  		Get_Index:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Get_Index(const Brush* b)
+void SB_Tabs_Brushes_Dlg::Get_Index(const Brush* b)
 {
 	App->Get_Current_Document();
 
@@ -349,7 +349,7 @@ void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 // *************************************************************************
 // *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::List_Selection_Changed(bool Clear)
+void SB_Tabs_Brushes_Dlg::List_Selection_Changed(bool Clear)
 {
 	int Index = SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if	(Index == -1)
@@ -369,7 +369,7 @@ void A_TabsGroups_Dlg::List_Selection_Changed(bool Clear)
 // *************************************************************************
 // *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
+void SB_Tabs_Brushes_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 {
 	App->Get_Current_Document();
 
@@ -410,7 +410,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 // *************************************************************************
 // *			 Fill_ListBox:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Fill_ListBox()
+void SB_Tabs_Brushes_Dlg::Fill_ListBox()
 {
 	if (Groups_Dlg_Created == 1)
 	{
@@ -440,7 +440,7 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 // *************************************************************************
 // *	Update_Dlg_SelectedBrushesCount:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
+void SB_Tabs_Brushes_Dlg::Update_Dlg_SelectedBrushesCount()
 {
 	char buff[100];
 	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
@@ -455,7 +455,7 @@ void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
 // *************************************************************************
 // *	  	Start_Properties_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Start_Brush_Properties_Dlg()
+void SB_Tabs_Brushes_Dlg::Start_Brush_Properties_Dlg()
 {
 	if (Properties_Dialog_Active == 0)
 	{
@@ -466,7 +466,7 @@ void A_TabsGroups_Dlg::Start_Brush_Properties_Dlg()
 // *************************************************************************
 // *			Properties_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -546,7 +546,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Properties_Proc(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_RENAME)
 		{
-			
+			//Brush_SetName(pBrush, *pName);
 			Debug
 			return TRUE;
 		}
@@ -575,7 +575,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Properties_Proc(HWND hDlg, UINT message
 // *************************************************************************
 // *	  	Fill_Brush_Combo:- Terry and Hazel Flanigan 2023	    	   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Fill_Brush_Combo(HWND hDlg)
+void SB_Tabs_Brushes_Dlg::Fill_Brush_Combo(HWND hDlg)
 {
 	App->Get_Current_Document();
 
@@ -600,7 +600,7 @@ void A_TabsGroups_Dlg::Fill_Brush_Combo(HWND hDlg)
 // *************************************************************************
 // *	  	   List_BrushData:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
+void SB_Tabs_Brushes_Dlg::List_BrushData(HWND hDlg)
 {
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 	char buf[255];
@@ -628,7 +628,7 @@ void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
 // *************************************************************************
 // *	  	Show_Brush_Info:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
+bool SB_Tabs_Brushes_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 {
 	char buf[255];
 
@@ -714,7 +714,7 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 // *************************************************************************
 // *	  	Show_Brush_ListInfo:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TabsGroups_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
+bool SB_Tabs_Brushes_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 {
 	char buf[MAX_PATH];
 	Brush *pBrush;
@@ -747,7 +747,7 @@ bool A_TabsGroups_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 // *************************************************************************
 // *	  Show_Brush_Faces_Info:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TabsGroups_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
+bool SB_Tabs_Brushes_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
 {
 	int i;
 	char buf[MAX_PATH];
@@ -775,7 +775,7 @@ bool A_TabsGroups_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
 // *************************************************************************
 // *		  Show_Face_Data:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TabsGroups_Dlg::Show_Face_Data(int Index, const Face *f, HWND hDlg)
+bool SB_Tabs_Brushes_Dlg::Show_Face_Data(int Index, const Face *f, HWND hDlg)
 {
 	
 	char buf[MAX_PATH];
@@ -843,7 +843,7 @@ bool A_TabsGroups_Dlg::Show_Face_Data(int Index, const Face *f, HWND hDlg)
 // *************************************************************************
 // *		  Update_Dlg_Controls:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Update_Dlg_Controls()
+void SB_Tabs_Brushes_Dlg::Update_Dlg_Controls()
 {
 	App->Get_Current_Document();
 

@@ -251,7 +251,7 @@ bool SB_App::InitApp(void)
 	CL_TextureDialog =				new	A_TextureDialog();
 	CL_FaceDialog =					new A_FaceDialog();
 	CL_TabsControl =				new A_TabsControl();
-	CL_TabsGroups_Dlg =				new A_TabsGroups_Dlg();
+	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
 	CL_TabsTemplates_Dlg =			new A_TabsTemplates_Dlg();
 
 	CL_CreateArchDialog =			new A_CreateArchDialog();

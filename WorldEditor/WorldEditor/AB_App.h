@@ -126,7 +126,7 @@ public:
 	A_TextureDialog*			CL_TextureDialog;
 	A_FaceDialog*				CL_FaceDialog;
 	A_TabsControl*				CL_TabsControl;
-	A_TabsGroups_Dlg*			CL_TabsGroups_Dlg;
+	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
 	A_TabsTemplates_Dlg*		CL_TabsTemplates_Dlg;
 
 	A_CreateArchDialog*			CL_CreateArchDialog;

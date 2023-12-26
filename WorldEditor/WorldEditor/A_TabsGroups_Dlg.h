@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_TabsGroups_Dlg
+class SB_Tabs_Brushes_Dlg
 {
 public:
-	A_TabsGroups_Dlg(void);
-	~A_TabsGroups_Dlg(void);
+	SB_Tabs_Brushes_Dlg(void);
+	~SB_Tabs_Brushes_Dlg(void);
 
 	void Show_GroupsDialog(bool Show);
 	void Start_Brush_Tabs_Dialog();
