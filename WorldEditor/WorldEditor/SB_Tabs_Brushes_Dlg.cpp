@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "A_TabsGroups_Dlg.h"
+#include "SB_Tabs_Brushes_Dlg.h"
 
 #pragma warning( disable : 4101)
 

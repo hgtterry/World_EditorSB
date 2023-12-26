@@ -41,7 +41,7 @@ distribution.
 #include "A_FaceDialog.h"
 
 #include "A_TabsControl.h"
-#include "A_TabsGroups_Dlg.h"
+#include "SB_Tabs_Brushes_Dlg.h"
 #include "A_TabsTemplates_Dlg.h"
 
 #include "A_CreateArchDialog.h"
