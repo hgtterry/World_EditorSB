@@ -18,6 +18,7 @@ public:
 	BrushList* BrushList_Create(void);
 	Brush* Get_By_Index(int Index);
 	bool Brush_Create_From_Equity();
+	bool Check_if_Name_Exist(char* Name);
 };
 
 

@@ -28,7 +28,7 @@ public:
 	SB_Dialogs(void);
 	~SB_Dialogs(void);
 
-	bool Dialog_Text();
+	bool Dialog_Text(int What_Check);
 	void YesNo(char* Text, char* Text2);
 	void YesNoCancel(char* Text, char* Text2);
 
@@ -40,6 +40,7 @@ public:
 	bool Canceled;
 	bool TrueFlase;
 
+	int What_Check_Name;
 
 	int YesNoCancel_Result;
 

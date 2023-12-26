@@ -40,6 +40,7 @@ SB_Dialogs::SB_Dialogs(void)
 
 	Canceled = 0;
 	TrueFlase = 0;
+	What_Check_Name = Enums::Check_Name_None;
 
 	YesNoCancel_Result = 0;
 
@@ -59,9 +60,10 @@ SB_Dialogs::~SB_Dialogs(void)
 // *************************************************************************
 // *	  			Dialog_Text:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool SB_Dialogs::Dialog_Text()
+bool SB_Dialogs::Dialog_Text(int What_Check)
 {
 	Canceled = 0;
+	What_Check_Name = What_Check;
 
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
@@ -146,6 +148,16 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wP
 			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
 
 			strcpy(App->CLSB_Dialogs->Chr_Text, buff);
+
+			if (App->CLSB_Dialogs->What_Check_Name == Enums::Check_Name_Brushes)
+			{
+				bool test = App->CL_Brush->Check_if_Name_Exist(buff);
+				if (test == 1)
+				{
+					App->Say("Brush Name Exist");
+					return TRUE;
+				}
+			}
 
 			App->CLSB_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));

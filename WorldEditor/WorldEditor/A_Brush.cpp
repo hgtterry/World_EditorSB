@@ -117,6 +117,34 @@ Brush* A_Brush::Get_By_Name(char* BrushName)
 }
 
 // *************************************************************************
+// *		Check_if_Name_Exist:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool A_Brush::Check_if_Name_Exist(char* Name)
+{
+	App->Get_Current_Document();
+
+	int Result = 1;
+	Brush* b;
+
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Result = strcmp(b->Name, Name);
+		if (Result == 0)
+		{
+			return 1;
+		}
+
+		b = b->Next;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
 // *							Get_By_Index							   *
 // *************************************************************************
 Brush* A_Brush::Get_By_Index(int Index)

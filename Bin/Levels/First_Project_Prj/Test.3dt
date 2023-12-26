@@ -469,7 +469,7 @@ Brush "Centre"
 		LightScale 2.000000 2.000000
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 -0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
-Brush "Staircase"
+Brush "Staircase Steps"
 	Flags 1
 	ModelId 0
 	GroupId 0
@@ -1864,7 +1864,7 @@ Brush "Box_Ledge"
 		LightScale 2.000000 2.000000
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 -0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
-Brush "Staircase"
+Brush "Staircase Ramp"
 	Flags 1
 	ModelId 0
 	GroupId 0

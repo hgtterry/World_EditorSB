@@ -75,6 +75,12 @@
 
 namespace Enums
 {
+	enum Check_Text
+	{
+		Check_Name_None = 0,
+		Check_Name_Brushes = 1
+	};
+
 	enum Camera
 	{
 		CamNone = 0,

@@ -478,6 +478,7 @@ LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Properties_Proc(HWND hDlg, UINT mess
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -516,6 +517,13 @@ LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Properties_Proc(HWND hDlg, UINT mess
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_RENAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -546,8 +554,30 @@ LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Properties_Proc(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_BT_RENAME)
 		{
-			//Brush_SetName(pBrush, *pName);
-			Debug
+			char Name[MAX_PATH];
+
+			strcpy(App->CLSB_Dialogs->btext, "Change File Name");
+			strcpy(App->CLSB_Dialogs->Chr_Text, App->CL_TabsGroups_Dlg->Selected_Brush->Name);
+
+			App->CLSB_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
+
+			if (App->CLSB_Dialogs->Canceled == 0)
+			{
+				strcpy(Name, App->CLSB_Dialogs->Chr_Text);
+			}
+			else
+			{
+				return TRUE;
+			}
+			
+			Brush_SetName(App->CL_TabsGroups_Dlg->Selected_Brush, Name);
+			
+			App->CL_TabsGroups_Dlg->Fill_Brush_Combo(hDlg);
+			App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
+			App->CL_TabsGroups_Dlg->Fill_ListBox();
+
+			App->m_pDoc->SetModifiedFlag(TRUE);
+
 			return TRUE;
 		}
 		
@@ -579,7 +609,7 @@ void SB_Tabs_Brushes_Dlg::Fill_Brush_Combo(HWND hDlg)
 {
 	App->Get_Current_Document();
 
-	//SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	Level* pLevel = App->CLSB_Doc->pLevel;
 	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);

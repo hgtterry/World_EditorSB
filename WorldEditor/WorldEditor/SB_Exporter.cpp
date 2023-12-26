@@ -306,7 +306,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			strcpy(App->CLSB_Dialogs->btext, "Change File Name");
 			strcpy(App->CLSB_Dialogs->Chr_Text, App->CLSB_Exporter->mJustName);
 
-			App->CLSB_Dialogs->Dialog_Text();
+			App->CLSB_Dialogs->Dialog_Text(Enums::Check_Name_None);
 
 			if (App->CLSB_Dialogs->Canceled == 0)
 			{
