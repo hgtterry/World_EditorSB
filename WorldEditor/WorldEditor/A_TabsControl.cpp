@@ -66,7 +66,7 @@ void A_TabsControl::Start_Tabs_Control_Dlg()
 
 		f_TabsDlg_Active = 1;
 		App->CL_TextureDialog->Start_TextureDialog();
-		App->CL_TabsGroups_Dlg->Start_GroupsDialog();
+		App->CL_TabsGroups_Dlg->Start_Brush_Tabs_Dialog();
 
 		Start_3DSettings();
 		Show_3DSettings(0);

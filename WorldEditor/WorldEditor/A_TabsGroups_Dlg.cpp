@@ -115,11 +115,11 @@ void A_TabsGroups_Dlg::Show_GroupsDialog(bool Show)
 }
 
 // *************************************************************************
-// *	  	Start_GroupsDialog:- Terry and Hazel Flanigan 2023			   *
+// *	  	Start_Brush_Tabs_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Start_GroupsDialog()
+void A_TabsGroups_Dlg::Start_Brush_Tabs_Dialog()
 {
-	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Groups_Proc);
+	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Brush_Tabs_Proc);
 
 	Groups_Dlg_Created = 1;
 
@@ -130,7 +130,7 @@ void A_TabsGroups_Dlg::Start_GroupsDialog()
 // *************************************************************************
 // *			 Groups_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -287,7 +287,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
 		{
-			App->CL_TabsGroups_Dlg->Start_Properties_Dlg();
+			App->CL_TabsGroups_Dlg->Start_Brush_Properties_Dlg();
 			SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
 			return TRUE;
 		}
@@ -455,18 +455,18 @@ void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
 // *************************************************************************
 // *	  	Start_Properties_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::Start_Properties_Dlg()
+void A_TabsGroups_Dlg::Start_Brush_Properties_Dlg()
 {
 	if (Properties_Dialog_Active == 0)
 	{
-		DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_PROPERTIES, App->MainHwnd, (DLGPROC)Properties_Proc);
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_PROPERTIES, App->MainHwnd, (DLGPROC)Brush_Properties_Proc);
 	}
 }
 
 // *************************************************************************
 // *			Properties_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK A_TabsGroups_Dlg::Brush_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -544,6 +544,13 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_RENAME)
+		{
+			
+			Debug
+			return TRUE;
+		}
+		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{

@@ -30,8 +30,8 @@ public:
 	~A_TabsGroups_Dlg(void);
 
 	void Show_GroupsDialog(bool Show);
-	void Start_GroupsDialog();
-	void Start_Properties_Dlg();
+	void Start_Brush_Tabs_Dialog();
+	void Start_Brush_Properties_Dlg();
 
 	void Get_Index(const Brush *b);
 	void Fill_ListBox();
@@ -44,8 +44,8 @@ public:
 
 private:
 
-	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Brush_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Brush_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_Selection_Changed(bool Clear);
 	void OnSelchangeBrushlist(int Index,bool Clear);
