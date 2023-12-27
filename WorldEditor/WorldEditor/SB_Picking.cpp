@@ -47,6 +47,8 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     closest_distance = -1;
     pentity = NULL;
 
+    Selected_Brush = NULL;
+
     closest_distance = 0;
 
     Selected_Brush_Face_Count = 0;
@@ -60,6 +62,8 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     SubMesh_Index_Fault = 0;
     Local_Face = 0;
     Got_Mesh_Flag = 0;
+
+    Real_Sub_Brush_Count = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -633,8 +637,8 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
 
     App->Get_Current_Document();
 
-    Brush* Selected_Brush;
-
+    Selected_Brush = NULL;
+   
     int			c;
     geBoolean	bChanged = FALSE;
 
@@ -650,11 +654,13 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
 
         Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
        
+       // int FaceCount = Brush_GetNumFaces(Selected_Brush);
+       
         strcpy(Selected_Brush_Name,App->CL_Brush->Brush_GetName(Selected_Brush));
 
         SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
-
+        Get_Brush_Data(Selected_Brush);
         App->CLSB_Doc->UpdateSelected();
 
         App->CL_TabsControl->Select_Brushes_Tab(0);
@@ -684,6 +690,57 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
     }
+}
+
+struct tag_FaceList
+{
+    int NumFaces;
+    int Limit;
+    Face** Faces;
+    geBoolean Dirty;
+    Box3d Bounds;
+};
+
+// *************************************************************************
+// *         Get_Brush_Data:- Terry and Hazel Flanigan 2023                *
+// *************************************************************************
+void SB_Picking::Get_Brush_Data(Brush* pBrush)
+{
+    Real_Brush_Type[0] = 0;
+    Real_Sub_Brush_Count = 0;
+    Real_Face_Count = 0;
+
+    if (pBrush->Type == BRUSH_MULTI)
+    {
+
+        strcpy(Real_Brush_Type, "BRUSH_MULTI");
+        Real_Sub_Brush_Count = BrushList_Count(pBrush->BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+
+        BrushIterator bi;
+        pBrush = BrushList_GetFirst(pBrush->BList, &bi);
+        while (pBrush != NULL)
+        {
+            Real_Face_Count = Real_Face_Count + Brush_GetNumFaces(pBrush);
+            pBrush = BrushList_GetNext(&bi);
+        }
+
+        return;
+    }
+    if (pBrush->Type == BRUSH_LEAF)
+    {
+        strcpy(Real_Brush_Type, "BRUSH_LEAF");
+        Real_Sub_Brush_Count = 1;
+        Real_Face_Count = pBrush->Faces->NumFaces;
+        return;
+    }
+    if (pBrush->Type == BRUSH_CSG)
+    {
+        strcpy(Real_Brush_Type, "BRUSH_CSG");
+        return;
+    }
+
+    Real_Face_Count = 0;
+    strcpy(Real_Brush_Type, "Unknown");
 }
 
 // *************************************************************************

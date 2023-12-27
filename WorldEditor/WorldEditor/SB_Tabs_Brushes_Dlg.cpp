@@ -756,6 +756,7 @@ bool SB_Tabs_Brushes_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 	Count = BrushList_Count (BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
+		Debug
 		sprintf(buf, "%s%d", " ===== Sub Brushes ", Count);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		return 0;

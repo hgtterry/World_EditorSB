@@ -77,6 +77,8 @@ SB_ImGui::SB_ImGui()
 
 	Show_Textures_F = 0;
 	Show_Brush_Data_F = 0;
+	Show_Real_Brush_F = 0;
+	Show_Global_Data_F = 0;
 
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
@@ -847,40 +849,55 @@ void SB_ImGui::Face_Selection(void)
 	}
 	else
 	{
-		ImGui::Text("Selected Object");
-		ImGui::Separator();
-
-		ImGui::Text("Internal Name: = %s", App->CLSB_Picking->Pl_Entity_Name.c_str());
-		ImGui::Text("Object Name: = %s", App->CLSB_Ogre->OgreListener->Selected_Object_Name);
-
-		ImGui::Text("");
-		ImGui::Text("Sub Meshes: = %i", App->CLSB_Picking->Sub_Mesh_Count);
-		ImGui::Text("Total Vertices: = %i", App->CLSB_Picking->Total_Vertices_count_Actual);
-		ImGui::Text("Total Indices: = %i", App->CLSB_Picking->Total_index_count_Actual);
-		ImGui::Text("Total Faces: = %i", App->CLSB_Picking->Total_index_count_Actual / 3);
-
-		ImGui::Text("");
-
-		ImGui::Text("Distance: = %f", App->CLSB_Picking->closest_distance);
-		//ImGui::Text("Type: = %s", App->CLSB_Picking->TextureName);
-
-		if (App->CLSB_Picking->TextCords)
+		if (ImGui::Button("Global_Data"))
 		{
-			int Face_Index = App->CLSB_Picking->Face_Index;
+			if (Show_Global_Data_F == 1)
+			{
+				Show_Global_Data_F = 0;
+			}
+			else
+			{
+				Show_Global_Data_F = 1;
+			}
+		}
 
-			ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Index);
-			ImGui::Text("Face Index Global: = %i", Face_Index / 3);
-			ImGui::Text("Face Index Local: = %i", App->CLSB_Picking->Local_Face);
-			//ImGui::Text("Test: = %i", (Face_Index / 3) - App->CLSB_Picking->Local_Face);
+		if (Show_Global_Data_F == 1)
+		{
+			ImGui::Text("Selected Object");
+			ImGui::Separator();
+
+			ImGui::Text("Internal Name: = %s", App->CLSB_Picking->Pl_Entity_Name.c_str());
+			ImGui::Text("Object Name: = %s", App->CLSB_Ogre->OgreListener->Selected_Object_Name);
+
 			ImGui::Text("");
-			/*ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[0].x, App->CLSB_Grid->HitVertices[0].y, App->CLSB_Grid->HitVertices[0].z);
-			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[1].x, App->CLSB_Grid->HitVertices[1].y, App->CLSB_Grid->HitVertices[1].z);
-			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[2].x, App->CLSB_Grid->HitVertices[2].y, App->CLSB_Grid->HitVertices[2].z);
+			ImGui::Text("Sub Meshes: = %i", App->CLSB_Picking->Sub_Mesh_Count);
+			ImGui::Text("Total Vertices: = %i", App->CLSB_Picking->Total_Vertices_count_Actual);
+			ImGui::Text("Total Indices: = %i", App->CLSB_Picking->Total_index_count_Actual);
+			ImGui::Text("Total Faces: = %i", App->CLSB_Picking->Total_index_count_Actual / 3);
+
 			ImGui::Text("");
-			ImGui::Text("UV1: = %f %f", App->CLSB_Grid->HitFaceUVs[0].x, App->CLSB_Grid->HitFaceUVs[0].y);
-			ImGui::Text("UV2: = %f %f", App->CLSB_Grid->HitFaceUVs[1].x, App->CLSB_Grid->HitFaceUVs[1].y);
-			ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
-			ImGui::Text("");*/
+
+			ImGui::Text("Distance: = %f", App->CLSB_Picking->closest_distance);
+			//ImGui::Text("Type: = %s", App->CLSB_Picking->TextureName);
+
+			if (App->CLSB_Picking->TextCords)
+			{
+				int Face_Index = App->CLSB_Picking->Face_Index;
+
+				ImGui::Text("Sub Mesh: = %i", App->CLSB_Picking->SubMesh_Index);
+				ImGui::Text("Face Index Global: = %i", Face_Index / 3);
+				ImGui::Text("Face Index Local: = %i", App->CLSB_Picking->Local_Face);
+				//ImGui::Text("Test: = %i", (Face_Index / 3) - App->CLSB_Picking->Local_Face);
+				ImGui::Text("");
+				/*ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[0].x, App->CLSB_Grid->HitVertices[0].y, App->CLSB_Grid->HitVertices[0].z);
+				ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[1].x, App->CLSB_Grid->HitVertices[1].y, App->CLSB_Grid->HitVertices[1].z);
+				ImGui::Text("Vert1: = %.3f %.3f %.3f", App->CLSB_Grid->HitVertices[2].x, App->CLSB_Grid->HitVertices[2].y, App->CLSB_Grid->HitVertices[2].z);
+				ImGui::Text("");
+				ImGui::Text("UV1: = %f %f", App->CLSB_Grid->HitFaceUVs[0].x, App->CLSB_Grid->HitFaceUVs[0].y);
+				ImGui::Text("UV2: = %f %f", App->CLSB_Grid->HitFaceUVs[1].x, App->CLSB_Grid->HitFaceUVs[1].y);
+				ImGui::Text("UV3: = %f %f", App->CLSB_Grid->HitFaceUVs[2].x, App->CLSB_Grid->HitFaceUVs[2].y);
+				ImGui::Text("");*/
+			}
 		}
 
 		if (ImGui::Button("Brush_Data"))
@@ -901,6 +918,32 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Text("Face Count: = %i", App->CLSB_Picking->Selected_Brush_Face_Count);
 			ImGui::Text("Face Material: = %s", App->CLSB_Picking->FaceMaterial);
 			ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
+			//ImGui::Text("Texture: = %s", App->CLSB_Picking->TextureName2);
+
+		}
+
+		if (ImGui::Button("Real Brush"))
+		{
+			if (Show_Real_Brush_F == 1)
+			{
+				Show_Real_Brush_F = 0;
+			}
+			else
+			{
+				Show_Real_Brush_F = 1;
+			}
+		}
+
+		if (Show_Real_Brush_F == 1)
+		{
+			if (App->CLSB_Picking->Selected_Brush)
+			{
+				ImGui::Text("Brush Name2: = %s", App->CLSB_Picking->Selected_Brush->Name);
+				ImGui::Text("Brush_Type: = %s", App->CLSB_Picking->Real_Brush_Type);
+				ImGui::Text("Total_Brushes: = %i", App->CLSB_Picking->Real_Sub_Brush_Count);
+				ImGui::Text("Sub_Brushes: = %i", App->CLSB_Picking->Real_Sub_Brush_Count-1);
+				ImGui::Text("Face Count: = %i", App->CLSB_Picking->Real_Face_Count);
+			}
 		}
 
 		if (ImGui::Button("Close"))
