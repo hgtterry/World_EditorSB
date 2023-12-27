@@ -1244,7 +1244,8 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		
 		SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_LIST_POINTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
 
 		return TRUE;
@@ -1297,6 +1298,7 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 
 				App->CLSB_Picking->Select_Face_In_Brush(Index+1);
+				App->CLSB_Dialogs->Show_Face_Data(Index, App->CLSB_Picking->Selected_Face, hDlg);
 			}
 			}
 
@@ -1341,6 +1343,105 @@ void SB_Dialogs::Fill_Face_Combo(HWND hDlg)
 	}
 
 	SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	Plane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
+// *************************************************************************
+// *		  Show_Face_Data:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
+{
+
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+	int		i, xShift, yShift, Rotate;
+	geFloat xScale, yScale, rot;
+
+	sprintf(buf, "%s", " -------------------------------------------");
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "Face Index", Index + 1);
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%i", "Flags ", f->Flags);
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%d", "NumPoints", f->NumPoints);
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		sprintf(buf, "XYZ %f %f %f", f->Points[i].X, f->Points[i].Y, f->Points[i].Z);
+		SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+
+	const TexInfo_Vectors* TVecs = Face_GetTextureVecs(f);
+	geVec3d uVec, vVec;
+	geFloat U, V;
+
+	int txSize, tySize;
+
+	Face_GetTextureSize(f, &txSize, &tySize);
+
+	// make sure that the texture size is set correctly (division!)
+	if (txSize == 0)
+		txSize = 32;
+	if (tySize == 0)
+		tySize = 32;
+
+	geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+	geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+	const geVec3d* verts = Face_GetPoints(f);
+
+	int j = 0;
+	for (j = 0; j < f->NumPoints; j++)
+	{
+		U = geVec3d_DotProduct(&(verts[j]), &uVec);
+		V = geVec3d_DotProduct(&(verts[j]), &vVec);
+		U += (TVecs->uOffset / txSize);
+		V -= (TVecs->vOffset / tySize);
+
+		sprintf(buf, "UV %.3f %.3f", U, V);
+		SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	char buf2[MAX_PATH];
+	strcpy(buf, Face_GetTextureName(f));
+	sprintf(buf2, "%s%s", "Texture: = ", buf);
+	SendDlgItemMessage(hDlg, IDC_LIST_POINTS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf2);
+
+	return 1;
 }
 
 
