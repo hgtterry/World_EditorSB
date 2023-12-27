@@ -36,7 +36,10 @@ public:
 	void Start_Speed_Camera();
 	bool Start_Dialog_DropGen();
 	void Dialog_TrueFlase();
-	
+
+	void Start_Select_Face_Dlg();
+	void Fill_Face_Combo(HWND hDlg);
+
 	bool Canceled;
 	bool TrueFlase;
 
@@ -61,6 +64,7 @@ private:
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Select_Face_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);
@@ -70,6 +74,8 @@ private:
 	void UpdateGroupDetails(HWND List);
 	
 	bool F_ListData_Dlg_Active;
+	bool Select_Face_Dlg_Active;
+
 	int mWhatList;
 
 	bool Mouse_Normal;

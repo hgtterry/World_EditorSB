@@ -48,6 +48,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     pentity = NULL;
 
     Selected_Brush = NULL;
+    Selected_Face = NULL;
 
     closest_distance = 0;
 
@@ -748,14 +749,9 @@ void SB_Picking::Get_Brush_Data(Brush* pBrush)
 // *************************************************************************
 void SB_Picking::Select_Face_In_Brush(int Face_Index)
 {
-    /* Face* pFace;
-     pFace = Brush_SelectFirstFace(App->CLSB_Doc->CurBrush);
-     SelBrushList_Add(App->CLSB_Doc->pSelBrushes, App->CLSB_Doc->CurBrush);
+    Selected_Face = NULL;
 
-     SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
-
-     App->CLSB_Doc->UpdateSelected();
-     App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
+    App->CLSB_Doc->ResetAllSelectedFaces();
 
     Selected_Brush_Face_Count = 0;
 
@@ -769,14 +765,14 @@ void SB_Picking::Select_Face_In_Brush(int Face_Index)
         return;
     }
 
-    Face* pFace;
-    pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, Face_Index - 1);
+    
+    Selected_Face = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, Face_Index - 1);
 
     App->CLSB_Doc->ResetAllSelectedFaces();
 
-    Face_SetSelected(pFace, GE_TRUE);
+    Face_SetSelected(Selected_Face, GE_TRUE);
 
-    SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
+    SelFaceList_Add(App->CLSB_Doc->pSelFaces, Selected_Face);
 
     App->CLSB_Doc->UpdateSelected();
     App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

@@ -32,6 +32,7 @@ SB_Dialogs::SB_Dialogs(void)
 	MessageString2[0] = 0;
 
 	F_ListData_Dlg_Active = 0;
+	Select_Face_Dlg_Active = 0;
 
 	Mouse_Normal = 1;
 	Mouse_Slow = 0;
@@ -1218,5 +1219,129 @@ void SB_Dialogs::UpdateGroupDetails(HWND List)
 	sprintf(buf, "Size X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Size.x, App->CLSB_Model->Group[Num]->Size.y, App->CLSB_Model->Group[Num]->Size.z);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 }
+
+// *************************************************************************
+// *	  	Start_Select_Face_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Dialogs::Start_Select_Face_Dlg()
+{
+	if (Select_Face_Dlg_Active == 0)
+	{
+		CreateDialog(App->hInst, (LPCTSTR)IDD_SB_SELECT_FACE, App->Equity_Dlg_hWnd, (DLGPROC)Select_Face_Proc);
+		Select_Face_Dlg_Active = 1;
+	}
+}
+
+// *************************************************************************
+// *		Select_Face_Proc:- Terry and Hazel Flanigan 2023	  		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		
+		SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+
+		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Dialogs->Mouse_Normal);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_CB_FACENUMBER)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_SELECTED_BRUSH);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+
+				App->CLSB_Picking->Select_Face_In_Brush(Index+1);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CLSB_ImGui->Select_Face_F = 0;
+			App->CLSB_Dialogs->Select_Face_Dlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CLSB_ImGui->Select_Face_F = 0;
+			App->CLSB_Dialogs->Select_Face_Dlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Fill_Face_Combo:- Terry and Hazel Flanigan 2023	    	   *
+// *************************************************************************
+void SB_Dialogs::Fill_Face_Combo(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+	int Count = 0;
+	while (Count < App->CLSB_Picking->Real_Face_Count)
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_ADDSTRING, (WPARAM)0, (LPARAM)itoa(Count+1,buf,10));
+		Count++;
+		
+	}
+
+	SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
 
 	

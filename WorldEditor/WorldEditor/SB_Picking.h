@@ -30,7 +30,7 @@ public:
 	~SB_Picking();
 
 	void SB_Picking::Mouse_Pick_Entity();
-
+	void Select_Face_In_Brush(int Face_Index);
 	Ogre::String Pl_Entity_Name;
 
 	float closest_distance;
@@ -63,6 +63,7 @@ public:
 	Ogre::uint32* Sub_Mesh_Indexs;
 
 	Brush* Selected_Brush;
+	Face* Selected_Face;
 
 	size_t Total_vertex_count;
 	size_t Total_index_count;
@@ -84,7 +85,6 @@ private:
 	int Get_Total_Vertices();
 	int Get_Local_Face(int SelectedGroup);
 	void Select_Brush(int Index, bool Clear);
-	void Select_Face_In_Brush(int Face_Index);
 	void Get_Brush_Data(Brush* pBrush);
 
 	Ogre::SceneManager* mSceneMgr;

@@ -80,9 +80,11 @@ SB_ImGui::SB_ImGui()
 	Show_Real_Brush_F = 0;
 	Show_Global_Data_F = 0;
 
+	Pick_Face = 1;
+
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
-
+	Select_Face_F = 0;
 }
 
 
@@ -944,6 +946,14 @@ void SB_ImGui::Face_Selection(void)
 				ImGui::Text("Sub_Brushes: = %i", App->CLSB_Picking->Real_Sub_Brush_Count-1);
 				ImGui::Text("Face Count: = %i", App->CLSB_Picking->Real_Face_Count);
 			}
+
+			ImGui::Selectable("Select Face:- ", &Select_Face_F);
+		}
+
+		if (Select_Face_F == 1)
+		{
+			App->CLSB_Dialogs->Start_Select_Face_Dlg();
+			//App->CLSB_Picking->Select_Face_In_Brush(Pick_Face);
 		}
 
 		if (ImGui::Button("Close"))

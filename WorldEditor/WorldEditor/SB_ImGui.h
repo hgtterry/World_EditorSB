@@ -66,6 +66,8 @@ public:
 	bool Show_Global_Data_F;
 	bool Show_Face_Selection;
 
+	int Pick_Face;
+	bool Select_Face_F;
 	float PosX;
 	float PosY;
 
