@@ -181,6 +181,7 @@ SB_App::SB_App()
 
 	Write_DebugFile = NULL;
 	New_Render = 0;
+	Block_RB_Actions = 0;
 }
 
 SB_App::~SB_App()

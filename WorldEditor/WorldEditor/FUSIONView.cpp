@@ -453,44 +453,47 @@ void CFusionView::Pan
 
 	if(mViewIs3d)
 	{
-		geVec3d MoveVec;
-
-		if(LButtonIsDown && RButtonIsDown)
+		if (App->Block_RB_Actions == 0)
 		{
-			geVec3d_Set (&MoveVec, (float)-dx, (float)-dy, 0.0f);
-			Render_MoveCamPos( VCam, &MoveVec ) ;
-			pDoc->UpdateCameraEntity( VCam ) ;
-		}
-		else if (LButtonIsDown)
-		{
-			geVec3d_Set (&MoveVec, 0.0f, 0.0f, (float)-dy);
-			//Render_MoveCamPos( VCam, &MoveVec ) ;
+			geVec3d MoveVec;
 
-			Render_IncrementPitch(VCam, (float)(dy));
+			if (LButtonIsDown && RButtonIsDown)
+			{
+				geVec3d_Set(&MoveVec, (float)-dx, (float)-dy, 0.0f);
+				Render_MoveCamPos(VCam, &MoveVec);
+				pDoc->UpdateCameraEntity(VCam);
+			}
+			else if (LButtonIsDown)
+			{
+				geVec3d_Set(&MoveVec, 0.0f, 0.0f, (float)-dy);
+				//Render_MoveCamPos( VCam, &MoveVec ) ;
 
-			if (Render_UpIsDown (VCam))
-			{
-				Render_IncrementPitch(VCam, (float)(-dx));
-				//Render_IncrementYaw (VCam, (float)(-dx));
+				Render_IncrementPitch(VCam, (float)(dy));
+
+				if (Render_UpIsDown(VCam))
+				{
+					Render_IncrementPitch(VCam, (float)(-dx));
+					//Render_IncrementYaw (VCam, (float)(-dx));
+				}
+				else
+				{
+					Render_IncrementYaw(VCam, (float)dx);
+				}
+				pDoc->UpdateCameraEntity(VCam);
 			}
-			else
+			else if (RButtonIsDown)
 			{
-				Render_IncrementYaw(VCam, (float)dx);
+				if (Render_UpIsDown(VCam))
+				{
+					Render_IncrementYaw(VCam, (float)(-dx));
+				}
+				else
+				{
+					Render_IncrementYaw(VCam, (float)dx);
+				}
+				Render_IncrementPitch(VCam, (float)dy);
+				pDoc->UpdateCameraEntity(VCam);
 			}
-			pDoc->UpdateCameraEntity( VCam ) ;
-		}
-		else if (RButtonIsDown)
-		{
-			if (Render_UpIsDown (VCam))
-			{
-				Render_IncrementYaw (VCam, (float)(-dx));
-			}
-			else
-			{
-				Render_IncrementYaw(VCam, (float)dx);
-			}
-			Render_IncrementPitch(VCam, (float)dy);
-			pDoc->UpdateCameraEntity( VCam ) ;
 		}
 	}
 	else
@@ -693,13 +696,14 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	//camera and space hold panning
 	if ((ModeTool == ID_TOOLS_CAMERA) ||IsPanning)
 	{
-		int Tolarance1 = 2;
-		int Tolarance2 = -2;
+			int Tolarance1 = 2;
+			int Tolarance2 = -2;
 
-		if (dx > Tolarance1 || dy > Tolarance1 || dx < Tolarance2 || dy < Tolarance2)
-		{
-			Pan(pDoc, dx, dy, &dv, LButtonIsDown, RButtonIsDown);
-		}
+			if (dx > Tolarance1 || dy > Tolarance1 || dx < Tolarance2 || dy < Tolarance2)
+			{
+				Pan(pDoc, dx, dy, &dv, LButtonIsDown, RButtonIsDown);
+			}
+		
 	}
 	else if (!mViewIs3d)
 	// none of this stuff should be available in the 3d view.
@@ -1080,23 +1084,26 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point) // hgtterry Left Mouse 
 
 		if (mViewIs3d)
 		{
-			if(ModeTool==ID_TOOLS_TEMPLATE && App->CLSB_Doc->TempEnt)
+			if (App->Block_RB_Actions == 0)
 			{
-				pDoc->PlaceTemplateEntity3D(point, VCam);	
-				pDoc->SetModifiedFlag();
-			}
-			else
-			{
-				switch (AdjustMode)
+				if (ModeTool == ID_TOOLS_TEMPLATE && App->CLSB_Doc->TempEnt)
 				{
-					case ADJUST_MODE_BRUSH :
-					case ADJUST_MODE_FACE :
-						pDoc->SelectRay (point, VCam);
-						App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+					pDoc->PlaceTemplateEntity3D(point, VCam);
+					pDoc->SetModifiedFlag();
+				}
+				else
+				{
+					switch (AdjustMode)
+					{
+					case ADJUST_MODE_BRUSH:
+					case ADJUST_MODE_FACE:
+						pDoc->SelectRay(point, VCam);
+						App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 						break;
-					
-					default :
+
+					default:
 						break;
+					}
 				}
 			}
 		}
@@ -1373,7 +1380,12 @@ void CFusionView::OnRButtonDown(UINT nFlags, CPoint point)
 
 		if (mViewIs3d && !SpaceIsDown)
 		{
-			SetCursor (AfxGetApp()->LoadCursor (IDC_EYEDROPPER));
+			if (App->Block_RB_Actions == 0)
+			{
+				App->Beep_Win();
+				SetCursor(AfxGetApp()->LoadCursor(IDC_EYEDROPPER));
+			}
+
 			return;
 		}
 
@@ -1428,8 +1440,10 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point) // hgtterry Mouse Right
 
 		if (mViewIs3d && !IsKeyDown(VK_CONTROL))
 		{
-			//App->Beep_Win();
-			App->CLSB_Doc->SelectTextureFromFace3D (point, VCam);
+			if (App->Block_RB_Actions == 0)
+			{
+				App->CLSB_Doc->SelectTextureFromFace3D(point, VCam);
+			}
 		}
 
 		pDoc->SetModifiedFlag();

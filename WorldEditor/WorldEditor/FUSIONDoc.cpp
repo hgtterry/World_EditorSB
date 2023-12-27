@@ -3260,7 +3260,7 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
         }
         else
         {
-            Render_RenderBrushFaces(v, pBrush, brushDrawData.Color);
+           Render_RenderBrushFaces(v, pBrush, brushDrawData.Color);
         }
     }
 

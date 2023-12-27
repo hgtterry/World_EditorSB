@@ -546,6 +546,8 @@ LRESULT CALLBACK SB_Tabs_Brushes_Dlg::Brush_Properties_Proc(HWND hDlg, UINT mess
 				App->CL_TabsGroups_Dlg->Selected_Index = Index;
 				App->CL_TabsGroups_Dlg->Selected_Brush = App->CL_Brush->Get_By_Index(Index);
 				App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
+
+				App->CL_TabsGroups_Dlg->OnSelchangeBrushlist(Index, 1);
 			}
 			}
 

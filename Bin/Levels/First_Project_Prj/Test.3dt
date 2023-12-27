@@ -7,7 +7,7 @@ NumEntities 1
 NumModels 0
 NumGroups 1
 Brushlist 20
-Brush "Box_R1"
+Brush "First_Room"
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -2877,7 +2877,7 @@ Brush "Box_19"
 		LightScale 2.000000 2.000000
 	Transform	0.000000 0.000000 1.000000 -0.000000 1.000000 0.000000 -1.000000 -0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
-Brush "Box_18"
+Brush "Box_21"
 	Flags 128
 	ModelId 0
 	GroupId 0
@@ -2968,7 +2968,7 @@ Brush "Box_18"
 		LightScale 1.000000 1.000000
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 -0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
-Brush "Box_18"
+Brush "Box_20"
 	Flags 128
 	ModelId 0
 	GroupId 0

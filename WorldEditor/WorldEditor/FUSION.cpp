@@ -393,7 +393,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_Panels->Set_Aplication_Dialogs_Off();
 
-	App->CLSB_SoundMgr->Play_StartUp_Sound();
+	//App->CLSB_SoundMgr->Play_StartUp_Sound();
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 
