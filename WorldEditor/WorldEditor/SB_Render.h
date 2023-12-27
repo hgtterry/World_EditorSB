@@ -59,6 +59,7 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 	bool Show_Marker_Face;
+	bool Show_Brush_Face;
 
 	bool Render_Brush_Group_Flag;
 
@@ -133,6 +134,7 @@ protected:
 	void RF_Render_Normals(void);
 	
 	void Marker_Face_Selection();
+	void Render_Brush_Face();
 
 	void RenderCrossHair(void);
 };

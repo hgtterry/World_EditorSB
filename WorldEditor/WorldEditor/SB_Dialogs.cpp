@@ -1305,6 +1305,19 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_RENDER)
+		{
+			if (App->CLSB_Ogre->RenderListener->Show_Brush_Face == 1)
+			{
+				App->CLSB_Ogre->RenderListener->Show_Brush_Face = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_ImGui->Select_Face_F = 0;

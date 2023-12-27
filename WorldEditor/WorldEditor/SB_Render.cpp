@@ -47,6 +47,8 @@ SB_Render::SB_Render()
 	ShowNormals = 0;
 	ShowBoundingBox = 0;
 	ShowBoundingGroup = 0;
+	Show_Brush_Face = 0;
+
 	PlayActive = 0;
 	Light_Activated = 0;
 	ShowOnlySubMesh = 0;
@@ -375,6 +377,11 @@ void SB_Render::Render_Loop()
 		Marker_Face_Selection();
 	}
 
+	// ---------------------- Brush Face Marker
+	if (Show_Brush_Face == 1)
+	{
+		Render_Brush_Face();
+	}
 
 	if (depthTestEnabled)
 	{
@@ -1764,7 +1771,7 @@ bool SB_Render::RenderByTexture()
 }
 
 // *************************************************************************
-// *					Assimp_Face_Parts Terry Bernie		   			   *
+// *					Marker_Face_Selection Terry Bernie		   		   *
 // *************************************************************************
 void SB_Render::Marker_Face_Selection()
 {
@@ -1785,4 +1792,69 @@ void SB_Render::Marker_Face_Selection()
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
+}
+
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	Plane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
+// *************************************************************************
+// *					Render_Brush_Face Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Render_Brush_Face()
+{
+	int Count = 0;
+	int Number_of_Points = App->CLSB_Picking->Selected_Face->NumPoints;
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3f(1, 0, 0);
+	glLineWidth(10);
+
+	
+	glBegin(GL_LINE_LOOP);
+
+	while (Count < Number_of_Points)
+	{
+		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[Count].X);
+		/*glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[1].X);
+
+		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[2].X);
+		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[3].X);*/
+		Count++;
+	}
+
+	glEnd();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+
+	//App->Flash_Window();
 }
