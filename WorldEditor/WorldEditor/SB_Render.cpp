@@ -1849,8 +1849,7 @@ void SB_Render::Render_Brush_Faces()
 		Count++;
 	}
 
-	//int Points = App->CLSB_Picking->Selected_Face->NumPoints;
-	//Render_Brush_Faces_Parts(Points);
+	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index+1);
 }
 
 // *************************************************************************
