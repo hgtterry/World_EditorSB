@@ -1245,8 +1245,12 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		
 		SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LIST_POINTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_RENDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
+		App->CLSB_Picking->Select_Face_In_Brush(0 + 1);
+		App->CLSB_Dialogs->Show_Face_Data(0, App->CLSB_Picking->Selected_Face, hDlg);
+		App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
 
 		return TRUE;
 	}
@@ -1272,12 +1276,12 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_RENDER && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Dialogs->Mouse_Normal);
+			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Show_Brush_Face);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}

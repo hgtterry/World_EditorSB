@@ -1844,10 +1844,6 @@ void SB_Render::Render_Brush_Face()
 	while (Count < Number_of_Points)
 	{
 		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[Count].X);
-		/*glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[1].X);
-
-		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[2].X);
-		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[3].X);*/
 		Count++;
 	}
 
