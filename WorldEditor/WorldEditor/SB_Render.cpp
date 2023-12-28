@@ -380,7 +380,7 @@ void SB_Render::Render_Loop()
 	// ---------------------- Brush Face Marker
 	if (Show_Brush_Face == 1)
 	{
-		Render_Brush_Face();
+		Render_Brush_Faces();
 	}
 
 	if (depthTestEnabled)
@@ -1824,24 +1824,53 @@ typedef struct FaceTag
 } Face;
 
 // *************************************************************************
-// *					Render_Brush_Face Terry Bernie		   			   *
+// *					Render_Brush_Faces Terry Bernie		   			   *
 // *************************************************************************
-void SB_Render::Render_Brush_Face()
+void SB_Render::Render_Brush_Faces()
 {
 	int Count = 0;
-	int Number_of_Points = App->CLSB_Picking->Selected_Face->NumPoints;
+	while (Count < App->CLSB_Picking->Real_Face_Count)
+	{
+		if (App->CLSB_Dialogs->Selected_Face_Index == Count)
+		{
+			glColor3f(1, 0, 0);
+			glLineWidth(5);
+		}
+		else
+		{
+			glColor3f(0, 1, 0);
+			glLineWidth(1);
+		}
 
+		App->CLSB_Picking->Select_Face_In_Brush(Count + 1);
+
+		int Points = App->CLSB_Picking->Selected_Face->NumPoints;
+		Render_Brush_Faces_Parts(Points);
+		Count++;
+	}
+
+	//int Points = App->CLSB_Picking->Selected_Face->NumPoints;
+	//Render_Brush_Faces_Parts(Points);
+}
+
+// *************************************************************************
+// *					Render_Brush_Face Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
+{
+	int Count = 0;
+	
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(1, 0, 0);
-	glLineWidth(10);
+	
+	//glLineWidth(2);
 
 	
 	glBegin(GL_LINE_LOOP);
 
-	while (Count < Number_of_Points)
+	while (Count < NumPoints)
 	{
 		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[Count].X);
 		Count++;
@@ -1852,5 +1881,4 @@ void SB_Render::Render_Brush_Face()
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 
-	//App->Flash_Window();
 }

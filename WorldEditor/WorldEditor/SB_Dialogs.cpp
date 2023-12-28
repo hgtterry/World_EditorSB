@@ -52,6 +52,7 @@ SB_Dialogs::SB_Dialogs(void)
 
 	Chr_DropText[0] = 0;
 	DropList_Data = 0;
+	Selected_Face_Index = 1;
 }
 
 SB_Dialogs::~SB_Dialogs(void)
@@ -1299,10 +1300,10 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 				char buff[MAX_PATH]{ 0 };
 
 				HWND temp = GetDlgItem(hDlg, IDC_CB_SELECTED_BRUSH);
-				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				App->CLSB_Dialogs->Selected_Face_Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 
-				App->CLSB_Picking->Select_Face_In_Brush(Index+1);
-				App->CLSB_Dialogs->Show_Face_Data(Index, App->CLSB_Picking->Selected_Face, hDlg);
+				App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index +1);
+				App->CLSB_Dialogs->Show_Face_Data(App->CLSB_Dialogs->Selected_Face_Index, App->CLSB_Picking->Selected_Face, hDlg);
 			}
 			}
 

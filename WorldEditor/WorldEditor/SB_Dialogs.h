@@ -40,6 +40,7 @@ public:
 	void Start_Select_Face_Dlg();
 	void Fill_Face_Combo(HWND hDlg);
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
+	int Selected_Face_Index;
 
 	bool Canceled;
 	bool TrueFlase;

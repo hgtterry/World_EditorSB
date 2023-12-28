@@ -134,7 +134,9 @@ protected:
 	void RF_Render_Normals(void);
 	
 	void Marker_Face_Selection();
-	void Render_Brush_Face();
+
+	void Render_Brush_Faces();
+	void Render_Brush_Faces_Parts(int NumPoints);
 
 	void RenderCrossHair(void);
 };
