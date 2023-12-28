@@ -106,6 +106,7 @@ SB_App::SB_App()
 
 	CLSB_PB =					nullptr;
 	CLSB_BR_Render =			nullptr;
+	CLSB_BaseFaces =			nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -320,6 +321,7 @@ bool SB_App::InitApp(void)
 	
 	CLSB_PB =						new SB_PB();
 	CLSB_BR_Render =				new SB_BR_Render();
+	CLSB_BaseFaces =				new Base_Faces();
 
 	InitCommonControls();
 

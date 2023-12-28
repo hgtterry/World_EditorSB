@@ -1864,9 +1864,6 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	
-	//glLineWidth(2);
-
-	
 	glBegin(GL_LINE_LOOP);
 
 	while (Count < NumPoints)

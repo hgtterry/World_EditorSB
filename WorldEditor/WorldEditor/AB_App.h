@@ -108,6 +108,7 @@ distribution.
 
 #include "SB_PB.h"
 #include "SB_BR_Render.h"
+#include "Base_Faces.h"
 
 class SB_App
 {
@@ -194,6 +195,7 @@ public:
 
 	SB_PB*						CLSB_PB;
 	SB_BR_Render*				CLSB_BR_Render;
+	Base_Faces*					CLSB_BaseFaces;
 
 	bool InitApp(void);
 	void InitMFC(void);
