@@ -102,7 +102,7 @@ void SB_Render::Reset_Class(void)
 	ShowOnlySubMesh = 0;
 	Show_HideGroup = 0;
 	Show_Crosshair = 0;
-
+	Show_Brush_Face_New = 0;
 	Render_Brush_Group_Flag = 0;
 }
 
@@ -381,6 +381,12 @@ void SB_Render::Render_Loop()
 	if (Show_Brush_Face == 1)
 	{
 		Render_Brush_Faces();
+	}
+
+	// ---------------------- Brush Face Marker
+	if (Show_Brush_Face_New == 1)
+	{
+		Render_Brush_Faces_New();
 	}
 
 	if (depthTestEnabled)
@@ -1869,6 +1875,104 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
 	while (Count < NumPoints)
 	{
 		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[Count].X);
+		Count++;
+	}
+
+	glEnd();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+
+}
+
+// *************************************************************************
+// *					Get_Brush_Faces Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Get_Brush_Faces()
+{
+	App->CLSB_BaseFaces->Face_Count = App->CLSB_Picking->Real_Face_Count;
+	App->CLSB_BaseFaces->Faces_Data.resize(App->CLSB_Picking->Real_Face_Count);
+
+
+	int Count = 0;
+	while (Count < App->CLSB_Picking->Real_Face_Count)
+	{
+		App->CLSB_Picking->Select_Face_In_Brush(Count + 1);
+
+		int Points = App->CLSB_Picking->Selected_Face->NumPoints;
+		App->CLSB_BaseFaces->Faces_Data[Count].Number_of_Points = Points;
+		App->CLSB_BaseFaces->Faces_Data[Count].Face_Points.resize(Points);
+		
+		Get_Brush_Faces_Parts(Points,Count);
+
+		Count++;
+	}
+
+	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
+}
+
+// *************************************************************************
+// *					Get_Brush_Faces_Parts Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Get_Brush_Faces_Parts(int NumPoints, int Index)
+{
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+
+	while (Count < NumPoints)
+	{
+		x = App->CLSB_Picking->Selected_Face->Points[Count].X;
+		y = App->CLSB_Picking->Selected_Face->Points[Count].Y;
+		z = App->CLSB_Picking->Selected_Face->Points[Count].Z;
+
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].x = x;
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].y = y;
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].z = z;
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *					Render_Brush_Faces Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Render_Brush_Faces_New()
+{
+	int Count = 0;
+	while (Count < App->CLSB_BaseFaces->Face_Count)
+	{
+		int Points = App->CLSB_BaseFaces->Faces_Data[Count].Number_of_Points;
+		
+		Render_Brush_Faces_Parts_New(Points,Count);
+
+		Count++;
+	}
+
+	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
+}
+
+// *************************************************************************
+// *					Render_Brush_Face Terry Bernie		   			   *
+// *************************************************************************
+void SB_Render::Render_Brush_Faces_Parts_New(int NumPoints, int Index)
+{
+	int Count = 0;
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3f(0, 0, 1);
+	glLineWidth(2);
+
+	glBegin(GL_LINE_LOOP);
+
+	while (Count < NumPoints)
+	{
+		glVertex3fv(&App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].x);
 		Count++;
 	}
 

@@ -23,10 +23,26 @@ misrepresented as being the original software.
 distribution.
 */
 
+typedef struct Face_vertex_type
+{
+	float x, y, z;
+}Face_vertex_type;
+
+typedef struct Face_type
+{
+	int Number_of_Points;
+	std::vector<Face_vertex_type> Face_Points;	// XYZ
+
+}Face_type;
+
 class Base_Faces
 {
 public:
 	Base_Faces();
 	~Base_Faces();
+
+	std::vector<Face_type> Faces_Data;	// XYZ
+
+	int Face_Count;
 };
 

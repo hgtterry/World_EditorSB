@@ -26,6 +26,7 @@ distribution.
 
 Base_Faces::Base_Faces()
 {
+	Face_Count = 0;
 }
 
 Base_Faces::~Base_Faces()

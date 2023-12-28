@@ -33,6 +33,9 @@ public:
 
 	void Reset_Class(void);
 
+	void Get_Brush_Faces();
+	void Get_Brush_Faces_Parts(int NumPoints, int Index);
+
 	float RX;
 	float RZ;
 
@@ -60,7 +63,7 @@ public:
 	bool Show_Crosshair;
 	bool Show_Marker_Face;
 	bool Show_Brush_Face;
-
+	bool Show_Brush_Face_New;
 	bool Render_Brush_Group_Flag;
 
 	// Brushes
@@ -137,6 +140,9 @@ protected:
 
 	void Render_Brush_Faces();
 	void Render_Brush_Faces_Parts(int NumPoints);
+
+	void Render_Brush_Faces_New();
+	void Render_Brush_Faces_Parts_New(int NumPoints, int Index);
 
 	void RenderCrossHair(void);
 };
