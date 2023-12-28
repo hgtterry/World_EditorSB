@@ -161,6 +161,8 @@ void SB_Picking::Mouse_Pick_Entity()
 				Select_Brush(Index, 1);
                 Select_Face_In_Brush(2);
 
+                Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index+1;
+
                 App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
 			}
         }

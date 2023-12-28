@@ -57,6 +57,7 @@ public:
 	int Real_Sub_Brush_Count;
 	int Real_Face_Count;
 
+	int Real_Face_Index;
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;
 	Ogre::uint32* indices;

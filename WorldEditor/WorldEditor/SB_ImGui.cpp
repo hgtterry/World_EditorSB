@@ -945,6 +945,7 @@ void SB_ImGui::Face_Selection(void)
 				ImGui::Text("Total_Brushes: = %i", App->CLSB_Picking->Real_Sub_Brush_Count);
 				ImGui::Text("Sub_Brushes: = %i", App->CLSB_Picking->Real_Sub_Brush_Count-1);
 				ImGui::Text("Face Count: = %i", App->CLSB_Picking->Real_Face_Count);
+				ImGui::Text("Real Face: = %i", App->CLSB_Picking->Real_Face_Index);
 			}
 
 			ImGui::Selectable("Select Face:- ", &Select_Face_F);

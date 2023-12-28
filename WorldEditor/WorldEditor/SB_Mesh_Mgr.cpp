@@ -1647,7 +1647,7 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 				int Brush_Index = App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
 				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
-
+				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].Face_Index = App->CLSB_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
 				FaceIndexNum++;
 				ActualFaceCount++;
 

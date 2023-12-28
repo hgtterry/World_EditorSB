@@ -28,7 +28,7 @@ typedef struct vertex_type
 	float x, y, z;
 }vertex_type;
 
-typedef struct polygon_type { int a, b, c, Group,Brush_Index; }polygon_type;
+typedef struct polygon_type { int a, b, c, Group,Brush_Index, Face_Index; }polygon_type;
 typedef struct normal_type { float x, y, z; }normal_type;
 typedef struct mapcoord_type { float u, v; }mapcoord_type;
 typedef struct int_type { int Index; }int_type;
