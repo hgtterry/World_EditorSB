@@ -1834,7 +1834,9 @@ typedef struct FaceTag
 // *************************************************************************
 void SB_Render::Render_Brush_Faces()
 {
-	int Count = 0;
+	Render_Brush_Faces_Parts(0);
+
+	/*int Count = 0;
 	while (Count < App->CLSB_Picking->Real_Face_Count)
 	{
 		if (App->CLSB_Dialogs->Selected_Face_Index == Count)
@@ -1855,7 +1857,7 @@ void SB_Render::Render_Brush_Faces()
 		Count++;
 	}
 
-	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index+1);
+	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index+1);*/
 }
 
 // *************************************************************************
@@ -1863,16 +1865,19 @@ void SB_Render::Render_Brush_Faces()
 // *************************************************************************
 void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
 {
+	int Points = App->CLSB_Picking->Selected_Face->NumPoints;
 	int Count = 0;
 	
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	
+	glColor3f(0, 1, 0);
+	glLineWidth(10);
+
 	glBegin(GL_LINE_LOOP);
 
-	while (Count < NumPoints)
+	while (Count < Points)
 	{
 		glVertex3fv(&App->CLSB_Picking->Selected_Face->Points[Count].X);
 		Count++;
