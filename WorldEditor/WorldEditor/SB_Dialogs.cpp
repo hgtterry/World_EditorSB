@@ -1249,8 +1249,8 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_RENDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
-		App->CLSB_Picking->Select_Face_In_Brush(0 + 1);
-		App->CLSB_Dialogs->Show_Face_Data(0, App->CLSB_Picking->Selected_Face, hDlg);
+		App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Picking->Real_Face_Index+1);
+		App->CLSB_Dialogs->Show_Face_Data(App->CLSB_Picking->Real_Face_Index+1, App->CLSB_Picking->Selected_Face, hDlg);
 		App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
 
 		return TRUE;
@@ -1360,7 +1360,7 @@ void SB_Dialogs::Fill_Face_Combo(HWND hDlg)
 		
 	}
 
-	SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(hDlg, IDC_CB_FACENUMBER, CB_SETCURSEL, (WPARAM)App->CLSB_Picking->Real_Face_Index+1, (LPARAM)0);
 }
 
 typedef struct TexInfoTag

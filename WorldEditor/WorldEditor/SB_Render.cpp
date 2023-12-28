@@ -1912,8 +1912,6 @@ void SB_Render::Get_Brush_Faces()
 
 		Count++;
 	}
-
-	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
 }
 
 // *************************************************************************
@@ -1956,7 +1954,7 @@ void SB_Render::Render_Brush_Faces_New()
 		Count++;
 	}
 
-	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
+	//App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
 }
 
 // *************************************************************************
