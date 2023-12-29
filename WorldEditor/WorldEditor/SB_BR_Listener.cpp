@@ -46,10 +46,8 @@ SB_BR_Listener::SB_BR_Listener()
 	WE_Cam = nullptr;
 	WE_Cam = App->CLSB_BR_Render->mCameraMeshView;
 
-	/*if (App->New_Render == 1)
-	{
-		App->CLSB_Picking = new SB_Picking(App->CLSB_BR_Render->RB_SceneMgr);
-	}*/
+	App->CLSB_BR_Picking = new SB_BR_Picking(App->CLSB_Ogre->mSceneMgr);
+	
 }
 
 SB_BR_Listener::~SB_BR_Listener()

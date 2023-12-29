@@ -103,7 +103,10 @@ distribution.
 #include "SB_Physics.h"
 #include "SB_Environment.h"
 #include "SB_SoundMgr.h"
+
 #include "SB_Picking.h"
+#include "SB_BR_Picking.h"
+
 #include "SB_Mesh_Mgr.h"
 
 #include "SB_PB.h"
@@ -190,7 +193,10 @@ public:
 	SB_Physics*					CLSB_Physics;
 	SB_Environment*				CLSB_Environment;
 	SB_SoundMgr*				CLSB_SoundMgr;
+
 	SB_Picking*					CLSB_Picking;
+	SB_BR_Picking*				CLSB_BR_Picking;
+
 	SB_Mesh_Mgr*				CLSB_Mesh_Mgr;
 
 	SB_PB*						CLSB_PB;

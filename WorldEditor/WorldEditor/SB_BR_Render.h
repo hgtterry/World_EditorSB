@@ -69,7 +69,7 @@ public:
 
 	Ogre::SceneNode* CamNode;
 	Ogre::Camera* mCameraMeshView;
-	Ogre::SceneManager* RB_SceneMgr;
+	Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* RB_View_Window;
 	HWND MeshView_3D_hWnd;
 	HWND Surface_Hwnd;

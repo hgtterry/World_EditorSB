@@ -63,7 +63,7 @@ SB_BR_Render::SB_BR_Render()
 
 	// ------------------------------------------------ 
 	RB_View_Window = NULL;
-	RB_SceneMgr = NULL;
+	mSceneMgr = NULL;
 	mCameraMeshView = NULL;
 	CamNode = NULL;
 
@@ -136,9 +136,9 @@ bool SB_BR_Render::Set_Render_Window(void)
 
 	RB_View_Window = App->CLSB_Ogre->mRoot->createRenderWindow("RB_ViewWin", 1024, 768, false, &options);
 
-	RB_SceneMgr = App->CLSB_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+	mSceneMgr = App->CLSB_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
-	mCameraMeshView = RB_SceneMgr->createCamera("CameraMV");
+	mCameraMeshView = mSceneMgr->createCamera("CameraMV");
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
 	mCameraMeshView->setNearClipDistance(0.1);
 	mCameraMeshView->setFarClipDistance(8000);
@@ -148,14 +148,14 @@ bool SB_BR_Render::Set_Render_Window(void)
 
 	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
-	CamNode = RB_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
+	CamNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
 	CamNode->attachObject(mCameraMeshView);
 
 	////-------------------------------------------- 
-	RB_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+	mSceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	// add a bright light above the scene
-	Light* light = RB_SceneMgr->createLight();
+	Light* light = mSceneMgr->createLight();
 	light->setType(Light::LT_POINT);
 	light->setPosition(-10, 40, 20);
 	light->setSpecularColour(ColourValue::White);
@@ -165,7 +165,7 @@ bool SB_BR_Render::Set_Render_Window(void)
 
 	Grid_Update(1);
 
-	App->CLSB_Ogre->RB_m_imgui.Init(RB_SceneMgr, Surface_Hwnd);
+	App->CLSB_Ogre->RB_m_imgui.Init(mSceneMgr, Surface_Hwnd);
 
 	RB_RenderListener = new SB_BR_Listener();
 
@@ -439,7 +439,7 @@ void SB_BR_Render::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridManual = RB_SceneMgr->createManualObject("GridManual");
+		GridManual = mSceneMgr->createManualObject("GridManual");
 		GridManual->setRenderQueueGroup(1);
 	}
 
@@ -491,7 +491,7 @@ void SB_BR_Render::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridNode = RB_SceneMgr->getRootSceneNode()->createChildSceneNode();
+		GridNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		GridNode->attachObject(GridManual);
 	}
 

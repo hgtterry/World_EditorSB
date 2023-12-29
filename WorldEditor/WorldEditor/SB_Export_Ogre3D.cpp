@@ -363,8 +363,8 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		}
 		else
 		{
-			App->CLSB_BR_Render->RB_SceneMgr->destroySceneNode(World_Node);
-			App->CLSB_BR_Render->RB_SceneMgr->destroyEntity(World_Ent);
+			App->CLSB_BR_Render->mSceneMgr->destroySceneNode(World_Node);
+			App->CLSB_BR_Render->mSceneMgr->destroyEntity(World_Ent);
 		}
 
 		World_Node = NULL;
@@ -395,8 +395,8 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	}
 	else
 	{
-		World_Ent = App->CLSB_BR_Render->RB_SceneMgr->createEntity(Name);
-		World_Node = App->CLSB_BR_Render->RB_SceneMgr->getRootSceneNode()->createChildSceneNode();
+		World_Ent = App->CLSB_BR_Render->mSceneMgr->createEntity(Name);
+		World_Node = App->CLSB_BR_Render->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	}
 
 	World_Node->attachObject(World_Ent);
