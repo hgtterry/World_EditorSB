@@ -528,6 +528,30 @@ void SB_BR_Render::Update_Scene()
 //====================================================== 
 
 // *************************************************************************
+// *			Start_BR_Mode:- Terry and Hazel Flanigan 2022	      	   *
+// *************************************************************************
+void SB_BR_Render::Start_BR_Mode(void)
+{
+	//App->CLSB_Mesh_Mgr->Update_World();
+
+	App->CLSB_Model->Set_Equity();
+	App->CLSB_Camera_EQ->Reset_Orientation();
+	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+	App->CLSB_TopTabs_Equity->Camera_Set_Free();
+
+	App->CLSB_Model->Model_Loaded = 1;
+	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+	App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
+	App->CLSB_Camera_EQ->Zero_View();
+
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
+	
+	App->CLSB_BR_Render->Go_BR_Mode();
+	App->CLSB_Mesh_Mgr->Update_World();
+}
+
+// *************************************************************************
 // *			Go_BR_Mode:- Terry and Hazel Flanigan 2022	    	  	   *
 // *************************************************************************
 void SB_BR_Render::Go_BR_Mode(void)
