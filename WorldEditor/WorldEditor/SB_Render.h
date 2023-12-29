@@ -59,8 +59,8 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 	bool Show_Marker_Face;
-	bool Show_Brush_Face;
-	bool Show_Brush_Face_New;
+	bool Show_Selected_Face;
+	bool Show_Brush_Faces;
 	bool Render_Brush_Group_Flag;
 
 	// Brushes
@@ -133,13 +133,14 @@ protected:
 	bool RF_Render_Just_Group();
 	void RF_Render_Normals(void);
 	
+	// -------------------------------------- Brushes
+
 	void Marker_Face_Selection();
 
+	void Render_Selected_Face();
+	
 	void Render_Brush_Faces();
-	void Render_Brush_Faces_Parts(int NumPoints);
-
-	void Render_Brush_Faces_New();
-	void Render_Brush_Faces_Parts_New(int NumPoints, int Index);
+	void Render_Brush_Faces_Parts(int NumPoints, int Index);
 
 	void RenderCrossHair(void);
 };

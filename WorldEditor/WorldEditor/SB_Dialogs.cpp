@@ -1251,7 +1251,7 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
 		App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Picking->Real_Face_Index+1);
 		App->CLSB_Dialogs->Show_Face_Data(App->CLSB_Picking->Real_Face_Index+1, App->CLSB_Picking->Selected_Face, hDlg);
-		App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
+		App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
 
 		return TRUE;
 	}
@@ -1280,7 +1280,7 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (some_item->idFrom == IDC_BT_RENDER && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Show_Brush_Face);
+			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Show_Selected_Face);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1312,13 +1312,13 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_RENDER)
 		{
-			if (App->CLSB_Ogre->RenderListener->Show_Brush_Face == 1)
+			if (App->CLSB_Ogre->RenderListener->Show_Selected_Face == 1)
 			{
-				App->CLSB_Ogre->RenderListener->Show_Brush_Face = 0;
+				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
+				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
 			}
 			return TRUE;
 		}

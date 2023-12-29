@@ -155,20 +155,23 @@ void SB_Picking::Mouse_Pick_Entity()
         {
 			if (Left_MouseDown == 1)
 			{
+                // Test Marker in mesh Triangle
 				Render_Selection();
+                App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
 
+                // Get Brush
 				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
 				Select_Brush(Index, 1);
 
+                // Store Brush faces and render
                 App->CLSB_Mesh_Mgr->Store_Faces_Data();
-                App->CLSB_Ogre->RenderListener->Show_Brush_Face_New = 1;
+                App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 1;
 
+                // Select Face and render
                 Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index+1;
                 Select_Face_In_Brush(Real_Face_Index);
-                App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+                App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
 
-                App->CLSB_Ogre->RenderListener->Show_Brush_Face_New = 1;
-                App->CLSB_Ogre->RenderListener->Show_Brush_Face = 1;
 			}
         }
     }

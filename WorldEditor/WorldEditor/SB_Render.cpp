@@ -47,7 +47,7 @@ SB_Render::SB_Render()
 	ShowNormals = 0;
 	ShowBoundingBox = 0;
 	ShowBoundingGroup = 0;
-	Show_Brush_Face = 0;
+	Show_Selected_Face = 0;
 
 	PlayActive = 0;
 	Light_Activated = 0;
@@ -102,7 +102,7 @@ void SB_Render::Reset_Class(void)
 	ShowOnlySubMesh = 0;
 	Show_HideGroup = 0;
 	Show_Crosshair = 0;
-	Show_Brush_Face_New = 0;
+	Show_Brush_Faces = 0;
 	Render_Brush_Group_Flag = 0;
 }
 
@@ -377,16 +377,16 @@ void SB_Render::Render_Loop()
 		Marker_Face_Selection();
 	}
 
-	// ---------------------- Brush Face Marker
-	if (Show_Brush_Face == 1)
+	// ---------------------- Render_Selected_Face
+	if (Show_Selected_Face == 1)
 	{
-		Render_Brush_Faces();
+		Render_Selected_Face();
 	}
 
-	// ---------------------- Brush Face Marker
-	if (Show_Brush_Face_New == 1)
+	// ---------------------- Show_Brush_Faces
+	if (Show_Brush_Faces == 1)
 	{
-		Render_Brush_Faces_New();
+		Render_Brush_Faces();
 	}
 
 	if (depthTestEnabled)
@@ -1830,49 +1830,18 @@ typedef struct FaceTag
 } Face;
 
 // *************************************************************************
-// *					Render_Brush_Faces Terry Bernie		   			   *
+// *		Render_Selected_Face:- Terry and Hazel Flanigan 2023	 	   *
 // *************************************************************************
-void SB_Render::Render_Brush_Faces()
-{
-	Render_Brush_Faces_Parts(0);
-
-	/*int Count = 0;
-	while (Count < App->CLSB_Picking->Real_Face_Count)
-	{
-		if (App->CLSB_Dialogs->Selected_Face_Index == Count)
-		{
-			glColor3f(1, 0, 0);
-			glLineWidth(5);
-		}
-		else
-		{
-			glColor3f(0, 1, 0);
-			glLineWidth(1);
-		}
-
-		App->CLSB_Picking->Select_Face_In_Brush(Count + 1);
-
-		int Points = App->CLSB_Picking->Selected_Face->NumPoints;
-		Render_Brush_Faces_Parts(Points);
-		Count++;
-	}
-
-	App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index+1);*/
-}
-
-// *************************************************************************
-// *					Render_Brush_Face Terry Bernie		   			   *
-// *************************************************************************
-void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
+void SB_Render::Render_Selected_Face()
 {
 	int Points = App->CLSB_Picking->Selected_Face->NumPoints;
 	int Count = 0;
-	
+
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(0, 1, 0);
+	glColor3f(1, 0, 0);
 	glLineWidth(10);
 
 	glBegin(GL_LINE_LOOP);
@@ -1893,25 +1862,23 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
 // *************************************************************************
 // *					Render_Brush_Faces Terry Bernie		   			   *
 // *************************************************************************
-void SB_Render::Render_Brush_Faces_New()
+void SB_Render::Render_Brush_Faces()
 {
 	int Count = 0;
 	while (Count < App->CLSB_BaseFaces->Face_Count)
 	{
 		int Points = App->CLSB_BaseFaces->Faces_Data[Count].Number_of_Points;
 		
-		Render_Brush_Faces_Parts_New(Points,Count);
+		Render_Brush_Faces_Parts(Points,Count);
 
 		Count++;
 	}
-
-	//App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Dialogs->Selected_Face_Index + 1);
 }
 
 // *************************************************************************
 // *					Render_Brush_Face Terry Bernie		   			   *
 // *************************************************************************
-void SB_Render::Render_Brush_Faces_Parts_New(int NumPoints, int Index)
+void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 {
 	int Count = 0;
 
@@ -1919,7 +1886,7 @@ void SB_Render::Render_Brush_Faces_Parts_New(int NumPoints, int Index)
 	glDisable(GL_DEPTH_TEST);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(0, 0, 1);
+	glColor3f(0, 1, 0);
 	glLineWidth(2);
 
 	glBegin(GL_LINE_LOOP);
