@@ -297,29 +297,29 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 	}
 	case WM_RBUTTONUP:
 	{
-		App->CLSB_Ogre->RB_m_imgui.mousePressed();
+		//App->CLSB_Ogre->RB_m_imgui.mousePressed();
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
-		{
-			ReleaseCapture();
-			App->CLSB_BR_Render->RB_RenderListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
+		//if (App->CLSB_Ogre->OgreIsRunning == 1)
+		//{
+		//	ReleaseCapture();
+		//	App->CLSB_BR_Render->RB_RenderListener->Pl_RightMouseDown = 0;
+		//	SetCursor(App->CUR);
 
-			//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
-			{
-				App->CLSB_BR_Picking->Mouse_Pick_Entity();
+		//	//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+		//	{
+		//		App->CLSB_BR_Picking->Mouse_Pick_Entity();
 
-				char JustName[200];
-				int len = strlen(App->CLSB_BR_Picking->TextureName2);
-				strcpy(JustName, App->CLSB_BR_Picking->TextureName2);
-				JustName[len - 4] = 0;
+		//		char JustName[200];
+		//		int len = strlen(App->CLSB_BR_Picking->TextureName2);
+		//		strcpy(JustName, App->CLSB_BR_Picking->TextureName2);
+		//		JustName[len - 4] = 0;
 
-				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
-				App->Say(App->CLSB_BR_Picking->TextureName2);
-			}
+		//		App->CL_TabsControl->Select_Texture_Tab(0, JustName);
+		//		App->Say(App->CLSB_BR_Picking->TextureName2);
+		//	}
 
-			return 1;
-		}
+		//	return 1;
+		//}
 
 		return 1;
 	}
@@ -343,11 +343,11 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
-					App->CLSB_BR_Picking->Left_MouseDown = 1;
+					/*App->CLSB_BR_Picking->Left_MouseDown = 1;
 
 					App->CLSB_BR_Picking->Mouse_Pick_Entity();
 
-					App->CLSB_BR_Picking->Left_MouseDown = 0;
+					App->CLSB_BR_Picking->Left_MouseDown = 0;*/
 				}
 
 				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);// Bernie
@@ -532,8 +532,6 @@ void SB_BR_Render::Update_Scene()
 // *************************************************************************
 void SB_BR_Render::Start_BR_Mode(void)
 {
-	//App->CLSB_Mesh_Mgr->Update_World();
-
 	App->CLSB_Model->Set_Equity();
 	App->CLSB_Camera_EQ->Reset_Orientation();
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);

@@ -103,8 +103,7 @@ SB_App::SB_App()
 	CLSB_SoundMgr =				nullptr;
 
 	CLSB_Picking =				nullptr;
-	CLSB_BR_Picking =			nullptr;
-
+	
 	CLSB_Mesh_Mgr =				nullptr;
 
 	CLSB_PB =					nullptr;

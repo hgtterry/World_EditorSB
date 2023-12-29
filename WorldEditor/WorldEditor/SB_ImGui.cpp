@@ -202,8 +202,8 @@ void SB_ImGui::WE_Data(void)
 		//Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
 		//Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
 
-		ImGui::Text("TX %f", App->CLSB_BR_Picking->tx);
-		ImGui::Text("TY %f", App->CLSB_BR_Picking->ty);
+		//ImGui::Text("TX %f", App->CLSB_BR_Picking->tx);
+		//ImGui::Text("TY %f", App->CLSB_BR_Picking->ty);
 
 		if (ImGui::Button("Close"))
 		{

@@ -44,10 +44,7 @@ SB_BR_Listener::SB_BR_Listener()
 	Pl_RightMouseDown = 0;
 	Show_DemoWindow = 0;
 	WE_Cam = nullptr;
-	WE_Cam = App->CLSB_BR_Render->mCamera;
-
-	App->CLSB_BR_Picking = new SB_BR_Picking(App->CLSB_Ogre->mSceneMgr);
-	
+	WE_Cam = App->CLSB_BR_Render->mCamera;	
 }
 
 SB_BR_Listener::~SB_BR_Listener()

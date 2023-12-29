@@ -203,6 +203,12 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			App->CLSB_ViewMgrDlg->TopLeft_Flag = 1;
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->BR_Resize();
+			}
+
 			return TRUE;
 		}
 
@@ -212,6 +218,12 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			App->CLSB_ViewMgrDlg->TopRight_Flag = 1;
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->BR_Resize();
+			}
+
 			return TRUE;
 		}
 
@@ -221,6 +233,12 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			App->CLSB_ViewMgrDlg->BottomLeft_Flag = 1;
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->BR_Resize();
+			}
+
 			return TRUE;
 		}
 
@@ -230,6 +248,11 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			App->CLSB_ViewMgrDlg->BottomRight_Flag = 1;
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->BR_Resize();
+			}
 			return TRUE;
 		}
 
@@ -238,6 +261,12 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->RestoreAllPanes();
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->BR_Resize();
+			}
+
 			return TRUE;
 		}
 
