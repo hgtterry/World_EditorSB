@@ -23,9 +23,9 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
-#include "SB_Picking.h"
+#include "SB_BR_Picking.h"
 
-SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
+SB_BR_Picking::SB_BR_Picking(Ogre::SceneManager* sceneMgr)
 {
     mSceneMgr = sceneMgr;
 
@@ -35,8 +35,8 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
         App->Say("No Ray Query");
         return;
     }
-   // mRaySceneQuery->setSortByDistance(true,0);
-   
+    // mRaySceneQuery->setSortByDistance(true,0);
+
     Pl_Entity_Name = "-- NA --";
     strcpy(FaceMaterial, " -- NA --");
     strcpy(Selected_Brush_Name, " -- NA --");
@@ -67,7 +67,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Real_Sub_Brush_Count = 0;
 }
 
-SB_Picking::~SB_Picking()
+SB_BR_Picking::~SB_BR_Picking()
 {
     if (mRaySceneQuery != NULL)
     {
@@ -78,7 +78,7 @@ SB_Picking::~SB_Picking()
 // *************************************************************************
 // *		  Clear_Picking_Data:- Terry and Hazel Flanigan 2023	   	   *
 // *************************************************************************
-void SB_Picking::Clear_Picking_Data()
+void SB_BR_Picking::Clear_Picking_Data()
 {
     Pl_Entity_Name = "-- NA --";
     strcpy(FaceMaterial, " -- NA --");
@@ -91,7 +91,7 @@ void SB_Picking::Clear_Picking_Data()
     Sub_Mesh_Count = -1;
     SubMesh_Index = 0;
     Selected_Ok = 0;
- 
+
     pentity = NULL;
 
     App->CLSB_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
@@ -106,15 +106,15 @@ void SB_Picking::Clear_Picking_Data()
 // *************************************************************************
 // *		Mouse_Pick_Entity::Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Picking::Mouse_Pick_Entity()
+void SB_BR_Picking::Mouse_Pick_Entity()
 {
     Clear_Picking_Data();
     Total_index_count = 0;
     // --------------------------------------------------------------
-    
-     rw = App->CLSB_Ogre->mWindow;
-     camera = App->CLSB_Ogre->mCamera;
-   
+
+    rw = App->CLSB_Ogre->mWindow;
+    camera = App->CLSB_Ogre->mCamera;
+
 
     ImGuiIO& io = ImGui::GetIO();
 
@@ -137,7 +137,7 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
     if (raycast(ray2, result, target, closest_distance, queryMask))
     {
-        
+
         //App->Beep_Win();
 
         mNode = pentity->getParentSceneNode();
@@ -155,26 +155,26 @@ void SB_Picking::Mouse_Pick_Entity()
         }
         else
         {
-			if (Left_MouseDown == 1)
-			{
+            if (Left_MouseDown == 1)
+            {
                 // Test Marker in mesh Triangle
-				Render_Selection();
+                Render_Selection();
                 App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
 
                 // Get Brush
-				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
-				Select_Brush(Index, 1);
+                int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
+                Select_Brush(Index, 1);
 
                 // Store Brush faces and render
                 App->CLSB_Mesh_Mgr->Store_Faces_Data();
                 App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 1;
 
                 // Select Face and render
-                Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index+1;
+                Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index + 1;
                 Select_Face_In_Brush(Real_Face_Index);
                 App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
 
-			}
+            }
         }
     }
 
@@ -183,62 +183,62 @@ void SB_Picking::Mouse_Pick_Entity()
 // *************************************************************************
 // *		        raycast:- Terry and Hazel Flanigan 2022		       	   *
 // *************************************************************************
-bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
+bool SB_BR_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
     Total_index_count_Actual = 0;
     Total_Vertices_count_Actual = 0;
 
-	target = NULL;
-	bool ParticleFound = 0;
-	Pl_Entity_Name = "---------";
-    
-	if (mRaySceneQuery != NULL)
-	{
-		mRaySceneQuery->setRay(ray);
-		mRaySceneQuery->setSortByDistance(true,2);
-		// mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
-		mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
-		// execute the query, returns a vector of hits
-		if (mRaySceneQuery->execute().size() <= 0)
-		{
-			// raycast did not hit an objects bounding box
-			Selected_Ok = 0;
-			Pl_Entity_Name = "---------";
-			return (false);
-		}
-	}
-	else
-	{
-		App->Say("No Ray Query");
-		Selected_Ok = 0;
-		return (false);
-	}
+    target = NULL;
+    bool ParticleFound = 0;
+    Pl_Entity_Name = "---------";
 
-	closest_distance = -1.0f;
-	Ogre::Vector3 closest_result;
-	Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
+    if (mRaySceneQuery != NULL)
+    {
+        mRaySceneQuery->setRay(ray);
+        mRaySceneQuery->setSortByDistance(true, 2);
+        // mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+        mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+        // execute the query, returns a vector of hits
+        if (mRaySceneQuery->execute().size() <= 0)
+        {
+            // raycast did not hit an objects bounding box
+            Selected_Ok = 0;
+            Pl_Entity_Name = "---------";
+            return (false);
+        }
+    }
+    else
+    {
+        App->Say("No Ray Query");
+        Selected_Ok = 0;
+        return (false);
+    }
 
- 
-	for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
-	{
-		// stop checking if we have found a raycast hit that is closer
-		// than all remaining entities
-		if ((closest_distance >= 0.0f) &&
-			(closest_distance < query_result[qr_idx].distance))
-		{
-			//strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
-			break;
-		}
+    closest_distance = -1.0f;
+    Ogre::Vector3 closest_result;
+    Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
 
-		// only check this result if its a hit against an entity
-		if ((query_result[qr_idx].movable != NULL) &&
-			(query_result[qr_idx].movable->getMovableType().compare("Entity") == 0) &&
-			ParticleFound == 0)
-		{
-			// get the entity to check
-			//strcpy(TextureName, "Entity");
 
-			pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
+    for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
+    {
+        // stop checking if we have found a raycast hit that is closer
+        // than all remaining entities
+        if ((closest_distance >= 0.0f) &&
+            (closest_distance < query_result[qr_idx].distance))
+        {
+            //strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
+            break;
+        }
+
+        // only check this result if its a hit against an entity
+        if ((query_result[qr_idx].movable != NULL) &&
+            (query_result[qr_idx].movable->getMovableType().compare("Entity") == 0) &&
+            ParticleFound == 0)
+        {
+            // get the entity to check
+            //strcpy(TextureName, "Entity");
+
+            pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
 
             char buff[255];
             char* pdest;
@@ -246,9 +246,9 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
             pdest = strstr(buff, "Ogre/MO");
             if (pdest != NULL)
             {
-               //App->Say(pentity->getName().c_str());
-          
-              // if (Got_Mesh_Flag == 0)
+                //App->Say(pentity->getName().c_str());
+
+               // if (Got_Mesh_Flag == 0)
                 {
                     GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
                         pentity->getParentNode()->_getDerivedPosition(),
@@ -307,29 +307,29 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                     closest_result = ray.getPoint(closest_distance);
                 }
             }
-		}
+        }
 
-	}
+    }
 
-	if (closest_distance >= 0.0f)
-	{
-		// raycast success
-		result = closest_result;
-		Selected_Ok = 1;
-		return (true);
-	}
-	else
-	{
-		// raycast failed
-		Selected_Ok = 0;
-		Pl_Entity_Name = "---------";
-		return (false);
-	}
+    if (closest_distance >= 0.0f)
+    {
+        // raycast success
+        result = closest_result;
+        Selected_Ok = 1;
+        return (true);
+    }
+    else
+    {
+        // raycast failed
+        Selected_Ok = 0;
+        Pl_Entity_Name = "---------";
+        return (false);
+    }
 }
 
 // *************************************************************************B
 // *************************************************************************
-void SB_Picking::Render_Selection()
+void SB_BR_Picking::Render_Selection()
 {
     if (SubMesh_Index_Fault == 0)
     {
@@ -354,15 +354,15 @@ void SB_Picking::Render_Selection()
         App->CLSB_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
         App->CLSB_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
-       // App->CLSB_Grid->Face_Update2();
-       // App->CLSB_Grid->FaceNode->setVisible(true);
+        // App->CLSB_Grid->Face_Update2();
+        // App->CLSB_Grid->FaceNode->setVisible(true);
     }
 }
 
 // *************************************************************************
 // *		  Get_Material_Data:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-bool SB_Picking::Get_Material_Data()
+bool SB_BR_Picking::Get_Material_Data()
 {
     SubMesh_Index_Fault = 0;
     int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
@@ -390,7 +390,7 @@ bool SB_Picking::Get_Material_Data()
 // *************************************************************************
 // *					      GetMeshInformation		              	   *
 // *************************************************************************
-void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale)
+void SB_BR_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale)
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -417,12 +417,12 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
         else
         {
             Total_vertex_count += submesh->vertexData->vertexCount;
-           
+
         }
 
         // Add the indices
         Total_index_count += submesh->indexData->indexCount;
-  
+
     }
 
     // Allocate space for the vertices and indices
@@ -433,7 +433,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
 
     memset(Sub_Mesh_Indexs, 0, Total_vertex_count);
 
-   // App->Say_Int(Total_index_count);
+    // App->Say_Int(Total_index_count);
     added_shared = false;
 
     // Run through the submeshes again, adding the data into the arrays
@@ -513,7 +513,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
 
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
-       
+
         Ogre::SubMesh* submesh = mesh->getSubMesh(i);
 
         Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
@@ -554,7 +554,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
 // *************************************************************************
 // *		Get_SubMesh_Count:- Terry and Hazel Flanigan 2023          	   *
 // *************************************************************************
-int SB_Picking::Get_SubMesh_Count()
+int SB_BR_Picking::Get_SubMesh_Count()
 {
     return ((Ogre::Entity*)pentity)->getNumSubEntities();;
 }
@@ -562,14 +562,14 @@ int SB_Picking::Get_SubMesh_Count()
 // *************************************************************************
 // *		Get_Total_Indices:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-int SB_Picking::Get_Total_Indices()
+int SB_BR_Picking::Get_Total_Indices()
 {
     Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
 
     int TotalIndices = 0;
     int Count = 0;
     int SubMeshes = mesh->getNumSubMeshes();
-    
+
     while (Count < SubMeshes)
     {
         Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
@@ -584,7 +584,7 @@ int SB_Picking::Get_Total_Indices()
 // *************************************************************************
 // *		Get_Total_Vertices:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-int SB_Picking::Get_Total_Vertices()
+int SB_BR_Picking::Get_Total_Vertices()
 {
     Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
 
@@ -592,7 +592,7 @@ int SB_Picking::Get_Total_Vertices()
     int TotalVertices = 0;
     int Count = 0;
     int SubMeshes = mesh->getNumSubMeshes();
-   
+
     while (Count < SubMeshes)
     {
         Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
@@ -619,7 +619,7 @@ int SB_Picking::Get_Total_Vertices()
 // *************************************************************************
 // *		    Get_Local_Face:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-int SB_Picking::Get_Local_Face(int SelectedGroup)
+int SB_BR_Picking::Get_Local_Face(int SelectedGroup)
 {
     Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
 
@@ -644,14 +644,14 @@ int SB_Picking::Get_Local_Face(int SelectedGroup)
 // *************************************************************************
 // *	        	Select_Brush:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Picking::Select_Brush(int Index, bool Clear)
+void SB_BR_Picking::Select_Brush(int Index, bool Clear)
 {
     strcpy(Selected_Brush_Name, "-------");
 
     App->Get_Current_Document();
 
     Selected_Brush = NULL;
-   
+
     int			c;
     geBoolean	bChanged = FALSE;
 
@@ -666,10 +666,10 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         }
 
         Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
-       
-       // int FaceCount = Brush_GetNumFaces(Selected_Brush);
-       
-        strcpy(Selected_Brush_Name,App->CL_Brush->Brush_GetName(Selected_Brush));
+
+        // int FaceCount = Brush_GetNumFaces(Selected_Brush);
+
+        strcpy(Selected_Brush_Name, App->CL_Brush->Brush_GetName(Selected_Brush));
 
         SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
@@ -717,7 +717,7 @@ struct tag_FaceList
 // *************************************************************************
 // *         Get_Brush_Data:- Terry and Hazel Flanigan 2023                *
 // *************************************************************************
-void SB_Picking::Get_Brush_Data(Brush* pBrush)
+void SB_BR_Picking::Get_Brush_Data(Brush* pBrush)
 {
     Real_Brush_Type[0] = 0;
     Real_Sub_Brush_Count = 0;
@@ -759,7 +759,7 @@ void SB_Picking::Get_Brush_Data(Brush* pBrush)
 // *************************************************************************
 // *         Select_Face_In_Brush:- Terry and Hazel Flanigan 2023          *
 // *************************************************************************
-void SB_Picking::Select_Face_In_Brush(int Face_Index)
+void SB_BR_Picking::Select_Face_In_Brush(int Face_Index)
 {
     Selected_Face = NULL;
 
@@ -777,7 +777,7 @@ void SB_Picking::Select_Face_In_Brush(int Face_Index)
         return;
     }
 
-    
+
     Selected_Face = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, Face_Index - 1);
 
     App->CLSB_Doc->ResetAllSelectedFaces();

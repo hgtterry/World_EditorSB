@@ -178,6 +178,7 @@
     <ClCompile Include="SB_Base_Group.cpp" />
     <ClCompile Include="SB_Brushes.cpp" />
     <ClCompile Include="SB_BR_Listener.cpp" />
+    <ClCompile Include="SB_BR_Picking.cpp" />
     <ClCompile Include="SB_BR_Render.cpp" />
     <ClCompile Include="SB_Bt_Render.cpp" />
     <ClCompile Include="SB_Bullet.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="SB_Base_Group.h" />
     <ClInclude Include="SB_Brushes.h" />
     <ClInclude Include="SB_BR_Listener.h" />
+    <ClInclude Include="SB_BR_Picking.h" />
     <ClInclude Include="SB_BR_Render.h" />
     <ClInclude Include="SB_Bt_Render.h" />
     <ClInclude Include="SB_Bullet.h" />

@@ -1841,8 +1841,8 @@ void SB_Render::Render_Selected_Face()
 	glDisable(GL_DEPTH_TEST);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(1, 0, 0);
-	glLineWidth(10);
+	glColor3f(1, 1, 0);
+	glLineWidth(3);
 
 	glBegin(GL_LINE_LOOP);
 
@@ -1887,7 +1887,7 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glColor3f(0, 1, 0);
-	glLineWidth(2);
+	glLineWidth(1);
 
 	glBegin(GL_LINE_LOOP);
 

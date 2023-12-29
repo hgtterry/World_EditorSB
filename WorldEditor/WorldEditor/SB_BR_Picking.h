@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class SB_Picking
+class SB_BR_Picking
 {
 public:
-	SB_Picking(Ogre::SceneManager* sceneMgr);
-	~SB_Picking();
+	SB_BR_Picking(Ogre::SceneManager* sceneMgr);
+	~SB_BR_Picking();
 
 	void Mouse_Pick_Entity();
 	void Select_Face_In_Brush(int Face_Index);

@@ -340,14 +340,14 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500X = p.x;
 				App->CLSB_BR_Render->RB_RenderListener->Pl_Cent500Y = p.y;
 
-				/*if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+				//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
 					App->CLSB_Picking->Left_MouseDown = 1;
 
 					App->CLSB_Picking->Mouse_Pick_Entity();
 
 					App->CLSB_Picking->Left_MouseDown = 0;
-				}*/
+				}
 
 				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
