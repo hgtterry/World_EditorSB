@@ -103,7 +103,7 @@ bool SB_BR_Listener::frameRenderingQueued(const FrameEvent& evt)
 // *************************************************************************
 void SB_BR_Listener::Camera_Mode_Free(float DeltaTime)
 {
-	App->CLSB_Ogre->m_imgui.render();
+	App->CLSB_Ogre->RB_m_imgui.render();
 
 	mRotX = 0;
 	mRotY = 0;

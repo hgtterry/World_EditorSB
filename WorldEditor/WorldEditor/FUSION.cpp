@@ -400,7 +400,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	App->CLSB_Doc->Render_WE_World = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
 	
-	
 	return TRUE;
 }
 

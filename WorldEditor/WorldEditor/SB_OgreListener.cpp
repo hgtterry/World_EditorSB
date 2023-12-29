@@ -85,6 +85,7 @@ SB_OgreListener::SB_OgreListener(void)
 	Animate_Ogre = 0;
 	AnimationScale = 1;
 
+
 	App->CLSB_Picking = new SB_Picking(App->CLSB_Ogre->mSceneMgr);
 	
 
@@ -122,7 +123,7 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 {
 	if (App->CLSB_BR_Render->RB_Render_Started == 1)
 	{
-		return true;
+		//return true;
 	}
 
 	Update_Game_Logic(evt.timeSinceLastFrame);
@@ -228,7 +229,7 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
 	if (App->CLSB_BR_Render->RB_Render_Started == 1)
 	{
-		return true;
+		//return true;
 	}
 
 	OgreFrameTime = evt.timeSinceLastFrame;

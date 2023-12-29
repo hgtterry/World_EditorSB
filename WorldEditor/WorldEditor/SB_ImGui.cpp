@@ -164,8 +164,33 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 // *************************************************************************
 void SB_ImGui::Render_FPS(void)
 {
-	if (Updating_F == 1)
-		Updating_GUI();
+	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos == 0)
+		{
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos = 1;
+		}
+
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosY = 10;
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
 	
 }
 
