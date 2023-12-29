@@ -1891,55 +1891,6 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints)
 }
 
 // *************************************************************************
-// *					Get_Brush_Faces Terry Bernie		   			   *
-// *************************************************************************
-void SB_Render::Get_Brush_Faces()
-{
-	App->CLSB_BaseFaces->Face_Count = App->CLSB_Picking->Real_Face_Count;
-	App->CLSB_BaseFaces->Faces_Data.resize(App->CLSB_Picking->Real_Face_Count);
-
-
-	int Count = 0;
-	while (Count < App->CLSB_Picking->Real_Face_Count)
-	{
-		App->CLSB_Picking->Select_Face_In_Brush(Count + 1);
-
-		int Points = App->CLSB_Picking->Selected_Face->NumPoints;
-		App->CLSB_BaseFaces->Faces_Data[Count].Number_of_Points = Points;
-		App->CLSB_BaseFaces->Faces_Data[Count].Face_Points.resize(Points);
-		
-		Get_Brush_Faces_Parts(Points,Count);
-
-		Count++;
-	}
-}
-
-// *************************************************************************
-// *					Get_Brush_Faces_Parts Terry Bernie		   			   *
-// *************************************************************************
-void SB_Render::Get_Brush_Faces_Parts(int NumPoints, int Index)
-{
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	int Count = 0;
-
-	while (Count < NumPoints)
-	{
-		x = App->CLSB_Picking->Selected_Face->Points[Count].X;
-		y = App->CLSB_Picking->Selected_Face->Points[Count].Y;
-		z = App->CLSB_Picking->Selected_Face->Points[Count].Z;
-
-		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].x = x;
-		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].y = y;
-		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].z = z;
-
-		Count++;
-	}
-}
-
-// *************************************************************************
 // *					Render_Brush_Faces Terry Bernie		   			   *
 // *************************************************************************
 void SB_Render::Render_Brush_Faces_New()

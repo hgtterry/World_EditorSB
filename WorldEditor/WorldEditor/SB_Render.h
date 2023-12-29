@@ -33,9 +33,6 @@ public:
 
 	void Reset_Class(void);
 
-	void Get_Brush_Faces();
-	void Get_Brush_Faces_Parts(int NumPoints, int Index);
-
 	float RX;
 	float RZ;
 

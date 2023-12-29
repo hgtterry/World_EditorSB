@@ -155,11 +155,12 @@ void SB_Picking::Mouse_Pick_Entity()
         {
 			if (Left_MouseDown == 1)
 			{
-				//Render_Selection();
+				Render_Selection();
 
 				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
 				Select_Brush(Index, 1);
-                App->CLSB_Ogre->RenderListener->Get_Brush_Faces();
+
+                App->CLSB_Mesh_Mgr->Store_Faces_Data();
                 App->CLSB_Ogre->RenderListener->Show_Brush_Face_New = 1;
 
                 Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index+1;

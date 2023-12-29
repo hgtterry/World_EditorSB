@@ -27,6 +27,7 @@ distribution.
 
 #include "EntTypeName.h"
 //#include "facelist.h"
+#define NUM_VIEWS (4)
 
 enum BrushFlags
 {
@@ -50,6 +51,35 @@ enum BrushFlags
 	// are reserved for user contents.
 };
 
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	Plane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
 struct tag_FaceList
 {
 	int NumFaces;
@@ -58,8 +88,6 @@ struct tag_FaceList
 	geBoolean Dirty;
 	Box3d Bounds;
 };
-
-#define NUM_VIEWS (4)
 
 struct tag_Level3
 {
@@ -1716,4 +1744,53 @@ bool SB_Mesh_Mgr::Update_World()
 
 	App->CLSB_ImGui->Updating_F = 0;
 	return 1;
+}
+
+// *************************************************************************
+// *		Store_Faces_Data:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+void SB_Mesh_Mgr::Store_Faces_Data()
+{
+	App->CLSB_BaseFaces->Face_Count = App->CLSB_Picking->Real_Face_Count;
+	App->CLSB_BaseFaces->Faces_Data.resize(App->CLSB_Picking->Real_Face_Count);
+
+
+	int Count = 0;
+	while (Count < App->CLSB_Picking->Real_Face_Count)
+	{
+		App->CLSB_Picking->Select_Face_In_Brush(Count + 1);
+
+		int Points = App->CLSB_Picking->Selected_Face->NumPoints;
+		App->CLSB_BaseFaces->Faces_Data[Count].Number_of_Points = Points;
+		App->CLSB_BaseFaces->Faces_Data[Count].Face_Points.resize(Points);
+
+		Store_Faces_Data_Parts(Points, Count);
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *		Store_Faces_Data_Parts:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Store_Faces_Data_Parts(int NumPoints, int Index)
+{
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+
+	while (Count < NumPoints)
+	{
+		x = App->CLSB_Picking->Selected_Face->Points[Count].X;
+		y = App->CLSB_Picking->Selected_Face->Points[Count].Y;
+		z = App->CLSB_Picking->Selected_Face->Points[Count].Z;
+
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].x = x;
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].y = y;
+		App->CLSB_BaseFaces->Faces_Data[Index].Face_Points[Count].z = z;
+
+		Count++;
+	}
 }

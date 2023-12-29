@@ -45,6 +45,9 @@ public:
 
 	bool Update_World();
 
+	void Store_Faces_Data();
+	void Store_Faces_Data_Parts(int NumPoints, int Index);
+
 	int ActualFaceCount;
 	int	mTextureCount;
 
