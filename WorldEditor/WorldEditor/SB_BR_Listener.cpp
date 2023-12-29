@@ -44,7 +44,7 @@ SB_BR_Listener::SB_BR_Listener()
 	Pl_RightMouseDown = 0;
 
 	WE_Cam = nullptr;
-	WE_Cam = App->CLSB_BR_Render->mCameraMeshView;
+	WE_Cam = App->CLSB_BR_Render->mCamera;
 
 	App->CLSB_BR_Picking = new SB_BR_Picking(App->CLSB_Ogre->mSceneMgr);
 	
@@ -78,7 +78,7 @@ bool SB_BR_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_BR_Listener::Get_View_Height_Width(void)
 {
-	Ogre::Viewport* vp = App->CLSB_BR_Render->RB_View_Window->getViewport(0);
+	Ogre::Viewport* vp = App->CLSB_BR_Render->mWindow->getViewport(0);
 
 	View_Width = vp->getActualWidth();
 	View_Height = vp->getActualHeight();

@@ -162,7 +162,6 @@ SB_App::SB_App()
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
 	Debug_File = 0;
 	Just_Equity = 0;
 	Centre_Debug = 1;
@@ -184,6 +183,8 @@ SB_App::SB_App()
 	m_pDoc = NULL;
 
 	Write_DebugFile = NULL;
+
+	Debug_App = 1;
 	New_Render = 0;
 	Block_RB_Actions = 0;
 }

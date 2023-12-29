@@ -62,9 +62,9 @@ SB_BR_Render::SB_BR_Render()
 	ShowDivisions = 1;
 
 	// ------------------------------------------------ 
-	RB_View_Window = NULL;
+	mWindow = NULL;
 	mSceneMgr = NULL;
-	mCameraMeshView = NULL;
+	mCamera = NULL;
 	CamNode = NULL;
 
 	RB_Render_Started = 0;
@@ -134,22 +134,22 @@ bool SB_BR_Render::Set_Render_Window(void)
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)Surface_Hwnd);
 
-	RB_View_Window = App->CLSB_Ogre->mRoot->createRenderWindow("RB_ViewWin", 1024, 768, false, &options);
+	mWindow = App->CLSB_Ogre->mRoot->createRenderWindow("RB_ViewWin", 1024, 768, false, &options);
 
 	mSceneMgr = App->CLSB_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
-	mCameraMeshView = mSceneMgr->createCamera("CameraMV");
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
-	mCameraMeshView->setNearClipDistance(0.1);
-	mCameraMeshView->setFarClipDistance(8000);
+	mCamera = mSceneMgr->createCamera("CameraMV");
+	mCamera->setPosition(Ogre::Vector3(0, 0, 0));
+	mCamera->setNearClipDistance(0.1);
+	mCamera->setFarClipDistance(8000);
 
-	Ogre::Viewport* vp = RB_View_Window->addViewport(mCameraMeshView);
-	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
 	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
 	CamNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
-	CamNode->attachObject(mCameraMeshView);
+	CamNode->attachObject(mCamera);
 
 	////-------------------------------------------- 
 	mSceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
@@ -172,7 +172,7 @@ bool SB_BR_Render::Set_Render_Window(void)
 	App->CLSB_Ogre->mRoot->addFrameListener(RB_RenderListener);
 
 
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
+	mCamera->setPosition(Ogre::Vector3(0, 0, 0));
 	//mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 
 	Resize_3DView();
@@ -265,7 +265,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre->RB_m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
@@ -296,7 +296,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 	}
 	case WM_RBUTTONUP:
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre->RB_m_imgui.mousePressed();
 
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
@@ -304,18 +304,18 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 			App->CLSB_BR_Render->RB_RenderListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 
-			/*if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 			{
-				App->CLSB_Picking->Mouse_Pick_Entity();
+				App->CLSB_BR_Picking->Mouse_Pick_Entity();
 
 				char JustName[200];
-				int len = strlen(App->CLSB_Picking->TextureName2);
-				strcpy(JustName, App->CLSB_Picking->TextureName2);
+				int len = strlen(App->CLSB_BR_Picking->TextureName2);
+				strcpy(JustName, App->CLSB_BR_Picking->TextureName2);
 				JustName[len - 4] = 0;
 
 				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
-
-			}*/
+				App->Say(App->CLSB_BR_Picking->TextureName2);
+			}
 
 			return 1;
 		}
@@ -326,7 +326,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre->RB_m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
@@ -342,11 +342,11 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				//if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 				{
-					App->CLSB_Picking->Left_MouseDown = 1;
+					App->CLSB_BR_Picking->Left_MouseDown = 1;
 
-					App->CLSB_Picking->Mouse_Pick_Entity();
+					App->CLSB_BR_Picking->Mouse_Pick_Entity();
 
-					App->CLSB_Picking->Left_MouseDown = 0;
+					App->CLSB_BR_Picking->Left_MouseDown = 0;
 				}
 
 				SetCapture(App->CLSB_BR_Render->Surface_Hwnd);// Bernie
@@ -421,9 +421,9 @@ void SB_BR_Render::Resize_3DView()
 
 	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{
-		RB_View_Window->windowMovedOrResized();
-		mCameraMeshView->setAspectRatio((Ogre::Real)RB_View_Window->getWidth() / (Ogre::Real)RB_View_Window->getHeight());
-		mCameraMeshView->yaw(Ogre::Radian(0));
+		mWindow->windowMovedOrResized();
+		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
+		mCamera->yaw(Ogre::Radian(0));
 
 		Root::getSingletonPtr()->renderOneFrame();
 	}

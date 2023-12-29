@@ -68,9 +68,9 @@ public:
 	Ogre::ColourValue ColourDivision;
 
 	Ogre::SceneNode* CamNode;
-	Ogre::Camera* mCameraMeshView;
+	Ogre::Camera* mCamera;
 	Ogre::SceneManager* mSceneMgr;
-	Ogre::RenderWindow* RB_View_Window;
+	Ogre::RenderWindow* mWindow;
 	HWND MeshView_3D_hWnd;
 	HWND Surface_Hwnd;
 

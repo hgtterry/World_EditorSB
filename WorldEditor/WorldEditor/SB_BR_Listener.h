@@ -71,5 +71,7 @@ public:
 	POINT	Pl_pt;
 	long	Pl_Cent500X;
 	long	Pl_Cent500Y;
+
+	char Selected_Object_Name[MAX_PATH];
 };
 
