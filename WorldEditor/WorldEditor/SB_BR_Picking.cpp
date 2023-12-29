@@ -120,10 +120,8 @@ void SB_BR_Picking::Mouse_Pick_Entity()
 
     ImGuiIO& io = ImGui::GetIO();
 
-    Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
-    Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
-
-    Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
+    tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
+    ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
 
     Pl_Entity_Name = "-----";
 
@@ -208,7 +206,7 @@ bool SB_BR_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::M
             // raycast did not hit an objects bounding box
             Selected_Ok = 0;
             Pl_Entity_Name = "---------";
-            //App->Say("Failed 1");
+            App->Say("Failed 1");
             return (false);
         }
     }
@@ -244,7 +242,7 @@ bool SB_BR_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::M
             //strcpy(TextureName, "Entity");
 
             pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
-
+            App->Say(pentity->getName().c_str());
             char buff[255];
             char* pdest;
             strcpy(buff, pentity->getName().c_str());
@@ -330,7 +328,7 @@ bool SB_BR_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::M
         // raycast failed
         Selected_Ok = 0;
         Pl_Entity_Name = "---------";
-       // App->Say("Failed 2");
+       App->Say("Failed 2");
 
         return (false);
     }

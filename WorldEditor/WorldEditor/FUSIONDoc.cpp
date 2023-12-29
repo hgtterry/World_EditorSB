@@ -3083,7 +3083,7 @@ static void DrawEntity (CEntity *pEnt, ViewVars *v, const EntityTable *pEntityDe
 void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
 {
     //App->Flash_Window();
-    
+    App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
     if (App->New_Render == 1)
     {
         if (App->CLSB_Doc->Render_WE_World == 0)
@@ -3094,7 +3094,7 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
             App->WE_3DView_Hwnd = NULL;
             App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
             App->CLSB_BR_Render->MeshView_3D_hWnd = WindowFromDC(pDC->m_hDC);
-
+           
             if (App->WE_3DView_Hwnd)
             {
                 //SetWindowPos(Test, NULL, 0,0,1000, 1000, SWP_NOZORDER);
@@ -3106,11 +3106,16 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
             return;
         }
 
-        if (App->CLSB_BR_Render->RB_Render_Started == 1)
+       // if (App->CLSB_BR_Render->RB_Render_Started == 1)
         {
             App->CLSB_BR_Render->Resize_3DView();
         }
 
+        return;
+    }
+
+    if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+    {
         return;
     }
 

@@ -361,6 +361,7 @@ bool SB_Ogre::Configure(void)
 
 	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
 	
+	Ogre::RenderTarget *poo = mRoot->getRenderTarget(Ogre::StringConverter::toString((size_t)RenderHwnd));
 	
 	return true;
 }

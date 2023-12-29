@@ -42,7 +42,7 @@ SB_BR_Listener::SB_BR_Listener()
 
 	Pl_LeftMouseDown = 0;
 	Pl_RightMouseDown = 0;
-
+	Show_DemoWindow = 0;
 	WE_Cam = nullptr;
 	WE_Cam = App->CLSB_BR_Render->mCamera;
 
@@ -65,6 +65,14 @@ bool SB_BR_Listener::frameStarted(const FrameEvent& evt)
 	if (App->CLSB_ImGui->Updating_F == 1)
 	{
 		App->CLSB_ImGui->Updating();
+	}
+
+	//App->CLSB_ImGui->Render_FPS();
+	App->CLSB_ImGui->WE_Data();
+
+	if (Show_DemoWindow == 1)
+	{
+		ImGui::ShowDemoWindow();
 	}
 
 	//App->CLSB_ImGui->Show_FPS = 1;

@@ -78,6 +78,9 @@ public:
 
 	int Local_Face;
 
+	Ogre::Real tx;
+	Ogre::Real ty;
+
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);

@@ -69,8 +69,13 @@ BOOL CFixedSplitterWnd::OnMouseWheel (UINT nFlags, short zDelta, CPoint pt)
 }
 #pragma warning (default: 4100)
 
-void CFixedSplitterWnd::RefreshSplitBars()
+void CFixedSplitterWnd::RefreshSplitBars() // hgtterrry RefreshSplitBars
 {
+	if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+	{
+		App->CLSB_BR_Render->BR_Resize();
+	}
+	
 	CRect rectInside;
 	GetInsideRect(rectInside);
 	DrawAllSplitBars(NULL, rectInside.right, rectInside.bottom);
@@ -78,6 +83,7 @@ void CFixedSplitterWnd::RefreshSplitBars()
 
 void CFixedSplitterWnd::OnDrawSplitter(CDC* pDC, ESplitType nType, const CRect& rectArg)
 {
+	
 	CSplitterWnd::OnDrawSplitter(pDC, nType, rectArg);
 	CWnd *pAct = GetActivePane();
 	if(pDC && pAct && !pAct->IsKindOf( RUNTIME_CLASS( CSplitterWnd)) && nType == splitBorder)
@@ -241,7 +247,7 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy) // hgtterry
 		m_wndSplitter.SetRowInfo(0, (cy>>2)*2, 0);
 		m_wndSplitter.SetRowInfo(1, cy>>2, 0);
 	}
-
+	
 	CMDIChildWnd::OnSize(nType, cx, cy);
 }
 
@@ -261,6 +267,8 @@ void CChildFrame::OnSetFocus(CWnd* pOldWnd)
 	{
 		pParent->SendMessage (WM_NOTIFY, 0, (LPARAM)&hdr);
 	}
+
+	
 }
 
 // *************************************************************************

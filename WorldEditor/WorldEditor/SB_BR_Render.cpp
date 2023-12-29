@@ -68,6 +68,7 @@ SB_BR_Render::SB_BR_Render()
 	CamNode = NULL;
 
 	RB_Render_Started = 0;
+	BR_Mode_Active = 0;
 }
 
 SB_BR_Render::~SB_BR_Render()
@@ -207,7 +208,7 @@ void SB_BR_Render::Switch_Proc()
 	
 
 	int test = 0;
-	test = SetWindowLong(Surface_Hwnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
+	test = SetWindowLong(Surface_Hwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
 
 	if (!test)
 	{
@@ -256,7 +257,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->CLSB_Ogre->m_imgui.mouseMoved();
+		App->CLSB_Ogre->RB_m_imgui.mouseMoved();
 
 		SetFocus(App->CLSB_BR_Render->Surface_Hwnd);
 		break;
@@ -410,6 +411,7 @@ LRESULT CALLBACK SB_BR_Render::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 void SB_BR_Render::Resize_3DView()
 {
+	App->Beep_Win();
 	RECT rect;
 	GetWindowRect(MeshView_3D_hWnd, &rect);
 	
@@ -519,4 +521,59 @@ void SB_BR_Render::Update_Scene()
 	App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
 }
 
+//======================================================
+//======================================================
+//======================================================
+//======================================================
+//====================================================== 
 
+// *************************************************************************
+// *			Go_BR_Mode:- Terry and Hazel Flanigan 2022	    	  	   *
+// *************************************************************************
+void SB_BR_Render::Go_BR_Mode(void)
+{
+	App->Block_RB_Actions = 1;
+	BR_Mode_Active = 1;
+
+	RECT rect;
+	GetWindowRect(App->WE_3DView_Hwnd, &rect);
+
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, rect.left, rect.top - 27, width, height-15, NULL);
+
+	SetParent(App->ViewGLhWnd, App->MainHwnd);
+
+	App->CLSB_Ogre->mWindow->resize(width, height - 15);
+
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+
+	App->CLSB_ImGui->Show_Physics_Console = 0;
+
+	Root::getSingletonPtr()->renderOneFrame();
+
+}
+
+// *************************************************************************
+// *			BR_Resize:- Terry and Hazel Flanigan 2022	    	  	   *
+// *************************************************************************
+void SB_BR_Render::BR_Resize(void)
+{
+
+	RECT rect;
+	GetWindowRect(App->WE_3DView_Hwnd, &rect);
+
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, rect.left, rect.top - 27, width, height - 15, NULL);
+
+	App->CLSB_Ogre->mWindow->resize(width, height - 15);
+
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
+}

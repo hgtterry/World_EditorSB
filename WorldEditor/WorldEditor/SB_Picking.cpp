@@ -121,8 +121,6 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
     Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
 
-    Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
-
     Pl_Entity_Name = "-----";
 
     Ogre::uint32 queryMask = -1;

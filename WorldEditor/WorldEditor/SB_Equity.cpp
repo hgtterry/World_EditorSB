@@ -493,8 +493,8 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 		//-------------------------------------------------------- Full Screen
 		if (LOWORD(wParam) == IDC_BTTB_FULLSCREEN)
 		{
-			App->CLSB_Scene->Go_FullScreen_Mode();
-
+			//App->CLSB_Scene->Go_FullScreen_Mode();
+			App->CLSB_BR_Render->Go_BR_Mode();
 			return TRUE;
 		}
 		//-------------------------------------------------------- Show Info
@@ -1066,22 +1066,25 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 void SB_Equity::Resize_3DView()
 {
-	RECT rcl;
-	GetClientRect(App->Equity_Dlg_hWnd, &rcl);
-
-	int X = rcl.right-10;
-	int Y = rcl.bottom - 85;
-
-	SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
-	
-	
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	if (App->CLSB_BR_Render->BR_Mode_Active == 0)
 	{
-		App->CLSB_Ogre->mWindow->windowMovedOrResized();
-		App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-		App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+		RECT rcl;
+		GetClientRect(App->Equity_Dlg_hWnd, &rcl);
 
-		Root::getSingletonPtr()->renderOneFrame();
+		int X = rcl.right - 10;
+		int Y = rcl.bottom - 85;
+
+		SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
+
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			App->CLSB_Ogre->mWindow->windowMovedOrResized();
+			App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+			App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+
+			Root::getSingletonPtr()->renderOneFrame();
+		}
 	}
 }
 

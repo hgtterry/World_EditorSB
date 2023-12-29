@@ -38,6 +38,10 @@ public:
 	void Switch_Proc();
 	void Update_Scene();
 
+	void Go_BR_Mode(void);
+	void BR_Resize(void);
+	bool BR_Mode_Active;
+
 	SB_BR_Listener* RB_RenderListener;
 
 	ManualObject* GridManual;

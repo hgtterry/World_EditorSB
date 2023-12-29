@@ -73,5 +73,7 @@ public:
 	long	Pl_Cent500Y;
 
 	char Selected_Object_Name[MAX_PATH];
+
+	bool Show_DemoWindow;
 };
 

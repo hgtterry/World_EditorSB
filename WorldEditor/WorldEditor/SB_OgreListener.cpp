@@ -135,7 +135,7 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 {
-
+	
 	if (App->CLSB_BR_Render->RB_Render_Started == 1)
 	{
 		return true;
@@ -151,6 +151,12 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 	}
 
 	App->CLSB_ImGui->Render_FPS();
+
+	if (Show_DemoWindow == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
+
 	App->CLSB_Dimensions->Dimesions_Select();
 
 	//if (GD_Run_Physics == 1)
@@ -227,6 +233,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 // *************************************************************************
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	
 	if (App->CLSB_BR_Render->RB_Render_Started == 1)
 	{
 		//return true;
@@ -377,7 +384,7 @@ void SB_OgreListener::Camera_Mode_Free(float DeltaTime)
 // *************************************************************************
 bool SB_OgreListener::Capture_Left_Mouse_Free(void)
 {
-	App->Flash_Window();
+	//App->Flash_Window();
 	//if (!ImGui::GetIO().WantCaptureMouse)
 	//{
 	GetCursorPos(&Pl_pt);

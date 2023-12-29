@@ -160,16 +160,16 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 }
 
 // *************************************************************************
-// *					Render_FPS  Terry Flanigan				   *
+// *					WE_Data  Terry Flanigan				   *
 // *************************************************************************
-void SB_ImGui::Render_FPS(void)
+void SB_ImGui::WE_Data(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+	//ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("WE_Data", &Show_FPS))// ImGuiWindowFlags_NoResize
+		//| //ImGuiWindowFlags_AlwaysAutoResize ))
 	{
 		ImGui::End();
 	}
@@ -185,8 +185,104 @@ void SB_ImGui::Render_FPS(void)
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		PosY = 10;
+
+		/*if (App->New_Render == 1)
+		{
+			PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}
+		else
+		{
+			PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}*/
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		//Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
+		//Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
+
+		ImGui::Text("TX %f", App->CLSB_BR_Picking->tx);
+		ImGui::Text("TY %f", App->CLSB_BR_Picking->ty);
+
+		if (ImGui::Button("Close"))
+		{
+			App->Say("Test");
+		}
+
+		if (ImGui::Button("Demo"))
+		{
+			if (App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow == 1)
+			{
+				App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow = 0;
+			}
+			else
+			{
+				App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow = 1;
+			}
+			
+		}
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+
+}
+
+// *************************************************************************
+// *					Render_FPS  Terry Flanigan				   *
+// *************************************************************************
+void SB_ImGui::Render_FPS(void)
+{
+	//ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Ogre Data", &Show_FPS))// ImGuiWindowFlags_NoResize
+		//| //ImGuiWindowFlags_AlwaysAutoResize ))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos == 0)
+		{
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos = 1;
+		}
+
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
+		ImVec2 Size = ImGui::GetWindowSize();
+
+		/*if (App->New_Render == 1)
+		{
+			PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}
+		else
+		{
+			PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			PosY = 10;
+		}*/
+
+		if (ImGui::Button("Close"))
+		{
+			App->Say("Test");
+		}
+
+		if (ImGui::Button("Test2"))
+		{
+			if (App->New_Render == 1)
+			{
+				App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow = 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Show_DemoWindow = 1;
+			}
+		}
 
 		ImGui::PopStyleColor();
 		ImGui::End();
