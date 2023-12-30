@@ -17,6 +17,8 @@ SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 
 	LinkViews_Flag = 1;
 	WorldView_Active_Flag = 0;
+
+	Was_BR_True3D_Mode_Active = 0;
 }
 
 SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
@@ -301,9 +303,17 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 				ShowWindow(App->ListPanel, false);
 				ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 				App->CLSB_Equity->Show_Equity_Dialog(0);
+
 			}
 			else
 			{
+				if (App->BR_True3D_Mode_Active == 1)
+				{
+					App->CLSB_BR_Render->Exit_BR_3D_Mode();
+					App->BR_True3D_Mode_Active = 0;
+					App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 1;
+				}
+
 				App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 1;
 				App->CLSB_Equity->Do_Preview_All();
 			}

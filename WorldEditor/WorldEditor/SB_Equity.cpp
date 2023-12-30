@@ -115,6 +115,12 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 				App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
 				EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 			}
+
+			if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->Start_BR_3D_Mode();
+				App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
+			}
 		}
 	}
 	else

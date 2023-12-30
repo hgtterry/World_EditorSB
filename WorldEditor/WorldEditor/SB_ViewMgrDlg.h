@@ -11,6 +11,7 @@ public:
 	bool View_MgrDlg_Active;
 	bool LinkViews_Flag;
 	bool WorldView_Active_Flag;
+	bool Was_BR_True3D_Mode_Active;
 
 	HWND MgrDlg_hWnd;
 
@@ -28,5 +29,6 @@ private:
 	bool TopRight_Flag;
 	bool BottomLeft_Flag;
 	bool BottomRight_Flag;
+
 };
 
