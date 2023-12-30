@@ -298,6 +298,7 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_3DUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TRUE3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -346,32 +347,38 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TRUE3D && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DELETEBRUSH));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TRUE3D));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle(item, App->CLSB_BR_Render->BR_Mode_Active);
 			}
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_TRUE3D)
+		{
+			App->CLSB_BR_Render->Start_BR_Mode();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
 		{
 			App->CLSB_Mesh_Mgr->Update_World();
 			return TRUE;
 		}
-
+		
 		if (LOWORD(wParam) == IDC_BT_PICK)
 		{
 			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)

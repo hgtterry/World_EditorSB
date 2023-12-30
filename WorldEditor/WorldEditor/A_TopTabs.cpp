@@ -841,7 +841,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			App->CLSB_BR_Render->Start_BR_Mode();
+			//App->CLSB_BR_Render->Start_BR_Mode();
 			/*if (App->CLSB_Doc->Render_WE_World == 1)
 			{
 				App->CLSB_Doc->Render_WE_World = 0;
