@@ -185,6 +185,7 @@ SB_App::SB_App()
 
 	Debug_App = 1;
 	Block_RB_Actions = 0;
+	BR_True3D_Mode_Active = 0;
 }
 
 SB_App::~SB_App()

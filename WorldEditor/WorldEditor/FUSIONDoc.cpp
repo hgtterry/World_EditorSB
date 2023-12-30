@@ -3084,7 +3084,7 @@ void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
 {
     App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
     
-    if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+    if (App->BR_True3D_Mode_Active == 1)
     {
         return;
     }

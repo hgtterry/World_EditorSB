@@ -357,7 +357,7 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CLSB_BR_Render->BR_Mode_Active);
+				App->Custom_Button_Toggle(item, App->BR_True3D_Mode_Active);
 			}
 			return CDRF_DODEFAULT;
 		}
@@ -369,7 +369,15 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == IDC_BT_TRUE3D)
 		{
-			App->CLSB_BR_Render->Start_BR_Mode();
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->Exit_BR_Mode();
+			}
+			else
+			{
+				App->CLSB_BR_Render->Start_BR_Mode();
+			}
+			
 			return TRUE;
 		}
 

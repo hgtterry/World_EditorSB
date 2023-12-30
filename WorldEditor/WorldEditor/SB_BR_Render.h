@@ -35,10 +35,12 @@ public:
 
 	void Update_Scene();
 
+
 	void Start_BR_Mode(void);
 	void Go_BR_Mode(void);
 	void BR_Resize(void);
-	bool BR_Mode_Active;
+	void Exit_BR_Mode(void);
+
 	bool RB_Render_Started;
 
 	Ogre::SceneNode* CamNode;

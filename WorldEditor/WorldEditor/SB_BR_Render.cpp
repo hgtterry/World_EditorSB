@@ -36,7 +36,6 @@ SB_BR_Render::SB_BR_Render()
 	CamNode = NULL;
 
 	RB_Render_Started = 0;
-	BR_Mode_Active = 0;
 }
 
 SB_BR_Render::~SB_BR_Render()
@@ -138,7 +137,7 @@ void SB_BR_Render::Start_BR_Mode(void)
 void SB_BR_Render::Go_BR_Mode(void)
 {
 	App->Block_RB_Actions = 1;
-	BR_Mode_Active = 1;
+	App->BR_True3D_Mode_Active = 1;
 
 	RECT rect;
 	GetWindowRect(App->WE_3DView_Hwnd, &rect);
@@ -181,4 +180,30 @@ void SB_BR_Render::BR_Resize(void)
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
+}
+
+// *************************************************************************
+// *			Exit_BR_Mode:- Terry and Hazel Flanigan 2023	      	   *
+// *************************************************************************
+void SB_BR_Render::Exit_BR_Mode(void)
+{
+	//if(Flags[0]->OgreIsRunning==1)
+	{
+		App->BR_True3D_Mode_Active = 0;
+		//App->FullScreen = 0;
+		SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
+		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
+		
+		App->CLSB_Equity->Resize_3DView();
+		
+		App->CLSB_Ogre->mWindow->windowMovedOrResized();
+		App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+		App->CLSB_Ogre->mCamera->yaw(Radian(0));
+		Root::getSingletonPtr()->renderOneFrame();
+
+		App->CLSB_Scene->FullScreenMode_Flag = 0;
+		App->CLSB_ImGui->Show_Physics_Console = 1;
+		
+		App->Block_RB_Actions = 0;
+	}
 }

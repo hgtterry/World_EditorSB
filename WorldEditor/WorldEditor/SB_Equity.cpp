@@ -1065,7 +1065,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 void SB_Equity::Resize_3DView()
 {
-	if (App->CLSB_BR_Render->BR_Mode_Active == 0)
+	if (App->BR_True3D_Mode_Active == 0)
 	{
 		RECT rcl;
 		GetClientRect(App->Equity_Dlg_hWnd, &rcl);

@@ -71,7 +71,7 @@ BOOL CFixedSplitterWnd::OnMouseWheel (UINT nFlags, short zDelta, CPoint pt)
 
 void CFixedSplitterWnd::RefreshSplitBars() // hgtterrry RefreshSplitBars
 {
-	if (App->CLSB_BR_Render->BR_Mode_Active == 1)
+	if (App->BR_True3D_Mode_Active == 1)
 	{
 		App->CLSB_BR_Render->BR_Resize();
 	}

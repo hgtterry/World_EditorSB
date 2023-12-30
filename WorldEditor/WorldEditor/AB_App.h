@@ -298,6 +298,7 @@ public:
 
 	bool File_Loaded_Flag;
 	bool Block_RB_Actions;
+	bool BR_True3D_Mode_Active;
 
 	HCURSOR CUR;
 
