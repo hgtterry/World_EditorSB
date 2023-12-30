@@ -184,7 +184,6 @@ SB_App::SB_App()
 	Write_DebugFile = NULL;
 
 	Debug_App = 1;
-	New_Render = 0;
 	Block_RB_Actions = 0;
 }
 
@@ -363,7 +362,7 @@ void SB_App::SetBrushes_Fonts(void)
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240,240,240));
 
-	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 
@@ -723,7 +722,7 @@ bool SB_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		}
 		else
 		{
-			defaultbrush = App->Brush_White;
+			defaultbrush = Brush_But_Normal;
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
@@ -789,7 +788,7 @@ bool SB_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 		}
 		else
 		{
-			defaultbrush = CreateSolidBrush(RGB(255, 255, 255)); // Unselected 
+			defaultbrush = Brush_But_Normal; // Unselected 
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));

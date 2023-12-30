@@ -319,6 +319,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
+			
 			App->CLSB_Exporter->Start_Export(1);
 			return TRUE;
 		}

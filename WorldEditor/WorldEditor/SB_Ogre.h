@@ -96,7 +96,6 @@ public:
 	GD_Bt_Render*		BulletListener;
 
 	OgreImGui  m_imgui;
-	OgreImGui  RB_m_imgui;
 	
 	//HWND Ogre_Window_hWnd;
 

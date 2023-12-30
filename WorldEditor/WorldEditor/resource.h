@@ -893,6 +893,8 @@
 #define IDC_BT_RENAME                   1582
 #define IDC_LIST_POINTS                 1583
 #define IDC_BT_RENDER                   1584
+#define IDC_B                           1585
+#define IDC_BT_PICK                     1585
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1122,7 +1124,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        360
 #define _APS_NEXT_COMMAND_VALUE         33106
-#define _APS_NEXT_CONTROL_VALUE         1585
+#define _APS_NEXT_CONTROL_VALUE         1586
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

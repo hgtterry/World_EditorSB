@@ -744,31 +744,24 @@ bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int Gro
 // *************************************************************************
 void SB_Scene::Go_FullScreen_Mode(void)
 {
-	App->Block_RB_Actions = 1;
 	FullScreenMode_Flag = 1;
 
-	RECT rect;
-	GetWindowRect(App->WE_3DView_Hwnd, &rect);
-	
-	int width = rect.right - rect.left;
-	int height = rect.bottom - rect.top;
-	
-	//int cx = GetSystemMetrics(SM_CXSCREEN);
-	//int cy = GetSystemMetrics(SM_CYSCREEN);
+	//App->SBC_Scene->CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
 
-	SetWindowPos(App->ViewGLhWnd, HWND_TOP, rect.left, rect.top-25, width, height, NULL);
+	//App->FullScreen = 1;
+	int cx = GetSystemMetrics(SM_CXSCREEN);
+	int cy = GetSystemMetrics(SM_CYSCREEN);
 
-	SetParent(App->ViewGLhWnd, App->MainHwnd);
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, cx, cy, NULL);
 
-	App->CLSB_Ogre->mWindow->resize(width, height);
+	SetParent(App->ViewGLhWnd, NULL);
+
+	App->CLSB_Ogre->mWindow->resize(cx, cy);
 
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 
-	App->CLSB_ImGui->Show_Physics_Console = 0;
-
 	Root::getSingletonPtr()->renderOneFrame();
-	//App->CLSB_Equity->Show_Equity_Dialog(0);
 }
 
 // *************************************************************************

@@ -202,6 +202,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_Doc->Lock_AllTextures();
 
+		App->CLSB_Panels->Set_Aplication_Dialogs_On();
 		App->File_Loaded_Flag = 1;
 		return 1;
 	}
@@ -249,6 +250,7 @@ void SB_File_WE::Open_Example_File()
 
 		App->CLSB_Doc->Lock_AllTextures();
 
+		App->CLSB_Panels->Set_Aplication_Dialogs_On();
 		App->File_Loaded_Flag = 1;
 		return;
 	}

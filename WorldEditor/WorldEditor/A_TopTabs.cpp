@@ -730,26 +730,26 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				if (Test == 1)
 				{
-					if (App->New_Render == 1)
-					{
-						if (App->CLSB_BR_Render->RB_Render_Started == 0)
-						{
-							App->CLSB_BR_Render->Update_Scene();
-						}
-						else
-						{
-							//App->CLSB_Doc->Render_WE_World = 0;
-							//App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
-							App->CLSB_BR_Render->Resize_3DView();
+					//if (App->New_Render == 1)
+					//{
+					//	if (App->CLSB_BR_Render->RB_Render_Started == 0)
+					//	{
+					//		App->CLSB_BR_Render->Update_Scene();
+					//	}
+					//	else
+					//	{
+					//		//App->CLSB_Doc->Render_WE_World = 0;
+					//		//App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
+					//		App->CLSB_BR_Render->Resize_3DView();
 
-							App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-							App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-							App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-							App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
-							App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
-							//App->CLSB_Environment->SetSky(1);
-						}
-					}
+					//		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+					//		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+					//		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+					//		App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+					//		App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
+					//		//App->CLSB_Environment->SetSky(1);
+					//	}
+					//}
 
 					App->CLSB_ImGui->Updating_F = 0;
 

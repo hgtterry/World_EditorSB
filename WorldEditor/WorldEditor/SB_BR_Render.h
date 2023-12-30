@@ -23,8 +23,6 @@ misrepresented as being the original software.
 distribution.
 */
 
-#include "SB_BR_Listener.h"
-
 class SB_BR_Render
 {
 public:
@@ -32,55 +30,24 @@ public:
 	~SB_BR_Render();
 
 	void Start_RB_Window();
-	bool Set_Render_Window(void);
-	void Grid_Update(bool Create);
+
 	void Resize_3DView();
-	void Switch_Proc();
+
 	void Update_Scene();
 
 	void Start_BR_Mode(void);
 	void Go_BR_Mode(void);
 	void BR_Resize(void);
 	bool BR_Mode_Active;
-
-	SB_BR_Listener* RB_RenderListener;
-
-	ManualObject* GridManual;
-	SceneNode* GridNode;
-	int Division_X;
-	int Division_Y;
-	int Division_Z;
-
-	int XAxis_min;
-	int	XAxis_max;
-	int YAxis_min;
-	int	YAxis_max;
-	int ZAxis_min;
-	int	ZAxis_max;
-	int HairExtend;
-
-	int Scale_X;
-	int Scale_Y;
-	int Scale_Z;
-
-	bool ShowDivisions;
 	bool RB_Render_Started;
-
-	Ogre::ColourValue ColourMain;
-	Ogre::ColourValue ColourHairZ;
-	Ogre::ColourValue ColourHairX;
-	Ogre::ColourValue ColourHairY;
-	Ogre::ColourValue ColourDivision;
 
 	Ogre::SceneNode* CamNode;
 	Ogre::Camera* mCamera;
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RenderWindow* mWindow;
 	HWND MeshView_3D_hWnd;
-	HWND Surface_Hwnd;
 
 private:
-	static LRESULT CALLBACK RB_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	
 };
 

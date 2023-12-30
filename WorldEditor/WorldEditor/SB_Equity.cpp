@@ -493,8 +493,7 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 		//-------------------------------------------------------- Full Screen
 		if (LOWORD(wParam) == IDC_BTTB_FULLSCREEN)
 		{
-			//App->CLSB_Scene->Go_FullScreen_Mode();
-			App->CLSB_BR_Render->Go_BR_Mode();
+			App->CLSB_Scene->Go_FullScreen_Mode();
 			return TRUE;
 		}
 		//-------------------------------------------------------- Show Info

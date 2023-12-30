@@ -212,14 +212,6 @@ void SB_ImGui::WE_Data(void)
 
 		if (ImGui::Button("Demo"))
 		{
-			if (App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow == 1)
-			{
-				App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow = 0;
-			}
-			else
-			{
-				App->CLSB_BR_Render->RB_RenderListener->Show_DemoWindow = 1;
-			}
 			
 		}
 
@@ -372,16 +364,10 @@ void SB_ImGui::Updating_GUI(void)
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 
-		if (App->New_Render == 1)
-		{
-			Model_Data_PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
-			Model_Data_PosY = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Height / 2) - (Size.x / 2);
-		}
-		else
-		{
-			Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-			Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.x / 2);
-		}
+		
+		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.x / 2);
+		
 
 		ImGui::End();
 	}
@@ -418,18 +404,9 @@ void SB_ImGui::ImGui_FPS(void)
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 
-		if (App->New_Render == 1)
-		{
-			PosX = ((float)App->CLSB_BR_Render->RB_RenderListener->View_Width / 2) - (Size.x / 2);
-			PosY = 10;
-		}
-		else
-		{
-			PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-			PosY = 10;
-		}
-
+		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
+		
 		ImGui::End();
 	}
 }

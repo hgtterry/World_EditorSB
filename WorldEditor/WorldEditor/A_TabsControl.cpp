@@ -297,8 +297,8 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_3DUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -331,22 +331,22 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_PICK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DIMENSIONS));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PICK));
 			if (test == 0)
 			{
-				//App->Custom_Button_Greyed(item);
+				App->Custom_Button_Greyed(item);
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre->OgreListener->GD_Selection_Mode);
 			}
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DELETEBRUSH));
@@ -369,6 +369,31 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
 		{
 			App->CLSB_Mesh_Mgr->Update_World();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_PICK)
+		{
+			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+				//App->CLSB_TopTabs_Equity->Picking_Active_Flag = 0;
+
+				//App->CLSB_ImGui->Show_Face_Selection = 0;
+				//App->CLSB_FileView->Show_FileView(1);
+
+				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
+				//App->CLSB_TopTabs_Equity->Picking_Active_Flag = 1;
+
+				//App->CLSB_ImGui->Show_Face_Selection = 1;
+				//App->CLSB_FileView->Show_FileView(0);
+
+				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+			}
 			return TRUE;
 		}
 
