@@ -29,25 +29,10 @@ public:
 	SB_BR_Render();
 	~SB_BR_Render();
 
-	void Start_RB_Window();
-
-	void Resize_3DView();
-
-	void Update_Scene();
-
-
-	void Start_BR_Mode(void);
-	void Go_BR_Mode(void);
-	void BR_Resize(void);
-	void Exit_BR_Mode(void);
-
-	bool RB_Render_Started;
-
-	Ogre::SceneNode* CamNode;
-	Ogre::Camera* mCamera;
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::RenderWindow* mWindow;
-	HWND MeshView_3D_hWnd;
+	void Start_BR_3D_Mode(void);
+	void Go_BR_3D_Mode(void);
+	void BR_3D_Resize(void);
+	void Exit_BR_3D_Mode(void);
 
 private:
 	

@@ -974,7 +974,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
-			App->CLSB_Equity->Do_Equity();
+			App->Say("Coming Soon Check Updates");
+			//App->CLSB_Equity->Do_Equity();
 			return TRUE;
 		}
 

@@ -121,11 +121,6 @@ void SB_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 {
-	if (App->CLSB_BR_Render->RB_Render_Started == 1)
-	{
-		//return true;
-	}
-
 	Update_Game_Logic(evt.timeSinceLastFrame);
 	return true;
 }
@@ -135,11 +130,6 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 {
-	
-	if (App->CLSB_BR_Render->RB_Render_Started == 1)
-	{
-		return true;
-	}
 
 	App->CLSB_Ogre->Get_View_Height_Width();
 	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
@@ -233,11 +223,6 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 // *************************************************************************
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	
-	if (App->CLSB_BR_Render->RB_Render_Started == 1)
-	{
-		//return true;
-	}
 
 	OgreFrameTime = evt.timeSinceLastFrame;
 

@@ -28,14 +28,7 @@ distribution.
 
 SB_BR_Render::SB_BR_Render()
 {
-	MeshView_3D_hWnd = nullptr;
-	// ------------------------------------------------ 
-	mWindow = NULL;
-	mSceneMgr = NULL;
-	mCamera = NULL;
-	CamNode = NULL;
-
-	RB_Render_Started = 0;
+	
 }
 
 SB_BR_Render::~SB_BR_Render()
@@ -43,76 +36,9 @@ SB_BR_Render::~SB_BR_Render()
 }
 
 // *************************************************************************
-// *			Start_RB_Window:- Terry and Hazel Flanigan 2023			   *
+// *			Start_BR_3D_Mode:- Terry and Hazel Flanigan 2023	      	   *
 // *************************************************************************
-void SB_BR_Render::Start_RB_Window()
-{
-	/*Surface_Hwnd = NULL;
-	Surface_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RB_RENDER_WIN, MeshView_3D_hWnd, (DLGPROC)RB_Window_Proc);
-	bool test = Set_Render_Window();
-	if (test == 0)
-	{
-		App->Say("Failed to Start Right Bottom Womdoe");
-		return;
-	}
-
-	Resize_3DView();*/
-}
-
-// *************************************************************************
-// *			Resize_3DView:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void SB_BR_Render::Resize_3DView()
-{
-	App->Beep_Win();
-	RECT rect;
-	GetWindowRect(MeshView_3D_hWnd, &rect);
-	
-	int width = rect.right - rect.left;
-	int height = rect.bottom - rect.top;
-	
-	
-
-
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
-	{
-		mWindow->windowMovedOrResized();
-		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
-		mCamera->yaw(Ogre::Radian(0));
-
-		Root::getSingletonPtr()->renderOneFrame();
-	}
-}
-
-// *************************************************************************
-// *	  		Update_Scene:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-void SB_BR_Render::Update_Scene()
-{
-	if (RB_Render_Started == 0)
-	{
-		App->CLSB_BR_Render->Start_RB_Window();
-	}
-
-	App->CLSB_BR_Render->Resize_3DView();
-
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-	App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
-	App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamDetached;
-}
-
-//======================================================
-//======================================================
-//======================================================
-//======================================================
-//====================================================== 
-
-// *************************************************************************
-// *			Start_BR_Mode:- Terry and Hazel Flanigan 2022	      	   *
-// *************************************************************************
-void SB_BR_Render::Start_BR_Mode(void)
+void SB_BR_Render::Start_BR_3D_Mode(void)
 {
 	App->CLSB_Model->Set_Equity();
 	App->CLSB_Camera_EQ->Reset_Orientation();
@@ -127,14 +53,14 @@ void SB_BR_Render::Start_BR_Mode(void)
 
 	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
 	
-	App->CLSB_BR_Render->Go_BR_Mode();
+	App->CLSB_BR_Render->Go_BR_3D_Mode();
 	App->CLSB_Mesh_Mgr->Update_World();
 }
 
 // *************************************************************************
-// *			Go_BR_Mode:- Terry and Hazel Flanigan 2022	    	  	   *
+// *			Go_BR_3D_Mode:- Terry and Hazel Flanigan 2022	    	  	   *
 // *************************************************************************
-void SB_BR_Render::Go_BR_Mode(void)
+void SB_BR_Render::Go_BR_3D_Mode(void)
 {
 	App->Block_RB_Actions = 1;
 	App->BR_True3D_Mode_Active = 1;
@@ -163,7 +89,7 @@ void SB_BR_Render::Go_BR_Mode(void)
 // *************************************************************************
 // *			BR_Resize:- Terry and Hazel Flanigan 2022	    	  	   *
 // *************************************************************************
-void SB_BR_Render::BR_Resize(void)
+void SB_BR_Render::BR_3D_Resize(void)
 {
 
 	RECT rect;
@@ -185,12 +111,12 @@ void SB_BR_Render::BR_Resize(void)
 // *************************************************************************
 // *			Exit_BR_Mode:- Terry and Hazel Flanigan 2023	      	   *
 // *************************************************************************
-void SB_BR_Render::Exit_BR_Mode(void)
+void SB_BR_Render::Exit_BR_3D_Mode(void)
 {
-	//if(Flags[0]->OgreIsRunning==1)
+	if(App->BR_True3D_Mode_Active == 1)
 	{
 		App->BR_True3D_Mode_Active = 0;
-		//App->FullScreen = 0;
+
 		SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
 		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
 		
@@ -205,5 +131,6 @@ void SB_BR_Render::Exit_BR_Mode(void)
 		App->CLSB_ImGui->Show_Physics_Console = 1;
 		
 		App->Block_RB_Actions = 0;
+		App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
 	}
 }

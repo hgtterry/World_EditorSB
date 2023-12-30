@@ -206,7 +206,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->BR_Resize();
+				App->CLSB_BR_Render->BR_3D_Resize();
 			}
 
 			return TRUE;
@@ -221,7 +221,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->BR_Resize();
+				App->CLSB_BR_Render->BR_3D_Resize();
 			}
 
 			return TRUE;
@@ -236,7 +236,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->BR_Resize();
+				App->CLSB_BR_Render->BR_3D_Resize();
 			}
 
 			return TRUE;
@@ -251,7 +251,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->BR_Resize();
+				App->CLSB_BR_Render->BR_3D_Resize();
 			}
 			return TRUE;
 		}
@@ -264,7 +264,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->BR_Resize();
+				App->CLSB_BR_Render->BR_3D_Resize();
 			}
 
 			return TRUE;

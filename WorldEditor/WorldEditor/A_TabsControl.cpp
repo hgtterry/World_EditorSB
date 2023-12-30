@@ -135,7 +135,16 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 		if (some_item->idFrom == IDC_BT_3DSETTINGS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_3DSettings_Flag);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DSETTINGS));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_TabsControl->Tab_3DSettings_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -328,7 +337,15 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BT_3DUPDATE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DUPDATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
 			return CDRF_DODEFAULT;
 		}
 
@@ -371,11 +388,13 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 		{
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_BR_Render->Exit_BR_Mode();
+				App->CLSB_BR_Render->Exit_BR_3D_Mode();
+				App->CLSB_Panels->Set_Tabs_3DSettings_On(false);
 			}
 			else
 			{
-				App->CLSB_BR_Render->Start_BR_Mode();
+				App->CLSB_BR_Render->Start_BR_3D_Mode();
+				App->CLSB_Panels->Set_Tabs_3DSettings_On(true);
 			}
 			
 			return TRUE;
@@ -392,21 +411,13 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
 			{
 				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
-				//App->CLSB_TopTabs_Equity->Picking_Active_Flag = 0;
-
-				//App->CLSB_ImGui->Show_Face_Selection = 0;
-				//App->CLSB_FileView->Show_FileView(1);
-
+				App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 0;
+				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
 				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
 			}
 			else
 			{
 				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
-				//App->CLSB_TopTabs_Equity->Picking_Active_Flag = 1;
-
-				//App->CLSB_ImGui->Show_Face_Selection = 1;
-				//App->CLSB_FileView->Show_FileView(0);
-
 				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
 			}
 			return TRUE;

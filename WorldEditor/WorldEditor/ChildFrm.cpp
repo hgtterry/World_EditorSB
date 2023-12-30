@@ -73,7 +73,7 @@ void CFixedSplitterWnd::RefreshSplitBars() // hgtterrry RefreshSplitBars
 {
 	if (App->BR_True3D_Mode_Active == 1)
 	{
-		App->CLSB_BR_Render->BR_Resize();
+		App->CLSB_BR_Render->BR_3D_Resize();
 	}
 	
 	CRect rectInside;
@@ -212,6 +212,8 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 	((CFusionView *)m_wndSplitter.GetPane(0,1))->OnViewType(ID_VIEW_SIDEVIEW);
 	((CFusionView *)m_wndSplitter.GetPane(1,0))->OnViewType(ID_VIEW_FRONTVIEW);
 	((CFusionView *)m_wndSplitter.GetPane(1,1))->OnViewType(ID_VIEW_3DWIREFRAME); //ID_VIEW_TEXTUREVIEW);
+
+	App->WE_3DView_Hwnd = m_wndSplitter.GetPane(1, 1)->GetSafeHwnd();
 
 	// activate the top left view
 	SetActiveView((CView*)m_wndSplitter.GetPane(0,0));

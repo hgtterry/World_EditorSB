@@ -3082,8 +3082,6 @@ static void DrawEntity (CEntity *pEnt, ViewVars *v, const EntityTable *pEntityDe
 // *************************************************************************
 void CFusionDoc::RenderWorld(ViewVars* v, CDC* pDC) // hgtterry RenderWorld
 {
-    App->WE_3DView_Hwnd = WindowFromDC(pDC->m_hDC);
-    
     if (App->BR_True3D_Mode_Active == 1)
     {
         return;

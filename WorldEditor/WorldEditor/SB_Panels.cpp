@@ -134,6 +134,22 @@ void SB_Panels::Set_Aplication_Dialogs_Off(void)
 	ShowWindow(App->CLSB_TopTabs->File_Panel_Hwnd, SW_SHOW);
 
 	App->CLSB_TopTabs->Update_Dlg_Controls();
+
+
+	if (App->BR_True3D_Mode_Active == 1)
+	{
+		App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+		App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 0;
+		App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
+		App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+
+		App->CLSB_BR_Render->Exit_BR_3D_Mode();
+		App->BR_True3D_Mode_Active = 0;
+	}
+
+	App->CLSB_ViewMgrDlg->RestoreAllPanes();
+
+	Set_Control_Tabs_3DSettings_On(false);
 }
 
 // *************************************************************************
@@ -151,4 +167,25 @@ void SB_Panels::Set_Aplication_Dialogs_On(void)
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_FACES), true);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_CAMERA), true);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEST2), true);
+
+	Set_Control_Tabs_3DSettings_On(true);
+
 }
+
+// *************************************************************************
+// *		Set_Control_Tabs_3DSettings:- Terry and Hazel Flanigan 2023    *
+// *************************************************************************
+void SB_Panels::Set_Control_Tabs_3DSettings_On(bool flag)
+{
+	EnableWindow(GetDlgItem(App->CL_TabsControl->Tabs_Control_Hwnd, IDC_BT_3DSETTINGS), flag);
+}
+
+// *************************************************************************
+// *		Set_Tabs_3DSettings:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Panels::Set_Tabs_3DSettings_On(bool flag)
+{
+	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
+	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
+}
+
