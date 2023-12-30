@@ -384,6 +384,12 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->CLSB_TopTabs->Textured_Flag = 1;
 			App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
 
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+				App->CLSB_Export_Ogre3D->World_Node->setVisible(true);
+			}
+
 			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
@@ -395,6 +401,12 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CLSB_TopTabs->Wired_Flag = 1;
 			App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
+
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+				App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+			}
 
 			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
