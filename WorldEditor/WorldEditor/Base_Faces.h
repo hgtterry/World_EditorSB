@@ -43,6 +43,9 @@ public:
 
 	std::vector<Face_type> Faces_Data;	// XYZ
 
+	Ogre::Vector3 HitVertices[2];
+	Ogre::Vector2 HitFaceUVs[2];
+
 	int Face_Count;
 };
 

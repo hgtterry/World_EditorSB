@@ -94,13 +94,13 @@ void SB_Picking::Clear_Picking_Data()
  
     pentity = NULL;
 
-    App->CLSB_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
-    App->CLSB_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
-    App->CLSB_Grid->HitVertices[2] = Ogre::Vector3(0, 0, 0);
+    App->CLSB_BaseFaces->HitVertices[0] = Ogre::Vector3(0, 0, 0);
+    App->CLSB_BaseFaces->HitVertices[1] = Ogre::Vector3(0, 0, 0);
+    App->CLSB_BaseFaces->HitVertices[2] = Ogre::Vector3(0, 0, 0);
 
-    App->CLSB_Grid->HitFaceUVs[0] = Ogre::Vector2(0, 0);
-    App->CLSB_Grid->HitFaceUVs[1] = Ogre::Vector2(0, 0);
-    App->CLSB_Grid->HitFaceUVs[2] = Ogre::Vector2(0, 0);
+    App->CLSB_BaseFaces->HitFaceUVs[0] = Ogre::Vector2(0, 0);
+    App->CLSB_BaseFaces->HitFaceUVs[1] = Ogre::Vector2(0, 0);
+    App->CLSB_BaseFaces->HitFaceUVs[2] = Ogre::Vector2(0, 0);
 }
 
 // *************************************************************************
@@ -335,17 +335,17 @@ void SB_Picking::Render_Selection()
         int B = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].b;
         int C = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].c;
 
-        App->CLSB_Grid->HitVertices[0].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].x;
-        App->CLSB_Grid->HitVertices[0].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].y;
-        App->CLSB_Grid->HitVertices[0].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].z;
+        App->CLSB_BaseFaces->HitVertices[0].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].x;
+        App->CLSB_BaseFaces->HitVertices[0].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].y;
+        App->CLSB_BaseFaces->HitVertices[0].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[A].z;
 
-        App->CLSB_Grid->HitVertices[1].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].x;
-        App->CLSB_Grid->HitVertices[1].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].y;
-        App->CLSB_Grid->HitVertices[1].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].z;
+        App->CLSB_BaseFaces->HitVertices[1].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].x;
+        App->CLSB_BaseFaces->HitVertices[1].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].y;
+        App->CLSB_BaseFaces->HitVertices[1].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[B].z;
 
-        App->CLSB_Grid->HitVertices[2].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].x;
-        App->CLSB_Grid->HitVertices[2].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].y;
-        App->CLSB_Grid->HitVertices[2].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].z;
+        App->CLSB_BaseFaces->HitVertices[2].x = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].x;
+        App->CLSB_BaseFaces->HitVertices[2].y = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].y;
+        App->CLSB_BaseFaces->HitVertices[2].z = App->CLSB_Model->Group[SubMesh_Index]->vertex_Data[C].z;
 
 
         /*App->CLSB_Grid->HitFaceUVs[0] = TextCords[Face_Index];

@@ -1790,9 +1790,9 @@ void SB_Render::Marker_Face_Selection()
 
 	glBegin(GL_POLYGON);
 
-	glVertex3fv(&App->CLSB_Grid->HitVertices[0].x);
-	glVertex3fv(&App->CLSB_Grid->HitVertices[1].x);
-	glVertex3fv(&App->CLSB_Grid->HitVertices[2].x);
+	glVertex3fv(&App->CLSB_BaseFaces->HitVertices[0].x);
+	glVertex3fv(&App->CLSB_BaseFaces->HitVertices[1].x);
+	glVertex3fv(&App->CLSB_BaseFaces->HitVertices[2].x);
 	
 	glEnd();
 
