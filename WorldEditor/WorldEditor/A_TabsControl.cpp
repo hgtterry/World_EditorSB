@@ -400,6 +400,14 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_FIRST)
+		{
+			//App->CLSB_Camera_EQ->Reset_Orientation();
+			//App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+			//App->CLSB_TopTabs_Equity->Camera_Set_First();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
 		{
 			App->CLSB_Mesh_Mgr->Update_World();
