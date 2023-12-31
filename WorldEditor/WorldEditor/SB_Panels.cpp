@@ -128,6 +128,10 @@ void SB_Panels::Set_Aplication_Dialogs_Off(void)
 	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), false);
 	EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_EXPORT), false);
 
+	// ------------------ Templates Dialog
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, IDC_BT_EXPORTTEMPLATE), false);
+	
+
 	App->CLSB_TopTabs->Reset_Tabs_Buttons();
 	App->CLSB_TopTabs->Header_File_Flag = 1;
 	RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -167,6 +171,9 @@ void SB_Panels::Set_Aplication_Dialogs_On(void)
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_FACES), true);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_CAMERA), true);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEST2), true);
+
+	// ------------------ Templates Dialog
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, IDC_BT_EXPORTTEMPLATE), true);
 
 	App->CLSB_Tabs_True3D_Dlg->Set_Control_Tabs_3DSettings_On(true);
 
