@@ -184,6 +184,11 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 
 			App->File_Loaded_Flag = 1;
 
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_Mesh_Mgr->Update_World();
+			}
+
 			return 1;
 		}
 
