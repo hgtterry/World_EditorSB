@@ -40,6 +40,7 @@ SB_Tabs_Control::SB_Tabs_Control(void)
 	Tab_3DSettings_Flag = 0;
 
 	Toggle_Camera_First_Flag = 0;
+	Toggle_Camera_Free_Flag = 0;
 }
 
 SB_Tabs_Control::~SB_Tabs_Control(void)
@@ -311,6 +312,7 @@ LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_BT_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TRUE3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -397,6 +399,22 @@ LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FREE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FREE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TabsControl->Toggle_Camera_Free_Flag);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -418,15 +436,35 @@ LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_FREE)
+		{
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_TabsControl->Toggle_Camera_Free_Flag = 1;
+			App->CLSB_TabsControl->Toggle_Camera_First_Flag = 0;
+
+			if (App->CLSB_Scene->Player_Added == 1)
+			{
+				int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+				App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}
+
+			RedrawWindow(App->CLSB_TabsControl->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_FIRST)
 		{
 			if (App->CLSB_Scene->Player_Added == 1)
 			{
 				App->CLSB_TabsControl->Toggle_Camera_First_Flag = 1;
+				App->CLSB_TabsControl->Toggle_Camera_Free_Flag = 0;
 				App->CLSB_Camera_EQ->Reset_Orientation();
 				App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
 				App->CLSB_TopTabs_Equity->Camera_Set_First();
 			}
+
+			RedrawWindow(App->CLSB_TabsControl->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
 		}

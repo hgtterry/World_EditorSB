@@ -29,16 +29,18 @@ distribution.
 SB_App::SB_App()
 {
 	ABC_Export_RFW =			NULL;
-	CLSB_FileIO =				NULL;
+	CLSB_FileIO =				nullptr;
 	CL_Dialogs =				NULL;
 	CL_World =					NULL;
 	CL_Render_App =				NULL;
 	CL_TxlEditor =				NULL;
 	CL_TextureDialog =			NULL;
 	CL_FaceDialog =				NULL;
-	CLSB_TabsControl =			NULL;
+
+	CLSB_TabsControl =			nullptr;
 	CL_TabsGroups_Dlg =			NULL;
 	CL_TabsTemplates_Dlg =		NULL;
+	CLSB_Tabs_True3D_Dlg =		nullptr;
 
 	CL_CreateArchDialog =		NULL;
 	CL_CreateBoxDialog =		NULL;
@@ -46,12 +48,12 @@ SB_App::SB_App()
 	CL_CreateCylDialog =		NULL;
 	CL_CreateSpheroidDialog =	NULL;
 	CL_CreateStaircaseDialog  = NULL;
-	CLSB_Camera_WE =			NULL;
-	CLSB_TopTabs =				NULL;
-	CLSB_File_WE =				NULL;
+	CLSB_Camera_WE =			nullptr;
+	CLSB_TopTabs =				nullptr;
+	CLSB_File_WE =				nullptr;
 	CL_Brush =					NULL;
 
-	CLSB_Export_World =			NULL;
+	CLSB_Export_World =			nullptr;
 
 	CL_Main_View =				NULL;
 
@@ -255,10 +257,12 @@ bool SB_App::InitApp(void)
 	CL_TxlEditor =					new	A_TxlEditor();
 	CL_TextureDialog =				new	A_TextureDialog();
 	CL_FaceDialog =					new A_FaceDialog();
+
 	CLSB_TabsControl =				new SB_Tabs_Control();
 	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
 	CL_TabsTemplates_Dlg =			new A_TabsTemplates_Dlg();
-
+	CLSB_Tabs_True3D_Dlg =			new SB_Tabs_True3D_Dlg();
+	
 	CL_CreateArchDialog =			new A_CreateArchDialog();
 	CL_CreateBoxDialog =			new A_CreateBoxDialog();
 	CL_CreateConeDialog =			new A_CreateConeDialog();
