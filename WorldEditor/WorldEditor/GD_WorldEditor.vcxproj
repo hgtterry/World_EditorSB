@@ -87,7 +87,6 @@
     <ClCompile Include="A_MainView.cpp" />
     <ClCompile Include="A_Render_App.cpp" />
     <ClCompile Include="A_Scene.cpp" />
-    <ClCompile Include="A_TabsTemplates_Dlg.cpp" />
     <ClCompile Include="A_TextureDialog.cpp" />
     <ClCompile Include="A_TopTabs.cpp" />
     <ClCompile Include="A_TxlEditor.cpp" />
@@ -220,6 +219,7 @@
     <ClCompile Include="SB_SoundMgr.cpp" />
     <ClCompile Include="SB_Tabs_Brushes_Dlg.cpp" />
     <ClCompile Include="SB_Tabs_Control.cpp" />
+    <ClCompile Include="SB_Tabs_Templates_Dlg.cpp" />
     <ClCompile Include="SB_Tabs_True3D_Dlg.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="SB_TopTabs_Equity.cpp" />
@@ -326,6 +326,7 @@
     <ClInclude Include="SB_SoundMgr.h" />
     <ClInclude Include="SB_Tabs_Brushes_Dlg.h" />
     <ClInclude Include="SB_Tabs_Control.h" />
+    <ClInclude Include="SB_Tabs_Templates_Dlg.h" />
     <ClInclude Include="SB_Tabs_True3D_Dlg.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="SB_TopTabs_Equity.h" />
@@ -351,7 +352,6 @@
     <ClInclude Include="A_MainView.h" />
     <ClInclude Include="A_Render_App.h" />
     <ClInclude Include="A_Scene.h" />
-    <ClInclude Include="A_TabsTemplates_Dlg.h" />
     <ClInclude Include="A_TextureDialog.h" />
     <ClInclude Include="A_TopTabs.h" />
     <ClInclude Include="A_TxlEditor.h" />

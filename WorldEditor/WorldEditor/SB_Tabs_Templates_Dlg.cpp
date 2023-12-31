@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "A_TabsTemplates_Dlg.h"
+#include "SB_Tabs_Templates_Dlg.h"
 
 SB_Tabs_Templates_Dlg::SB_Tabs_Templates_Dlg(void)
 {
