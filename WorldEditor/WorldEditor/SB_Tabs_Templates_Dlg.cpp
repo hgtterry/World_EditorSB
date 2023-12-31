@@ -112,6 +112,28 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_IMPORTTEMPLATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BT_EXPORTTEMPLATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_EXPORTTEMPLATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
 		return CDRF_DODEFAULT;
 	}
 

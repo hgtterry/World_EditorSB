@@ -1434,7 +1434,13 @@ void SB_File_WE::Export_Template_File()
 // *************************************************************************
 void SB_File_WE::Import_Template_File()
 {
-	bool test = Open_File_Dialog("Template File   *.tpf\0*.tpf\0", " Open Template File", NULL);
+	char StartDir[MAX_PATH];
+	strcpy(StartDir, App->WorldEditor_Directory);
+	strcat(StartDir, "Levels");
+	strcat(StartDir, "\\");
+	strcat(StartDir, "Templates");
+
+	bool test = Open_File_Dialog("Template File   *.tpf\0*.tpf\0", " Open Template File", StartDir);
 	if (test == 0)
 	{
 		return;
