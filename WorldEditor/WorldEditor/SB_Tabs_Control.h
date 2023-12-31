@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_TabsControl
+class SB_Tabs_Control
 {
 public:
-	A_TabsControl(void);
-	~A_TabsControl(void);
+	SB_Tabs_Control(void);
+	~SB_Tabs_Control(void);
 
 	void Start_Tabs_Control_Dlg();
 	void Show_Tabs_Control_Dlg(bool Show);

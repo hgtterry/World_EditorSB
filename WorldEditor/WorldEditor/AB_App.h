@@ -128,7 +128,7 @@ public:
 	A_TxlEditor*				CL_TxlEditor;
 	A_TextureDialog*			CL_TextureDialog;
 	A_FaceDialog*				CL_FaceDialog;
-	A_TabsControl*				CL_TabsControl;
+	SB_Tabs_Control*			CL_TabsControl;
 	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
 	A_TabsTemplates_Dlg*		CL_TabsTemplates_Dlg;
 

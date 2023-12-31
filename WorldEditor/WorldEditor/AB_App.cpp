@@ -255,7 +255,7 @@ bool SB_App::InitApp(void)
 	CL_TxlEditor =					new	A_TxlEditor();
 	CL_TextureDialog =				new	A_TextureDialog();
 	CL_FaceDialog =					new A_FaceDialog();
-	CL_TabsControl =				new A_TabsControl();
+	CL_TabsControl =				new SB_Tabs_Control();
 	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
 	CL_TabsTemplates_Dlg =			new A_TabsTemplates_Dlg();
 

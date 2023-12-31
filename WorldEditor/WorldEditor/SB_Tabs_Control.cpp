@@ -26,7 +26,7 @@ distribution.
 #include "resource.h"
 #include "A_TabsControl.h"
 
-A_TabsControl::A_TabsControl(void)
+SB_Tabs_Control::SB_Tabs_Control(void)
 {
 	f_TabsDlg_Active = 0;
 	Tabs_Control_Hwnd = nullptr;
@@ -42,14 +42,14 @@ A_TabsControl::A_TabsControl(void)
 	Toggle_Camera_First_Flag = 0;
 }
 
-A_TabsControl::~A_TabsControl(void)
+SB_Tabs_Control::~SB_Tabs_Control(void)
 {
 }
 
 // *************************************************************************
 // *	  	Tabs_Control_Dlg:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsControl::Show_Tabs_Control_Dlg(bool Show)
+void SB_Tabs_Control::Show_Tabs_Control_Dlg(bool Show)
 {
 	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
 	{
@@ -60,7 +60,7 @@ void A_TabsControl::Show_Tabs_Control_Dlg(bool Show)
 // *************************************************************************
 // *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsControl::Start_Tabs_Control_Dlg()
+void SB_Tabs_Control::Start_Tabs_Control_Dlg()
 {
 	if (Command_Panel_Started == 0)
 	{
@@ -85,7 +85,7 @@ void A_TabsControl::Start_Tabs_Control_Dlg()
 // *************************************************************************
 // *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -221,7 +221,7 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *	  	Hide_Dialogs:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsControl::Hide_Dialogs()
+void SB_Tabs_Control::Hide_Dialogs()
 {
 	Tab_Texture_Flag = 0;
 	Tab_Group_Flag = 0;
@@ -239,7 +239,7 @@ void A_TabsControl::Hide_Dialogs()
 // *************************************************************************
 // *	  	Select_Texture_Tab:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsControl::Select_Texture_Tab(int SelNum ,char* TextName)
+void SB_Tabs_Control::Select_Texture_Tab(int SelNum ,char* TextName)
 {
 	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
 	{
@@ -259,7 +259,7 @@ void A_TabsControl::Select_Texture_Tab(int SelNum ,char* TextName)
 // *************************************************************************
 // *	  	Select_Brushes_Tab:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsControl::Select_Brushes_Tab(int SelNum)
+void SB_Tabs_Control::Select_Brushes_Tab(int SelNum)
 {
 	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
 	{
@@ -275,7 +275,7 @@ void A_TabsControl::Select_Brushes_Tab(int SelNum)
 // *************************************************************************
 // *	  	Enable_Tabs_Dlg:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsControl::Enable_Tabs_Dlg(bool Enable)
+void SB_Tabs_Control::Enable_Tabs_Dlg(bool Enable)
 {
 	EnableWindow(Tabs_Control_Hwnd,Enable);
 }
@@ -283,7 +283,7 @@ void A_TabsControl::Enable_Tabs_Dlg(bool Enable)
 // *************************************************************************
 // *	  	Show_3DSettings:- Terry and Hazel Flanigan 2023		           *
 // *************************************************************************
-void A_TabsControl::Show_3DSettings(bool Show)
+void SB_Tabs_Control::Show_3DSettings(bool Show)
 {
 	ShowWindow(RB_3DSettings_Hwnd, Show);
 }
@@ -291,7 +291,7 @@ void A_TabsControl::Show_3DSettings(bool Show)
 // *************************************************************************
 // *	  	Start_3DSettings:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TabsControl::Start_3DSettings()
+void SB_Tabs_Control::Start_3DSettings()
 {
 	RB_3DSettings_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)RB_3DSettings_Proc);
 
@@ -300,7 +300,7 @@ void A_TabsControl::Start_3DSettings()
 // *************************************************************************
 // *			 3DSettings_Proc:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
