@@ -195,10 +195,23 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	//------------------------------------------------ Escape 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
-		if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+		if (Block_Keyboard == 0)
 		{
-			App->CLSB_Ogre->ExitFullScreen();
+			Block_Keyboard = 1;
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->Go_BR_3D_Mode();
+			}
+			else
+			{
+				if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+				{
+					App->CLSB_Ogre->ExitFullScreen();
+				}
+			}
 		}
+
+		Block_Keyboard = 0;
 	}
 
 }
@@ -501,10 +514,23 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//------------------------------------------------ Escape 
 		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 		{
-			if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+			if (Block_Keyboard == 0)
 			{
-				App->CLSB_Ogre->ExitFullScreen();
+				Block_Keyboard = 1;
+				if (App->BR_True3D_Mode_Active == 1)
+				{
+					App->CLSB_BR_Render->Go_BR_3D_Mode();
+				}
+				else
+				{
+					if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+					{
+						App->CLSB_Ogre->ExitFullScreen();
+					}
+				}
 			}
+
+			Block_Keyboard = 0;	
 		}
 	}
 }

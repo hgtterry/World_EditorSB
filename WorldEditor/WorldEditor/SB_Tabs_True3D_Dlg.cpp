@@ -62,7 +62,8 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_BT_TRUE3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -163,6 +164,21 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FULLSCREEN && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FULLSCREEN));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+			return CDRF_DODEFAULT;
+		}
+
 
 		return CDRF_DODEFAULT;
 	}
@@ -241,6 +257,12 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_FULLSCREEN)
+		{
+			App->CLSB_Scene->Go_FullScreen_Mode();
+			return TRUE;
+		}
+		
 		break;
 	}
 	}
@@ -272,6 +294,7 @@ void SB_Tabs_True3D_Dlg::Set_Tabs_3DSettings_On(bool flag)
 	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
 	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
 	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_FREE), flag);
+	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_FULLSCREEN), flag);
 
 	RedrawWindow(RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

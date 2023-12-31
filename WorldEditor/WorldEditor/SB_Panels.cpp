@@ -173,7 +173,7 @@ void SB_Panels::Set_Aplication_Dialogs_On(void)
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs->Top_Tabs_Hwnd, IDC_BT_TB_TEST2), true);
 
 	// ------------------ Templates Dialog
-	EnableWindow(GetDlgItem(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, IDC_BT_EXPORTTEMPLATE), true);
+	//EnableWindow(GetDlgItem(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, IDC_BT_EXPORTTEMPLATE), true);
 
 	App->CLSB_Tabs_True3D_Dlg->Set_Control_Tabs_3DSettings_On(true);
 
