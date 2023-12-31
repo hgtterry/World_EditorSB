@@ -36,9 +36,5 @@ public:
 	void Move_FileView_Window(void);
 	void MovePhysicsView(void);
 	void Place_GlobalGroups(void);
-
-
-	void Set_Control_Tabs_3DSettings_On(bool flag);
-	void Set_Tabs_3DSettings_On(bool flag);
 };
 

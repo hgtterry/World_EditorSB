@@ -31,7 +31,7 @@ SB_Tabs_True3D_Dlg::SB_Tabs_True3D_Dlg(void)
 	RB_3DSettings_Hwnd = nullptr;
 
 	Toggle_Camera_First_Flag = 0;
-	Toggle_Camera_Free_Flag = 0;
+	Toggle_Camera_Free_Flag = 1;
 }
 
 SB_Tabs_True3D_Dlg::~SB_Tabs_True3D_Dlg(void)
@@ -174,12 +174,12 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 			if (App->BR_True3D_Mode_Active == 1)
 			{
 				App->CLSB_BR_Render->Exit_BR_3D_Mode();
-				App->CLSB_Panels->Set_Tabs_3DSettings_On(false);
+				App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
 			}
 			else
 			{
 				App->CLSB_BR_Render->Start_BR_3D_Mode();
-				App->CLSB_Panels->Set_Tabs_3DSettings_On(true);
+				App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(true);
 			}
 
 			return TRUE;
@@ -253,4 +253,25 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 void SB_Tabs_True3D_Dlg::Show_3DSettings(bool Show)
 {
 	ShowWindow(RB_3DSettings_Hwnd, Show);
+}
+
+// *************************************************************************
+// *		Set_Control_Tabs_3DSettings:- Terry and Hazel Flanigan 2023    *
+// *************************************************************************
+void SB_Tabs_True3D_Dlg::Set_Control_Tabs_3DSettings_On(bool flag)
+{
+	EnableWindow(GetDlgItem(App->CLSB_TabsControl->Tabs_Control_Hwnd, IDC_BT_3DSETTINGS), flag);
+}
+
+// *************************************************************************
+// *		Set_Tabs_3DSettings:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Tabs_True3D_Dlg::Set_Tabs_3DSettings_On(bool flag)
+{
+	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
+	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
+	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
+	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_FREE), flag);
+
+	RedrawWindow(RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

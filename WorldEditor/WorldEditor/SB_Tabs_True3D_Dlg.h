@@ -31,6 +31,8 @@ public:
 
 	void Start_3DSettings();
 	void Show_3DSettings(bool Show);
+	void Set_Tabs_3DSettings_On(bool flag);
+	void Set_Control_Tabs_3DSettings_On(bool flag);
 
 	HWND RB_3DSettings_Hwnd;
 
