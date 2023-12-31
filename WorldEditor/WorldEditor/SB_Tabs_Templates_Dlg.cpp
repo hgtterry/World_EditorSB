@@ -196,12 +196,20 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_IMPORTTEMPLATE)
 		{
-			Debug
+			App->CLSB_File_WE->Import_Template_File();
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_EXPORTTEMPLATE)
 		{
+			int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+
+			if (NumSelBrushes == 0)
+			{
+				App->Say("No Brushes Selected");
+				return TRUE;
+			}
+
 			char TestFile[MAX_PATH];
 			strcpy(TestFile,App->WorldEditor_Directory);
 			strcat(TestFile, "XTestX.3dt");

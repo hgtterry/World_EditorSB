@@ -56,6 +56,7 @@ public:
 	void CreateNewTemplateBrush(Brush* pBrush);
 
 	void Export_Template_File();
+	void Import_Template_File();
 
 	bool Quick_load_Flag;
 

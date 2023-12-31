@@ -1365,7 +1365,7 @@ void SB_File_WE::Export_Template_File()
 {
 	App->Get_Current_Document();
 
-	bool test = App->CLSB_FileIO->SaveSelectedFile("*3dt", NULL);
+	bool test = App->CLSB_FileIO->SaveSelectedFile("*tpf", NULL);
 
 	if (test == 0)
 	{
@@ -1378,7 +1378,7 @@ void SB_File_WE::Export_Template_File()
 	}
 	else
 	{
-		strcat(App->CLSB_FileIO->PathFileName, ".3dt");
+		strcat(App->CLSB_FileIO->PathFileName, ".tpf");
 	}
 
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
@@ -1394,7 +1394,7 @@ void SB_File_WE::Export_Template_File()
 	if (NewLevel == NULL)
 	{
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		AfxMessageBox("Error: Unable to export objects.", MB_OK + MB_ICONERROR);
+		App->Say("Template Export Failed");
 		return;
 	}
 
@@ -1403,7 +1403,6 @@ void SB_File_WE::Export_Template_File()
 
 	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 
-	// add all selected brushes and entities to the new level
 	for (i = 0; i < NumSelBrushes; ++i)
 	{
 		Brush* NewBrush;
@@ -1415,20 +1414,37 @@ void SB_File_WE::Export_Template_File()
 		Level_AppendBrush(NewLevel, NewBrush);
 	}
 
-	// ok, everything's added.  Write it to the file.
 	if (!Level_WriteToFile(NewLevel, App->CLSB_FileIO->PathFileName))
 	{
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		AfxMessageBox("Error: Unable to export objects to file.", MB_OK + MB_ICONERROR);
+		App->Say("Template Export Failed");
 	}
 	else
 	{
-		App->Say("Test Exported");
+		App->Say("Template Exported");
 	}
 	
 	Level_Destroy(&NewLevel);
 
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+}
+
+// *************************************************************************
+// *		Import_Template_File:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_File_WE::Import_Template_File()
+{
+	bool test = Open_File_Dialog("Template File   *.tpf\0*.tpf\0", " Open Template File", NULL);
+	if (test == 0)
+	{
+		return;
+	}
+
+	App->Get_Current_Document();
+
+	geVec3d loc;
+	geVec3d_Clear(&loc);
+	App->m_pDoc->ImportFile(PathFileName_3dt, &loc);
 }
 
 

@@ -4782,9 +4782,6 @@ void CFusionDoc::OnFileImportActor()
 
 void CFusionDoc::OnFileImport() 
 {
-   // App->Say("Not Available yet");
-   // return;
-
     static const char FDTitle[] = "Import";
     CFileDialog dlg(TRUE, "3dt", NULL, (OFN_HIDEREADONLY	| OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST),
                                     "World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|BSP Leak Files (*.pnt)|*.pnt|All Files (*.*)|*.*||");
