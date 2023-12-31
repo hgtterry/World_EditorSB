@@ -974,7 +974,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 				strcpy(JustName, App->CLSB_Picking->TextureName2);
 				JustName[len - 4] = 0;
 
-				App->CL_TabsControl->Select_Texture_Tab(0, JustName);
+				App->CLSB_TabsControl->Select_Texture_Tab(0, JustName);
 
 			}
 

@@ -50,7 +50,7 @@ void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 
 	pStaircaseTemplate = Level_GetStaircaseTemplate (App->CLSB_Doc->pLevel);
 
-	App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_STAIRCASEDIALOG, App->MainHwnd, (DLGPROC)CreateStaircase_Proc);
 }
 
@@ -273,7 +273,7 @@ LRESULT CALLBACK A_CreateStaircaseDialog::CreateStaircase_Proc(HWND hDlg, UINT m
 
 				App->CL_CreateStaircaseDialog->CreateStaircase();
 
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
 				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
@@ -283,7 +283,7 @@ LRESULT CALLBACK A_CreateStaircaseDialog::CreateStaircase_Proc(HWND hDlg, UINT m
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

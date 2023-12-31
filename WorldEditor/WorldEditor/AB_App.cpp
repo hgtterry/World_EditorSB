@@ -36,7 +36,7 @@ SB_App::SB_App()
 	CL_TxlEditor =				NULL;
 	CL_TextureDialog =			NULL;
 	CL_FaceDialog =				NULL;
-	CL_TabsControl =			NULL;
+	CLSB_TabsControl =			NULL;
 	CL_TabsGroups_Dlg =			NULL;
 	CL_TabsTemplates_Dlg =		NULL;
 
@@ -255,7 +255,7 @@ bool SB_App::InitApp(void)
 	CL_TxlEditor =					new	A_TxlEditor();
 	CL_TextureDialog =				new	A_TextureDialog();
 	CL_FaceDialog =					new A_FaceDialog();
-	CL_TabsControl =				new SB_Tabs_Control();
+	CLSB_TabsControl =				new SB_Tabs_Control();
 	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
 	CL_TabsTemplates_Dlg =			new A_TabsTemplates_Dlg();
 
@@ -959,7 +959,7 @@ void SB_App::Debug_Float(float Value, bool NewLine)
 void SB_App::Start_Dialogs()
 {
 	CLSB_TopTabs->Start_Headers_Tabs();
-	CL_TabsControl->Start_Tabs_Control_Dlg();
+	CLSB_TabsControl->Start_Tabs_Control_Dlg();
 	CLSB_ViewMgrDlg->Start_View_MgrDlg();
 }
 
@@ -970,7 +970,7 @@ void SB_App::Enable_Dialogs(bool Enable)
 {
 	EnableWindow(CLSB_ViewMgrDlg->MgrDlg_hWnd, Enable);
 	EnableWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, Enable);
-	EnableWindow(App->CL_TabsControl->Tabs_Control_Hwnd, Enable);
+	EnableWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, Enable);
 }
 
 // *************************************************************************

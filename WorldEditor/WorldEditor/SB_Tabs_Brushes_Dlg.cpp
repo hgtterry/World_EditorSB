@@ -119,7 +119,7 @@ void SB_Tabs_Brushes_Dlg::Show_GroupsDialog(bool Show)
 // *************************************************************************
 void SB_Tabs_Brushes_Dlg::Start_Brush_Tabs_Dialog()
 {
-	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Brush_Tabs_Proc);
+	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Brush_Tabs_Proc);
 
 	Groups_Dlg_Created = 1;
 

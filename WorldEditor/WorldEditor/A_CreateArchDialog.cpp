@@ -64,7 +64,7 @@ void A_CreateArchDialog::Start_CreateArch_Dlg()
 
 	pArchTemplate = Level_GetArchTemplate (App->CLSB_Doc->pLevel);
 
-	App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
 }
 
@@ -522,7 +522,7 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 				App->CL_CreateArchDialog->CreateArch();
 
 
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
 				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
@@ -532,7 +532,7 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

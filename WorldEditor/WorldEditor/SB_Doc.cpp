@@ -353,7 +353,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 
 	UpdateSelected();
 
-	App->CL_TabsControl->Select_Brushes_Tab(0);
+	App->CLSB_TabsControl->Select_Brushes_Tab(0);
 	App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
 
 	App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
@@ -2390,7 +2390,7 @@ void SB_Doc::SelectTextureFromFace3D(CPoint point, ViewVars* v)
             char TextName[MAX_PATH];
             strcpy(TextName, Face_GetTextureName(bdat.CurFace));
            
-            App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
+            App->CLSB_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
 
         }
     }

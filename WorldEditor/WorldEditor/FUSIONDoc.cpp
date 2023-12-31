@@ -6454,7 +6454,7 @@ void CFusionDoc::Start_QuickView()
 
 void CFusionDoc::Start_CommandPanel()
 {
-    App->CL_TabsControl->Start_Tabs_Control_Dlg();
+    App->CLSB_TabsControl->Start_Tabs_Control_Dlg();
 }
 
 void CFusionDoc::Start_RecentFiles()

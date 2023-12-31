@@ -62,7 +62,7 @@ void A_CreateCylDialog::Start_CreateCyl_Dlg()
 
 	pCylinderTemplate = Level_GetCylinderTemplate (App->CLSB_Doc->pLevel);
 
-	App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYL, App->MainHwnd, (DLGPROC)CreateCyl_Proc);
 }
 
@@ -383,7 +383,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 				App->CL_CreateCylDialog->Set_CylinderTemplate(); 
 				App->CL_CreateCylDialog->CreateCylinder();
 
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
 				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
@@ -393,7 +393,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

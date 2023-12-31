@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "A_TabsControl.h"
+#include "SB_Tabs_Control.h"
 
 SB_Tabs_Control::SB_Tabs_Control(void)
 {
@@ -116,21 +116,21 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 		if (some_item->idFrom == IDC_TBTEXTURES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Texture_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TabsControl->Tab_Texture_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBTEMPLATES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Templates_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TabsControl->Tab_Templates_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBGROUPS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Group_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TabsControl->Tab_Group_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -144,7 +144,7 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CL_TabsControl->Tab_3DSettings_Flag);
+				App->Custom_Button_Toggle(item, App->CLSB_TabsControl->Tab_3DSettings_Flag);
 			}
 
 			return CDRF_DODEFAULT;
@@ -157,57 +157,57 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 		{
 			if (LOWORD(wParam) == IDC_TBTEXTURES)
 			{
-				App->CL_TabsControl->Hide_Dialogs();
-				App->CL_TabsControl->Tab_Texture_Flag = 1;
+				App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_Texture_Flag = 1;
 				App->CL_TextureDialog->Show_Dialog(true);
 
-				RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_TBTEMPLATES)
 			{
-				App->CL_TabsControl->Hide_Dialogs();
-				App->CL_TabsControl->Tab_Templates_Flag = 1;
+				App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_Templates_Flag = 1;
 				App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
 
-				RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_TBGROUPS)
 			{
-				App->CL_TabsControl->Hide_Dialogs();
-				App->CL_TabsControl->Tab_Group_Flag = 1;
+				App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_Group_Flag = 1;
 				App->CL_TabsGroups_Dlg->Show_GroupsDialog(true);
 
-				RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
 			{
-				App->CL_TabsControl->Hide_Dialogs();
-				App->CL_TabsControl->Tab_3DSettings_Flag = 1;
-				App->CL_TabsControl->Show_3DSettings(1);
+				App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
+				App->CLSB_TabsControl->Show_3DSettings(1);
 
-				RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 			
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
-				App->CL_TabsControl->Command_Panel_Started = 0;
-				App->CL_TabsControl->f_TabsDlg_Active = 0;
+				App->CLSB_TabsControl->Command_Panel_Started = 0;
+				App->CLSB_TabsControl->f_TabsDlg_Active = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				App->CL_TabsControl->Command_Panel_Started = 0;
-				App->CL_TabsControl->f_TabsDlg_Active = 0;
+				App->CLSB_TabsControl->Command_Panel_Started = 0;
+				App->CLSB_TabsControl->f_TabsDlg_Active = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -241,9 +241,9 @@ void SB_Tabs_Control::Hide_Dialogs()
 // *************************************************************************
 void SB_Tabs_Control::Select_Texture_Tab(int SelNum ,char* TextName)
 {
-	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
+	if(Tabs_Control_Hwnd && App->CLSB_TabsControl->f_TabsDlg_Active == 1)
 	{
-		App->CL_TabsControl->Hide_Dialogs();
+		App->CLSB_TabsControl->Hide_Dialogs();
 		App->CL_TextureDialog->Show_Dialog(true);
 
 
@@ -251,7 +251,7 @@ void SB_Tabs_Control::Select_Texture_Tab(int SelNum ,char* TextName)
 		if (test == 1)
 		{
 			Tab_Texture_Flag = 1;
-			RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 }
@@ -261,14 +261,14 @@ void SB_Tabs_Control::Select_Texture_Tab(int SelNum ,char* TextName)
 // *************************************************************************
 void SB_Tabs_Control::Select_Brushes_Tab(int SelNum)
 {
-	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
+	if(Tabs_Control_Hwnd && App->CLSB_TabsControl->f_TabsDlg_Active == 1)
 	{
-		App->CL_TabsControl->Hide_Dialogs();
+		App->CLSB_TabsControl->Hide_Dialogs();
 		App->CL_TabsGroups_Dlg->Show_GroupsDialog(true);
 		//App->CL_TextureDialog->Select_Texture(SelNum);
 
 		Tab_Group_Flag = 1;
-		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 
@@ -293,7 +293,7 @@ void SB_Tabs_Control::Show_3DSettings(bool Show)
 // *************************************************************************
 void SB_Tabs_Control::Start_3DSettings()
 {
-	RB_3DSettings_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)RB_3DSettings_Proc);
+	RB_3DSettings_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)RB_3DSettings_Proc);
 
 }
 
@@ -392,7 +392,7 @@ LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WP
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CL_TabsControl->Toggle_Camera_First_Flag);
+				App->Custom_Button_Toggle(item, App->CLSB_TabsControl->Toggle_Camera_First_Flag);
 			}
 			return CDRF_DODEFAULT;
 		}
@@ -422,7 +422,7 @@ LRESULT CALLBACK SB_Tabs_Control::RB_3DSettings_Proc(HWND hDlg, UINT message, WP
 		{
 			if (App->CLSB_Scene->Player_Added == 1)
 			{
-				App->CL_TabsControl->Toggle_Camera_First_Flag = 1;
+				App->CLSB_TabsControl->Toggle_Camera_First_Flag = 1;
 				App->CLSB_Camera_EQ->Reset_Orientation();
 				App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
 				App->CLSB_TopTabs_Equity->Camera_Set_First();

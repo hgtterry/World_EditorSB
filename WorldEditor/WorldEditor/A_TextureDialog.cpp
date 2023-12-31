@@ -66,7 +66,7 @@ void A_TextureDialog::Show_Dialog(bool Show)
 // *************************************************************************
 void A_TextureDialog::Start_TextureDialog()
 {
-	TextureDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEXTURES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)TextureDialog_Proc);
+	TextureDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEXTURES, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)TextureDialog_Proc);
 
 	Set_Txl_FileName();
 	Fill_ListBox();

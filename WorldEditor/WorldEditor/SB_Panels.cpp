@@ -177,7 +177,7 @@ void SB_Panels::Set_Aplication_Dialogs_On(void)
 // *************************************************************************
 void SB_Panels::Set_Control_Tabs_3DSettings_On(bool flag)
 {
-	EnableWindow(GetDlgItem(App->CL_TabsControl->Tabs_Control_Hwnd, IDC_BT_3DSETTINGS), flag);
+	EnableWindow(GetDlgItem(App->CLSB_TabsControl->Tabs_Control_Hwnd, IDC_BT_3DSETTINGS), flag);
 }
 
 // *************************************************************************
@@ -185,8 +185,8 @@ void SB_Panels::Set_Control_Tabs_3DSettings_On(bool flag)
 // *************************************************************************
 void SB_Panels::Set_Tabs_3DSettings_On(bool flag)
 {
-	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
-	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
-	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
+	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
+	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
+	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
 }
 

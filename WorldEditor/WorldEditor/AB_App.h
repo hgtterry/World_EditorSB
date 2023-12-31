@@ -40,7 +40,7 @@ distribution.
 #include "A_TextureDialog.h"
 #include "A_FaceDialog.h"
 
-#include "A_TabsControl.h"
+#include "SB_Tabs_Control.h"
 #include "SB_Tabs_Brushes_Dlg.h"
 #include "A_TabsTemplates_Dlg.h"
 
@@ -128,7 +128,7 @@ public:
 	A_TxlEditor*				CL_TxlEditor;
 	A_TextureDialog*			CL_TextureDialog;
 	A_FaceDialog*				CL_FaceDialog;
-	SB_Tabs_Control*			CL_TabsControl;
+	SB_Tabs_Control*			CLSB_TabsControl;
 	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
 	A_TabsTemplates_Dlg*		CL_TabsTemplates_Dlg;
 

@@ -51,7 +51,7 @@ void A_CreateConeDialog::Start_CreateCone_Dlg()
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 	pConeTemplate = Level_GetConeTemplate (App->CLSB_Doc->pLevel);
 
-	App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)CreateCone_Proc);
 }
 
@@ -300,7 +300,7 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 				App->CL_CreateConeDialog->Set_ConeTemplate(); 
 				App->CL_CreateConeDialog->CreateCone();
 
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
 				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
@@ -310,7 +310,7 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

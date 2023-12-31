@@ -674,7 +674,7 @@ void SB_Picking::Select_Brush(int Index, bool Clear)
         Get_Brush_Data(Selected_Brush);
         App->CLSB_Doc->UpdateSelected();
 
-        App->CL_TabsControl->Select_Brushes_Tab(0);
+        App->CLSB_TabsControl->Select_Brushes_Tab(0);
         App->CL_TabsGroups_Dlg->Get_Index(Selected_Brush);
 
         App->CL_TabsGroups_Dlg->Update_Dlg_Controls();

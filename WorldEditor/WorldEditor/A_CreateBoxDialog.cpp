@@ -59,7 +59,7 @@ void A_CreateBoxDialog::Start_CreateBox_Dlg()
 
 	pBoxTemplate = Level_GetBoxTemplate (App->CLSB_Doc->pLevel);
 
-	App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATEBOX, App->MainHwnd, (DLGPROC)CreateBox_Proc);
 }
@@ -401,7 +401,7 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
 
-			App->CL_TabsControl->Enable_Tabs_Dlg(true);
+			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -411,7 +411,7 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_TabsControl->Enable_Tabs_Dlg(true);
+			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 
@@ -671,7 +671,7 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 		App->m_pDoc->LastTemplateTypeName = BoxName;
 		CreateNewTemplateBrush(pCube);
 
-		App->CL_TabsControl->Enable_Tabs_Dlg(true);
+		App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 		App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
 
 		Debug

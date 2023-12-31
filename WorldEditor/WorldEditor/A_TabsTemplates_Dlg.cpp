@@ -52,7 +52,7 @@ void A_TabsTemplates_Dlg::Start_TemplatesDialog()
 {
 	App->Get_Current_Document();
 
-	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEMPLATES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Templates_Proc);
+	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEMPLATES, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Templates_Proc);
 	Set_Icons();
 
 	Enable_Insert_Button(true);
