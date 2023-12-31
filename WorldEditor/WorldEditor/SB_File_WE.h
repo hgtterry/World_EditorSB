@@ -55,6 +55,8 @@ public:
 
 	void CreateNewTemplateBrush(Brush* pBrush);
 
+	void Export_Template_File();
+
 	bool Quick_load_Flag;
 
 	char FileName_3dt[MAX_PATH];

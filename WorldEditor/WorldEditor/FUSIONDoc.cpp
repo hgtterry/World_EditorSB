@@ -4782,8 +4782,8 @@ void CFusionDoc::OnFileImportActor()
 
 void CFusionDoc::OnFileImport() 
 {
-    App->Say("Not Available yet");
-    return;
+   // App->Say("Not Available yet");
+   // return;
 
     static const char FDTitle[] = "Import";
     CFileDialog dlg(TRUE, "3dt", NULL, (OFN_HIDEREADONLY	| OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST),

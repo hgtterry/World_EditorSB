@@ -246,15 +246,30 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_LOWERRIGHT)
 		{
-			App->CLSB_ViewMgrDlg->MaximizeLowerRightPane();
-			App->CLSB_ViewMgrDlg->Reset_Flags();
-			App->CLSB_ViewMgrDlg->BottomRight_Flag = 1;
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			if (App->BR_True3D_Mode_Active == 1)
+			if (App->CLSB_ViewMgrDlg->BottomRight_Flag == 1)
 			{
-				App->CLSB_BR_Render->BR_3D_Resize();
+				App->CLSB_ViewMgrDlg->RestoreAllPanes();
+				App->CLSB_ViewMgrDlg->Reset_Flags();
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				if (App->BR_True3D_Mode_Active == 1)
+				{
+					App->CLSB_BR_Render->BR_3D_Resize();
+				}
 			}
+			else
+			{
+				App->CLSB_ViewMgrDlg->MaximizeLowerRightPane();
+				App->CLSB_ViewMgrDlg->Reset_Flags();
+				App->CLSB_ViewMgrDlg->BottomRight_Flag = 1;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				if (App->BR_True3D_Mode_Active == 1)
+				{
+					App->CLSB_BR_Render->BR_3D_Resize();
+				}
+			}
+
 			return TRUE;
 		}
 

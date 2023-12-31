@@ -567,6 +567,7 @@
 #define IDC_BTSHOWTEXTURES              1353
 #define IDC_BT_TT_ZEROCAM               1353
 #define IDC_BT_BOXROOM                  1353
+#define IDC_BT_IMPORTTEMPLATE           1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_TBSHOWHAIR                  1355
@@ -897,6 +898,7 @@
 #define IDC_BT_TRUE3D                   1586
 #define IDC_BT_FIRST                    1587
 #define IDC_BT_FREE                     1588
+#define IDC_BT_EXPORTTEMPLATE           1589
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1126,7 +1128,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        360
 #define _APS_NEXT_COMMAND_VALUE         33106
-#define _APS_NEXT_CONTROL_VALUE         1589
+#define _APS_NEXT_CONTROL_VALUE         1590
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

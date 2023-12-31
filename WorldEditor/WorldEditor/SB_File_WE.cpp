@@ -1349,3 +1349,87 @@ void SB_File_WE::Close_File()
 	App->File_Loaded_Flag = 0;
 }
 
+//////
+//////
+
+typedef struct
+{
+	Level* NewLevel;
+	Level* OldLevel;
+} AddPremadeEnumData;
+
+// *************************************************************************
+// *		Export_Template_File:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_File_WE::Export_Template_File()
+{
+	App->Get_Current_Document();
+
+	bool test = App->CLSB_FileIO->SaveSelectedFile("*3dt", NULL);
+
+	if (test == 0)
+	{
+		App->Say("Cancelled");
+		return;
+	}
+
+	if (_stricmp(App->CLSB_FileIO->PathFileName + strlen(App->CLSB_FileIO->PathFileName) - 4, ".3dt") == 0)
+	{
+	}
+	else
+	{
+		strcat(App->CLSB_FileIO->PathFileName, ".3dt");
+	}
+
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
+
+	Level* NewLevel;
+	int i;
+	AddPremadeEnumData EnumData;
+
+	// changed QD Actors
+	NewLevel = Level_Create(Level_GetWadPath(App->CLSB_Doc->pLevel), Level_GetHeadersDirectory(App->CLSB_Doc->pLevel),
+		Level_GetActorsDirectory(App->CLSB_Doc->pLevel), Level_GetPawnIniPath(App->CLSB_Doc->pLevel));
+	// end change
+	if (NewLevel == NULL)
+	{
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		AfxMessageBox("Error: Unable to export objects.", MB_OK + MB_ICONERROR);
+		return;
+	}
+
+	EnumData.NewLevel = NewLevel;
+	EnumData.OldLevel = App->CLSB_Doc->pLevel;
+
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+
+	// add all selected brushes and entities to the new level
+	for (i = 0; i < NumSelBrushes; ++i)
+	{
+		Brush* NewBrush;
+		Brush* OldBrush;
+
+		OldBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
+		
+		NewBrush = Brush_Clone(OldBrush);
+		Level_AppendBrush(NewLevel, NewBrush);
+	}
+
+	// ok, everything's added.  Write it to the file.
+	if (!Level_WriteToFile(NewLevel, App->CLSB_FileIO->PathFileName))
+	{
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		AfxMessageBox("Error: Unable to export objects to file.", MB_OK + MB_ICONERROR);
+	}
+	else
+	{
+		App->Say("Test Exported");
+	}
+	
+	Level_Destroy(&NewLevel);
+
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+}
+
+
+

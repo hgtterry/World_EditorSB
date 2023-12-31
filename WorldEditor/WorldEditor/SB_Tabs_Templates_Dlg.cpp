@@ -71,6 +71,8 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_ST_GD_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTINSERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ACTOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_IMPORTTEMPLATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_EXPORTTEMPLATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -192,6 +194,23 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_IMPORTTEMPLATE)
+		{
+			Debug
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_EXPORTTEMPLATE)
+		{
+			char TestFile[MAX_PATH];
+			strcpy(TestFile,App->WorldEditor_Directory);
+			strcat(TestFile, "XTestX.3dt");
+
+			App->CLSB_File_WE->Export_Template_File();
+			return 1;
+		}
+
+		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{

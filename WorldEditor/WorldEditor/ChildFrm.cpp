@@ -79,6 +79,7 @@ void CFixedSplitterWnd::RefreshSplitBars() // hgtterrry RefreshSplitBars
 	CRect rectInside;
 	GetInsideRect(rectInside);
 	DrawAllSplitBars(NULL, rectInside.right, rectInside.bottom);
+
 }
 
 void CFixedSplitterWnd::OnDrawSplitter(CDC* pDC, ESplitType nType, const CRect& rectArg)
@@ -249,7 +250,7 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy) // hgtterry
 		m_wndSplitter.SetRowInfo(0, (cy>>2)*2, 0);
 		m_wndSplitter.SetRowInfo(1, cy>>2, 0);
 	}
-	
+
 	CMDIChildWnd::OnSize(nType, cx, cy);
 }
 
