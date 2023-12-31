@@ -55,5 +55,7 @@ private:
 	bool Tab_Group_Flag;
 	bool Tab_3DSettings_Flag;
 
+	bool Toggle_Camera_First_Flag;
+
 	bool Command_Panel_Started;
 };

@@ -38,6 +38,8 @@ A_TabsControl::A_TabsControl(void)
 	Tab_Group_Flag = 0;
 	Tab_Templates_Flag = 1;
 	Tab_3DSettings_Flag = 0;
+
+	Toggle_Camera_First_Flag = 0;
 }
 
 A_TabsControl::~A_TabsControl(void)
@@ -308,6 +310,7 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BT_3DUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TRUE3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -379,6 +382,21 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FIRST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FIRST));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_TabsControl->Toggle_Camera_First_Flag);
+			}
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -402,9 +420,14 @@ LRESULT CALLBACK A_TabsControl::RB_3DSettings_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_FIRST)
 		{
-			//App->CLSB_Camera_EQ->Reset_Orientation();
-			//App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
-			//App->CLSB_TopTabs_Equity->Camera_Set_First();
+			if (App->CLSB_Scene->Player_Added == 1)
+			{
+				App->CL_TabsControl->Toggle_Camera_First_Flag = 1;
+				App->CLSB_Camera_EQ->Reset_Orientation();
+				App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+				App->CLSB_TopTabs_Equity->Camera_Set_First();
+			}
+
 			return TRUE;
 		}
 		

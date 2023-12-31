@@ -187,5 +187,6 @@ void SB_Panels::Set_Tabs_3DSettings_On(bool flag)
 {
 	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
 	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
+	EnableWindow(GetDlgItem(App->CL_TabsControl->RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
 }
 
