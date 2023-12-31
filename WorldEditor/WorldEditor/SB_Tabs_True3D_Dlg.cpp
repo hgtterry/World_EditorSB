@@ -23,12 +23,226 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
+#include "resource.h"
 #include "SB_Tabs_True3D_Dlg.h"
 
 SB_Tabs_True3D_Dlg::SB_Tabs_True3D_Dlg(void)
 {
+	RB_3DSettings_Hwnd = nullptr;
+
+	Toggle_Camera_First_Flag = 0;
+	Toggle_Camera_Free_Flag = 0;
 }
 
 SB_Tabs_True3D_Dlg::~SB_Tabs_True3D_Dlg(void)
 {
+}
+
+// *************************************************************************
+// *	  	Start_3DSettings:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Tabs_True3D_Dlg::Start_3DSettings()
+{
+	RB_3DSettings_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)RB_3DSettings_Proc);
+
+}
+
+// *************************************************************************
+// *			 3DSettings_Proc:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_3DUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PICK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TRUE3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*
+		if (GetDlgItem(hDlg, IDC_ST_GD_GROUPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_3DUPDATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DUPDATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_PICK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PICK));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre->OgreListener->GD_Selection_Mode);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TRUE3D && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TRUE3D));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->BR_True3D_Mode_Active);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_FIRST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FIRST));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_First_Flag);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_FREE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FREE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_Free_Flag);
+			}
+			return CDRF_DODEFAULT;
+		}
+
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_TRUE3D)
+		{
+			if (App->BR_True3D_Mode_Active == 1)
+			{
+				App->CLSB_BR_Render->Exit_BR_3D_Mode();
+				App->CLSB_Panels->Set_Tabs_3DSettings_On(false);
+			}
+			else
+			{
+				App->CLSB_BR_Render->Start_BR_3D_Mode();
+				App->CLSB_Panels->Set_Tabs_3DSettings_On(true);
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_FREE)
+		{
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_Free_Flag = 1;
+			App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_First_Flag = 0;
+
+			if (App->CLSB_Scene->Player_Added == 1)
+			{
+				int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+				App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}
+
+			RedrawWindow(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_FIRST)
+		{
+			if (App->CLSB_Scene->Player_Added == 1)
+			{
+				App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_First_Flag = 1;
+				App->CLSB_Tabs_True3D_Dlg->Toggle_Camera_Free_Flag = 0;
+				App->CLSB_Camera_EQ->Reset_Orientation();
+				App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+				App->CLSB_TopTabs_Equity->Camera_Set_First();
+			}
+
+			RedrawWindow(App->CLSB_TabsControl->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_3DUPDATE)
+		{
+			App->CLSB_Mesh_Mgr->Update_World();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_PICK)
+		{
+			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 0;
+				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
+				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+			}
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
 }

@@ -28,5 +28,15 @@ class SB_Tabs_True3D_Dlg
 public:
 	SB_Tabs_True3D_Dlg(void);
 	~SB_Tabs_True3D_Dlg(void);
+
+	void Start_3DSettings();
+
+	HWND RB_3DSettings_Hwnd;
+
+private:
+	static LRESULT CALLBACK RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Toggle_Camera_First_Flag;
+	bool Toggle_Camera_Free_Flag;
 };
 
