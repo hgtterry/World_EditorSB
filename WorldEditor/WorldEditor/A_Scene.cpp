@@ -86,11 +86,11 @@ void A_World::Reset_Editor(void)
 
 	App->CLSB_TabsControl->Hide_Dialogs();
 	App->CLSB_TabsControl->Tab_Templates_Flag = 1;
-	App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
+	App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
 
 	App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW); // Use Textures not wire frame
 
-	App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
+	App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
 
 	RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

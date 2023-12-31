@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_TabsTemplates_Dlg
+class SB_Tabs_Templates_Dlg
 {
 public:
-	A_TabsTemplates_Dlg(void);
-	~A_TabsTemplates_Dlg(void);
+	SB_Tabs_Templates_Dlg(void);
+	~SB_Tabs_Templates_Dlg(void);
 
 	void Show_TemplatesDialog(bool Show);
 	void Start_TemplatesDialog();

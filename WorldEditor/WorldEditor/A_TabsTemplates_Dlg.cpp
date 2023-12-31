@@ -26,21 +26,21 @@ distribution.
 #include "resource.h"
 #include "A_TabsTemplates_Dlg.h"
 
-A_TabsTemplates_Dlg::A_TabsTemplates_Dlg(void)
+SB_Tabs_Templates_Dlg::SB_Tabs_Templates_Dlg(void)
 {
 	TemplatesDlg_Hwnd = NULL;
 
 	Insert_Enabled_Flag = 0;
 }
 
-A_TabsTemplates_Dlg::~A_TabsTemplates_Dlg(void)
+SB_Tabs_Templates_Dlg::~SB_Tabs_Templates_Dlg(void)
 {
 }
 
 // *************************************************************************
 // *	  	Show_TemplatesDialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsTemplates_Dlg::Show_TemplatesDialog(bool Show)
+void SB_Tabs_Templates_Dlg::Show_TemplatesDialog(bool Show)
 {
 	ShowWindow(TemplatesDlg_Hwnd, Show);
 }
@@ -48,7 +48,7 @@ void A_TabsTemplates_Dlg::Show_TemplatesDialog(bool Show)
 // *************************************************************************
 // *	  	Start_TemplatesDialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsTemplates_Dlg::Start_TemplatesDialog()
+void SB_Tabs_Templates_Dlg::Start_TemplatesDialog()
 {
 	App->Get_Current_Document();
 
@@ -61,7 +61,7 @@ void A_TabsTemplates_Dlg::Start_TemplatesDialog()
 // *************************************************************************
 // *        TemplatesDialog_Proc:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -179,7 +179,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 
 			App->CL_World->Reset_Editor();
 
-			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
+			App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
 			App->CLSB_Panels->Set_Aplication_Dialogs_On();
 
 			App->File_Loaded_Flag = 1;
@@ -211,7 +211,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 // *	  		Set_Icons:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsTemplates_Dlg::Set_Icons()
+void SB_Tabs_Templates_Dlg::Set_Icons()
 {
 	HWND Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_CUBE_PRIMITIVE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Box_Icon);
@@ -236,19 +236,19 @@ void A_TabsTemplates_Dlg::Set_Icons()
 // *************************************************************************
 // *	  	Enable_Insert_Button:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsTemplates_Dlg::Enable_Insert_Button(bool Enable)
+void SB_Tabs_Templates_Dlg::Enable_Insert_Button(bool Enable)
 {
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd,IDC_BTINSERT),Enable);
 	Insert_Enabled_Flag = Enable;
 
-	RedrawWindow(App->CL_TabsTemplates_Dlg->TemplatesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 
 // *************************************************************************
 // *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
+void SB_Tabs_Templates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 {
 	App->Get_Current_Document();
 	

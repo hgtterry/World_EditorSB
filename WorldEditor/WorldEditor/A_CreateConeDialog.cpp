@@ -302,7 +302,7 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 
 				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
-				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+				App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;

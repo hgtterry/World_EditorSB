@@ -39,7 +39,7 @@ SB_App::SB_App()
 
 	CLSB_TabsControl =			nullptr;
 	CL_TabsGroups_Dlg =			NULL;
-	CL_TabsTemplates_Dlg =		NULL;
+	CLSB_Tabs_Templates_Dlg =	nullptr;
 	CLSB_Tabs_True3D_Dlg =		nullptr;
 
 	CL_CreateArchDialog =		NULL;
@@ -260,7 +260,7 @@ bool SB_App::InitApp(void)
 
 	CLSB_TabsControl =				new SB_Tabs_Control();
 	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
-	CL_TabsTemplates_Dlg =			new A_TabsTemplates_Dlg();
+	CLSB_Tabs_Templates_Dlg =		new SB_Tabs_Templates_Dlg();
 	CLSB_Tabs_True3D_Dlg =			new SB_Tabs_True3D_Dlg();
 	
 	CL_CreateArchDialog =			new A_CreateArchDialog();

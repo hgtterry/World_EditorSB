@@ -402,7 +402,7 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			App->CL_CreateBoxDialog->CreateCube();
 
 			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
-			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+			App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -672,7 +672,7 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 		CreateNewTemplateBrush(pCube);
 
 		App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
-		App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+		App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);
 
 		Debug
 	}

@@ -71,8 +71,8 @@ void SB_Tabs_Control::Start_Tabs_Control_Dlg()
 		App->CLSB_Tabs_True3D_Dlg->Start_3DSettings();
 		App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(0);
 
-		App->CL_TabsTemplates_Dlg->Start_TemplatesDialog();
-		App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
+		App->CLSB_Tabs_Templates_Dlg->Start_TemplatesDialog();
+		App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
 
 		//CheckMenuItem(App->hMenu_WE, ID_WINDOW_COMMANDPANEL, MF_BYCOMMAND | MF_CHECKED);
 
@@ -167,7 +167,7 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 			{
 				App->CLSB_TabsControl->Hide_Dialogs();
 				App->CLSB_TabsControl->Tab_Templates_Flag = 1;
-				App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
+				App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
 
 				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
@@ -228,7 +228,7 @@ void SB_Tabs_Control::Hide_Dialogs()
 
 	App->CL_TextureDialog->Show_Dialog(false);
 	App->CL_TabsGroups_Dlg->Show_GroupsDialog(false);
-	App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(false);
+	App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(false);
 	App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(0);
 
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
