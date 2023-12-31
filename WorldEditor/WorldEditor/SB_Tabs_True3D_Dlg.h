@@ -30,6 +30,7 @@ public:
 	~SB_Tabs_True3D_Dlg(void);
 
 	void Start_3DSettings();
+	void Show_3DSettings(bool Show);
 
 	HWND RB_3DSettings_Hwnd;
 

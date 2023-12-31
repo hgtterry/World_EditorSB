@@ -185,11 +185,11 @@ void SB_Panels::Set_Control_Tabs_3DSettings_On(bool flag)
 // *************************************************************************
 void SB_Panels::Set_Tabs_3DSettings_On(bool flag)
 {
-	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
-	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
-	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
-	EnableWindow(GetDlgItem(App->CLSB_TabsControl->RB_3DSettings_Hwnd, IDC_BT_FREE), flag);
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, IDC_BT_PICK), flag);
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, IDC_BT_FIRST), flag);
+	EnableWindow(GetDlgItem(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, IDC_BT_FREE), flag);
 
-	RedrawWindow(App->CLSB_TabsControl->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

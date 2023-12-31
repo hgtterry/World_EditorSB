@@ -213,7 +213,7 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 				App->CLSB_TopTabs_Equity->Camera_Set_First();
 			}
 
-			RedrawWindow(App->CLSB_TabsControl->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CLSB_Tabs_True3D_Dlg->RB_3DSettings_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
 		}
@@ -245,4 +245,12 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::RB_3DSettings_Proc(HWND hDlg, UINT message,
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Show_3DSettings:- Terry and Hazel Flanigan 2023		           *
+// *************************************************************************
+void SB_Tabs_True3D_Dlg::Show_3DSettings(bool Show)
+{
+	ShowWindow(RB_3DSettings_Hwnd, Show);
 }
