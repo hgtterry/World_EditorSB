@@ -1078,6 +1078,10 @@ bool SB_Loader::Wavefront_Obj_File()
 				strcpy(f->Tex.Name, "Dummy");
 				f->Tex.Dib = Level_GetDibId(App->CLSB_Doc->pLevel, "Dummy");
 
+				f->Tex.TVecs.uVec.X = 0;
+				f->Tex.TVecs.uVec.Y = 0;
+				f->Tex.TVecs.uVec.Z = 0;
+
 				f->Tex.txSize = 256;
 				f->Tex.tySize = 256;
 
@@ -1087,9 +1091,12 @@ bool SB_Loader::Wavefront_Obj_File()
 				f->Tex.xShift = 134;
 				f->Tex.yShift = 4;
 
+				//f->Tex.TVecs.uVec.
 				Face_SetTextureLock(f, true);
 	
-				FaceList_AddFace(fl, f);	
+				FaceList_AddFace(fl, f);
+
+				//Face_UpdateLockedTextureVecs();
 			}
 			else
 			{

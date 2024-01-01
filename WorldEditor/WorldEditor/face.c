@@ -496,7 +496,7 @@ static void Face_UpdateLockedTextureVecs
 	assert (t != NULL);
 //	assert (t->xScale != 0.0f);
 //	assert (t->yScale != 0.0f);
-#pragma message ("this is an ugly hack.  Values should never be == 0.")
+//#pragma message ("this is an ugly hack.  Values should never be == 0.")
 	if (t->xScale == 0.0f) t->xScale = 1.0f;
 	if (t->yScale == 0.0f) t->yScale = 1.0f;
 

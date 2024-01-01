@@ -91,6 +91,20 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			}
 
 			EquitySB_Dialog_Visible = 1;
+
+			if (Equity_Start_Mode == 1)
+			{
+				HMENU TestMenu;
+				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUSB));
+				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
+			}
+			else
+			{
+				HMENU TestMenu;
+				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_TEST));
+				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
+			}
+
 			ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		}
 		else
@@ -357,7 +371,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-
+			App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
 			/*if (App->CLSB_Loader->LoadError == 1)
 			{
 				App->Say("Loaded With Errors");
@@ -436,6 +450,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_TEST_TEST)
+		{
+			Debug
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			if (App->CLSB_Equity->Close_Equity_Flag == 1)
