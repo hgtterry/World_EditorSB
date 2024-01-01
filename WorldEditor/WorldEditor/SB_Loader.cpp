@@ -120,7 +120,7 @@ bool SB_Loader::Read_Project_File(char* Path_And_File)
 // *************************************************************************
 bool SB_Loader::Load_File_Wepf()
 {
-	App->CLSB_Model->Clear_Model_And_Reset();
+	/*App->CLSB_Model->Clear_Model_And_Reset();
 
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608+64 + aiProcess_PreTransformVertices;
 
@@ -156,7 +156,7 @@ bool SB_Loader::Load_File_Wepf()
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 	App->CLSB_TopTabs_Equity->Camera_Set_Free();
 	
-	App->CLSB_Model->Set_BondingBoxes_AllGroups();
+	App->CLSB_Model->Set_BondingBoxes_AllGroups();*/
 
 	return 1;
 }

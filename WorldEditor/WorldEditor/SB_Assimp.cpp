@@ -128,10 +128,10 @@ void SB_Assimp::StoreMeshData(const aiScene* pScene)
 		VC = 0;
 		t = 0;
 
-		App->CLSB_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
-		App->CLSB_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
+		Assimp_Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
+		Assimp_Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
 
-		App->CLSB_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
+		Assimp_Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
 
 		while (t < mesh->mNumFaces)
 		{
@@ -142,24 +142,24 @@ void SB_Assimp::StoreMeshData(const aiScene* pScene)
 			{
 				int vertexIndex = face->mIndices[i];
 
-				App->CLSB_Model->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
-				App->CLSB_Model->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
-				App->CLSB_Model->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
+				Assimp_Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
+				Assimp_Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
+				Assimp_Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
 
 
 				if (mesh->HasNormals())
 				{
-					App->CLSB_Model->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
-					App->CLSB_Model->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
-					App->CLSB_Model->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
+					Assimp_Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
+					Assimp_Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
+					Assimp_Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
 				}
 
 				//		App->CL_Scene_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
 
 				if (mesh->HasTextureCoords(0))
 				{
-					App->CLSB_Model->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
-					App->CLSB_Model->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
+					Assimp_Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
+					Assimp_Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
 				}
 
 				VC++;
@@ -167,18 +167,18 @@ void SB_Assimp::StoreMeshData(const aiScene* pScene)
 				FaceNum++;
 			}
 
-			App->CLSB_Model->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
-			App->CLSB_Model->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
-			App->CLSB_Model->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
+			Assimp_Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
+			Assimp_Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
+			Assimp_Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
 
-			App->CLSB_Model->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
+			Assimp_Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
 
 			FaceIndexNum++;
 
 			t++;
 		}
 
-		App->CLSB_Model->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
+		Assimp_Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
 
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		GroupCount++;
@@ -244,7 +244,7 @@ void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
 
 		mTotalFaces = mTotalFaces + mesh->mNumFaces;
 
-		App->CLSB_Model->Group[Count]->GroupFaceCount = mesh->mNumFaces;
+		Assimp_Group[Count]->GroupFaceCount = mesh->mNumFaces;
 
 		while (t < mesh->mNumFaces)
 		{
@@ -260,10 +260,10 @@ void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
 			t++;
 		}
 
-		App->CLSB_Model->Group[Count]->vertex_Data.resize(VC);
-		App->CLSB_Model->Group[Count]->Normal_Data.resize(VC);
-		App->CLSB_Model->Group[Count]->MapCord_Data.resize(VC);
-		App->CLSB_Model->Group[Count]->Face_Data.resize(VC);
+		Assimp_Group[Count]->vertex_Data.resize(VC);
+		Assimp_Group[Count]->Normal_Data.resize(VC);
+		Assimp_Group[Count]->MapCord_Data.resize(VC);
+		Assimp_Group[Count]->Face_Data.resize(VC);
 
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		Count++;
@@ -290,44 +290,44 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 	while (Count < mGroupCount)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];
-		App->CLSB_Model->Create_Mesh_Group(Count);
+		Create_Assimp_Mesh_Group(Count);
 
 		//App->Say(mesh->mName.C_Str());
 
 		_itoa(Count, GroupNum, 10);
 		strcpy(GroupName, "Group_");
 		strcat(GroupName, GroupNum);
-		strcpy(App->CLSB_Model->Group[Count]->GroupName, GroupName);
+		strcpy(Assimp_Group[Count]->GroupName, GroupName);
 
 		strcpy(MaterialName, "Material_");
 		strcat(MaterialName, GroupNum);
-		strcpy(App->CLSB_Model->Group[Count]->MaterialName, MaterialName);
+		strcpy(Assimp_Group[Count]->MaterialName, MaterialName);
 
 		////---------------
 
-		App->CLSB_Model->Group[Count]->GroupVertCount = 0;
-		App->CLSB_Model->Group[Count]->MaterialIndex = -1;
+		Assimp_Group[Count]->GroupVertCount = 0;
+		Assimp_Group[Count]->MaterialIndex = -1;
 
-		App->CLSB_Model->Group[Count]->MaterialIndex = Count;
+		Assimp_Group[Count]->MaterialIndex = Count;
 
-		strcpy(App->CLSB_Model->Group[Count]->Text_FileName, "No_Texture");
+		strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
 
 		//strcpy(App->CLSB_Model->Group[Count]->Texture_FolderPath, App->CLSB_Model->Texture_FolderPath); // Back Slash remains
 
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
 
-		strcpy(App->CLSB_Model->Group[Count]->MaterialName, mtl->GetName().C_Str());
+		strcpy(Assimp_Group[Count]->MaterialName, mtl->GetName().C_Str());
 
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
 		{
-			strcpy(App->CLSB_Model->Group[Count]->Text_FileName, texPath.C_Str());
-			strcpy(App->CLSB_Model->Group[Count]->Equity_Text_FileName, texPath.C_Str());
+			strcpy(Assimp_Group[Count]->Text_FileName, texPath.C_Str());
+			strcpy(Assimp_Group[Count]->Equity_Text_FileName, texPath.C_Str());
 		}
 		else
 		{
-			strcpy(App->CLSB_Model->Group[Count]->Text_FileName, "No_Texture");
-			App->CLSB_Model->Group[Count]->MaterialIndex = -1;
+			strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
+			Assimp_Group[Count]->MaterialIndex = -1;
 		}
 
 		Count++;
@@ -340,4 +340,18 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 void SB_Assimp::LoadTextures()
 {
 	App->CLSB_Textures->Load_Textures_Assimp();
+}
+
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Assimp::Create_Assimp_Mesh_Group(int Index)
+{
+	if (Assimp_Group[Index] != nullptr)
+	{
+		delete Assimp_Group[Index];
+		Assimp_Group[Index] = nullptr;
+	}
+
+	Assimp_Group[Index] = new Base_Assimp();
 }
