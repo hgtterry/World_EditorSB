@@ -32,11 +32,15 @@ distribution.
 #include "LogStream.hpp"
 #include "matrix4x4.h"
 
+#include "Base_Assimp.h"
+
 class SB_Assimp
 {
 public:
 	SB_Assimp();
 	~SB_Assimp();
+
+	Base_Assimp* Assimp_Group[500];
 
 	bool LoadFile(const char* pFile);
 

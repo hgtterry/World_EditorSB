@@ -23,16 +23,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-typedef struct vertex_type
+typedef struct vertex_type_Assimp
 {
 	float x, y, z;
-}vertex_type;
+}vertex_type_Assimp;
 
-typedef struct polygon_type { int a, b, c, Group, Brush_Index, Face_Index; }polygon_type;
-typedef struct normal_type { float x, y, z; }normal_type;
-typedef struct mapcoord_type { float u, v; }mapcoord_type;
-typedef struct int_type { int Index; }int_type;
-typedef struct float_type { float Float1; }float_type;
+typedef struct polygon_type_Assimp { int a, b, c; }polygon_type_Assimp;
+typedef struct normal_type_Assimp { float x, y, z; }normal_type_Assimp;
+typedef struct mapcoord_type_Assimp { float u, v; }mapcoord_type_Assimp;
+typedef struct int_type_Assimp { int Index; }int_type_Assimp;
+typedef struct float_type_Assimp { float Float1; }float_type_Assimp;
 
 class Base_Assimp
 {
@@ -63,23 +63,23 @@ public:
 
 	bool Dont_Use;
 
-	std::vector<vertex_type> vertex_Data;		// XYZ
-	std::vector<polygon_type> Face_Data;		// ABC
-	std::vector<normal_type> Normal_Data;		// XYZ
-	std::vector<mapcoord_type> MapCord_Data;	// UV
-	std::vector<int_type> FaceIndex_Data;
+	std::vector<vertex_type_Assimp> vertex_Data;		// XYZ
+	std::vector<polygon_type_Assimp> Face_Data;		// ABC
+	std::vector<normal_type_Assimp> Normal_Data;		// XYZ
+	std::vector<mapcoord_type_Assimp> MapCord_Data;	// UV
+	std::vector<int_type_Assimp> FaceIndex_Data;
 
-	std::vector<int_type> BoneIndex_Data; // Ogre
-	std::vector<int_type> BA_BoneIndex_Data; // Ogre
-	std::vector<int_type> BA_BoneVertexIndex_Data; // Ogre
-	std::vector<float_type> BA_Weight_Data; // Ogre
+	std::vector<int_type_Assimp> BoneIndex_Data; // Ogre
+	std::vector<int_type_Assimp> BA_BoneIndex_Data; // Ogre
+	std::vector<int_type_Assimp> BA_BoneVertexIndex_Data; // Ogre
+	std::vector<float_type_Assimp> BA_Weight_Data; // Ogre
 	int BoneAssignMentCount; // Ogre
 
 	// Bounding Box
-	vertex_type BB_Max;
-	vertex_type BB_Min;
-	vertex_type Size;
-	vertex_type Centre;
+	vertex_type_Assimp BB_Max;
+	vertex_type_Assimp BB_Min;
+	vertex_type_Assimp Size;
+	vertex_type_Assimp Centre;
 	float radius;
 
 	HBITMAP Base_Bitmap;

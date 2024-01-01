@@ -31,6 +31,13 @@ SB_Assimp::SB_Assimp()
 	SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	mTotalVertices = 0;
 	DoTextures = 0;
+
+	int Count = 0;
+	while (Count < 499)
+	{
+		Assimp_Group[Count] = nullptr;
+		Count++;
+	}
 }
 
 

@@ -346,13 +346,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{
-			App->CLSB_Loader->RFActor_Loader();
+			//App->CLSB_Loader->RFActor_Loader();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
 		{
-			App->Clear_ErrorLog();
+			/*App->Clear_ErrorLog();
 			App->CLSB_Loader->LoadError = 0;
 
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
@@ -362,21 +362,21 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			{
 				App->Say("Loaded With Errors");
 				App->CLSB_Dialogs->Start_ListData(1);
-			}
+			}*/
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITORPROJECT)
 		{
-			int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
+			/*int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
 			if (Result == 0)
 			{
 				return 1;
 			}
 
 			App->CLSB_Loader->Read_Project_File(App->CLSB_Loader->Path_FileName);
-			App->CLSB_Loader->Load_File_Wepf();
+			App->CLSB_Loader->Load_File_Wepf();*/
 
 			return TRUE;
 		}
