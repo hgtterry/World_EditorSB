@@ -63,6 +63,8 @@ public:
 	bool Show_Brush_Faces;
 	bool Render_Brush_Group_Flag;
 
+	bool Show_Test_Assimp_Faces;
+
 	// Brushes
 	bool Render_Just_Brush;
 	int Selected_Brush_Index;

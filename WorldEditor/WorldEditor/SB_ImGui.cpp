@@ -79,6 +79,7 @@ SB_ImGui::SB_ImGui()
 	Show_Brush_Data_F = 0;
 	Show_Real_Brush_F = 0;
 	Show_Global_Data_F = 0;
+	Show_Assimp_Data_F = 0;
 
 	Pick_Face = 1;
 
@@ -471,6 +472,25 @@ void SB_ImGui::Model_Data_GUI(void)
 				ImGui::Text("Texture ID:-%i %s", Count, App->CLSB_Mesh_Mgr->TextureName2[Count]);
 				Count++;
 			}
+		}
+
+		if (ImGui::Button("Assimp Data"))
+		{
+			if (Show_Assimp_Data_F == 1)
+			{
+				Show_Assimp_Data_F = 0;
+			}
+			else
+			{
+				Show_Assimp_Data_F = 1;
+			}
+		}
+
+		if (Show_Assimp_Data_F == 1)
+		{
+			ImGui::Text("Assimp Group Count:- %i", App->CLSB_Assimp->Total_Assimp_GroupCount);
+			ImGui::Text("Assimp Vertice Count:- %i", App->CLSB_Assimp->Total_Assimp_VerticeCount);
+			ImGui::Text("Assimp Face Count:- %i", App->CLSB_Assimp->Total_Assimp_FaceCount);
 		}
 
 		ImGui::Text("  ");

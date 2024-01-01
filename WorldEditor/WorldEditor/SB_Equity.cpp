@@ -352,13 +352,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
 		{
-			/*App->Clear_ErrorLog();
-			App->CLSB_Loader->LoadError = 0;
+			//App->Clear_ErrorLog();
+			//App->CLSB_Loader->LoadError = 0;
 
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 
-			if (App->CLSB_Loader->LoadError == 1)
+			/*if (App->CLSB_Loader->LoadError == 1)
 			{
 				App->Say("Loaded With Errors");
 				App->CLSB_Dialogs->Start_ListData(1);

@@ -62,6 +62,7 @@ public:
 	bool Show_BB_Data_F;
 
 	bool Show_Textures_F;
+	bool Show_Assimp_Data_F;
 	bool Show_Brush_Data_F;
 	bool Show_Real_Brush_F;
 	bool Show_Global_Data_F;

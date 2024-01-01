@@ -48,6 +48,7 @@ SB_Render::SB_Render()
 	ShowBoundingBox = 0;
 	ShowBoundingGroup = 0;
 	Show_Selected_Face = 0;
+	Show_Test_Assimp_Faces = 0;
 
 	PlayActive = 0;
 	Light_Activated = 0;
@@ -388,6 +389,14 @@ void SB_Render::Render_Loop()
 	{
 		Render_Brush_Faces();
 	}
+
+	// ---------------------- Show_Brush_Faces
+	if (Show_Test_Assimp_Faces == 1)
+	{
+		Test_Assimp_Render_Faces();
+	}
+
+	
 
 	if (depthTestEnabled)
 	{
@@ -1909,6 +1918,8 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 // *************************************************************************
 bool SB_Render::Test_Assimp_Render_Faces(void)
 {
+	//App->Flash_Window();
+
 	int Count = 0;
 
 	glColor3f(1, 1, 1);

@@ -74,7 +74,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 	//SelectedPreset = GetUserPresets(); // See what user wants
 
 	const aiScene* scene = aiImportFile(pFile, SelectedPreset);
-
+	
 	if (!scene)
 	{
 		char buf[1024];
@@ -88,20 +88,20 @@ bool SB_Assimp::LoadFile(const char* pFile)
 		GetBasicInfo(scene);
 		
 		Create_MeshGroups(scene);
-
+		
 		Get_Group_VertCount(scene);
-
+		
 		StoreMeshData(scene);
-
+		
 		if (DoTextures == 1)
 		{
 			//LoadTextures();
 		}
 
-		App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
+		//App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
 
 		// Create Groups Bounding Boxes
-		App->CLSB_Model->Set_BondingBoxes_AllGroups();
+		//App->CLSB_Model->Set_BondingBoxes_AllGroups();
 	}
 
 	
@@ -119,7 +119,7 @@ void SB_Assimp::GetBasicInfo(const aiScene* pScene)
 	bool test = pScene->HasMeshes();
 	if (test == 1)
 	{
-		App->CLSB_Model->Set_Groupt_Count(pScene->mNumMeshes);
+		//App->CLSB_Model->Set_Groupt_Count(pScene->mNumMeshes);
 		Total_Assimp_GroupCount = pScene->mNumMeshes;
 	}
 

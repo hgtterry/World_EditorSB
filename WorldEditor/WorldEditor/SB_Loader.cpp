@@ -56,18 +56,19 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd,Extension, Extension2, NULL);
 	if (Result == 0)
 	{
+		App->Say("Failed");
 		return;
 	}
 
-	App->CLSB_Model->Clear_Model_And_Reset();
+	//App->CLSB_Model->Clear_Model_And_Reset();
 	
 	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
 	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
 
-	App->CLSB_Model->Set_Paths();
+	//App->CLSB_Model->Set_Paths();
 
-	App->CLSB_Assimp->DoTextures = 1;
-
+	//App->CLSB_Assimp->DoTextures = 1;
+	//App->Say(App->CLSB_Loader->Path_FileName);
 	bool Test = App->CLSB_Assimp->LoadFile(App->CLSB_Loader->Path_FileName);
 	if (Test == 0)
 	{
@@ -75,13 +76,14 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 		return;
 	}
 
-	App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
+	App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
+	/*App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 
 	App->CLSB_Model->Set_Equity();
 
 	App->CLSB_Grid->Reset_View();
 	App->CLSB_Ogre->RenderListener->RX = 0;
-	App->CLSB_Ogre->RenderListener->RZ = 0;
+	App->CLSB_Ogre->RenderListener->RZ = 0;*/
 
 
 	//App->CL_Recent_Files->RecentFile_Models_History_Update();
