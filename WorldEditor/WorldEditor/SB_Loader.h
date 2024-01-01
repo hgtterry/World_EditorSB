@@ -41,6 +41,7 @@ public:
 	bool RFActor_Loader(void);
 	bool Load_ActorWorld();
 	bool Wavefront_Obj_File();
+	void Strange_UV_Stuff();
 
 
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);

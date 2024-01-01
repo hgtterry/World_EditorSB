@@ -29,6 +29,35 @@ distribution.
 
 #include "RAM.h"
 
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	GPlane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
 SB_Loader::SB_Loader(void)
 {
 	FileName[0] = 0;
@@ -76,7 +105,7 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 		return;
 	}
 
-	App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
+	//App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
 	/*App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 
 	App->CLSB_Model->Set_Equity();
@@ -1012,29 +1041,55 @@ bool SB_Loader::Wavefront_Obj_File()
 		while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
 		{
 			geVec3d FaceVerts[3];
+			Ogre::Vector2 UV_Cords[3];
 
 			A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
 			B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
 			C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
 
-			//-----------------------------------------------
+			//----------------------- Vertices 1
 			FaceVerts[2].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x;
 			FaceVerts[2].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].y;
 			FaceVerts[2].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].z;
 
+			UV_Cords[2].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].u;
+			UV_Cords[2].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].v;
+
+			//----------------------- Vertices 2
 			FaceVerts[1].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x;
 			FaceVerts[1].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].y;
 			FaceVerts[1].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].z;
 
+			UV_Cords[1].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].u;
+			UV_Cords[1].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].v;
+
+			//----------------------- Vertices 3
 			FaceVerts[0].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x;
 			FaceVerts[0].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].y;
 			FaceVerts[0].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].z;
-			
+
+			UV_Cords[0].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].u;
+			UV_Cords[0].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].v;
+			//-----------------------------------------------
 			f = Face_Create(3, FaceVerts, 0);
 
 			if (f)
 			{
-				FaceList_AddFace(fl, f);
+				strcpy(f->Tex.Name, "Dummy");
+				f->Tex.Dib = Level_GetDibId(App->CLSB_Doc->pLevel, "Dummy");
+
+				f->Tex.txSize = 256;
+				f->Tex.tySize = 256;
+
+				f->Tex.xScale = 0.073;
+				f->Tex.yScale = 0.076;
+
+				f->Tex.xShift = 134;
+				f->Tex.yShift = 4;
+
+				Face_SetTextureLock(f, true);
+	
+				FaceList_AddFace(fl, f);	
 			}
 			else
 			{
@@ -1068,15 +1123,61 @@ bool SB_Loader::Wavefront_Obj_File()
 	Brush_SetVisible(NewBrush, GE_TRUE);
 	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, NewBrush);
 
-	App->m_pDoc->SetDefaultBrushTexInfo(NewBrush);
+	//App->m_pDoc->SetDefaultBrushTexInfo(NewBrush);
 	Brush_Bound(NewBrush);
 	Brush_Center(NewBrush, &mOrigin);
 
 	Brush_SetName(NewBrush, "TestXX");
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+
 	App->m_pDoc->SetModifiedFlag();
 
 	App->Say("Added");
 	return 1;
+}
+
+// *************************************************************************
+// *	  Strange_UV_Stuff:- Terry and Hazel Flanigan 2024        *
+// *************************************************************************
+void SB_Loader::Strange_UV_Stuff()
+{
+	//int UVIndex = 0;
+	//// -----------------------------------  UVS
+	//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
+	//for (i = 0; i < pList->NumFaces; i++)
+	//{
+	//	const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
+	//	const geVec3d* verts;
+	//	geVec3d uVec, vVec;
+	//	geFloat U, V;
+
+	//	int txSize, tySize;
+
+	//	Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
+
+	//	if (txSize == 0)
+	//		txSize = 32;
+	//	if (tySize == 0)
+	//		tySize = 32;
+
+	//	geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+	//	geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+	//	verts = Face_GetPoints(pList->Faces[i]);
+	//	curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+
+	//	for (j = 0; j < curnum_verts; j++)
+	//	{
+	//		U = geVec3d_DotProduct(&(verts[j]), &uVec);
+	//		V = geVec3d_DotProduct(&(verts[j]), &vVec);
+	//		U += (TVecs->uOffset / txSize);
+	//		V -= (TVecs->vOffset / tySize);
+
+	//		App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
+	//		App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
+	//		UVIndex++;
+	//	}
+	//}
 }
