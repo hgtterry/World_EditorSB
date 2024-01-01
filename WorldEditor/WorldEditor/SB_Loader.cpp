@@ -979,7 +979,7 @@ bool SB_Loader::Load_ActorWorld()
 // *************************************************************************
 // *	  Import_Wavefront_Obj_File:- Terry and Hazel Flanigan 2024        *
 // *************************************************************************
-bool SB_Loader::Import_Wavefront_Obj_File()
+bool SB_Loader::Wavefront_Obj_File()
 {
 	int Result = App->CLSB_FileIO->Open_File_Model(App->MainHwnd, "RF Actor   *.act\0*.act\0", "RF Actor", NULL);
 	if (Result == 0)

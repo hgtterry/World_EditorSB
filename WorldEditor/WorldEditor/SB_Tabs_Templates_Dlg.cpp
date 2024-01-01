@@ -142,6 +142,7 @@ LRESULT CALLBACK SB_Tabs_Templates_Dlg::Templates_Proc(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_ACTOR)
 		{
 			App->CLSB_Loader->Load_ActorWorld();
+			App->CLSB_Loader->Wavefront_Obj_File();
 			return 1;
 		}
 		if (LOWORD(wParam) == IDC_GD_CUBE_PRIMITIVE)

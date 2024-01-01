@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 Reality Factory Scene Builder -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -20,8 +22,6 @@ misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 */
-
-#pragma once
 
 typedef struct vertex_type
 {

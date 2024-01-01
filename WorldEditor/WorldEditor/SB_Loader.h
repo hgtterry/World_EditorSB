@@ -40,7 +40,7 @@ public:
 
 	bool RFActor_Loader(void);
 	bool Load_ActorWorld();
-	bool Import_Wavefront_Obj_File();
+	bool Wavefront_Obj_File();
 
 
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);

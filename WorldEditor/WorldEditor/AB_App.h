@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2023 World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2024 Reality Factory Scene Builder -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -19,7 +19,7 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
-*/ 
+*/
 
 #if !defined(AFX_SB_APP_H__F1CE337E_1C46_4F80_9639_566F8F7DFBD6__INCLUDED_)
 #define AFX_SB_APP_H__F1CE337E_1C46_4F80_9639_566F8F7DFBD6__INCLUDED_
