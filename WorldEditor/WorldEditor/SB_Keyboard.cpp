@@ -214,6 +214,18 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		Block_Keyboard = 0;
 	}
 
+	if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+	{
+		
+		if (App->CLSB_Scene->Player_Added == 1)
+		{
+			//App->Flash_Window();
+			App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
+			//App->CL_Player->Check_Collisions_New();
+			App->CLSB_Scene->B_Player[0]->IsMOving = 1;
+		}
+	}
+
 }
 
 
@@ -278,8 +290,9 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//	}
 
 		//	------------------------------------------------ Forward
-		if (GetAsyncKeyState(VK_UP) < 0 && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
 		{
+			//App->Flash_Window();
 			if (App->CLSB_Scene->Player_Added == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
