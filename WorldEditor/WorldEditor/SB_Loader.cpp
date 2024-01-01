@@ -983,167 +983,78 @@ bool SB_Loader::Load_ActorWorld()
 // *************************************************************************
 bool SB_Loader::Wavefront_Obj_File()
 {
-	int Result = App->CLSB_FileIO->Open_File_Model(App->MainHwnd, "RF Actor   *.act\0*.act\0", "RF Actor", NULL);
-	if (Result == 0)
-	{
-		return 0;
-	}
+	App->Get_Current_Document();
 
-	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
-	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
-
-	char filename[MAX_PATH];
-	strcpy(filename, App->CLSB_Loader->Path_FileName);
-
-	char ActorFile[MAX_PATH];;
-	strcpy(ActorFile, App->CLSB_Loader->FileName);
-
-	App->Say(filename);
-
-	geVFile* ActFile;
-	geActor_Def* mActorDef;
-	geActor* Actor;
-	CString ActorRotStr;
-	geVec3d ActorRotation;
-	geXForm3d thePosition;
-	geFloat Scale;
-	CString ActorScale;
-
-	ActFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, filename, NULL, GE_VFILE_OPEN_READONLY);
-	if (ActFile)
-	{
-		mActorDef = geActor_DefCreateFromFile(ActFile);
-		if (!mActorDef)
-		{
-			geVFile_Close(ActFile);
-			AfxMessageBox("Failed to create ActorDef", MB_ICONEXCLAMATION | MB_OK);
-			return NULL;
-		}
-	}
-	else
-	{
-		App->Say("Failed");
-		return NULL;
-	}
-	geVFile_Close(ActFile);
-
-	Actor = geActor_Create(mActorDef);
-
-	geVec3d_Clear(&ActorRotation);	// Initialize
-	Scale = 1.0f;
-	geXForm3d_SetIdentity(&thePosition);
-
-	geBody* B = geActor_GetBody(mActorDef);
-
-	if (!B)
-	{
-		if (mActorDef != NULL)
-			geActor_DefDestroy(&mActorDef);
-
-		if (Actor != NULL)
-			geActor_Destroy(&Actor);
-
-		return NULL;
-	}
+	App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 
 	FaceList* fl;
 	Face* f;
 
+	fl = FaceList_Create(App->CLSB_Assimp->Total_Assimp_FaceCount);
+	if (!fl)
 	{
-		int i, NumFaces = 0;
-		geBody_Index Index;
-		geBody_Index BoneIndex;
-		char BoneName[255];
-		geXForm3d Transform;
-		const char* BName;
+		App->Say("Error creating FaceList");
+	}
 
-		NumFaces = B->SkinFaces[0].FaceCount;
+	int Count = 0;
+	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
-		// create the facelist for the brush
-		fl = FaceList_Create(NumFaces);
-		if (!fl)
-		{
-			char szError[256];
-			sprintf(szError, "Error creating FaceList: '%s'", ActorFile);
-			AfxMessageBox(szError, MB_ICONEXCLAMATION | MB_OK);
+	while (Count < GroupCount)
+	{
+		int FaceCount = 0;
+		int A = 0;
+		int B = 0;
+		int C = 0;
 
-			if (mActorDef != NULL)
-				geActor_DefDestroy(&mActorDef);
-			if (Actor != NULL)
-				geActor_Destroy(&Actor);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-			return NULL;
-		}
-
-		for (i = 0; i < NumFaces; i++)
+		while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
 		{
 			geVec3d FaceVerts[3];
 
-			for (int j = 0; j < 3; j++)
-			{
-				// have to reverse vertex order for some reason
-				Index = B->SkinFaces[0].FaceArray[i].VtxIndex[j];
-				geVec3d_Copy(&(B->XSkinVertexArray[Index].XPoint), &(FaceVerts[2 - j]));
+			A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
+			B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
+			C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
 
-				// transform vertex point by bone transformation
-				BoneIndex = B->XSkinVertexArray[Index].BoneIndex;
-				BName = geStrBlock_GetString(B->BoneNames, BoneIndex);
-				strcpy(BoneName, BName);
-				geActor_GetBoneTransform(Actor, BoneName, &Transform);
-				geXForm3d_Transform(&Transform, &(FaceVerts[2 - j]), &(FaceVerts[2 - j]));
+			//-----------------------------------------------
+			FaceVerts[2].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x;
+			FaceVerts[2].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].y;
+			FaceVerts[2].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].z;
 
-				geVec3d_Scale(&FaceVerts[2 - j], Scale, &FaceVerts[2 - j]);
-			}
+			FaceVerts[1].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x;
+			FaceVerts[1].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].y;
+			FaceVerts[1].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].z;
 
-			// create faces and add them to the facelist
+			FaceVerts[0].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x;
+			FaceVerts[0].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].y;
+			FaceVerts[0].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].z;
+			
 			f = Face_Create(3, FaceVerts, 0);
 
 			if (f)
+			{
 				FaceList_AddFace(fl, f);
+			}
 			else
 			{
-				// hack; if original face has no normal create a valid face instead
-				geVec3d_Set(&(FaceVerts[0]), 10000.0f, 10000.0f, 10000.0f);
-				geVec3d_Set(&(FaceVerts[1]), 10001.0f, 10000.0f, 10000.0f);
-				geVec3d_Set(&(FaceVerts[2]), 10000.0f, 10001.0f, 10000.0f);
-
-				f = Face_Create(3, FaceVerts, 0);
-
-				if (f)
-					FaceList_AddFace(fl, f);
+				App->Say("Error create Face");
 			}
+
+			FaceCount++;
+			//-----------------------------------------------
 		}
+
+		Count++;
 	}
 
-	Brush* mActorBrush;
+	Brush* NewBrush;
 
-	mActorBrush = Brush_Create(BRUSH_LEAF, fl, NULL);
-	if (!mActorBrush)
+	NewBrush = Brush_Create(BRUSH_LEAF, fl, NULL);
+	if (!NewBrush)
 	{
-		char szError[256];
-		sprintf(szError, "Error creating brush: '%s'", ActorFile);
-		AfxMessageBox(szError, MB_ICONEXCLAMATION | MB_OK);
-
-		FaceList_Destroy(&fl);
-
-		if (mActorDef != NULL)
-			geActor_DefDestroy(&mActorDef);
-
-		if (Actor != NULL)
-			geActor_Destroy(&Actor);
-
-		return NULL;
+		App->Say("Failed to Create Brush");
 	}
-
-
-
-	if (mActorDef != NULL)
-		geActor_DefDestroy(&mActorDef);
-
-	if (Actor != NULL)
-		geActor_Destroy(&Actor);
-
-	// move the brush to the right position
 
 	geVec3d	mOrigin;
 
@@ -1151,22 +1062,20 @@ bool SB_Loader::Wavefront_Obj_File()
 	mOrigin.Y = 0;
 	mOrigin.Z = 0;
 
-	Brush_Move(mActorBrush, &mOrigin);
+	Brush_Move(NewBrush, &mOrigin);
 
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	Level_AppendBrush(App->CLSB_Doc->pLevel, NewBrush);
+	Brush_SetVisible(NewBrush, GE_TRUE);
+	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, NewBrush);
 
-	Level_AppendBrush(App->CLSB_Doc->pLevel, mActorBrush);
-	Brush_SetVisible(mActorBrush, GE_TRUE);
-	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, mActorBrush);
+	App->m_pDoc->SetDefaultBrushTexInfo(NewBrush);
+	Brush_Bound(NewBrush);
+	Brush_Center(NewBrush, &mOrigin);
 
-	m_pDoc->SetDefaultBrushTexInfo(mActorBrush);
-	Brush_Bound(mActorBrush);
-	Brush_Center(mActorBrush, &mOrigin);
-
-	Brush_SetName(mActorBrush, "Test");
+	Brush_SetName(NewBrush, "TestXX");
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag();
+	App->m_pDoc->SetModifiedFlag();
 
 	App->Say("Added");
 	return 1;
