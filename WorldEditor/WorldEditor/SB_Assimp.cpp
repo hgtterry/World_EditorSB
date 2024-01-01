@@ -32,6 +32,9 @@ SB_Assimp::SB_Assimp()
 	mTotalVertices = 0;
 	DoTextures = 0;
 
+	Total_Assimp_VerticeCount = 0;
+	Total_Assimp_FaceCount = 0;
+
 	int Count = 0;
 	while (Count < 499)
 	{
@@ -91,7 +94,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 
 		if (DoTextures == 1)
 		{
-			LoadTextures();
+			//LoadTextures();
 		}
 
 		App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
@@ -104,6 +107,158 @@ bool SB_Assimp::LoadFile(const char* pFile)
 	aiReleaseImport(scene);
 
 	return 1;
+}
+
+// *************************************************************************
+// *			GetBasicInfo:- Terry and Hazel Flanigan 2023	  	 	   *
+// *************************************************************************
+void SB_Assimp::GetBasicInfo(const aiScene* pScene)
+{
+
+	bool test = pScene->HasMeshes();
+	if (test == 1)
+	{
+		App->CLSB_Model->Set_Groupt_Count(pScene->mNumMeshes);
+	}
+
+	test = pScene->HasMaterials();
+	if (test == 1)
+	{
+		int Mat = 0;
+
+		Mat = pScene->mNumMaterials;
+
+		if (Mat > 0)
+		{
+			App->CLSB_Model->Set_Texture_Count(pScene->mNumMaterials);
+		}
+		else
+		{
+			App->CLSB_Model->Set_Texture_Count(-1);
+		}
+	}
+
+	test = pScene->HasAnimations();
+	if (test == 1)
+	{
+		App->CLSB_Model->Set_Motion_Count(pScene->mNumAnimations);
+	}
+}
+
+// *************************************************************************
+// *	Create_MeshGroups_ByIndex:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
+{
+	int Count = 0;
+
+	char GroupName[255];
+	char MaterialName[255];
+	char GroupNum[255];
+
+	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+	while (Count < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[Count];
+		Create_Assimp_Mesh_Group(Count);
+
+		//App->Say(mesh->mName.C_Str());
+
+		_itoa(Count, GroupNum, 10);
+		strcpy(GroupName, "Group_");
+		strcat(GroupName, GroupNum);
+		strcpy(Assimp_Group[Count]->GroupName, GroupName);
+
+		strcpy(MaterialName, "Material_");
+		strcat(MaterialName, GroupNum);
+		strcpy(Assimp_Group[Count]->MaterialName, MaterialName);
+
+		////---------------
+
+		Assimp_Group[Count]->GroupVertCount = 0;
+		Assimp_Group[Count]->MaterialIndex = -1;
+
+		Assimp_Group[Count]->MaterialIndex = Count;
+
+		strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
+
+		//strcpy(App->CLSB_Model->Group[Count]->Texture_FolderPath, App->CLSB_Model->Texture_FolderPath); // Back Slash remains
+
+		aiString texPath;
+		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
+
+		strcpy(Assimp_Group[Count]->MaterialName, mtl->GetName().C_Str());
+
+		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
+		{
+			strcpy(Assimp_Group[Count]->Text_FileName, texPath.C_Str());
+			strcpy(Assimp_Group[Count]->Equity_Text_FileName, texPath.C_Str());
+		}
+		else
+		{
+			strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
+			Assimp_Group[Count]->MaterialIndex = -1;
+		}
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *		Get_Group_VertCount:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
+{
+	int Count = 0;
+	unsigned int t = 0;
+	unsigned int i = 0;
+	int VC = 0;
+	int mTotalVertices = 0;
+	int mTotalFaces = 0;
+
+	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+	while (Count < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[Count];
+
+		VC = 0;
+		t = 0;
+
+		mTotalFaces = mTotalFaces + mesh->mNumFaces;
+
+		Assimp_Group[Count]->GroupFaceCount = mesh->mNumFaces;
+
+		while (t < mesh->mNumFaces)
+		{
+			aiFace* face = &mesh->mFaces[t];
+
+			i = 0;
+			while (i < face->mNumIndices)
+			{
+				VC++;
+				i++;
+			}
+
+			t++;
+		}
+
+		Assimp_Group[Count]->vertex_Data.resize(VC);
+		Assimp_Group[Count]->Normal_Data.resize(VC);
+		Assimp_Group[Count]->MapCord_Data.resize(VC);
+		Assimp_Group[Count]->Face_Data.resize(VC);
+
+		mTotalVertices = mTotalVertices + mesh->mNumVertices;
+		Count++;
+	}
+
+	App->CLSB_Model->VerticeCount = mTotalVertices;
+	App->CLSB_Model->FaceCount = mTotalFaces;
+
+	Total_Assimp_VerticeCount = mTotalVertices;
+	Total_Assimp_FaceCount = mTotalFaces;
+
 }
 
 // *************************************************************************
@@ -182,155 +337,6 @@ void SB_Assimp::StoreMeshData(const aiScene* pScene)
 
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		GroupCount++;
-	}
-}
-
-// *************************************************************************
-// *			GetBasicInfo:- Terry and Hazel Flanigan 2023	  	 	   *
-// *************************************************************************
-void SB_Assimp::GetBasicInfo(const aiScene* pScene)
-{
-
-	bool test = pScene->HasMeshes();
-	if (test == 1)
-	{
-		App->CLSB_Model->Set_Groupt_Count(pScene->mNumMeshes);
-	}
-
-	test = pScene->HasMaterials();
-	if (test == 1)
-	{
-		int Mat = 0;
-
-		Mat = pScene->mNumMaterials;
-
-		if (Mat > 0)
-		{
-			App->CLSB_Model->Set_Texture_Count(pScene->mNumMaterials);
-		}
-		else
-		{
-			App->CLSB_Model->Set_Texture_Count(-1);
-		}
-	}
-
-	test = pScene->HasAnimations();
-	if (test == 1)
-	{
-		App->CLSB_Model->Set_Motion_Count(pScene->mNumAnimations);
-	}
-}
-
-// *************************************************************************
-// *		Get_Group_VertCount:- Terry and Hazel Flanigan 2023		  	   *
-// *************************************************************************
-void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
-{
-	int Count = 0;
-	unsigned int t = 0;
-	unsigned int i = 0;
-	int VC = 0;
-	int mTotalVertices = 0;
-	int mTotalFaces = 0;
-
-	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
-
-	while (Count < mGroupCount)
-	{
-		aiMesh* mesh = pScene->mMeshes[Count];
-
-		VC = 0;
-		t = 0;
-
-		mTotalFaces = mTotalFaces + mesh->mNumFaces;
-
-		Assimp_Group[Count]->GroupFaceCount = mesh->mNumFaces;
-
-		while (t < mesh->mNumFaces)
-		{
-			aiFace* face = &mesh->mFaces[t];
-
-			i = 0;
-			while (i<face->mNumIndices)
-			{
-				VC++;
-				i++;
-			}
-
-			t++;
-		}
-
-		Assimp_Group[Count]->vertex_Data.resize(VC);
-		Assimp_Group[Count]->Normal_Data.resize(VC);
-		Assimp_Group[Count]->MapCord_Data.resize(VC);
-		Assimp_Group[Count]->Face_Data.resize(VC);
-
-		mTotalVertices = mTotalVertices + mesh->mNumVertices;
-		Count++;
-	}
-
-	App->CLSB_Model->VerticeCount = mTotalVertices;
-	App->CLSB_Model->FaceCount = mTotalFaces;
-
-}
-
-// *************************************************************************
-// *	Create_MeshGroups_ByIndex:- Terry and Hazel Flanigan 2023	 	   *
-// *************************************************************************
-void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
-{
-	int Count = 0;
-
-	char GroupName[255];
-	char MaterialName[255];
-	char GroupNum[255];
-
-	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
-	
-	while (Count < mGroupCount)
-	{
-		aiMesh* mesh = pScene->mMeshes[Count];
-		Create_Assimp_Mesh_Group(Count);
-
-		//App->Say(mesh->mName.C_Str());
-
-		_itoa(Count, GroupNum, 10);
-		strcpy(GroupName, "Group_");
-		strcat(GroupName, GroupNum);
-		strcpy(Assimp_Group[Count]->GroupName, GroupName);
-
-		strcpy(MaterialName, "Material_");
-		strcat(MaterialName, GroupNum);
-		strcpy(Assimp_Group[Count]->MaterialName, MaterialName);
-
-		////---------------
-
-		Assimp_Group[Count]->GroupVertCount = 0;
-		Assimp_Group[Count]->MaterialIndex = -1;
-
-		Assimp_Group[Count]->MaterialIndex = Count;
-
-		strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
-
-		//strcpy(App->CLSB_Model->Group[Count]->Texture_FolderPath, App->CLSB_Model->Texture_FolderPath); // Back Slash remains
-
-		aiString texPath;
-		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
-
-		strcpy(Assimp_Group[Count]->MaterialName, mtl->GetName().C_Str());
-
-		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
-		{
-			strcpy(Assimp_Group[Count]->Text_FileName, texPath.C_Str());
-			strcpy(Assimp_Group[Count]->Equity_Text_FileName, texPath.C_Str());
-		}
-		else
-		{
-			strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
-			Assimp_Group[Count]->MaterialIndex = -1;
-		}
-
-		Count++;
 	}
 }
 

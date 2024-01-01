@@ -49,6 +49,9 @@ public:
 
 	bool DoTextures;
 
+	int Total_Assimp_VerticeCount;
+	int Total_Assimp_FaceCount;
+
 protected:
 
 	void logInfo(std::string logString);
