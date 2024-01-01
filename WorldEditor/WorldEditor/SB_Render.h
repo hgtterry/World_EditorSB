@@ -100,6 +100,9 @@ protected:
 	bool Render_As_Points_Parts(int Count);
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
+
+	bool Test_Assimp_Render_Faces(void);
+	bool Test_Assimp_Face_Parts(int Count);
 	
 	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);

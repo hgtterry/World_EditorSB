@@ -32,6 +32,7 @@ SB_Assimp::SB_Assimp()
 	mTotalVertices = 0;
 	DoTextures = 0;
 
+	Total_Assimp_GroupCount = 0;
 	Total_Assimp_VerticeCount = 0;
 	Total_Assimp_FaceCount = 0;
 
@@ -119,6 +120,7 @@ void SB_Assimp::GetBasicInfo(const aiScene* pScene)
 	if (test == 1)
 	{
 		App->CLSB_Model->Set_Groupt_Count(pScene->mNumMeshes);
+		Total_Assimp_GroupCount = pScene->mNumMeshes;
 	}
 
 	test = pScene->HasMaterials();
@@ -156,7 +158,8 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char MaterialName[255];
 	char GroupNum[255];
 
-	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	//int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	int mGroupCount = Total_Assimp_GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -217,7 +220,8 @@ void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	int mTotalVertices = 0;
 	int mTotalFaces = 0;
 
-	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	//int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	int mGroupCount = Total_Assimp_GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -274,7 +278,8 @@ void SB_Assimp::StoreMeshData(const aiScene* pScene)
 	unsigned int i = 0;
 	int VC = 0;
 
-	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	//int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
+	int mGroupCount = Total_Assimp_GroupCount;
 
 	while (GroupCount < mGroupCount)
 	{

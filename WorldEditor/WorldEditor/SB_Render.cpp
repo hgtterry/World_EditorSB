@@ -919,6 +919,7 @@ bool SB_Render::Assimp_Render_Points(void)
 
 	return 1;
 }
+
 // *************************************************************************
 // *					Render_As_Points_Parts Terry Bernie	   			   *
 // *************************************************************************
@@ -1901,5 +1902,60 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
+}
 
+// *************************************************************************
+// *						Test_Assimp_Render_Faces Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::Test_Assimp_Render_Faces(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+
+	while (Count < GroupCount)
+	{
+		Test_Assimp_Face_Parts(Count);
+		Count++;
+	}
+
+	return 1;
+}
+// *************************************************************************
+// *					Test_Assimp_Face_Parts Terry Bernie		   			   *
+// *************************************************************************
+bool SB_Render::Test_Assimp_Face_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
+	{
+		A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
+		B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
+		C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
+		FaceCount++;
+		//-----------------------------------------------
+
+		glEnd();
+	}
+
+	return 1;
 }
