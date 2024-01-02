@@ -113,6 +113,8 @@ distribution.
 #include "SB_BR_Render.h"
 #include "Base_Faces.h"
 
+#include "SB_GameDirector.h"
+
 class SB_App
 {
 public:
@@ -202,6 +204,7 @@ public:
 	SB_PB*						CLSB_PB;
 	SB_BR_Render*				CLSB_BR_Render;
 	Base_Faces*					CLSB_BaseFaces;
+	SB_GameDirector*			CLSB_GameDirector;
 
 	bool InitApp(void);
 	void InitMFC(void);

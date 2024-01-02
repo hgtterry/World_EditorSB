@@ -8,7 +8,8 @@ SB_Equity::SB_Equity(void)
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
 	EquitySB_Dialog_Visible = 0;
-	Equity_Start_Mode = 0;
+
+	Equity_Render_Mode = Enums::EQ_Mode_None;
 
 	OgreView_3D_hWnd =		nullptr;
 	Render_Buttons_hWnd =	nullptr;
@@ -92,7 +93,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 
 			EquitySB_Dialog_Visible = 1;
 
-			if (Equity_Start_Mode == 1)
+			if (Equity_Render_Mode == Enums::EQ_Mode_Equity)
 			{
 				HMENU TestMenu;
 				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUSB));
@@ -109,7 +110,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 		}
 		else
 		{
-			if (Equity_Start_Mode == 2)
+			if (Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
 			{
 				App->CLSB_Camera_EQ->Save_Camera_Pos();
 				Saved_Camera_Mode = App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag;
@@ -468,7 +469,15 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			ShowWindow(App->ListPanel, false);
 			ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 			
-			App->CLSB_Equity->Show_Equity_Dialog(false);
+			if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_Equity)
+			{
+				App->CLSB_Equity->Show_Equity_Dialog(false);
+			}
+			else
+			{
+				App->CLSB_GameDirector->Hide_GameDirector_Dialog();
+				//App->CLSB_Equity->Show_Equity_Dialog(false);
+			}
 			return TRUE;
 		}
 	}
@@ -1118,7 +1127,7 @@ void SB_Equity::Resize_3DView()
 // *************************************************************************
 void SB_Equity::Set_Mode_Equity()
 {
-	Equity_Start_Mode = 1;
+	Equity_Render_Mode = Enums::EQ_Mode_Equity;
 
 	App->CLSB_TopTabs_Equity->Hide_Tabs();
 	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
@@ -1146,13 +1155,21 @@ void SB_Equity::Set_Mode_Equity()
 // *************************************************************************
 void SB_Equity::Do_Equity()
 {
+	if (App->BR_True3D_Mode_Active == 1)
+	{
+		App->CLSB_BR_Render->Exit_BR_3D_Mode();
+		App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
+	}
+
+	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+
 	App->CLSB_Model->Clear_Model_And_Reset();
 
 	App->CLSB_Grid->Reset_View();
 
 	App->CLSB_TopTabs_Equity->Camera_Set_Model();
 
-	Equity_Start_Mode = 1;
+	Equity_Render_Mode = Enums::EQ_Mode_Equity;
 
 	App->CLSB_TopTabs_Equity->Hide_Tabs();
 	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
@@ -1189,9 +1206,10 @@ void SB_Equity::Do_Equity()
 // *************************************************************************
 void SB_Equity::Do_Preview_Selected()
 {
+	return;
 	bool AllGood = 0;
 
-	Equity_Start_Mode = 3;
+	Equity_Render_Mode = Enums::EQ_Mode_Selected;
 
 	Get_CurrentDocument();
 
@@ -1264,115 +1282,6 @@ void SB_Equity::Do_Preview_Selected()
 	else
 	{
 		App->Say("Only Cut Brush Selected","Cant not build Geometry from only Cut Brushes");
-
-	}
-
-}
-
-// *************************************************************************
-// *			Do_Preview_All():- Terry and Hazel Flanigan 2023	  	   *
-// *************************************************************************
-void SB_Equity::Do_Preview_All()
-{
-	Get_CurrentDocument();
-
-	Equity_Start_Mode = 2;
-
-	App->CLSB_ImGui->Show_Physics_Console = 1;
-
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
-
-	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
-
-	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-	Ogre::Vector3 OldCamPos;
-	
-	//------------------------------------------------------
-	int BCount = App->CL_World->Get_Brush_Count();
-	if (BCount == 0)
-	{
-		App->Say("No Scene to Preview");
-		return;
-	}
-
-	if (App->CLSB_Scene->Scene_Loaded == 0)
-	{
-		App->CLSB_TopTabs->Update_Dlg_Controls();
-
-		OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
-		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-		App->CLSB_Model->Set_Equity();
-		App->CLSB_Camera_EQ->Reset_Orientation();
-		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-		App->CLSB_TopTabs_Equity->Camera_Set_Free();
-
-		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
-
-		ShowWindow(App->ListPanel, true);
-		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
-
-		App->CLSB_Equity->Show_Equity_Dialog(true);
-		App->CLSB_TopTabs->Update_Dlg_Controls();
-		App->CLSB_Equity->Resize_3DView();
-		App->CLSB_Panels->MovePhysicsView();
-
-		if (App->CLSB_Equity->First_Run == 1)
-		{
-			App->CLSB_Camera_EQ->Zero_View();
-			App->CLSB_Equity->First_Run = 0;
-		}
-
-		App->CLSB_Mesh_Mgr->Update_World();
-		
-		App->CLSB_Project->Load_Project();
-
-		App->CLSB_Environment->Add_New_Environ_Entity(true);
-		App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
-	}
-	else
-	{
-		App->CLSB_Mesh_Mgr->Update_World();
-		
-		//App->CLSB_Model->Set_BondingBox_Brushes();
-
-		if (Saved_Camera_Mode == 0)
-		{
-			App->CLSB_Camera_EQ->Reset_Orientation();
-			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-			App->CLSB_TopTabs_Equity->Camera_Set_Free();
-		}
-		else
-		{
-			App->CLSB_Camera_EQ->Reset_Orientation();
-			App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
-			App->CLSB_TopTabs_Equity->Camera_Set_First();
-		}
-
-		OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
-		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		//App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
-
-		ShowWindow(App->ListPanel, true);
-		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
-
-		App->CLSB_Equity->Show_Equity_Dialog(true);
-		App->CLSB_TopTabs->Update_Dlg_Controls();
 
 	}
 

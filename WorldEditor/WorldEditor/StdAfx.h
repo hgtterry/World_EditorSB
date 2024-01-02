@@ -81,6 +81,14 @@ namespace Enums
 		Check_Name_Brushes = 1
 	};
 
+	enum Equity_Render
+	{
+		EQ_Mode_None = 0,
+		EQ_Mode_Equity = 1,
+		EQ_Mode_GameDirector = 2,
+		EQ_Mode_Selected = 3
+	};
+
 	enum Camera
 	{
 		CamNone = 0,

@@ -14,14 +14,13 @@ public:
 	
 	void Do_Equity();
 	void Do_Preview_Selected();
-	void Do_Preview_All();
 	void Resize_3DView();
 
 	bool mAutoLoad;
 	bool First_Run;
 	bool EquitySB_Dialog_Created;
 	bool EquitySB_Dialog_Visible;
-	int Equity_Start_Mode;
+	int Equity_Render_Mode;
 
 	bool Saved_Camera_Mode;
 

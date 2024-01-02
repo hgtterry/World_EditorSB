@@ -192,6 +192,7 @@
     <ClCompile Include="SB_Export_World.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_File_WE.cpp" />
+    <ClCompile Include="SB_GameDirector.cpp" />
     <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="SB_Export_World.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_File_WE.h" />
+    <ClInclude Include="SB_GameDirector.h" />
     <ClInclude Include="SB_Genesis3D.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_ImGui.h" />
