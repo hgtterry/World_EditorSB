@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_TextureDialog
+class SB_Tabs_Texture_Dlg
 {
 public:
-	A_TextureDialog(void);
-	~A_TextureDialog(void);
+	SB_Tabs_Texture_Dlg(void);
+	~SB_Tabs_Texture_Dlg(void);
 
 	void Start_TextureDialog();
 

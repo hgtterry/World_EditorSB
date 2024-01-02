@@ -34,7 +34,7 @@ distribution.
 
 #pragma warning(disable : 4715)
 
-A_TextureDialog::A_TextureDialog(void)
+SB_Tabs_Texture_Dlg::SB_Tabs_Texture_Dlg(void)
 {
 	f_TextureDlg_Active = 0;
 	TextureDlg_Hwnd = NULL;
@@ -46,14 +46,14 @@ A_TextureDialog::A_TextureDialog(void)
 	BasePicHeight = NULL;
 }
 
-A_TextureDialog::~A_TextureDialog(void)
+SB_Tabs_Texture_Dlg::~SB_Tabs_Texture_Dlg(void)
 {
 }
 
 // *************************************************************************
 // *	  		Show_Dialog:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TextureDialog::Show_Dialog(bool Show)
+void SB_Tabs_Texture_Dlg::Show_Dialog(bool Show)
 {
 	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
 	{
@@ -64,7 +64,7 @@ void A_TextureDialog::Show_Dialog(bool Show)
 // *************************************************************************
 // *	  	Start_TextureDialog:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Start_TextureDialog()
+void SB_Tabs_Texture_Dlg::Start_TextureDialog()
 {
 	TextureDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEXTURES, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)TextureDialog_Proc);
 
@@ -76,7 +76,7 @@ void A_TextureDialog::Start_TextureDialog()
 // *************************************************************************
 // *        TextureDialog_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Texture_Dlg::TextureDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -221,7 +221,7 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 // *						ViewerBasePic Terry Flanigan	  			   *
 // *************************************************************************
-bool CALLBACK A_TextureDialog::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+bool CALLBACK SB_Tabs_Texture_Dlg::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_PAINT)
 	{
@@ -266,7 +266,7 @@ bool CALLBACK A_TextureDialog::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam,
 // *************************************************************************
 // *					RenderTexture_Blit Terry Bernie		  		   *
 // *************************************************************************
-bool A_TextureDialog::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect)
+bool SB_Tabs_Texture_Dlg::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect)
 {
 	HDC		MemDC;
 	int		SourceWidth;
@@ -371,7 +371,7 @@ static void TextureBrushList
 // *************************************************************************
 // *			Apply_Texture:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Apply_Texture() 
+void SB_Tabs_Texture_Dlg::Apply_Texture()
 {
 	App->Get_Current_Document();
 
@@ -471,7 +471,7 @@ void A_TextureDialog::Apply_Texture()
 // *************************************************************************
 // *			Select_Texture:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TextureDialog::Select_Texture(int SelNum, char* TextName)
+bool SB_Tabs_Texture_Dlg::Select_Texture(int SelNum, char* TextName)
 {
 	int test = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextName);
 	if (test == LB_ERR)
@@ -489,7 +489,7 @@ bool A_TextureDialog::Select_Texture(int SelNum, char* TextName)
 // *************************************************************************
 // *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TextureDialog::List_Selection_Changed()
+void SB_Tabs_Texture_Dlg::List_Selection_Changed()
 {
 	int Index = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if	(Index == LB_ERR)
@@ -516,7 +516,7 @@ void A_TextureDialog::List_Selection_Changed()
 // *************************************************************************
 // *	  	Set_Txl_FileName:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Set_Txl_FileName()
+void SB_Tabs_Texture_Dlg::Set_Txl_FileName()
 {
 	SetDlgItemText(TextureDlg_Hwnd, IDC_STTDTXLNAME, (LPCTSTR)App->CL_World->mCurrent_TXL_FileName);
 }
@@ -524,7 +524,7 @@ void A_TextureDialog::Set_Txl_FileName()
 // *************************************************************************
 // *	  		Get_BitMap:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TextureDialog::Get_BitMap()
+void SB_Tabs_Texture_Dlg::Get_BitMap()
 {
 	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 	WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap(m_CurrentTexture);
@@ -575,7 +575,7 @@ void A_TextureDialog::Get_BitMap()
 // *************************************************************************
 // *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
 // *************************************************************************
-HBITMAP A_TextureDialog::CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc)
+HBITMAP SB_Tabs_Texture_Dlg::CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc)
 {
 	geBitmap * Lock;
 	gePixelFormat Format;
@@ -662,7 +662,7 @@ HBITMAP A_TextureDialog::CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc)
 // *************************************************************************
 // *			Fill_ListBox:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Fill_ListBox()
+void SB_Tabs_Texture_Dlg::Fill_ListBox()
 {
 	App->Get_Current_Document();
 	int LBIndex;
@@ -708,7 +708,7 @@ void A_TextureDialog::Fill_ListBox()
 // *************************************************************************
 // *	  	Get_Index_FromName:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-int A_TextureDialog::Get_Index_FromName(char* TextureName)
+int SB_Tabs_Texture_Dlg::Get_Index_FromName(char* TextureName)
 {
 	CWadFile* pWad;
 	pWad = NULL;
@@ -739,7 +739,7 @@ int A_TextureDialog::Get_Index_FromName(char* TextureName)
 // *************************************************************************
 // *			Open_TXL_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_TextureDialog::Open_TXL_File(char* TXL_Filename)
+bool SB_Tabs_Texture_Dlg::Open_TXL_File(char* TXL_Filename)
 {
 	geVFile* VFS;
 	geVFile_Finder* Finder = NULL;
@@ -802,7 +802,7 @@ bool A_TextureDialog::Open_TXL_File(char* TXL_Filename)
 // *************************************************************************
 // *						AddTexture  06/06/08 				  		   *
 // *************************************************************************
-bool A_TextureDialog::AddTexture(geVFile* BaseFile, const char* Path)
+bool SB_Tabs_Texture_Dlg::AddTexture(geVFile* BaseFile, const char* Path)
 {
 	geBitmap_Info	PInfo;
 	geBitmap_Info	SInfo;
@@ -864,7 +864,7 @@ bool A_TextureDialog::AddTexture(geVFile* BaseFile, const char* Path)
 // *************************************************************************
 // *						Save/SaveAs  13/06/08 				  		   *
 // *************************************************************************
-bool A_TextureDialog::Save(const char* Path)
+bool SB_Tabs_Texture_Dlg::Save(const char* Path)
 {
 	char		FileName[_MAX_PATH];
 	geVFile* VFS;

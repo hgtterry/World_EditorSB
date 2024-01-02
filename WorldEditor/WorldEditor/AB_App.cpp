@@ -255,7 +255,7 @@ bool SB_App::InitApp(void)
 	CL_World =						new	A_World();
 	CL_Render_App =					new	A_Render_App();
 	CL_TxlEditor =					new	A_TxlEditor();
-	CL_TextureDialog =				new	A_TextureDialog();
+	CL_TextureDialog =				new	SB_Tabs_Texture_Dlg();
 	CL_FaceDialog =					new A_FaceDialog();
 
 	CLSB_TabsControl =				new SB_Tabs_Control();

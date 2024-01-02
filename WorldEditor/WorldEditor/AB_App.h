@@ -127,7 +127,7 @@ public:
 	A_World*					CL_World;
 	A_Render_App*				CL_Render_App;
 	A_TxlEditor*				CL_TxlEditor;
-	A_TextureDialog*			CL_TextureDialog;
+	SB_Tabs_Texture_Dlg*		CL_TextureDialog;
 	A_FaceDialog*				CL_FaceDialog;
 	SB_Tabs_Control*			CLSB_TabsControl;
 	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
