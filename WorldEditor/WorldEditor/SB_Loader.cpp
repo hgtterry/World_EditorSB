@@ -94,7 +94,7 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
 	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
 
-	//App->CLSB_Model->Set_Paths();
+	App->CLSB_Model->Set_Paths();
 
 	//App->CLSB_Assimp->DoTextures = 1;
 	//App->Say(App->CLSB_Loader->Path_FileName);

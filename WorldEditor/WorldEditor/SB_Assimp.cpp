@@ -186,7 +186,7 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		strcpy(Assimp_Group[Count]->Text_FileName, "No_Texture");
 
-		//strcpy(App->CLSB_Model->Group[Count]->Texture_FolderPath, App->CLSB_Model->Texture_FolderPath); // Back Slash remains
+		strcpy(Assimp_Group[Count]->Texture_FolderPath, App->CLSB_Model->Texture_FolderPath); // Back Slash remains
 
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
