@@ -1455,7 +1455,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29 - [01-01-24] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29 - [02-01-24] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1959,7 +1959,7 @@ BEGIN
     DEFPUSHBUTTON   "",IDC_GD_ARCH_PRIMITIVE,55,64,24,22,BS_ICON
     CTEXT           "Templates",IDC_ST_GD_TEMPLATES,7,7,142,17,SS_CENTERIMAGE
     PUSHBUTTON      "Insert",IDC_BTINSERT,39,289,81,19,WS_DISABLED
-    PUSHBUTTON      "Load File",IDC_ACTOR,28,104,102,17,WS_DISABLED
+    PUSHBUTTON      "Load File",IDC_ACTOR,28,104,102,17
     PUSHBUTTON      "Export as Template",IDC_BT_EXPORTTEMPLATE,28,207,102,17,WS_DISABLED
     PUSHBUTTON      "Import Template",IDC_BT_IMPORTTEMPLATE,28,186,102,17,WS_DISABLED
 END

@@ -53,6 +53,7 @@ SB_Textures::~SB_Textures()
 // *************************************************************************
 void SB_Textures::Load_Textures_Assimp()
 {
+	Debug
 	int v = 0;
 	int Count = 0;
 	bool DummyCreated = 0;

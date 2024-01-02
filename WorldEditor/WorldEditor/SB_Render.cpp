@@ -390,10 +390,10 @@ void SB_Render::Render_Loop()
 		Render_Brush_Faces();
 	}
 
-	// ---------------------- Test_Assimp_Face_Parts
+	// ---------------------- New_Assimp_Faces
 	if (Show_Test_Assimp_Faces == 1)
 	{
-		Test_Assimp_Face();
+		New_Assimp_Face();
 	}
 
 	
@@ -1914,9 +1914,9 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 }
 
 // *************************************************************************
-// *					Test_Assimp_Face_Parts Terry Bernie		   			   *
+// *			New_Assimp_Face:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Render::Test_Assimp_Face()
+bool SB_Render::New_Assimp_Face()
 {
 	int Count = 0;
 	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
@@ -1957,3 +1957,85 @@ bool SB_Render::Test_Assimp_Face()
 
 	return 1;
 }
+
+// *************************************************************************
+// *						New_Assimp_Render_Textures_Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::New_Assimp_Render_Textures(void)
+{
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		New_Assimp_Textured_Parts(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+
+	return 1;
+}
+// *************************************************************************
+// *					Assimp_Textured_Parts Terry Bernie		 		   *
+// *************************************************************************
+bool SB_Render::New_Assimp_Textured_Parts(int Count)
+{
+	int VertCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	if (App->CLSB_Model->Group[Count]->MaterialIndex > -1)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+
+		//glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Model->Group[Count]->MaterialIndex]);
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->Group[Count]->MaterialIndex]);
+
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+
+	while (VertCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+	{
+		A = App->CLSB_Model->Group[Count]->Face_Data[VertCount].a;
+		B = App->CLSB_Model->Group[Count]->Face_Data[VertCount].b;
+		C = App->CLSB_Model->Group[Count]->Face_Data[VertCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[A].u, App->CLSB_Model->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[B].u, App->CLSB_Model->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[C].u, App->CLSB_Model->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[C].x);
+		VertCount++;
+		//-----------------------------------------------
+
+		glEnd();
+
+	}
+
+	return 1;
+}
+

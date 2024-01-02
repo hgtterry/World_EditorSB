@@ -103,8 +103,10 @@ protected:
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
 
-	bool Test_Assimp_Face();
-	
+	bool New_Assimp_Face();
+	bool New_Assimp_Render_Textures(void);
+	bool New_Assimp_Textured_Parts(int Count);
+
 	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);
 

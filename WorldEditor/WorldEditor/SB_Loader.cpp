@@ -1085,10 +1085,21 @@ bool SB_Loader::Wavefront_Obj_File()
 				f->Tex.txSize = 256;
 				f->Tex.tySize = 256;
 
-				f->Tex.xScale = 0.073;
-				f->Tex.yScale = 0.076;
+				float x = 256 / 20;
+				float y = 256 / 20;
 
-				f->Tex.xShift = 134;
+				x = x / 100;
+				y = y / 100;
+
+				x = x / 1.55;
+				y = y / 1.55;
+
+				//App->Say_Float(x);
+
+				f->Tex.xScale = x;
+				f->Tex.yScale = y;
+
+				f->Tex.xShift = 256/2;
 				f->Tex.yShift = 4;
 
 				//f->Tex.TVecs.uVec.

@@ -93,9 +93,9 @@ bool SB_Assimp::LoadFile(const char* pFile)
 		
 		StoreMeshData(scene);
 		
-		if (DoTextures == 1)
+		//if (DoTextures == 1)
 		{
-			//LoadTextures();
+			LoadTextures();
 		}
 
 		//App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
