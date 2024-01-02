@@ -149,7 +149,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 // *************************************************************************
 void SB_Equity::Hide_Equity_Dialog()
 {
-	//App->Say("Stop Equity");
+	App->Say("Stop Equity");
 
 	if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
 	{
@@ -1195,7 +1195,11 @@ void SB_Equity::Do_Equity()
 		App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
 	}
 
-	App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
+	if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
+	{
+		App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
+		//App->CLSB_Ogre->mSceneMgr->setSkyDome(false, NULL);
+	}
 
 	App->CLSB_Model->Clear_Model_And_Reset();
 

@@ -170,7 +170,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_BT_TEST)
 		{
-			App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+			//Debug
+			//App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
 			return 1;
 		}
 
