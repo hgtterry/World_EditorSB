@@ -145,6 +145,41 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 }
 
 // *************************************************************************
+// *		  Hide_Equity_Dialog:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void SB_Equity::Hide_Equity_Dialog()
+{
+	//App->Say("Stop Equity");
+
+	if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
+	{
+		App->CLSB_Camera_EQ->Save_Camera_Pos();
+		App->CLSB_Equity->Saved_Camera_Mode = App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag;
+	}
+
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
+	App->CLSB_TopTabs->Update_Dlg_Controls();
+
+	ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
+
+	App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
+	RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
+	{
+		App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+		App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
+		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
+	}
+
+	if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
+	{
+		App->CLSB_BR_Render->Start_BR_3D_Mode();
+		App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
+	}
+}
+
+// *************************************************************************
 // *		Start_Equity_Dialog_New:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Equity::Start_Equity_Dialog_New()
@@ -471,7 +506,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			
 			if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_Equity)
 			{
-				App->CLSB_Equity->Show_Equity_Dialog(false);
+				App->CLSB_Equity->Hide_Equity_Dialog();
 			}
 			else
 			{

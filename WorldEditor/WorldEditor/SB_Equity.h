@@ -9,6 +9,7 @@ public:
 
 	bool Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
+	void Hide_Equity_Dialog();
 
 	void Set_Mode_Equity();
 	
