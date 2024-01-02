@@ -236,7 +236,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == ID_MODE_GROUPS)
 		{
 			App->CLSB_Model->Render_Type = Enums::Render_Groups;
-			App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+			App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
 			return TRUE;
 		}
 
@@ -476,7 +476,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->CLSB_GameDirector->Hide_GameDirector_Dialog();
-				//App->CLSB_Equity->Show_Equity_Dialog(false);
 			}
 			return TRUE;
 		}
@@ -1161,7 +1160,7 @@ void SB_Equity::Do_Equity()
 		App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
 	}
 
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
 
 	App->CLSB_Model->Clear_Model_And_Reset();
 

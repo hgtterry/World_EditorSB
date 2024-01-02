@@ -48,8 +48,6 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	Export_Manual = NULL;
 	World_Manual = NULL;
 
-	World_Node = NULL;
-	World_Ent = NULL;
 	NameIndex = 0;
 }
 
@@ -352,15 +350,15 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
 	
-	if (World_Ent)
+	if (App->CLSB_Mesh_Mgr->World_Ent)
 	{
-		World_Node->detachAllObjects();
+		App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
 
-		App->CLSB_Ogre->mSceneMgr->destroySceneNode(World_Node);
-		App->CLSB_Ogre->mSceneMgr->destroyEntity(World_Ent);
+		App->CLSB_Ogre->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
+		App->CLSB_Ogre->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
 		
-		World_Node = NULL;
-		World_Ent = NULL;
+		App->CLSB_Mesh_Mgr->World_Node = NULL;
+		App->CLSB_Mesh_Mgr->World_Ent = NULL;
 
 		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
 		//ptr->unload();
@@ -381,14 +379,14 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	}
 
 	
-	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity(Name);
-	World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity(Name);
+	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	
-	World_Node->attachObject(World_Ent);
+	App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
 
-	World_Node->setPosition(0, 0, 0);
-	World_Node->setVisible(true);
-	World_Node->setScale(1, 1, 1);
+	App->CLSB_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
+	App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
+	App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);

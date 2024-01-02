@@ -58,6 +58,9 @@ public:
 
 	bool Brush_Viewer_Dialog_Active;
 
+	Ogre::SceneNode* World_Node;
+	Ogre::Entity* World_Ent;
+
 	HWND Mesh_Viewer_HWND;
 
 private:

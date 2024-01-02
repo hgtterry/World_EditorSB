@@ -156,6 +156,9 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 	Groups_List_Index = 0;
 	Brushes_List_Index = 0;
 
+	World_Node = NULL;
+	World_Ent = NULL;
+
 	Mesh_Viewer_HWND = nullptr;
 }
 
@@ -561,7 +564,7 @@ void SB_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 void SB_Mesh_Mgr::Set_RenderMode_Compiled()
 {
 	// Index 0
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(true);
+	World_Node->setVisible(true);
 	App->CLSB_Model->Render_Type = Enums::Render_Nothing;
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
@@ -572,7 +575,7 @@ void SB_Mesh_Mgr::Set_RenderMode_Compiled()
 void SB_Mesh_Mgr::Set_RenderMode_Groups()
 {
 	// Index 1
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	World_Node->setVisible(false);
 	App->CLSB_Model->Render_Type = Enums::Render_Groups;
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
@@ -583,7 +586,7 @@ void SB_Mesh_Mgr::Set_RenderMode_Groups()
 void SB_Mesh_Mgr::Set_RenderMode_Brushes()
 {
 	// Index 2
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	World_Node->setVisible(false);
 	App->CLSB_Model->Render_Type = Enums::Render_Brushes;
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
@@ -594,7 +597,7 @@ void SB_Mesh_Mgr::Set_RenderMode_Brushes()
 void SB_Mesh_Mgr::Set_RenderMode_NoRender()
 {
 	// Index 3
-	App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+	World_Node->setVisible(false);
 	App->CLSB_Model->Render_Type = Enums::Render_Nothing;
 	Update_Brush_List(Mesh_Viewer_HWND);
 }
@@ -611,7 +614,7 @@ void SB_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	// ------------------- Compiled
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
-		sprintf(buf, "%s %i", "Total Sub Meshs - ", App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities());
+		sprintf(buf, "%s %i", "Total Sub Meshs - ", World_Ent->getNumSubEntities());
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Model->Ogre_Face_Count);
@@ -658,7 +661,7 @@ void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	// ------------------- Compiled
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
-		int SubCount = App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
+		int SubCount = World_Ent->getNumSubEntities();
 		int Count = 0;
 		while (Count < SubCount)
 		{
@@ -730,9 +733,9 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	// ------------------- Compiled
 	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
 	{
-		App->CLSB_Export_Ogre3D->World_Ent->getNumSubEntities();
+		World_Ent->getNumSubEntities();
 
-		Ogre::SubMesh const* subMesh = App->CLSB_Export_Ogre3D->World_Ent->getSubEntity(Index)->getSubMesh();
+		Ogre::SubMesh const* subMesh = World_Ent->getSubEntity(Index)->getSubMesh();
 		
 		int FaceCount = subMesh->indexData->indexCount;
 		sprintf(buf, "Face Count - %i", FaceCount/3);

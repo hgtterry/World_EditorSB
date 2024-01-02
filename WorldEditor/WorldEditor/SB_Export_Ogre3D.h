@@ -36,9 +36,6 @@ public:
 	void Convert_ToOgre3D(bool Create);
 	bool Clean_Direcory();
 
-	Ogre::SceneNode* World_Node;
-	Ogre::Entity* World_Ent;
-
 private:
 
 	void Set_World_Paths(void);
