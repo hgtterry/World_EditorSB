@@ -2269,7 +2269,7 @@ void SB_Doc::UpdateAfterWadChange()
 
     // update textures tab
     mCurTextureSelection = 0;
-    App->CL_TextureDialog->Fill_ListBox();
+    App->CLSB_TextureDialog->Fill_ListBox();
 
     // update all brush faces
     BrushList_EnumLeafBrushes(Level_GetBrushes(pLevel), this, ::fdocUpdateBrushFaceTextures);

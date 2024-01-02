@@ -34,7 +34,7 @@ SB_App::SB_App()
 	CL_World =					NULL;
 	CL_Render_App =				NULL;
 	CL_TxlEditor =				NULL;
-	CL_TextureDialog =			NULL;
+	CLSB_TextureDialog =		nullptr;
 	CL_FaceDialog =				NULL;
 
 	CLSB_TabsControl =			nullptr;
@@ -255,7 +255,7 @@ bool SB_App::InitApp(void)
 	CL_World =						new	A_World();
 	CL_Render_App =					new	A_Render_App();
 	CL_TxlEditor =					new	A_TxlEditor();
-	CL_TextureDialog =				new	SB_Tabs_Texture_Dlg();
+	CLSB_TextureDialog =			new	SB_Tabs_Texture_Dlg();
 	CL_FaceDialog =					new A_FaceDialog();
 
 	CLSB_TabsControl =				new SB_Tabs_Control();

@@ -1234,7 +1234,7 @@ void CFusionDoc::SetDefaultBrushTexInfo(Brush *b)
     const char *TexName;
     BrushTexSetData CallbackData;
 
-    TexName = App->CL_TextureDialog->m_CurrentTexture;
+    TexName = App->CLSB_TextureDialog->m_CurrentTexture;
     CallbackData.pDoc = this;
     CallbackData.TexName = TexName;
 
@@ -4817,9 +4817,9 @@ void CFusionDoc::OnFileImport()
             App->CL_TabsGroups_Dlg->Fill_ListBox();
         }
 
-        if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
+        if (App->CLSB_TextureDialog->f_TextureDlg_Active == 1)
         {
-            App->CL_TextureDialog->Fill_ListBox();
+            App->CLSB_TextureDialog->Fill_ListBox();
         }
        
         App->CLSB_Panels->Set_Aplication_Dialogs_On();

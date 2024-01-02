@@ -49,7 +49,7 @@ SB_Tabs_Control::~SB_Tabs_Control(void)
 // *************************************************************************
 void SB_Tabs_Control::Show_Tabs_Control_Dlg(bool Show)
 {
-	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
+	if (App->CLSB_TextureDialog->f_TextureDlg_Active == 1)
 	{
 		ShowWindow(Tabs_Control_Hwnd, Show);
 	}
@@ -65,7 +65,7 @@ void SB_Tabs_Control::Start_Tabs_Control_Dlg()
 		Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Tabs_Control_Proc);
 
 		f_TabsDlg_Active = 1;
-		App->CL_TextureDialog->Start_TextureDialog();
+		App->CLSB_TextureDialog->Start_TextureDialog();
 		App->CL_TabsGroups_Dlg->Start_Brush_Tabs_Dialog();
 
 		App->CLSB_Tabs_True3D_Dlg->Start_3DSettings();
@@ -157,7 +157,7 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 			{
 				App->CLSB_TabsControl->Hide_Dialogs();
 				App->CLSB_TabsControl->Tab_Texture_Flag = 1;
-				App->CL_TextureDialog->Show_Dialog(true);
+				App->CLSB_TextureDialog->Show_Dialog(true);
 
 				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
@@ -226,7 +226,7 @@ void SB_Tabs_Control::Hide_Dialogs()
 	Tab_Templates_Flag = 0;
 	Tab_3DSettings_Flag = 0;
 
-	App->CL_TextureDialog->Show_Dialog(false);
+	App->CLSB_TextureDialog->Show_Dialog(false);
 	App->CL_TabsGroups_Dlg->Show_GroupsDialog(false);
 	App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(false);
 	App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(0);
@@ -242,10 +242,10 @@ void SB_Tabs_Control::Select_Texture_Tab(int SelNum ,char* TextName)
 	if(Tabs_Control_Hwnd && App->CLSB_TabsControl->f_TabsDlg_Active == 1)
 	{
 		App->CLSB_TabsControl->Hide_Dialogs();
-		App->CL_TextureDialog->Show_Dialog(true);
+		App->CLSB_TextureDialog->Show_Dialog(true);
 
 
-		bool test = App->CL_TextureDialog->Select_Texture(SelNum, TextName);
+		bool test = App->CLSB_TextureDialog->Select_Texture(SelNum, TextName);
 		if (test == 1)
 		{
 			Tab_Texture_Flag = 1;

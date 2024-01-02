@@ -276,7 +276,7 @@ bool SB_File_WE::Open_3dt_File()
 
 	if (Quick_load_Flag == 0)
 	{
-		App->CL_TextureDialog->Fill_ListBox();
+		App->CLSB_TextureDialog->Fill_ListBox();
 	}
 	else
 	{
@@ -287,7 +287,7 @@ bool SB_File_WE::Open_3dt_File()
 		Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
 		App->CLSB_Doc->UpdateAfterWadChange();
-		App->CL_TextureDialog->Fill_ListBox();
+		App->CLSB_TextureDialog->Fill_ListBox();
 
 		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);
 
@@ -1270,7 +1270,7 @@ bool SB_File_WE::New_File()
 	App->CL_CreateBoxDialog->CreateDefault_TemplateCube();
 
 	App->CL_TabsGroups_Dlg->Fill_ListBox();
-	App->CL_TextureDialog->Fill_ListBox();
+	App->CLSB_TextureDialog->Fill_ListBox();
 
 	App->CL_World->Set_Paths();
 	App->CL_World->Reset_Editor();

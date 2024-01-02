@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "A_TextureDialog.h"
+#include "SB_Tabs_Texture_Dlg.h"
 
 #include "WadFile.h"
 #include "Ram.h"
@@ -55,7 +55,7 @@ SB_Tabs_Texture_Dlg::~SB_Tabs_Texture_Dlg(void)
 // *************************************************************************
 void SB_Tabs_Texture_Dlg::Show_Dialog(bool Show)
 {
-	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
+	if (App->CLSB_TextureDialog->f_TextureDlg_Active == 1)
 	{
 		ShowWindow(TextureDlg_Hwnd, Show);
 	}
@@ -95,7 +95,7 @@ LRESULT CALLBACK SB_Tabs_Texture_Dlg::TextureDialog_Proc(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_BTTDFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_TextureDialog->f_TextureDlg_Active = 1;
+		App->CLSB_TextureDialog->f_TextureDlg_Active = 1;
 
 		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 
@@ -181,19 +181,19 @@ LRESULT CALLBACK SB_Tabs_Texture_Dlg::TextureDialog_Proc(HWND hDlg, UINT message
 				App->CL_World->Set_Current_TxlPath();
 				App->CLSB_Doc->UpdateAfterWadChange();
 
-				App->CL_TextureDialog->Fill_ListBox();
+				App->CLSB_TextureDialog->Fill_ListBox();
 				return TRUE;
 			}
 	
 			if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
 			{
-				App->CL_TextureDialog->List_Selection_Changed();
+				App->CLSB_TextureDialog->List_Selection_Changed();
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_BTTDAPPLY)
 			{
-				App->CL_TextureDialog->Apply_Texture();
+				App->CLSB_TextureDialog->Apply_Texture();
 				return TRUE;
 			}
 
@@ -235,7 +235,7 @@ bool CALLBACK SB_Tabs_Texture_Dlg::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPa
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
 
-		if (App->CL_TextureDialog->Sel_BaseBitmap != NULL)
+		if (App->CLSB_TextureDialog->Sel_BaseBitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -243,15 +243,15 @@ bool CALLBACK SB_Tabs_Texture_Dlg::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPa
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = App->CL_TextureDialog->BasePicHeight;
-			Source.right = App->CL_TextureDialog->BasePicWidth;
+			Source.bottom = App->CLSB_TextureDialog->BasePicHeight;
+			Source.right = App->CLSB_TextureDialog->BasePicWidth;
 
 			Dest = Rect;
 
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			App->CL_TextureDialog->RenderTexture_Blit(hDC, App->CL_TextureDialog->Sel_BaseBitmap, &Source, &Dest);
+			App->CLSB_TextureDialog->RenderTexture_Blit(hDC, App->CLSB_TextureDialog->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 
 		}
@@ -564,8 +564,8 @@ void SB_Tabs_Texture_Dlg::Get_BitMap()
 		Sel_BaseBitmap = hbm;
 	}
 
-	App->CL_TextureDialog->BasePicHeight = BitmapPtr->Height;
-	App->CL_TextureDialog->BasePicWidth = BitmapPtr->Width;
+	App->CLSB_TextureDialog->BasePicHeight = BitmapPtr->Height;
+	App->CLSB_TextureDialog->BasePicWidth = BitmapPtr->Width;
 
 	ReleaseDC(PreviewWnd, hDC);
 	InvalidateRect(GetDlgItem(TextureDlg_Hwnd, IDC_BASETEXTURE2), NULL, TRUE);

@@ -37,7 +37,7 @@ distribution.
 #include "A_Scene.h"
 #include "A_Render_App.h"
 #include "A_TxlEditor.h"
-#include "A_TextureDialog.h"
+#include "SB_Tabs_Texture_Dlg.h"
 #include "A_FaceDialog.h"
 
 #include "SB_Tabs_Control.h"
@@ -127,7 +127,7 @@ public:
 	A_World*					CL_World;
 	A_Render_App*				CL_Render_App;
 	A_TxlEditor*				CL_TxlEditor;
-	SB_Tabs_Texture_Dlg*		CL_TextureDialog;
+	SB_Tabs_Texture_Dlg*		CLSB_TextureDialog;
 	A_FaceDialog*				CL_FaceDialog;
 	SB_Tabs_Control*			CLSB_TabsControl;
 	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
