@@ -1198,7 +1198,8 @@ void SB_Equity::Do_Equity()
 	if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
 	{
 		App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
-		//App->CLSB_Ogre->mSceneMgr->setSkyDome(false, NULL);
+		//App->CLSB_Scene->V_Object[App->CLSB_Environment->Eviron_Index]->S_Environ[0]->Enabled = 0;
+		//App->CLSB_Environment->SetSky(0);
 	}
 
 	App->CLSB_Model->Clear_Model_And_Reset();
@@ -1235,6 +1236,8 @@ void SB_Equity::Do_Equity()
 
 	ShowWindow(App->ListPanel, false);
 	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
+
+	//App->CLSB_Environment->SetSky(false);
 
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 }

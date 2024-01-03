@@ -44,7 +44,7 @@ public:
 	void Set_To_PlayerView();
 	void SetSky(bool Enable);
 	bool EnableFog(bool SetFog);
-
+	int Eviron_Index;
 	bool Show_PropertyEditor;
 
 protected:
@@ -65,7 +65,7 @@ protected:
 	ImVec4 Fog_Colour_Copy;
 	ImVec4 Fog_Colour;
 
-	int Eviron_Index;
+	
 
 	bool Float_Exit;
 
