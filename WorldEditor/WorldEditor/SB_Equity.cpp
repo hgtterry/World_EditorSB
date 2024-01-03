@@ -96,13 +96,13 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			if (Equity_Render_Mode == Enums::EQ_Mode_Equity)
 			{
 				HMENU TestMenu;
-				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUSB));
+				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
 				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 			}
 			else
 			{
 				HMENU TestMenu;
-				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_TEST));
+				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUSB));
 				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 			}
 
@@ -149,7 +149,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 // *************************************************************************
 void SB_Equity::Hide_Equity_Dialog()
 {
-	App->Say("Stop Equity");
+	//App->Say("Stop Equity");
 
 	if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
 	{
@@ -400,23 +400,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
-		{
-			//App->Clear_ErrorLog();
-			//App->CLSB_Loader->LoadError = 0;
-
-			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-			App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
-			/*if (App->CLSB_Loader->LoadError == 1)
-			{
-				App->Say("Loaded With Errors");
-				App->CLSB_Dialogs->Start_ListData(1);
-			}*/
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITORPROJECT)
 		{
 			/*int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
@@ -434,7 +417,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		// File Export/Save
 		if (LOWORD(wParam) == ID_FILE_SAVESCENE)
 		{
-			Debug
 			return TRUE;
 		}
 		
@@ -483,6 +465,26 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));*/
 			App->CLSB_Equity->Show_Equity_Dialog(false);
+			return TRUE;
+		}
+
+		// ---------------- Equity -------------------------
+		// -------------------------------------------------
+
+		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ_EQUITY)
+		{
+			//App->Clear_ErrorLog();
+			//App->CLSB_Loader->LoadError = 0;
+
+			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
+			/*if (App->CLSB_Loader->LoadError == 1)
+			{
+				App->Say("Loaded With Errors");
+				App->CLSB_Dialogs->Start_ListData(1);
+			}*/
+
 			return TRUE;
 		}
 
@@ -1185,9 +1187,9 @@ void SB_Equity::Set_Mode_Equity()
 }
 
 // *************************************************************************
-// *				Do_Equity:- Terry and Hazel Flanigan 2023		  	   *
+// *				Go_Equity:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void SB_Equity::Do_Equity()
+void SB_Equity::Go_Equity()
 {
 	if (App->BR_True3D_Mode_Active == 1)
 	{
@@ -1238,8 +1240,16 @@ void SB_Equity::Do_Equity()
 	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
 	//App->CLSB_Environment->SetSky(false);
+	ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
 
-	App->CLSB_Equity->Show_Equity_Dialog(true);
+	HMENU TestMenu;
+	TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
+	SetMenu(App->Equity_Dlg_hWnd, TestMenu);
+
+	EquitySB_Dialog_Visible = 1;
+	ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
+
+	//App->CLSB_Equity->Show_Equity_Dialog(true);
 }
 
 // *************************************************************************

@@ -323,7 +323,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_TB_EQUITY)
 		{
-			App->CLSB_Equity->Do_Equity();
+			App->CLSB_Equity->Go_Equity();
 			/*App->CLSB_TopTabs->Reset_Tabs_Buttons();
 			App->CLSB_TopTabs->Header_Equity_Flag = 1;
 			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -988,7 +988,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
 			//App->Say("Coming Soon Check Updates");
-			App->CLSB_Equity->Do_Equity();
+			App->CLSB_Equity->Go_Equity();
 			return TRUE;
 		}
 

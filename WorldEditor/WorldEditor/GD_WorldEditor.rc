@@ -2927,15 +2927,9 @@ IDR_MENUSB MENU
 BEGIN
     POPUP "File"
     BEGIN
-        POPUP "Import"
-        BEGIN
-            MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT, GRAYED
-            MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ
-            MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT, GRAYED
-        END
+        MENUITEM "Import",                      ID_FILE_IMPORT33111
         MENUITEM "Save Scene",                  ID_FILE_SAVESCENE
         MENUITEM SEPARATOR
-        MENUITEM "Clear Model",                 ID_FILE_CLEARMODEL
     END
     POPUP "Camera"
     BEGIN
@@ -2974,8 +2968,15 @@ BEGIN
     END
 END
 
-IDR_MENU_TEST MENU
+IDR_MENU_EQUITY MENU
 BEGIN
+    POPUP "File"
+    BEGIN
+        POPUP "Import"
+        BEGIN
+            MENUITEM "Wavefront obj...",            ID_IMPORT_WAVEFRONTOBJ_EQUITY
+        END
+    END
     POPUP "Test"
     BEGIN
         MENUITEM "Test_Item",                   ID_TEST_TEST

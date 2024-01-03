@@ -177,7 +177,7 @@
 #define IDD_SB_PROGRESS_BAR             354
 #define IDD_RB_RENDER_WIN               356
 #define IDD_SB_SELECT_FACE              358
-#define IDR_MENU_TEST                   360
+#define IDR_MENU_EQUITY                 360
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -1123,6 +1123,10 @@
 #define ID_OPENEXAMPLES_2               33105
 #define ID_TEST                         33106
 #define ID_TEST_TEST                    33107
+#define ID_FILE_IMPORT33108             33108
+#define ID_IMPORT_WAVEFRONTOBJ33109     33109
+#define ID_IMPORT_WAVEFRONTOBJ_EQUITY   33110
+#define ID_FILE_IMPORT33111             33111
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1131,7 +1135,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        361
-#define _APS_NEXT_COMMAND_VALUE         33108
+#define _APS_NEXT_COMMAND_VALUE         33112
 #define _APS_NEXT_CONTROL_VALUE         1591
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
