@@ -112,6 +112,7 @@ namespace Enums
 		Render_Brushes = 0,
 		Render_Groups = 1,
 		Render_Ogre = 2,
+		Render_Assimp = 3
 	};
 
 	enum LoadedFile

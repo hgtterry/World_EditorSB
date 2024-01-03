@@ -1191,63 +1191,66 @@ void SB_Equity::Set_Mode_Equity()
 // *************************************************************************
 void SB_Equity::Go_Equity()
 {
-	if (App->BR_True3D_Mode_Active == 1)
+	if (App->Equity_Dlg_hWnd)
 	{
-		App->CLSB_BR_Render->Exit_BR_3D_Mode();
-		App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
+		if (App->BR_True3D_Mode_Active == 1)
+		{
+			App->CLSB_BR_Render->Exit_BR_3D_Mode();
+			App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
+		}
+
+		if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
+		{
+			App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
+			//App->CLSB_Scene->V_Object[App->CLSB_Environment->Eviron_Index]->S_Environ[0]->Enabled = 0;
+			//App->CLSB_Environment->SetSky(0);
+		}
+
+		App->CLSB_Model->Clear_Model_And_Reset();
+
+		App->CLSB_Grid->Reset_View();
+
+		App->CLSB_TopTabs_Equity->Camera_Set_Model();
+
+		Equity_Render_Mode = Enums::EQ_Mode_Equity;
+
+		App->CLSB_TopTabs_Equity->Hide_Tabs();
+		ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
+		App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
+
+		App->CLSB_ImGui->Show_Physics_Console = 0;
+
+		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
+
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+		}
+
+		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
+		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Model->Model_Loaded = 1;
+
+		ShowWindow(App->ListPanel, false);
+		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
+
+		//App->CLSB_Environment->SetSky(false);
+		ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
+
+		HMENU TestMenu;
+		TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
+		SetMenu(App->Equity_Dlg_hWnd, TestMenu);
+
+		EquitySB_Dialog_Visible = 1;
+		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 	}
-
-	if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
-	{
-		App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
-		//App->CLSB_Scene->V_Object[App->CLSB_Environment->Eviron_Index]->S_Environ[0]->Enabled = 0;
-		//App->CLSB_Environment->SetSky(0);
-	}
-
-	App->CLSB_Model->Clear_Model_And_Reset();
-
-	App->CLSB_Grid->Reset_View();
-
-	App->CLSB_TopTabs_Equity->Camera_Set_Model();
-
-	Equity_Render_Mode = Enums::EQ_Mode_Equity;
-
-	App->CLSB_TopTabs_Equity->Hide_Tabs();
-	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
-	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
-
-	App->CLSB_ImGui->Show_Physics_Console = 0;
-
-	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
-
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
-
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
-	{
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
-	}
-
-	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-	App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
-	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-	App->CLSB_Model->Model_Loaded = 1;
-
-	ShowWindow(App->ListPanel, false);
-	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-
-	//App->CLSB_Environment->SetSky(false);
-	ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
-
-	HMENU TestMenu;
-	TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
-	SetMenu(App->Equity_Dlg_hWnd, TestMenu);
-
-	EquitySB_Dialog_Visible = 1;
-	ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 
 	//App->CLSB_Equity->Show_Equity_Dialog(true);
 }
