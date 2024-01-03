@@ -36,6 +36,8 @@ SB_Assimp::SB_Assimp()
 	Total_Assimp_VerticeCount = 0;
 	Total_Assimp_FaceCount = 0;
 
+	Assimp_Model_Loaded = 0;
+
 	int Count = 0;
 	while (Count < 499)
 	{
@@ -107,6 +109,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 	
 	aiReleaseImport(scene);
 
+	Assimp_Model_Loaded = 1;
 	return 1;
 }
 

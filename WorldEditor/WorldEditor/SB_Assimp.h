@@ -48,6 +48,7 @@ public:
 	int mTotalVertices;
 
 	bool DoTextures;
+	bool Assimp_Model_Loaded;
 
 	int Total_Assimp_GroupCount;
 	int Total_Assimp_VerticeCount;

@@ -473,18 +473,11 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ_EQUITY)
 		{
-			//App->Clear_ErrorLog();
-			//App->CLSB_Loader->LoadError = 0;
-
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-			App->CLSB_Ogre->RenderListener->Show_Test_Assimp_Faces = 1;
-			/*if (App->CLSB_Loader->LoadError == 1)
-			{
-				App->Say("Loaded With Errors");
-				App->CLSB_Dialogs->Start_ListData(1);
-			}*/
 
+			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
+		
 			return TRUE;
 		}
 
@@ -1206,7 +1199,7 @@ void SB_Equity::Go_Equity()
 			//App->CLSB_Environment->SetSky(0);
 		}
 
-		App->CLSB_Model->Clear_Model_And_Reset();
+		//App->CLSB_Model->Clear_Model_And_Reset();
 
 		App->CLSB_Grid->Reset_View();
 
@@ -1233,7 +1226,8 @@ void SB_Equity::Go_Equity()
 		}
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
+		
+		App->CLSB_Model->Render_Type = Enums::Render_Assimp;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_Assimp;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Model_Loaded = 1;

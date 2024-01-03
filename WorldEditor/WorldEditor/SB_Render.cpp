@@ -48,8 +48,7 @@ SB_Render::SB_Render()
 	ShowBoundingBox = 0;
 	ShowBoundingGroup = 0;
 	Show_Selected_Face = 0;
-	Show_Test_Assimp_Faces = 0;
-
+	
 	PlayActive = 0;
 	Light_Activated = 0;
 	ShowOnlySubMesh = 0;
@@ -275,6 +274,15 @@ void SB_Render::Render_Loop()
 			//XBrush_Render_Textures();
 		}
 
+		// Equity View
+		if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
+		{
+			if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+			{
+				New_Assimp_Render_Textures();
+			}
+		}
+
 	}
 
 	// ---------------------- Mesh
@@ -282,14 +290,12 @@ void SB_Render::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		/*if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+		if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 		{
-			RF_Render_Faces();
-		}*/
-
-		//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
-		{
-			Assimp_Render_Faces();
+			if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+			{
+				Assimp_Render_Faces();
+			}
 		}
 
 		//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
@@ -387,17 +393,8 @@ void SB_Render::Render_Loop()
 	// ---------------------- Show_Brush_Faces
 	if (Show_Brush_Faces == 1)
 	{
-		Render_Brush_Faces();
+		//Render_Brush_Faces();
 	}
-
-	// ---------------------- New_Assimp_Faces
-	if (Show_Test_Assimp_Faces == 1)
-	{
-		New_Assimp_Render_Textures();
-		//New_Assimp_Face();
-	}
-
-	
 
 	if (depthTestEnabled)
 	{
@@ -863,7 +860,7 @@ bool SB_Render::Assimp_Render_Faces(void)
 
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
 	while (Count<GroupCount)
 	{
@@ -885,22 +882,22 @@ bool SB_Render::Assimp_Face_Parts(int Count)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount<App->CLSB_Model->Group[Count]->GroupFaceCount)
+	while (FaceCount<App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
 	{
-		A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
-		B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
-		C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
+		A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
+		B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
+		C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[A].x);
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[B].x);
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[C].x);
+		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
 		FaceCount++;
 		//-----------------------------------------------
 
@@ -1912,51 +1909,6 @@ void SB_Render::Render_Brush_Faces_Parts(int NumPoints, int Index)
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
-}
-
-// *************************************************************************
-// *			New_Assimp_Face:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-bool SB_Render::New_Assimp_Face()
-{
-	int Count = 0;
-	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
-
-	while (Count < GroupCount)
-	{
-		int FaceCount = 0;
-		int A = 0;
-		int B = 0;
-		int C = 0;
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
-		{
-			A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
-			B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
-			C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
-
-			glBegin(GL_POLYGON);
-
-			//-----------------------------------------------
-			glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
-
-			//-----------------------------------------------
-			glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
-
-			//-----------------------------------------------
-			glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
-			FaceCount++;
-			//-----------------------------------------------
-
-			glEnd();
-		}
-
-		Count++;
-	}
-
-	return 1;
 }
 
 // *************************************************************************

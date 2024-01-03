@@ -63,8 +63,6 @@ public:
 	bool Show_Brush_Faces;
 	bool Render_Brush_Group_Flag;
 
-	bool Show_Test_Assimp_Faces;
-
 	// Brushes
 	bool Render_Just_Brush;
 	int Selected_Brush_Index;
@@ -103,7 +101,7 @@ protected:
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
 
-	bool New_Assimp_Face();
+	//bool New_Assimp_Face();
 	bool New_Assimp_Render_Textures(void);
 	bool New_Assimp_Textured_Parts(int Count);
 
