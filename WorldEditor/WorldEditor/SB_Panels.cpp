@@ -175,7 +175,7 @@ void SB_Panels::Set_Aplication_Dialogs_On(void)
 	// ------------------ Templates Dialog
 	//EnableWindow(GetDlgItem(App->CLSB_Tabs_Templates_Dlg->TemplatesDlg_Hwnd, IDC_BT_EXPORTTEMPLATE), true);
 
-	App->CLSB_Tabs_True3D_Dlg->Set_Control_Tabs_3DSettings_On(true);
+	//App->CLSB_Tabs_True3D_Dlg->Set_Control_Tabs_3DSettings_On(true);
 
 }
 

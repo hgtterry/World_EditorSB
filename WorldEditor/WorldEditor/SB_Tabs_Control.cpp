@@ -185,11 +185,11 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 
 			if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
 			{
-				App->CLSB_TabsControl->Hide_Dialogs();
-				App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
-				App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(1);
+				//App->CLSB_TabsControl->Hide_Dialogs();
+				//App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
+				//App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(1);
 
-				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				//RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 			
