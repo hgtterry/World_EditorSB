@@ -40,6 +40,7 @@ SB_BR_Render::~SB_BR_Render()
 // *************************************************************************
 void SB_BR_Render::Start_BR_3D_Mode(void)
 {
+	return;
 	if (App->CLSB_GameDirector->Project_Loaded == 0)
 	{
 		App->CLSB_Camera_EQ->Reset_Orientation();
@@ -88,6 +89,7 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 // *************************************************************************
 void SB_BR_Render::Go_BR_3D_Mode(void)
 {
+	return;
 	App->Block_RB_Actions = 1;
 	App->BR_True3D_Mode_Active = 1;
 
@@ -117,7 +119,6 @@ void SB_BR_Render::Go_BR_3D_Mode(void)
 // *************************************************************************
 void SB_BR_Render::BR_3D_Resize(void)
 {
-
 	RECT rect;
 	GetWindowRect(App->WE_3DView_Hwnd, &rect);
 
