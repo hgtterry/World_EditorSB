@@ -46,9 +46,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		{
 			App->CLSB_Objects_Create->Add_New_Object(Count, 0);
-			App->CLSB_Scene->V_Object[Count]->Altered = 0;
-			App->CLSB_Scene->V_Object[Count]->Folder = Enums::Folder_Objects;
-			App->CLSB_Scene->V_Object[Count]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder, App->CLSB_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->CLSB_GameDirector->V_Object[Count]->Altered = 0;
+			App->CLSB_GameDirector->V_Object[Count]->Folder = Enums::Folder_Objects;
+			App->CLSB_GameDirector->V_Object[Count]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder, App->CLSB_GameDirector->V_Object[Count]->Mesh_Name, Count, false);
 		}
 
 		Count++;
@@ -58,7 +58,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Objects_Folder);
 		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->CLSB_FileView->SelectItem(App->CLSB_Scene->V_Object[0]->FileViewItem);
+		App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[0]->FileViewItem);
 	}
 
 	return 1;
@@ -73,7 +73,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CLSB_Scene->V_Object[Index];
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -193,7 +193,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CLSB_Scene->V_Object[Index];
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -270,7 +270,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_Scene->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
 

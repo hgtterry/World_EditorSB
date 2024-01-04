@@ -46,8 +46,8 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 	}
 	else*/
 	{
-		AxisAlignedBox worldAAB = App->CLSB_Scene->V_Object[Object_Index]->Object_Ent->getBoundingBox();
-		worldAAB.transformAffine(App->CLSB_Scene->V_Object[Object_Index]->Object_Node->_getFullTransform());
+		AxisAlignedBox worldAAB = App->CLSB_GameDirector->V_Object[Object_Index]->Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->CLSB_GameDirector->V_Object[Object_Index]->Object_Node->_getFullTransform());
 		Ogre::Vector3 Centre = worldAAB.getCenter();
 
 		return Centre;

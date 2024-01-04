@@ -771,7 +771,7 @@ bool SB_Properties::Update_ListView_Objects()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CLSB_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CLSB_GameDirector->V_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -790,9 +790,9 @@ bool SB_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CLSB_Scene->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->CLSB_Scene->V_Object[index]->Mesh_FileName;
-	grid[0][2] = "Materials", grid[1][2] = App->CLSB_Scene->V_Object[index]->Material_File;
+	grid[0][0] = "Name", grid[1][0] = App->CLSB_GameDirector->V_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CLSB_GameDirector->V_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CLSB_GameDirector->V_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
 
 	ListView_DeleteAllItems(Properties_hLV);
