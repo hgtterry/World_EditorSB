@@ -1248,6 +1248,8 @@ void SB_Equity::Go_Equity()
 		//->CLSB_Environment->SetSky(false);
 		App->CLSB_Environment->EnableFog(false);
 
+		App->CLSB_GameDirector->Show_Objects(false);
+
 		App->CLSB_Ogre->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	}
 
