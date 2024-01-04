@@ -237,26 +237,6 @@ void SB_Model::Set_Paths(void)
 }
 
 // *************************************************************************
-// *			Set_Equity:- Terry and Hazel Flanigan 2023				   *
-// *************************************************************************
-void SB_Model::Set_Equity(void)
-{
-	App->CLSB_Model->Model_Loaded = 1;
-
-	if (App->CLSB_Equity->mAutoLoad == 0)
-	{
-		App->CLSB_Grid->Reset_View();
-	}
-
-	char TitleBar[MAX_PATH];
-	strcpy(TitleBar, "Equity_ME - ");
-	strcat(TitleBar, App->CLSB_Model->Path_FileName);
-	SetWindowText(App->Equity_Dlg_hWnd, TitleBar);
-
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-}
-
-// *************************************************************************
 // *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Model::Set_BondingBox_Model(bool Create)

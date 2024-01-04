@@ -803,8 +803,6 @@ bool SB_Loader::RFActor_Loader(void)
 
 	App->CLSB_Model->Render_Type = Enums::LoadedFile_Actor;
 
-	App->CLSB_Model->Set_Equity();
-
 	//App->CL_Recent_Files->RecentFile_Models_History_Update();
 	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
 

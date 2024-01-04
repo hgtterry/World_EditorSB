@@ -318,8 +318,8 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 				ShowWindow(App->ListPanel, false);
 				ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 				App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
-				App->CLSB_Equity->Show_Equity_Dialog(0);
-
+				//App->CLSB_Equity->Show_Equity_Dialog(0);
+				App->CLSB_GameDirector->Go_GameDirector();
 			}
 			else
 			{

@@ -42,7 +42,6 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 {
 	if (App->CLSB_GameDirector->Project_Loaded == 0)
 	{
-		App->CLSB_Model->Set_Equity();
 		App->CLSB_Camera_EQ->Reset_Orientation();
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
@@ -66,8 +65,8 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 	}
 	else
 	{
-		App->CLSB_Model->Set_Equity();
-		App->CLSB_Camera_EQ->Reset_Orientation();
+		//App->CLSB_Model->Set_Equity();
+		//App->CLSB_Camera_EQ->Reset_Orientation();
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
 
@@ -75,7 +74,7 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
-		App->CLSB_Camera_EQ->Zero_View();
+		//App->CLSB_Camera_EQ->Zero_View();
 
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
 

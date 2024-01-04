@@ -1288,7 +1288,6 @@ void SB_Equity::Do_Preview_Selected()
 
 	if (AllGood == 1)
 	{
-		App->CLSB_Model->Set_Equity();
 		App->CLSB_Camera_EQ->Reset_Orientation();
 
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);

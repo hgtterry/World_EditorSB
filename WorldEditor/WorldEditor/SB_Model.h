@@ -108,7 +108,6 @@ public:
 	void Set_BondingBox_Brushes();
 	
 	void Set_Paths(void);
-	void Set_Equity(void);
 	void Clear_Model_And_Reset(void);
 	void Reset_Class(void);
 
