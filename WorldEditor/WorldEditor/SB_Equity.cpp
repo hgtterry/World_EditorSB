@@ -175,7 +175,7 @@ void SB_Equity::Hide_Equity_Dialog()
 	if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
 	{
 		App->CLSB_BR_Render->Start_BR_3D_Mode();
-		App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
+		Debug
 	}
 }
 
@@ -184,6 +184,8 @@ void SB_Equity::Hide_Equity_Dialog()
 // *************************************************************************
 void SB_Equity::Start_Equity_Dialog_New()
 {
+	App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = App->CLSB_ViewMgrDlg->View_MgrDlg_Active;
+
 	if (EquitySB_Dialog_Created == 0)
 	{
 		App->Equity_Dlg_hWnd = nullptr;
@@ -1234,7 +1236,7 @@ void SB_Equity::Go_Equity()
 		ShowWindow(App->ListPanel, false);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
-		//App->CLSB_Environment->SetSky(false);
+		
 		ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
 
 		HMENU TestMenu;
@@ -1243,6 +1245,10 @@ void SB_Equity::Go_Equity()
 
 		EquitySB_Dialog_Visible = 1;
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
+		//->CLSB_Environment->SetSky(false);
+		App->CLSB_Environment->EnableFog(false);
+
+		App->CLSB_Ogre->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	}
 
 	//App->CLSB_Equity->Show_Equity_Dialog(true);
