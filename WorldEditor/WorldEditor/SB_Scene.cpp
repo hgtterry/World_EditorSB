@@ -142,7 +142,6 @@ SB_Scene::SB_Scene()
 	FullScreenMode_Flag = 0;
 	SameBrush = 0;
 	Scene_Modified = 0;
-	Scene_Loaded = 0;
 	BrushChange = -1;
 	Area_Added = 0;
 	Selected_Brush = NULL;

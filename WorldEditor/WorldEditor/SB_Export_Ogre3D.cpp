@@ -492,7 +492,7 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 // *************************************************************************
 bool SB_Export_Ogre3D::Clean_Direcory()
 {
-	if (App->CLSB_Scene->Scene_Loaded == 0)
+	if (App->CLSB_GameDirector->Project_Loaded == 0)
 	{
 		return 0;
 	}

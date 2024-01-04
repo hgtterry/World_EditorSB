@@ -47,7 +47,6 @@ public:
 
 	std::vector<Base_Player*> B_Player;
 
-	bool Scene_Loaded;
 	bool Area_Added;
 	bool Player_Added;
 	int Player_Count;

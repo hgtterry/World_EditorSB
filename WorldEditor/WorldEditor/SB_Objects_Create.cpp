@@ -110,7 +110,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	//}
 
 
-	App->CLSB_Scene->Scene_Loaded = 1;
+		App->CLSB_GameDirector->Project_Loaded = 1;
 
 
 	//---------------------- Static

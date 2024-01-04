@@ -40,7 +40,7 @@ SB_BR_Render::~SB_BR_Render()
 // *************************************************************************
 void SB_BR_Render::Start_BR_3D_Mode(void)
 {
-	if (App->CLSB_Scene->Scene_Loaded == 0)
+	if (App->CLSB_GameDirector->Project_Loaded == 0)
 	{
 		App->CLSB_Model->Set_Equity();
 		App->CLSB_Camera_EQ->Reset_Orientation();

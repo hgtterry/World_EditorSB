@@ -203,7 +203,7 @@ bool SB_Project::Load_Project()
 	//	App->SBC_Com_Environments->Set_First_Environment(Test);
 	//}
 
-	App->CLSB_Scene->Scene_Loaded = 1;
+	App->CLSB_GameDirector->Project_Loaded = 1;
 	//App->SBC_Project->Project_Loaded = 1;
 
 	//delete Options;
