@@ -134,7 +134,7 @@ public:
 	SB_Tabs_Control*			CLSB_TabsControl;
 	SB_Tabs_Brushes_Dlg*		CL_TabsGroups_Dlg;
 	SB_Tabs_Templates_Dlg*		CLSB_Tabs_Templates_Dlg;
-	SB_Tabs_True3D_Dlg*			CLSB_Tabs_True3D_Dlg;
+	SB_Tabs_Game_Dlg*			CLSB_Tabs_True3D_Dlg;
 
 	A_CreateArchDialog*			CL_CreateArchDialog;
 	A_CreateBoxDialog*			CL_CreateBoxDialog;

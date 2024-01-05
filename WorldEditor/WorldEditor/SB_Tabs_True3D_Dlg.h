@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class SB_Tabs_True3D_Dlg
+class SB_Tabs_Game_Dlg
 {
 public:
-	SB_Tabs_True3D_Dlg(void);
-	~SB_Tabs_True3D_Dlg(void);
+	SB_Tabs_Game_Dlg(void);
+	~SB_Tabs_Game_Dlg(void);
 
 	void Start_Game_Settings();
 	void Show_Game_Dlg(bool Show);

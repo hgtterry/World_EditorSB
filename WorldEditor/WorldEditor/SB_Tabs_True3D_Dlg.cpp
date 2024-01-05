@@ -26,7 +26,7 @@ distribution.
 #include "resource.h"
 #include "SB_Tabs_True3D_Dlg.h"
 
-SB_Tabs_True3D_Dlg::SB_Tabs_True3D_Dlg(void)
+SB_Tabs_Game_Dlg::SB_Tabs_Game_Dlg(void)
 {
 	Game_Tab_hDlg_Hwnd = nullptr;
 
@@ -34,14 +34,14 @@ SB_Tabs_True3D_Dlg::SB_Tabs_True3D_Dlg(void)
 	Toggle_Camera_Free_Flag = 1;
 }
 
-SB_Tabs_True3D_Dlg::~SB_Tabs_True3D_Dlg(void)
+SB_Tabs_Game_Dlg::~SB_Tabs_Game_Dlg(void)
 {
 }
 
 // *************************************************************************
 // *	  	Start_Game_Settings:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Tabs_True3D_Dlg::Start_Game_Settings()
+void SB_Tabs_Game_Dlg::Start_Game_Settings()
 {
 	Game_Tab_hDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3DSETTINGS, App->CLSB_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Game_Settings_Proc);
 }
@@ -49,7 +49,7 @@ void SB_Tabs_True3D_Dlg::Start_Game_Settings()
 // *************************************************************************
 // *			 Game_Settings_Proc:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-LRESULT CALLBACK SB_Tabs_True3D_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -318,7 +318,7 @@ LRESULT CALLBACK SB_Tabs_True3D_Dlg::Game_Settings_Proc(HWND hDlg, UINT message,
 // *************************************************************************
 // *	  	Show_Game_Dlg:- Terry and Hazel Flanigan 2023		           *
 // *************************************************************************
-void SB_Tabs_True3D_Dlg::Show_Game_Dlg(bool Show)
+void SB_Tabs_Game_Dlg::Show_Game_Dlg(bool Show)
 {
 	ShowWindow(Game_Tab_hDlg_Hwnd, Show);
 }
@@ -326,7 +326,7 @@ void SB_Tabs_True3D_Dlg::Show_Game_Dlg(bool Show)
 // *************************************************************************
 // *		Set_Control_Tabs_3DSettings:- Terry and Hazel Flanigan 2023    *
 // *************************************************************************
-void SB_Tabs_True3D_Dlg::Set_Control_Tabs_3DSettings_On(bool flag)
+void SB_Tabs_Game_Dlg::Set_Control_Tabs_3DSettings_On(bool flag)
 {
 	EnableWindow(GetDlgItem(App->CLSB_TabsControl->Tabs_Control_Hwnd, IDC_BT_3DSETTINGS), flag);
 }
@@ -334,7 +334,7 @@ void SB_Tabs_True3D_Dlg::Set_Control_Tabs_3DSettings_On(bool flag)
 // *************************************************************************
 // *		Set_Tabs_3DSettings:- Terry and Hazel Flanigan 2023            *
 // *************************************************************************
-void SB_Tabs_True3D_Dlg::Set_Tabs_3DSettings_On(bool flag)
+void SB_Tabs_Game_Dlg::Set_Tabs_3DSettings_On(bool flag)
 {
 	/*EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_3DUPDATE), flag);
 	EnableWindow(GetDlgItem(RB_3DSettings_Hwnd, IDC_BT_PICK), flag);

@@ -262,7 +262,7 @@ bool SB_App::InitApp(void)
 	CLSB_TabsControl =				new SB_Tabs_Control();
 	CL_TabsGroups_Dlg =				new SB_Tabs_Brushes_Dlg();
 	CLSB_Tabs_Templates_Dlg =		new SB_Tabs_Templates_Dlg();
-	CLSB_Tabs_True3D_Dlg =			new SB_Tabs_True3D_Dlg();
+	CLSB_Tabs_True3D_Dlg =			new SB_Tabs_Game_Dlg();
 	
 	CL_CreateArchDialog =			new A_CreateArchDialog();
 	CL_CreateBoxDialog =			new A_CreateBoxDialog();
