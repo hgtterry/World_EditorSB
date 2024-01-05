@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "SB_Tabs_True3D_Dlg.h"
+#include "SB_Tabs_Game_Dlg.h"
 
 SB_Tabs_Game_Dlg::SB_Tabs_Game_Dlg(void)
 {
