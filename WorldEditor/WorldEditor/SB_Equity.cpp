@@ -121,7 +121,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 
 			ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
 
-			App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
+			App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
 			RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
@@ -162,7 +162,7 @@ void SB_Equity::Hide_Equity_Dialog()
 
 	ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
 
-	App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
+	App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
 	RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)

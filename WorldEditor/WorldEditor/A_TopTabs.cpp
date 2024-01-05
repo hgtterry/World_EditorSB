@@ -1314,7 +1314,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 	{
 		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
 		{
-			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 0);
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_EXPORT), 0);
 		}
 	}
@@ -1322,7 +1321,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 	{
 		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
 		{
-			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 1);
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_EXPORT), 1);
 		}
 	}

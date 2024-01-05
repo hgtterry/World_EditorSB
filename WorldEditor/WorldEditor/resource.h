@@ -901,6 +901,7 @@
 #define IDC_BT_FREE                     1588
 #define IDC_BT_EXPORTTEMPLATE           1589
 #define IDC_BT_FULLSCREEN               1590
+#define IDC_BT_PREVIEWEDITOR            1591
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1136,7 +1137,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        361
 #define _APS_NEXT_COMMAND_VALUE         33112
-#define _APS_NEXT_CONTROL_VALUE         1591
+#define _APS_NEXT_CONTROL_VALUE         1592
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

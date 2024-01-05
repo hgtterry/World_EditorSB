@@ -29,15 +29,16 @@ public:
 	SB_Tabs_True3D_Dlg(void);
 	~SB_Tabs_True3D_Dlg(void);
 
-	void Start_3DSettings();
-	void Show_3DSettings(bool Show);
+	void Start_Game_Settings();
+	void Show_Game_Dlg(bool Show);
 	void Set_Tabs_3DSettings_On(bool flag);
 	void Set_Control_Tabs_3DSettings_On(bool flag);
 
-	HWND RB_3DSettings_Hwnd;
+	HWND Game_Tab_hDlg_Hwnd;
 
+	bool GameEditor_Active_Flag;
 private:
-	static LRESULT CALLBACK RB_3DSettings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Game_Settings_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Toggle_Camera_First_Flag;
 	bool Toggle_Camera_Free_Flag;

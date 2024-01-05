@@ -68,8 +68,8 @@ void SB_Tabs_Control::Start_Tabs_Control_Dlg()
 		App->CLSB_TextureDialog->Start_TextureDialog();
 		App->CL_TabsGroups_Dlg->Start_Brush_Tabs_Dialog();
 
-		App->CLSB_Tabs_True3D_Dlg->Start_3DSettings();
-		App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(0);
+		App->CLSB_Tabs_True3D_Dlg->Start_Game_Settings();
+		App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);
 
 		App->CLSB_Tabs_Templates_Dlg->Start_TemplatesDialog();
 		App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
@@ -185,11 +185,11 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 
 			if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
 			{
-				//App->CLSB_TabsControl->Hide_Dialogs();
-				//App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
-				//App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(1);
+				App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
+				App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(1);
 
-				//RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 			
@@ -229,7 +229,7 @@ void SB_Tabs_Control::Hide_Dialogs()
 	App->CLSB_TextureDialog->Show_Dialog(false);
 	App->CL_TabsGroups_Dlg->Show_GroupsDialog(false);
 	App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(false);
-	App->CLSB_Tabs_True3D_Dlg->Show_3DSettings(0);
+	App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);
 
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

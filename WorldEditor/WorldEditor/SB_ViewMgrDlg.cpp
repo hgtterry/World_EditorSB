@@ -16,7 +16,6 @@ SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 	View_MgrDlg_Active = 0;
 
 	LinkViews_Flag = 1;
-	WorldView_Active_Flag = 0;
 
 	Was_BR_True3D_Mode_Active = 0;
 }
@@ -61,7 +60,6 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		SendDlgItemMessage(hDlg, IDC_BT_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -123,22 +121,6 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->LinkViews_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_PREVIEW && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVIEW));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->WorldView_Active_Flag);
-			}
-
 			return CDRF_DODEFAULT;
 		}
 
@@ -306,34 +288,6 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_BT_SELECTED)
 		{
 			App->CLSB_Equity->Do_Preview_Selected();
-			return TRUE;
-		}
-
-
-		if (LOWORD(wParam) == IDC_BT_PREVIEW)
-		{
-			if (App->CLSB_ViewMgrDlg->WorldView_Active_Flag == 1)
-			{
-				App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
-				ShowWindow(App->ListPanel, false);
-				ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-				App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
-				//App->CLSB_Equity->Show_Equity_Dialog(0);
-				App->CLSB_GameDirector->Go_GameDirector();
-			}
-			else
-			{
-				if (App->BR_True3D_Mode_Active == 1)
-				{
-					App->CLSB_BR_Render->Exit_BR_3D_Mode();
-					App->BR_True3D_Mode_Active = 0;
-					App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 1;
-				}
-
-				App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 1;
-				App->CLSB_GameDirector->Go_GameDirector();
-			}
-
 			return TRUE;
 		}
 
