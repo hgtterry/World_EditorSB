@@ -80,6 +80,7 @@ SB_ImGui::SB_ImGui()
 	Show_Real_Brush_F = 0;
 	Show_Global_Data_F = 0;
 	Show_Assimp_Data_F = 0;
+	Show_WE_Data_F = 0;
 
 	Pick_Face = 1;
 
@@ -206,6 +207,8 @@ void SB_ImGui::Start_Render(void)
 	//App->CLSB_ImGui->Show_Physics_Console = 0;
 
 	Root::getSingletonPtr()->renderOneFrame();
+
+	Show_WE_Data_F = 1;
 }
 
 // *************************************************************************
@@ -243,7 +246,7 @@ void SB_ImGui::Stop_Render(void)
 }
 
 // *************************************************************************
-// *			BR_Resize:- Terry and Hazel Flanigan 2022	    	  	   *
+// *		Render_Surface_Resize:- Terry and Hazel Flanigan 2022	   	   *
 // *************************************************************************
 void SB_ImGui::Render_Surface_Resize(void)
 {
@@ -278,6 +281,107 @@ void SB_ImGui::BackGround_Render_Loop(void)
 		App->CLSB_Ogre->mRoot->_updateAllRenderTargets();
 		App->CLSB_Ogre->mRoot->_fireFrameEnded();
 		App->CLSB_Ogre->FPStimer.reset();
+	}
+}
+
+// *************************************************************************
+// *		ImGui_WE_Editor_Loop:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_ImGui::ImGui_WE_Editor_Loop(void)
+{
+	if (Show_WE_Data_F == 1)
+	{
+		WE_Data_GUI();
+	}
+}
+
+// *************************************************************************
+// *			WE_Data_GUI:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_ImGui::WE_Data_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("WE Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("World Editor Info");
+		/*ImGui::Text("  ");
+		ImGui::Text("Model Name:- %s", App->CLSB_Model->JustName);
+		ImGui::Text("Model File Name:- %s", App->CLSB_Model->FileName);
+		ImGui::Text("Model Path:- %s", App->CLSB_Model->Path_FileName);
+		ImGui::Text("Texture Path:- %s", App->CLSB_Model->Texture_FolderPath);
+		ImGui::Text("  ");
+		ImGui::Text("Vertices:- %i", App->CLSB_Model->VerticeCount);
+		ImGui::Text("Faces:- %i", App->CLSB_Model->FaceCount);
+		ImGui::Text("Groups:- %i", App->CLSB_Model->Get_Groupt_Count());
+		ImGui::Text("Motions:- %i", App->CLSB_Model->MotionCount);
+		ImGui::Text(" --------------------------- Brushes  ");
+		ImGui::Text("XBrushes:- %i", App->CLSB_Model->XBrushCount);
+		ImGui::Text("Brushes XX:- %i", App->CLSB_Model->BrushCount);
+
+		ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);*/
+
+		/*if (ImGui::Button("Textures"))
+		{
+			if (Show_Textures_F == 1)
+			{
+				Show_Textures_F = 0;
+			}
+			else
+			{
+				Show_Textures_F = 1;
+			}
+		}*/
+
+		/*if (Show_Textures_F == 1)
+		{
+			int Count = 0;
+			while (Count < App->CLSB_Mesh_Mgr->mTextureCount)
+			{
+				ImGui::Text("Texture ID:-%i %s", Count, App->CLSB_Mesh_Mgr->TextureName2[Count]);
+				Count++;
+			}
+		}
+
+		if (ImGui::Button("Assimp Data"))
+		{
+			if (Show_Assimp_Data_F == 1)
+			{
+				Show_Assimp_Data_F = 0;
+			}
+			else
+			{
+				Show_Assimp_Data_F = 1;
+			}
+		}
+
+		if (Show_Assimp_Data_F == 1)
+		{
+			ImGui::Text("Assimp Group Count:- %i", App->CLSB_Assimp->Total_Assimp_GroupCount);
+			ImGui::Text("Assimp Vertice Count:- %i", App->CLSB_Assimp->Total_Assimp_VerticeCount);
+			ImGui::Text("Assimp Face Count:- %i", App->CLSB_Assimp->Total_Assimp_FaceCount);
+		}
+
+		ImGui::Text("  ");*/
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Close_Model_Data();
+		}
+
+		ImGui::End();
 	}
 }
 

@@ -33,6 +33,10 @@ public:
 	void Stop_Render(void);
 	void Set_Render_Mode(void);
 	void Render_Surface_Resize(void);
+	void ImGui_WE_Editor_Loop(void);
+	void WE_Data_GUI(void);
+
+	// ---------------------------------
 
 	void ImGui_Editor_Loop(void);
 
@@ -62,6 +66,7 @@ public:
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
+	bool Show_WE_Data_F;
 	bool Show_Model_Data_F;
 	bool Updating_F;
 	bool Show_Camera_Pos_F;
