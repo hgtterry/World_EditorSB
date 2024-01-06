@@ -140,10 +140,6 @@ void SB_BR_Render::BR_3D_Resize(void)
 // *************************************************************************
 void SB_BR_Render::Exit_BR_3D_Mode(void)
 {
-	if(App->BR_True3D_Mode_Active == 1)
-	{
-		App->BR_True3D_Mode_Active = 0;
-
 		SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
 		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
 		
@@ -159,5 +155,4 @@ void SB_BR_Render::Exit_BR_3D_Mode(void)
 		
 		App->Block_RB_Actions = 0;
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
-	}
 }

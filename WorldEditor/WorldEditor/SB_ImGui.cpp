@@ -87,6 +87,7 @@ SB_ImGui::SB_ImGui()
 	pCameraEntity = nullptr;
 	Select_Face_F = 0;
 
+	ImGui_Surface_Active = 0;
 	ImGui_Dlg_Surface_hWnd = NULL;
 }
 
@@ -100,7 +101,13 @@ SB_ImGui::~SB_ImGui()
 // *************************************************************************
 void SB_ImGui::Start_ImGui_Surface()
 {	
-	ImGui_Dlg_Surface_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_IMGUI_SURFACE2, App->MainHwnd, (DLGPROC)ImGui_Surface_Proc);
+	if (ImGui_Surface_Active == 0)
+	{
+		ImGui_Surface_Active = 1;
+		ImGui_Dlg_Surface_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_IMGUI_SURFACE2, App->MainHwnd, (DLGPROC)ImGui_Surface_Proc);
+		Start_Render();
+		Render_Surface_Resize();
+	}
 }
 
 // *************************************************************************
@@ -136,6 +143,22 @@ LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		return (LONG)App->AppBackground;
 	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		App->CLSB_Ogre->m_imgui.mouseMoved();
+
+		SetFocus(App->CLSB_ImGui->ImGui_Dlg_Surface_hWnd);
+		break;
+	}
+
+	case WM_SIZE:
+	{
+		App->CLSB_ImGui->Render_Surface_Resize();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	}break;
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDOK)
@@ -146,6 +169,8 @@ LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CLSB_ImGui->Stop_Render();
+			App->CLSB_ImGui->ImGui_Surface_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -154,6 +179,75 @@ LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Render:- Terry and Hazel Flanigan 2022	     	   *
+// *************************************************************************
+void SB_ImGui::Start_Render(void)
+{
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
+
+	RECT rect;
+	GetWindowRect(ImGui_Dlg_Surface_hWnd, &rect);
+
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, width, height, NULL);
+
+	SetParent(App->ViewGLhWnd, ImGui_Dlg_Surface_hWnd);
+
+	App->CLSB_Ogre->mWindow->resize(width, height);
+
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+
+	//App->CLSB_ImGui->Show_Physics_Console = 0;
+
+	Root::getSingletonPtr()->renderOneFrame();
+}
+
+// *************************************************************************
+// *			Stop_Render:- Terry and Hazel Flanigan 2023	      	   *
+// *************************************************************************
+void SB_ImGui::Stop_Render(void)
+{
+	SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
+
+	App->CLSB_Equity->Resize_3DView();
+
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre->mCamera->yaw(Radian(0));
+	Root::getSingletonPtr()->renderOneFrame();
+
+	/*App->CLSB_Scene->FullScreenMode_Flag = 0;
+	App->CLSB_ImGui->Show_Physics_Console = 1;
+
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;*/
+}
+
+// *************************************************************************
+// *			BR_Resize:- Terry and Hazel Flanigan 2022	    	  	   *
+// *************************************************************************
+void SB_ImGui::Render_Surface_Resize(void)
+{
+	RECT rect;
+	GetWindowRect(ImGui_Dlg_Surface_hWnd, &rect);
+
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, width, height - 15, NULL);
+
+	App->CLSB_Ogre->mWindow->resize(width, height);
+
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************

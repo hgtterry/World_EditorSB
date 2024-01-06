@@ -29,6 +29,9 @@ public:
 	~SB_ImGui();
 
 	void Start_ImGui_Surface();
+	void Start_Render(void);
+	void Stop_Render(void);
+	void Render_Surface_Resize(void);
 
 	void ImGui_Editor_Loop(void);
 
@@ -69,6 +72,8 @@ public:
 	bool Show_Real_Brush_F;
 	bool Show_Global_Data_F;
 	bool Show_Face_Selection;
+
+	bool ImGui_Surface_Active;
 
 	int Pick_Face;
 	bool Select_Face_F;

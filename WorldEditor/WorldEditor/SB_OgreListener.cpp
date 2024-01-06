@@ -133,7 +133,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_Ogre->Get_View_Height_Width();
 	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
-
+	
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
 		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);

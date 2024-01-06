@@ -247,6 +247,11 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Environment->Add_New_Environ_Entity(true);
 			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 		}
+
+		if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
+		{
+			App->CLSB_ImGui->Stop_Render();
+		}
 	}
 }
 
