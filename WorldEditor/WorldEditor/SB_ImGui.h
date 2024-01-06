@@ -31,6 +31,7 @@ public:
 	void Start_ImGui_Surface();
 	void Start_Render(void);
 	void Stop_Render(void);
+	void Set_Render_Mode(void);
 	void Render_Surface_Resize(void);
 
 	void ImGui_Editor_Loop(void);

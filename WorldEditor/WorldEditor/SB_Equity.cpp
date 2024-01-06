@@ -1122,10 +1122,12 @@ void SB_Equity::Go_Equity()
 {
 	if (App->Equity_Dlg_hWnd)
 	{
-		if (App->BR_True3D_Mode_Active == 1)
+		if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
 		{
-			App->CLSB_BR_Render->Exit_BR_3D_Mode();
-			App->CLSB_Tabs_True3D_Dlg->Set_Tabs_3DSettings_On(false);
+			App->CLSB_ImGui->Stop_Render();
+			EndDialog(App->CLSB_ImGui->ImGui_Dlg_Surface_hWnd, 0);
+			App->CLSB_ImGui->ImGui_Surface_Active = 0;
+			Debug
 		}
 
 		if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)

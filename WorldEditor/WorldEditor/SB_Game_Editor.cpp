@@ -181,6 +181,14 @@ void SB_Game_Editor::Go_Game_Editor()
 	{
 		App->Get_Current_Document();
 
+		if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
+		{
+			App->CLSB_ImGui->Stop_Render();
+			EndDialog(App->CLSB_ImGui->ImGui_Dlg_Surface_hWnd,0);
+			App->CLSB_ImGui->ImGui_Surface_Active = 0;
+			//Debug
+		}
+
 		App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 
 		App->CLSB_ImGui->Show_Physics_Console = 1;
@@ -248,10 +256,6 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 		}
 
-		if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
-		{
-			App->CLSB_ImGui->Stop_Render();
-		}
 	}
 }
 

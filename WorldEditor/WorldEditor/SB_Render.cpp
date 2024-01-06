@@ -240,169 +240,171 @@ void SB_Render::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
-
-	//---------------------- Textured
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowTextured == 1)
+	if (App->CLSB_ImGui->ImGui_Surface_Active == 0)
 	{
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-
-		if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
+		//---------------------- Textured
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowTextured == 1)
 		{
-			Assimp_Render_Textures();
-		}
+			glEnable(GL_DEPTH_TEST);
+			glShadeModel(GL_SMOOTH);
 
-		if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
-		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-			//Brush_Render_Group_Texture();
-			//WE_Render_By_Texture();
 
-			if (Render_Brush_Group_Flag == 1)
+			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
 			{
-				Brush_Render_Group_Texture();
+				Assimp_Render_Textures();
 			}
-			else
+
+			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
 			{
-				Brush_Render_Brush_Texture();
-			}
- 
- 
-			//XBrush_Render_Textures();
-		}
 
-		// Equity View
-		if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
-		{
-			if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				//Brush_Render_Group_Texture();
+				//WE_Render_By_Texture();
+
+				if (Render_Brush_Group_Flag == 1)
+				{
+					Brush_Render_Group_Texture();
+				}
+				else
+				{
+					Brush_Render_Brush_Texture();
+				}
+
+
+				//XBrush_Render_Textures();
+			}
+
+			// Equity View
+			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 			{
-				New_Assimp_Render_Textures();
+				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				{
+					New_Assimp_Render_Textures();
+				}
 			}
+
 		}
 
-	}
-
-	// ---------------------- Mesh
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowFaces == 1)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
+		// ---------------------- Mesh
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowFaces == 1)
 		{
-			if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 			{
-				Assimp_Render_Faces();
+				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				{
+					Assimp_Render_Faces();
+				}
 			}
+
+			//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+			//{
+			//	//Brushes_Render_Faces();
+			//	//XBrushes_Render_Faces();
+			//	Brushes_Render_Faces_XX();
+			//}
 		}
 
-		//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
-		//{
-		//	//Brushes_Render_Faces();
-		//	//XBrushes_Render_Faces();
-		//	Brushes_Render_Faces_XX();
-		//}
-	}
 
-
-	// ---------------------- Points
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
-	{
-		/*if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+		// ---------------------- Points
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
 		{
-			RF_Render_Points();
-		}
+			/*if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+			{
+				RF_Render_Points();
+			}
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
-		{*/
+			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
+			{*/
 			Assimp_Render_Points();
-		/*}
+			/*}
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
-		{
-			Brush_Render_Points();
-		}*/
+			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+			{
+				Brush_Render_Points();
+			}*/
 
-	}
-
-	// ---------------------- Normals
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowNormals == 1)
-	{
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
-		{
-			RF_Render_Normals();
 		}
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
+		// ---------------------- Normals
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowNormals == 1)
 		{
-			Assimp_Render_Normals();
+			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Actor)
+			{
+				RF_Render_Normals();
+			}
+
+			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
+			{
+				Assimp_Render_Normals();
+			}
+
+			if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+			{
+				//Brush_Render_Normals();
+			}
 		}
 
-		if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
+		// ---------------------- Bounding Box
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
 		{
-			//Brush_Render_Normals();
+			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
+			{
+				//Render_BoundingBoxModel();
+				Render_BB_Selected_Brush();
+			}
+			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+			RenderPoints();
+			}*/
 		}
-	}
 
-	// ---------------------- Bounding Box
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
-	{
-		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
+		// ---------------------- Bounding Box Group
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingGroup == 1)
 		{
-			//Render_BoundingBoxModel();
-			Render_BB_Selected_Brush();
+			Render_BoundingBoxGroup();
 		}
-		/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+
+		// ---------------------- Bones
+		if (App->CLSB_Model->Model_Loaded == 1 && ShowBones == 1)
 		{
-		RenderPoints();
-		}*/
-	}
+			As_RenderBones();
+		}
 
-	// ---------------------- Bounding Box Group
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingGroup == 1)
-	{
-		Render_BoundingBoxGroup();
-	}
+		// ---------------------- Crosshair
+		if (Show_Crosshair == 1)
+		{
+			RenderCrossHair();
+		}
 
-	// ---------------------- Bones
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowBones == 1)
-	{
-		As_RenderBones();
-	}
+		// ---------------------- Face Marker
+		if (Show_Marker_Face == 1)
+		{
+			Marker_Face_Selection();
+		}
 
-	// ---------------------- Crosshair
-	if (Show_Crosshair == 1)
-	{
-		RenderCrossHair();
-	}
+		// ---------------------- Render_Selected_Face
+		if (Show_Selected_Face == 1)
+		{
+			Render_Selected_Face();
+		}
 
-	// ---------------------- Face Marker
-	if (Show_Marker_Face == 1)
-	{
-		Marker_Face_Selection();
-	}
+		// ---------------------- Show_Brush_Faces
+		if (Show_Brush_Faces == 1)
+		{
+			//Render_Brush_Faces();
+		}
 
-	// ---------------------- Render_Selected_Face
-	if (Show_Selected_Face == 1)
-	{
-		Render_Selected_Face();
-	}
-
-	// ---------------------- Show_Brush_Faces
-	if (Show_Brush_Faces == 1)
-	{
-		//Render_Brush_Faces();
-	}
-
-	if (depthTestEnabled)
-	{
-		glEnable(GL_DEPTH_TEST);
-	}
-	if (stencilTestEnabled)
-	{
-		glEnable(GL_STENCIL_TEST);
+		if (depthTestEnabled)
+		{
+			glEnable(GL_DEPTH_TEST);
+		}
+		if (stencilTestEnabled)
+		{
+			glEnable(GL_STENCIL_TEST);
+		}
 	}
 }
 

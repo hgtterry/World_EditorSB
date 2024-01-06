@@ -186,7 +186,7 @@ LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void SB_ImGui::Start_Render(void)
 {
-	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
+	Set_Render_Mode();
 
 	RECT rect;
 	GetWindowRect(ImGui_Dlg_Surface_hWnd, &rect);
@@ -209,6 +209,22 @@ void SB_ImGui::Start_Render(void)
 }
 
 // *************************************************************************
+// *			Set_Render_Mode:- Terry and Hazel Flanigan 2023	      	   *
+// *************************************************************************
+void SB_ImGui::Set_Render_Mode(void)
+{
+	App->CLSB_GameDirector->Show_Objects(false);
+	App->CLSB_Ogre->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
+	App->CLSB_Environment->EnableFog(false);
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
+
+	if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
+	{
+		App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
+	}
+}
+
+// *************************************************************************
 // *			Stop_Render:- Terry and Hazel Flanigan 2023	      	   *
 // *************************************************************************
 void SB_ImGui::Stop_Render(void)
@@ -223,10 +239,7 @@ void SB_ImGui::Stop_Render(void)
 	App->CLSB_Ogre->mCamera->yaw(Radian(0));
 	Root::getSingletonPtr()->renderOneFrame();
 
-	/*App->CLSB_Scene->FullScreenMode_Flag = 0;
-	App->CLSB_ImGui->Show_Physics_Console = 1;
-
-	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;*/
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
 }
 
 // *************************************************************************
