@@ -330,7 +330,7 @@ bool SB_App::InitApp(void)
 	CLSB_PB =						new SB_PB();
 	CLSB_BR_Render =				new SB_BR_Render();
 	CLSB_BaseFaces =				new Base_Faces();
-	CLSB_GameDirector =				new SB_GameDirector();
+	CLSB_GameDirector =				new SB_Game_Editor();
 
 	InitCommonControls();
 

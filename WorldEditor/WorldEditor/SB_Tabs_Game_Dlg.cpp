@@ -226,7 +226,7 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 				}*/
 
 				App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 1;
-				App->CLSB_GameDirector->Go_GameDirector();
+				App->CLSB_GameDirector->Go_Game_Editor();
 			}
 			return TRUE;
 		}

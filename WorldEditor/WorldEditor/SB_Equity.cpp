@@ -93,18 +93,9 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 
 			EquitySB_Dialog_Visible = 1;
 
-			if (Equity_Render_Mode == Enums::EQ_Mode_Equity)
-			{
-				HMENU TestMenu;
-				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
-				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
-			}
-			else
-			{
-				HMENU TestMenu;
-				TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUSB));
-				SetMenu(App->Equity_Dlg_hWnd, TestMenu);
-			}
+			HMENU TestMenu;
+			TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
+			SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 
 			ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		}
@@ -131,11 +122,11 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 				EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 			}
 
-			if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
+			/*if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
 			{
 				App->CLSB_BR_Render->Start_BR_3D_Mode();
 				App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
-			}
+			}*/
 		}
 	}
 	else

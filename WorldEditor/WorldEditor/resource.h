@@ -123,6 +123,7 @@
 #define IDD_SB_OGREVIEWER               268
 #define IDD_SB_EQUITYME                 268
 #define IDR_MENUSB                      274
+#define IDR_MENUGAMEEDITOR              274
 #define IDD_SB_EXPORTOPTIONS            275
 #define IDD_DIALOG3                     276
 #define IDD_SB_YESNO                    276
