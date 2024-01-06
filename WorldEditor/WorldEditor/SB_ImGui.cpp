@@ -63,6 +63,11 @@ SB_ImGui::SB_ImGui()
 	Physics_PosY = 500;
 	Physics_Console_StartPos = 0;
 
+	Resize_ImGui_Surface_F = 0;
+
+	Cam_Dlg_Data_PosX = 0;
+	Cam_Dlg_Data_PosX = 0;
+
 	// -------------- Float
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
@@ -108,6 +113,9 @@ void SB_ImGui::Start_ImGui_Surface()
 		ImGui_Dlg_Surface_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_IMGUI_SURFACE2, App->MainHwnd, (DLGPROC)ImGui_Surface_Proc);
 		Start_Render();
 		Render_Surface_Resize();
+		Show_WE_Data_F = 1;
+		SetWindowPos(ImGui_Dlg_Surface_hWnd, NULL, 0, 0, 300+20, 300+40, SWP_NOMOVE | SWP_NOZORDER);
+
 	}
 }
 
@@ -204,11 +212,7 @@ void SB_ImGui::Start_Render(void)
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 
-	//App->CLSB_ImGui->Show_Physics_Console = 0;
-
 	Root::getSingletonPtr()->renderOneFrame();
-
-	Show_WE_Data_F = 1;
 }
 
 // *************************************************************************
@@ -300,85 +304,43 @@ void SB_ImGui::ImGui_WE_Editor_Loop(void)
 // *************************************************************************
 void SB_ImGui::WE_Data_GUI(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(ImVec2(300, 300));
 
-	if (!ImGui::Begin("WE Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("WE Data", &Show_Model_Data_F, ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
 		ImGui::Spacing();
-		ImGui::Text("World Editor Info");
-		/*ImGui::Text("  ");
-		ImGui::Text("Model Name:- %s", App->CLSB_Model->JustName);
-		ImGui::Text("Model File Name:- %s", App->CLSB_Model->FileName);
-		ImGui::Text("Model Path:- %s", App->CLSB_Model->Path_FileName);
-		ImGui::Text("Texture Path:- %s", App->CLSB_Model->Texture_FolderPath);
+		ImGui::Text("Camera Info");
 		ImGui::Text("  ");
-		ImGui::Text("Vertices:- %i", App->CLSB_Model->VerticeCount);
-		ImGui::Text("Faces:- %i", App->CLSB_Model->FaceCount);
-		ImGui::Text("Groups:- %i", App->CLSB_Model->Get_Groupt_Count());
-		ImGui::Text("Motions:- %i", App->CLSB_Model->MotionCount);
-		ImGui::Text(" --------------------------- Brushes  ");
-		ImGui::Text("XBrushes:- %i", App->CLSB_Model->XBrushCount);
-		ImGui::Text("Brushes XX:- %i", App->CLSB_Model->BrushCount);
 
-		ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);*/
+		geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
 
-		/*if (ImGui::Button("Textures"))
+		ImGui::Text("Cam X:- %f", Pos.X);
+		ImGui::Text("Cam Y:- %f", Pos.Y);
+		ImGui::Text("Cam Z:- %f", Pos.Z);
+		
+		geVec3d Angles;
+		App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+		ImGui::Text("  ");
+		ImGui::Text("Angle X:- %f", Angles.X);
+		ImGui::Text("Angle Y:- %f", Angles.Y);
+		ImGui::Text("Angle Z:- %f", Angles.Z);
+
+		if (Resize_ImGui_Surface_F == 0)
 		{
-			if (Show_Textures_F == 1)
-			{
-				Show_Textures_F = 0;
-			}
-			else
-			{
-				Show_Textures_F = 1;
-			}
-		}*/
+			Resize_ImGui_Surface_F = 1;
+			//ImVec2 Size = ImGui::GetWindowSize();
 
-		/*if (Show_Textures_F == 1)
-		{
-			int Count = 0;
-			while (Count < App->CLSB_Mesh_Mgr->mTextureCount)
-			{
-				ImGui::Text("Texture ID:-%i %s", Count, App->CLSB_Mesh_Mgr->TextureName2[Count]);
-				Count++;
-			}
-		}
-
-		if (ImGui::Button("Assimp Data"))
-		{
-			if (Show_Assimp_Data_F == 1)
-			{
-				Show_Assimp_Data_F = 0;
-			}
-			else
-			{
-				Show_Assimp_Data_F = 1;
-			}
-		}
-
-		if (Show_Assimp_Data_F == 1)
-		{
-			ImGui::Text("Assimp Group Count:- %i", App->CLSB_Assimp->Total_Assimp_GroupCount);
-			ImGui::Text("Assimp Vertice Count:- %i", App->CLSB_Assimp->Total_Assimp_VerticeCount);
-			ImGui::Text("Assimp Face Count:- %i", App->CLSB_Assimp->Total_Assimp_FaceCount);
-		}
-
-		ImGui::Text("  ");*/
-
-		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
-
-		ImGui::Separator();
-
-		if (ImGui::Button("Close"))
-		{
-			Close_Model_Data();
+			//ImGui_Test();
+			//SetWindowPos(ImGui_Dlg_Surface_hWnd, NULL, 0,0, 500, 500, SWP_NOMOVE | SWP_NOZORDER);
+			//Cam_Dlg_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			//Cam_Dlg_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 		}
 
 		ImGui::End();

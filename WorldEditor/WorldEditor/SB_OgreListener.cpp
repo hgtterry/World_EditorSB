@@ -142,6 +142,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
 	{
+		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);
 		App->CLSB_ImGui->ImGui_WE_Editor_Loop();
 		return 1;
 	}

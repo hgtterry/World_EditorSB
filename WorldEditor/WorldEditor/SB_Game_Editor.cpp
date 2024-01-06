@@ -233,9 +233,25 @@ void SB_Game_Editor::Go_Game_Editor()
 		TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUGAMEEDITOR));
 		SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 
+
+		//  Set Position
+		geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
+		App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
+		geVec3d Angles;
+		App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+
+		Ogre::Quaternion Rotation;
+		//Rotation.IDENTITY;
+		Rotation.FromAngleAxis(Ogre::Degree(Angles.X), Rotation * Ogre::Vector3::UNIT_X);
+		Rotation.FromAngleAxis(Ogre::Radian(60), Rotation * Ogre::Vector3::UNIT_Y);
+		Rotation.FromAngleAxis(Ogre::Degree(0), Rotation * Ogre::Vector3::UNIT_Z);
+
+		App->CLSB_Ogre->mCamera->setOrientation(Rotation);
+		// ------------------
+
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
-		//App->CLSB_Equity->Show_Equity_Dialog(true);
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 		App->CLSB_Equity->Resize_3DView();
@@ -243,7 +259,7 @@ void SB_Game_Editor::Go_Game_Editor()
 
 		if (App->CLSB_Equity->First_Run == 1)
 		{
-			App->CLSB_Camera_EQ->Zero_View();
+			//App->CLSB_Camera_EQ->Zero_View();
 			App->CLSB_Equity->First_Run = 0;
 		}
 
@@ -255,6 +271,7 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Environment->Add_New_Environ_Entity(true);
 			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 		}
+
 
 	}
 }

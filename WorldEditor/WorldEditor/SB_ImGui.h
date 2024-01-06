@@ -35,7 +35,7 @@ public:
 	void Render_Surface_Resize(void);
 	void ImGui_WE_Editor_Loop(void);
 	void WE_Data_GUI(void);
-
+	
 	// ---------------------------------
 
 	void ImGui_Editor_Loop(void);
@@ -80,6 +80,7 @@ public:
 	bool Show_Face_Selection;
 
 	bool ImGui_Surface_Active;
+	bool Resize_ImGui_Surface_F;
 
 	int Pick_Face;
 	bool Select_Face_F;
@@ -88,6 +89,10 @@ public:
 
 	float Model_Data_PosX;
 	float Model_Data_PosY;
+
+	float Cam_Dlg_Data_PosX;
+	float Cam_Dlg_Data_PosY;
+	
 
 	// -------------- Physics Console
 	bool Disable_Physics_Console;
