@@ -172,11 +172,11 @@ void SB_Equity::Hide_Equity_Dialog()
 		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 	}
 
-	if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
+	/*if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
 	{
 		App->CLSB_BR_Render->Start_BR_3D_Mode();
 		Debug
-	}
+	}*/
 }
 
 // *************************************************************************
