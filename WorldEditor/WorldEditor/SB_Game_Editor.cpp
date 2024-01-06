@@ -205,15 +205,6 @@ void SB_Game_Editor::Go_Game_Editor()
 		
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
-		//Ogre::Vector3 OldCamPos;
-		//OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-
-		//Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
-		//App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-		//App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-		//App->CLSB_Model->Set_Equity();
-		//App->CLSB_Camera_EQ->Reset_Orientation();
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
 
@@ -260,9 +251,9 @@ void SB_Game_Editor::Go_Game_Editor()
 }
 
 // *************************************************************************
-// *	  Hide_GameDirector_Dialog:- Terry and Hazel Flanigan 2024	 	   *
+// *	  Hide_Game_Editor_Dialog:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void SB_Game_Editor::Hide_GameDirector_Dialog()
+void SB_Game_Editor::Hide_Game_Editor_Dialog()
 {
 	//App->Say("Stop GD");
 

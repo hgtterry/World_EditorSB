@@ -33,7 +33,7 @@ public:
 
 	void Go_Game_Editor();
 	
-	void Hide_GameDirector_Dialog();
+	void Hide_Game_Editor_Dialog();
 	void Show_Objects(bool Flag);
 
 	bool Project_Loaded;

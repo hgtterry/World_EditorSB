@@ -213,7 +213,7 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 				ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 				App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 				
-				App->CLSB_GameDirector->Hide_GameDirector_Dialog();
+				App->CLSB_GameDirector->Hide_Game_Editor_Dialog();
 				RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			else

@@ -8,12 +8,12 @@ public:
 	void Start_Equity_Dialog_New();
 
 	bool Auto_Load_File();
-	void Show_Equity_Dialog(bool Show);
 	void Hide_Equity_Dialog();
 
 	void Set_Mode_Equity();
 	void Go_Equity();
 	void Do_Preview_Selected();
+
 	void Resize_3DView();
 
 	bool mAutoLoad;

@@ -78,64 +78,6 @@ bool SB_Equity::Auto_Load_File()
 }
 
 // *************************************************************************
-// *			Show_Equity_Dialog:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-void SB_Equity::Show_Equity_Dialog(bool Show)
-{
-	if (App->Equity_Dlg_hWnd)
-	{
-		if (Show == 1)
-		{
-			if (App->CLSB_ImGui->Show_Face_Selection == 1)
-			{
-				ShowWindow(App->ListPanel, false);
-			}
-
-			EquitySB_Dialog_Visible = 1;
-
-			HMENU TestMenu;
-			TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
-			SetMenu(App->Equity_Dlg_hWnd, TestMenu);
-
-			ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
-		}
-		else
-		{
-			if (Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
-			{
-				App->CLSB_Camera_EQ->Save_Camera_Pos();
-				Saved_Camera_Mode = App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag;
-			}
-			
-			EquitySB_Dialog_Visible = 0;
-			App->CLSB_TopTabs->Update_Dlg_Controls();
-
-			ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
-
-			App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
-			RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
-			{
-				App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
-				App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
-				EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
-			}
-
-			/*if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
-			{
-				App->CLSB_BR_Render->Start_BR_3D_Mode();
-				App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
-			}*/
-		}
-	}
-	else
-	{
-		App->Say("Cant Start");
-	}
-}
-
-// *************************************************************************
 // *		  Hide_Equity_Dialog:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 void SB_Equity::Hide_Equity_Dialog()
@@ -457,7 +399,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));*/
-			App->CLSB_Equity->Show_Equity_Dialog(false);
+			//App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
 		}
 
@@ -498,8 +440,9 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			}
 			else
 			{
-				App->CLSB_GameDirector->Hide_GameDirector_Dialog();
+				App->CLSB_GameDirector->Hide_Game_Editor_Dialog();
 			}
+
 			return TRUE;
 		}
 	}
@@ -1322,7 +1265,7 @@ void SB_Equity::Do_Preview_Selected()
 		ShowWindow(App->ListPanel, false);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
-		App->CLSB_Equity->Show_Equity_Dialog(true);
+		//App->CLSB_Equity->Show_Equity_Dialog(true);
 	}
 	else
 	{
