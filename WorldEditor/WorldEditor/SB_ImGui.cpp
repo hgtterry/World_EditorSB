@@ -86,11 +86,74 @@ SB_ImGui::SB_ImGui()
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
 	Select_Face_F = 0;
+
+	ImGui_Dlg_Surface_hWnd = NULL;
 }
 
 
 SB_ImGui::~SB_ImGui()
 {
+}
+
+// *************************************************************************
+// *	  	Start_ImGui_Surface:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Start_ImGui_Surface()
+{	
+	ImGui_Dlg_Surface_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_IMGUI_SURFACE2, App->MainHwnd, (DLGPROC)ImGui_Surface_Proc);
+}
+
+// *************************************************************************
+// *		  ImGui_Surface_Proc:- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************

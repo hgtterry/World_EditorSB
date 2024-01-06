@@ -28,6 +28,8 @@ public:
 	SB_ImGui();
 	~SB_ImGui();
 
+	void Start_ImGui_Surface();
+
 	void ImGui_Editor_Loop(void);
 
 	void Updating_GUI(void);
@@ -95,6 +97,8 @@ public:
 	char Float_Banner[MAX_PATH];
 	bool Float_Exit;
 
+	HWND ImGui_Dlg_Surface_hWnd;
+
 protected:
 
 	void Load_Font(void);
@@ -113,5 +117,9 @@ protected:
 	bool PosX_Selected;
 	bool PosY_Selected;
 	bool PosZ_Selected;
+
+private:
+
+	static LRESULT CALLBACK ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

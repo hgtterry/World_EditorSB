@@ -57,6 +57,8 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 
 	// hgtterry Menu Commands
 	ON_COMMAND(ID_EQUITYSB_PREFERENCESWE, Open_Preferences)
+	ON_COMMAND(ID_EQUITYSB_SHOWIMGUI_SURFACE, Show_ImGui_Surface)
+
 	ON_COMMAND(ID_EQUITYSB_FACEPROPERTIES, Open_FaceProperties)
 	ON_COMMAND(ID_FILE_CLOSE33078, CloseDocument)
 	ON_COMMAND(ID_TOOLS_TXLEDITOR, Open_TxlEditor)
@@ -428,6 +430,11 @@ void CFusionApp::Open_TxlEditor() // hgtterry void CFusionApp::Open_TxlEditor()
 void CFusionApp::Open_Preferences() // hgtterry Start_Preferences_Dlg()
 {
 	App->CLSB_Preferences->Start_Preferences_Dlg();
+}
+
+void CFusionApp::Show_ImGui_Surface() // hgtterry Start_Preferences_Dlg()
+{
+	App->CLSB_ImGui->Start_ImGui_Surface();
 }
 
 void CFusionApp::Open_FaceProperties() // hgtterry void CFusionApp::Open_FaceProperties()
