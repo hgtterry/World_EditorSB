@@ -233,23 +233,6 @@ void SB_Game_Editor::Go_Game_Editor()
 		TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUGAMEEDITOR));
 		SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 
-
-		//  Set Position
-		geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
-		App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
-		geVec3d Angles;
-		App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
-
-
-		Ogre::Quaternion Rotation;
-		//Rotation.IDENTITY;
-		Rotation.FromAngleAxis(Ogre::Degree(Angles.X), Rotation * Ogre::Vector3::UNIT_X);
-		Rotation.FromAngleAxis(Ogre::Radian(60), Rotation * Ogre::Vector3::UNIT_Y);
-		Rotation.FromAngleAxis(Ogre::Degree(0), Rotation * Ogre::Vector3::UNIT_Z);
-
-		App->CLSB_Ogre->mCamera->setOrientation(Rotation);
-		// ------------------
-
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
 
@@ -272,8 +255,32 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 		}
 
-
+		Set_Camera();
 	}
+}
+
+// *************************************************************************
+// *			 Set_Camera:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void SB_Game_Editor::Set_Camera()
+{
+	geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
+	App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
+	geVec3d Angles;
+	App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+
+	Ogre::Quaternion Rotation;
+	Rotation.w = 1;
+	Rotation.x = 0;
+	Rotation.y = 0;
+	Rotation.z = 0;
+
+	Angles.X = Angles.X + 3.141;
+
+	App->CLSB_Ogre->OgreListener->mCam->setOrientation(Rotation);
+	App->CLSB_Ogre->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
+	App->CLSB_Ogre->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
 }
 
 // *************************************************************************
