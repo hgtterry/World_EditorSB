@@ -36,6 +36,8 @@ public:
 	bool Read_Project_File(char* Path_And_File);
 
 	void Assimp_Loader(HWND Owner,char* Extension, char* Extension2);
+	bool Ogre_Loader(char* Extension, char* Extension2);
+
 	bool Load_File_Wepf();
 
 	bool RFActor_Loader(void);

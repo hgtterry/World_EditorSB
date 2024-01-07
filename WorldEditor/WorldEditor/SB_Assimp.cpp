@@ -100,7 +100,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 			LoadTextures();
 		}
 
-		//App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
+		App->CLSB_Model->Set_BondingBox_Assimp(1); // Create Main Bounding Box
 
 		// Create Groups Bounding Boxes
 		//App->CLSB_Model->Set_BondingBoxes_AllGroups();

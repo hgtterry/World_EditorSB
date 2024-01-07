@@ -350,10 +350,18 @@ void SB_Render::Render_Loop()
 		// ---------------------- Bounding Box
 		if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
 		{
+			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
+			{
+				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				{
+					Render_BoundingBoxModel();
+				}
+			}
+
 			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
 			{
 				//Render_BoundingBoxModel();
-				Render_BB_Selected_Brush();
+				//Render_BB_Selected_Brush();
 			}
 			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{

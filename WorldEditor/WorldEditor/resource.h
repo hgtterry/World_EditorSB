@@ -179,7 +179,6 @@
 #define IDD_RB_RENDER_WIN               356
 #define IDD_SB_SELECT_FACE              358
 #define IDR_MENU_EQUITY                 360
-#define IDD_SB_ImGui_Surface            361
 #define IDD_SB_IMGUI_SURFACE2           361
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -1133,6 +1132,11 @@
 #define ID_FILE_IMPORT33111             33111
 #define ID_EQUITYSB_SHOWIMGUI           33112
 #define ID_EQUITYSB_SHOWIMGUI_SURFACE   33113
+#define ID_IMPORT_OGRE3D                33114
+#define ID_OGRE3D_MESH33115             33115
+#define ID_OGRE3D_MESHEQUITY            33116
+#define ID_IMPORT_AUTODESK3DS           33117
+#define ID_IMPORT_AUTODESK3DS_EQUITY    33118
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1141,7 +1145,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        363
-#define _APS_NEXT_COMMAND_VALUE         33114
+#define _APS_NEXT_COMMAND_VALUE         33119
 #define _APS_NEXT_CONTROL_VALUE         1592
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
