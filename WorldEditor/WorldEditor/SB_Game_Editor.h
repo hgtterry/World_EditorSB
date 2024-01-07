@@ -36,6 +36,7 @@ public:
 	void Hide_Game_Editor_Dialog();
 	void Show_Objects(bool Flag);
 	void Set_Camera();
+	void Reset_Camera();
 
 	bool Project_Loaded;
 

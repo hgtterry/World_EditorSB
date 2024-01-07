@@ -1193,6 +1193,29 @@ void SB_Equity::Go_Equity()
 }
 
 // *************************************************************************
+// *			 Set_Camera:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void SB_Equity::Set_Camera()
+{
+	geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
+	App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
+	geVec3d Angles;
+	App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+	Ogre::Quaternion Rotation;
+	Rotation.w = 1;
+	Rotation.x = 0;
+	Rotation.y = 0;
+	Rotation.z = 0;
+
+	Angles.X = Angles.X + 3.141;
+
+	App->CLSB_Ogre->OgreListener->mCam->setOrientation(Rotation);
+	App->CLSB_Ogre->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
+	App->CLSB_Ogre->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
+}
+
+// *************************************************************************
 // *			Do_Preview_Selected:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 void SB_Equity::Do_Preview_Selected()

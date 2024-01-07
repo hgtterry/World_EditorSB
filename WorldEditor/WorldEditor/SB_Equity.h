@@ -12,6 +12,8 @@ public:
 
 	void Set_Mode_Equity();
 	void Go_Equity();
+	void Set_Camera();
+
 	void Do_Preview_Selected();
 
 	void Resize_3DView();

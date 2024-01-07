@@ -48,13 +48,13 @@ public:
 
 	bool KeyBeingPresed_Flag;
 
+	CEntity* pCameraEntity;
+	geVec3d CameraPosition;
+	geVec3d Angles;
+
 private:
 
 	static LRESULT CALLBACK Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	CEntity *pCameraEntity;
-	geVec3d CameraPosition;
-	geVec3d Angles;
 
 	void Update_Dlg(HWND hDlg);
 	void Get_Values_Dlg(HWND hDlg);

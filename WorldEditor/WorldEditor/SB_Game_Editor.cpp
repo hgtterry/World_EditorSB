@@ -210,7 +210,6 @@ void SB_Game_Editor::Go_Game_Editor()
 			return;
 		}
 
-		
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
@@ -269,14 +268,13 @@ void SB_Game_Editor::Set_Camera()
 	geVec3d Angles;
 	App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
-
 	Ogre::Quaternion Rotation;
 	Rotation.w = 1;
 	Rotation.x = 0;
 	Rotation.y = 0;
 	Rotation.z = 0;
 
-	Angles.X = Angles.X + 3.141;
+	Angles.X = Angles.X + 3.141593;
 
 	App->CLSB_Ogre->OgreListener->mCam->setOrientation(Rotation);
 	App->CLSB_Ogre->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
@@ -311,11 +309,35 @@ void SB_Game_Editor::Hide_Game_Editor_Dialog()
 		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 	}
 
-	if (App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active == 1)
-	{
-		App->CLSB_BR_Render->Start_BR_3D_Mode();
-		App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 0;
-	}
+	Reset_Camera();
+}
+
+// *************************************************************************
+// *			 Reset_Camera:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void SB_Game_Editor::Reset_Camera()
+{
+
+	Ogre::Vector3 Pos;
+	Pos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+	App->CLSB_Camera_WE->CameraPosition.X = Pos.x;
+	App->CLSB_Camera_WE->CameraPosition.Y = Pos.y;
+	App->CLSB_Camera_WE->CameraPosition.Z = Pos.z;
+
+	Ogre::Vector3 Rot;
+	Rot.x = App->CLSB_Ogre->OgreListener->mCam->getOrientation().getPitch().valueRadians();
+	Rot.y = App->CLSB_Ogre->OgreListener->mCam->getOrientation().getYaw().valueRadians();
+	Rot.z = 0;
+
+	App->CLSB_Camera_WE->Angles.X = 3.141593 - Rot.x;
+	App->CLSB_Camera_WE->Angles.Y = -Rot.y;
+	App->CLSB_Camera_WE->Angles.Z = 0;
+
+	App->CLSB_Camera_WE->FindCameraEntity()->SetOrigin(Pos.x, Pos.y, Pos.z, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+
+	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+
 }
 
 // *************************************************************************
