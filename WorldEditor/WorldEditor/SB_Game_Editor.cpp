@@ -245,6 +245,7 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Equity->First_Run = 0;
 		}
 
+		Set_Camera();
 		App->CLSB_Mesh_Mgr->Update_World();
 
 		if (App->CLSB_GameDirector->Project_Loaded == 0)
@@ -254,7 +255,7 @@ void SB_Game_Editor::Go_Game_Editor()
 			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 		}
 
-		Set_Camera();
+		//Set_Camera();
 	}
 }
 
@@ -288,6 +289,8 @@ void SB_Game_Editor::Hide_Game_Editor_Dialog()
 {
 	//App->Say("Stop GD");
 
+	Reset_Camera();
+
 	if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_GameDirector);
 	{
 		App->CLSB_Camera_EQ->Save_Camera_Pos();
@@ -309,7 +312,6 @@ void SB_Game_Editor::Hide_Game_Editor_Dialog()
 		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 	}
 
-	Reset_Camera();
 }
 
 // *************************************************************************
