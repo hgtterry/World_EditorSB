@@ -95,15 +95,20 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
+		SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		//SetBkMode((HDC)wParam, TRANSPARENT);
 		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
+		//SetBkMode((HDC)wParam, TRANSPARENT);
 		return (LONG)App->AppBackground;
 	}
 

@@ -329,13 +329,22 @@ void SB_Game_Editor::Reset_Camera()
 	Rot.y = App->CLSB_Ogre->OgreListener->mCam->getOrientation().getYaw().valueRadians();
 	Rot.z = 0;
 
-	App->CLSB_Camera_WE->Angles.X = 3.141593 - Rot.x;
-	App->CLSB_Camera_WE->Angles.Y = -Rot.y;
-	App->CLSB_Camera_WE->Angles.Z = 0;
+	geVec3d Angles;
+	Angles.X = 3.141593 - Rot.x;
+	Angles.Y = - Rot.y;
+	Angles.Z = 0;
+
+	geVec3d	mOrigin;
+	mOrigin.X = Pos.x;
+	mOrigin.Y = Pos.y;
+	mOrigin.Z = Pos.z;
+
 
 	App->CLSB_Camera_WE->FindCameraEntity()->SetOrigin(Pos.x, Pos.y, Pos.z, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+	App->CLSB_Camera_WE->FindCameraEntity()->SetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
-	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
+
+	App->m_pDoc->SetRenderedViewCamera(&(mOrigin), &Angles);
 	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }
