@@ -958,6 +958,102 @@ void SB_Dimensions::Rotate_Y_Model(float Y)
 }
 
 // *************************************************************************
+// *	  		Rotate_Z_Assimp:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Dimensions::Rotate_Z_Assimp(float Z)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = 0;
+		Rotate.z = Z;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.z != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CLSB_Model->Set_BondingBox_Assimp(0);
+	}
+}
+
+// *************************************************************************
+// *	  Centre_Model_Mid_Assimp:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Dimensions::Centre_Model_Mid_Assimp(void)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+		float X = -App->CLSB_Model->Centre.x;
+		float Y = -App->CLSB_Model->Centre.y;
+		float Z = -App->CLSB_Model->Centre.z;
+
+		int Count = 0;
+		int VertCount = 0;
+		int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount)
+			{
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x += X;
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z += Z;
+
+				VertCount++;
+			}
+
+			Count++;
+		}
+
+		App->CLSB_Model->Set_BondingBox_Assimp(0);
+
+	}
+}
+
+// *************************************************************************
 // *	  				Rotate_Z_Model Terry Bernie						   *
 // *************************************************************************
 void SB_Dimensions::Rotate_Z_Model(float Z)
@@ -1052,6 +1148,7 @@ void SB_Dimensions::Centre_Model_Mid_Brushes(void)
 
 	}
 }
+
 
 // *************************************************************************
 // *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *

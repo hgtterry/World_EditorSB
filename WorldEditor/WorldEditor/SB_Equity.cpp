@@ -413,6 +413,10 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
 
+			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
+			App->CLSB_Dimensions->Rotate_Z_Assimp(90);
+			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
+
 			return TRUE;
 		}
 
@@ -434,6 +438,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 
 			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
+
+			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 		
 			return TRUE;
 		}

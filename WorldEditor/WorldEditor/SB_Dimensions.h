@@ -46,6 +46,10 @@ public:
 	void ImGui_Rotation_Area(void);
 	void ImGui_Scale_Area(void);
 
+	void Rotate_Z_Assimp(float Z);
+	void Centre_Model_Mid_Assimp(void);
+
+
 protected:
 
 	void ImGui_Position(void);
