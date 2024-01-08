@@ -25,7 +25,7 @@ distribution.
 #include "AB_App.h"
 #include "SB_Export_Ogre3D.h"
 
-SB_Export_Ogre3D::SB_Export_Ogre3D(void)
+SB_Ogre3D::SB_Ogre3D(void)
 {
 	mDirectory_Name[0] = 0;
 	mSelected_Directory[0] = 0;
@@ -51,7 +51,7 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	NameIndex = 0;
 }
 
-SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
+SB_Ogre3D::~SB_Ogre3D(void)
 {
 	
 }
@@ -59,7 +59,7 @@ SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
 // *************************************************************************
 // *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
-void SB_Export_Ogre3D::Set_Export_Paths(void)
+void SB_Ogre3D::Set_Export_Paths(void)
 {
 	char ExportFolder[MAX_PATH];
 
@@ -89,7 +89,7 @@ void SB_Export_Ogre3D::Set_Export_Paths(void)
 // *************************************************************************
 // *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
+void SB_Ogre3D::Export_To_Ogre3D(bool Create)
 {
 	Set_Export_Paths();
 
@@ -198,7 +198,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 // *************************************************************************
 // *		Set_World_Paths:- Terry and Hazel Flanigan 2023			 	   *
 // *************************************************************************
-void SB_Export_Ogre3D::Set_World_Paths(void)
+void SB_Ogre3D::Set_World_Paths(void)
 {
 	char Num[100];
 	itoa(NameIndex, Num, 10);
@@ -230,7 +230,7 @@ void SB_Export_Ogre3D::Set_World_Paths(void)
 // *************************************************************************
 // *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
+void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 {
 	Set_World_Paths();
 	App->CLSB_Model->Ogre_Face_Count = 0;
@@ -396,7 +396,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 // *************************************************************************
 // *			Get_Data:- Terry and Hazel Flanigan 2023  			   	   *
 // *************************************************************************
-void SB_Export_Ogre3D::Get_Data(int Index, int FaceIndex)
+void SB_Ogre3D::Get_Data(int Index, int FaceIndex)
 {
 	x = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].x;
 	y = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].y;
@@ -413,7 +413,7 @@ void SB_Export_Ogre3D::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 // *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
 // *************************************************************************
-bool SB_Export_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
+bool SB_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 {
 
 	char buf[MAX_PATH];
@@ -439,7 +439,7 @@ bool SB_Export_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 // *************************************************************************
 // *		CreateMaterialFile:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
+void SB_Ogre3D::CreateMaterialFile(char* MatFileName)
 {
 	char MatName[255];
 	char File[255];
@@ -490,7 +490,7 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 // *************************************************************************
 // *			Clean_Direcory:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Export_Ogre3D::Clean_Direcory()
+bool SB_Ogre3D::Clean_Direcory()
 {
 	if (App->CLSB_GameDirector->Project_Loaded == 0)
 	{
@@ -536,3 +536,48 @@ bool SB_Export_Ogre3D::Clean_Direcory()
 
 	return 1;
 }
+
+//// *************************************************************************
+//// *					Load_OgreModel Terry Bernie 					   *
+//// *************************************************************************
+//bool ME_Ogre3D::Load_OgreModel(void)
+//{
+//	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
+//
+//	NoTexture = 0;
+//	NoMaterialFileFound = 0;
+//
+//	AddToScene();
+//
+//	Create_MeshGroups();
+//	Extract_Mesh_Two();
+//
+//	//App->CL_Model_Data->HasMesh = 1;
+//
+//	App->CL_Model->Set_BondingBox_Model(1);
+//
+//	Get_SkeletonInstance();
+//
+//	Get_BoneNames();
+//
+//	Get_Motions();
+//
+//	Get_Textures();
+//
+//	bool SkellAnimation = OgreModel_Ent->hasSkeleton();
+//	Ogre::SkeletonInstance* skeletonInstance = OgreModel_Ent->getSkeleton();
+//
+//	if (skeletonInstance && SkellAnimation == 1)
+//	{
+//		if (App->CL_Model->MotionCount > 0)
+//		{
+//			Ogre::Animation* animation = skeletonInstance->getAnimation(0);
+//			strcpy(App->CL_Motions->Selected_Motion_Name, animation->getName().c_str());
+//
+//			strcpy(App->CL_Motions->Decode_MotionByName, App->CL_Motions->Selected_Motion_Name);
+//			App->CL_Ogre->Ogre_Listener->Animate_State = OgreModel_Ent->getAnimationState(App->CL_Motions->Selected_Motion_Name);
+//		}
+//	}
+//
+//	return 1;
+//}

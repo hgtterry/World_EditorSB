@@ -26,11 +26,11 @@ distribution.
 using namespace std;
 using namespace Ogre;
 
-class SB_Export_Ogre3D
+class SB_Ogre3D
 {
 public:
-	SB_Export_Ogre3D(void);
-	~SB_Export_Ogre3D(void);
+	SB_Ogre3D(void);
+	~SB_Ogre3D(void);
 
 	void Export_To_Ogre3D(bool Create);
 	void Convert_ToOgre3D(bool Create);

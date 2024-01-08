@@ -165,7 +165,7 @@ public:
 	SB_Ini*						CLSB_Ini;
 
 	SB_Export_3DS*				CLSB_Export_3DS;
-	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
+	SB_Ogre3D*					CLSB_Ogre3D;
 	SB_Export_Object*			CLSB_Export_Object;
 	SB_Export_Milkshape*		CLSB_Export_Milkshape;
 	SB_Exporter*				CLSB_Exporter;

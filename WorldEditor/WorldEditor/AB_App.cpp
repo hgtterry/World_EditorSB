@@ -71,7 +71,7 @@ SB_App::SB_App()
 	CLSB_Ini =					nullptr;
 
 	CLSB_Export_3DS =			nullptr;
-	CLSB_Export_Ogre3D =		nullptr;
+	CLSB_Ogre3D =				nullptr;
 	CLSB_Export_Object =		nullptr;
 	CLSB_Export_Milkshape =		nullptr;
 	CLSB_Exporter =				nullptr;
@@ -294,7 +294,7 @@ bool SB_App::InitApp(void)
 	CLSB_Ini =						new SB_Ini();
 
 	CLSB_Export_3DS =				new SB_Export_3DS();
-	CLSB_Export_Ogre3D =			new SB_Export_Ogre3D();
+	CLSB_Ogre3D =					new SB_Ogre3D();
 	CLSB_Export_Object =			new SB_Export_Object();
 	CLSB_Export_Milkshape =			new SB_Export_Milkshape();
 	CLSB_Exporter =					new SB_Exporter();
@@ -566,7 +566,7 @@ void SB_App::Close_WorldEditor()
 	App->CLSB_Mesh_Mgr->Delete_Brush_List();
 	App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
 
-	App->CLSB_Export_Ogre3D->Clean_Direcory();
+	App->CLSB_Ogre3D->Clean_Direcory();
 
 }
 
