@@ -72,7 +72,7 @@ distribution.
 #include "SB_Loader.h"
 #include "SB_Ini.h"
 
-#include "SB_Export_Ogre3D.h"
+#include "SB_Ogre3D.h"
 #include "SB_Export_Object.h"
 #include "SB_Export_3DS.h"
 #include "SB_Export_Milkshape.h"

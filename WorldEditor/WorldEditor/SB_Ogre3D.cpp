@@ -23,7 +23,7 @@ distribution.
 
 #include "StdAfx.h"
 #include "AB_App.h"
-#include "SB_Export_Ogre3D.h"
+#include "SB_Ogre3D.h"
 
 SB_Ogre3D::SB_Ogre3D(void)
 {
