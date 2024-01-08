@@ -422,13 +422,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_OGRE3D_MESHEQUITY)
 		{
-
-			//Debug
-			/*App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-
-			App->CLSB_Model->Render_Type = Enums::Render_Assimp;*/
-
+			App->CLSB_Loader->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 			return TRUE;
 		}
 

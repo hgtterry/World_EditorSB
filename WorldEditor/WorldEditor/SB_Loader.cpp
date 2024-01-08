@@ -111,7 +111,6 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 // *************************************************************************
 bool SB_Loader::Ogre_Loader(char* Extension, char* Extension2)
 {
-	return 0;
 	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd, Extension, Extension2, NULL);
 	if (Result == 0)
 	{
@@ -125,8 +124,11 @@ bool SB_Loader::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CLSB_Model->Set_Paths();
 
-	//App->CL_Ogre3D->Load_OgreModel();
+	App->CLSB_Ogre3D->Load_OgreModel();
 
+	App->CLSB_Assimp->Assimp_Model_Loaded = 1;
+	Debug
+	
 	return 1;
 }
 

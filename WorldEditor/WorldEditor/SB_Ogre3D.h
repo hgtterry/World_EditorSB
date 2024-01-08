@@ -36,13 +36,39 @@ public:
 	void Convert_ToOgre3D(bool Create);
 	bool Clean_Direcory();
 
+	bool Load_OgreModel(void);
+
+	bool NoTexture;
+	bool NoMaterialFileFound; // Returns 1 No Material File Found;
+
+	Ogre::Entity* OgreModel_Ent;
+
+	Ogre::String TempResourceGroupXX;   // Tempory Reosource Group
+
 private:
+
+	Ogre::SceneNode* OgreModel_Node;
 
 	void Set_World_Paths(void);
 	void Set_Export_Paths(void);
 	void Get_Data(int Index, int FaceIndex);
 	bool DecompileTextures_TXL(char* PathAndFile);
 	void CreateMaterialFile(char* MatFileName);
+
+	void Get_Textures(void);
+	void AddToScene(void);
+	void Create_MeshGroups();
+	bool Extract_Mesh_Two();
+
+	void Get_SubPoseMeshInstance(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count,
+		unsigned long*& indices,
+		int SubMesh,
+		Ogre::int16*& BoneIndices);
+
+	bool NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
+	bool NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals, int SubMesh);
+
+	std::vector<Vector2> MeshTextureCoords;
 
 	char mDirectory_Name[MAX_PATH];
 	char mSelected_Directory[MAX_PATH];

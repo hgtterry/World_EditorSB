@@ -2990,7 +2990,7 @@ BEGIN
         POPUP "Import"
         BEGIN
             MENUITEM "Wavefront obj...",            ID_IMPORT_WAVEFRONTOBJ_EQUITY
-            POPUP "Ogre3D", GRAYED
+            POPUP "Ogre3D"
             BEGIN
                 MENUITEM "Mesh",                        ID_OGRE3D_MESHEQUITY
             END

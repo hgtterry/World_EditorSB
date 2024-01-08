@@ -43,6 +43,7 @@ public:
 	Base_Assimp* Assimp_Group[500];
 
 	bool LoadFile(const char* pFile);
+	void Create_Assimp_Mesh_Group(int Index);
 
 	long int SelectedPreset;
 	int mTotalVertices;
@@ -59,12 +60,10 @@ protected:
 	void logInfo(std::string logString);
 	void logDebug(const char* logString);
 
+	void Create_MeshGroups(const aiScene* pScene);
 	void StoreMeshData(const aiScene* pScene);
 	void GetBasicInfo(const aiScene* pScene);
 	void Get_Group_VertCount(const aiScene* pScene);
-	void Create_MeshGroups(const aiScene* pScene);
 	void LoadTextures();
-
-	void Create_Assimp_Mesh_Group(int Index);
 };
 

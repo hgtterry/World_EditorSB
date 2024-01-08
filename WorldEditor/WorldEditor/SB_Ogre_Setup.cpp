@@ -96,6 +96,7 @@ bool SB_Ogre_Setup::InitOgre(void)
 	App->CLSB_Grid->Reset_View();
 	App->CLSB_Grid->Grid_SetVisible(true);
 
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre3D->TempResourceGroupXX);
 	//mSceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 	return 1;
 }
