@@ -391,7 +391,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 0;
 				App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
 			}
 
@@ -409,7 +409,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			if (App->BR_True3D_Mode_Active == 1)
 			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 1;
 				App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
 			}
 

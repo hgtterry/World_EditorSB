@@ -217,9 +217,9 @@ void SB_Dimensions::ImGui_Position(void)
 		Pos.y = App->CLSB_Model->Centre.y;
 		Pos.z = App->CLSB_Model->Centre.z;
 
-		App->CLSB_Ogre->RenderListener->Hair_1PosX = Pos.x;
-		App->CLSB_Ogre->RenderListener->Hair_1PosY = Pos.y;
-		App->CLSB_Ogre->RenderListener->Hair_1PosZ = Pos.z;
+		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosX = Pos.x;
+		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosY = Pos.y;
+		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosZ = Pos.z;
 	}
 
 	ImGuiStyle* style = &ImGui::GetStyle();

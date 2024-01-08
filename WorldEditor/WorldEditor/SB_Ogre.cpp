@@ -25,7 +25,7 @@ distribution.
 #include "AB_App.h"
 #include "SB_Ogre.h"
 
-SB_Ogre::SB_Ogre(void)
+SB_Ogre_Setup::SB_Ogre_Setup(void)
 {
 	RenderHwnd =	NULL;
 	mRoot =			nullptr;
@@ -60,14 +60,14 @@ SB_Ogre::SB_Ogre(void)
 	FPStimer.reset();
 }
 
-SB_Ogre::~SB_Ogre(void)
+SB_Ogre_Setup::~SB_Ogre_Setup(void)
 {
 }
 
 // *************************************************************************
 // *				InitOgre:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::InitOgre(void)
+bool SB_Ogre_Setup::InitOgre(void)
 {
 	OgreCreateRoot();
 	SetUpResources();
@@ -103,7 +103,7 @@ bool SB_Ogre::InitOgre(void)
 // *************************************************************************
 // *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::Ogre_Render_Loop(void)
+bool SB_Ogre_Setup::Ogre_Render_Loop(void)
 {
 	mRoot->clearEventTimes();
 	App->CLSB_TopTabs->OgreRunning_Flag = 1;
@@ -144,7 +144,7 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 // *************************************************************************
 // *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-bool SB_Ogre::OgreCreateRoot(void)
+bool SB_Ogre_Setup::OgreCreateRoot(void)
 {
 	mResourcePath = "";
 	Ogre::String pluginsPath;
@@ -168,7 +168,7 @@ bool SB_Ogre::OgreCreateRoot(void)
 // **************************************************************************
 // *			SetUpResources:- Terry and Hazel Flanigan 2022				*
 // **************************************************************************
-bool SB_Ogre::SetUpResources(void)
+bool SB_Ogre_Setup::SetUpResources(void)
 {
 
 	Ogre::String File;
@@ -194,7 +194,7 @@ bool SB_Ogre::SetUpResources(void)
 // *************************************************************************
 // *				ReverseBackSlash  Terry Bernie				  	 	   *
 // *************************************************************************
-bool SB_Ogre::ReverseBackSlash(char* buf)
+bool SB_Ogre_Setup::ReverseBackSlash(char* buf)
 {
 	strcpy(Return_Chr, "");
 	char bufnew[256];
@@ -229,7 +229,7 @@ bool SB_Ogre::ReverseBackSlash(char* buf)
 // *************************************************************************
 // *		Initialise_Resources:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Ogre::Initialise_Resources(void)
+bool SB_Ogre_Setup::Initialise_Resources(void)
 {
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
@@ -239,7 +239,7 @@ bool SB_Ogre::Initialise_Resources(void)
 // *************************************************************************
 // *			Get_Main_Folders:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Ogre::Get_Main_Folders()
+bool SB_Ogre_Setup::Get_Main_Folders()
 {
 	char Path[1024];
 
@@ -284,7 +284,7 @@ bool SB_Ogre::Get_Main_Folders()
 // *************************************************************************
 // *			Get_Sub_Folders:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-bool SB_Ogre::Get_Sub_Folders(char* Sub_folder)
+bool SB_Ogre_Setup::Get_Sub_Folders(char* Sub_folder)
 {
 	char Path[1024];
 
@@ -334,7 +334,7 @@ bool SB_Ogre::Get_Sub_Folders(char* Sub_folder)
 // *************************************************************************
 // *				Configure:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::Configure(void)
+bool SB_Ogre_Setup::Configure(void)
 {
 
 	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
@@ -362,7 +362,7 @@ bool SB_Ogre::Configure(void)
 // *************************************************************************
 // *		chooseSceneManager:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::chooseSceneManager(void)
+bool SB_Ogre_Setup::chooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
 	
@@ -377,7 +377,7 @@ bool SB_Ogre::chooseSceneManager(void)
 // *************************************************************************
 // *			createCamera:- Terry and Hazel Flanigan 202				   *
 // *************************************************************************
-bool SB_Ogre::createCamera(void)
+bool SB_Ogre_Setup::createCamera(void)
 {
 	mCamera = mSceneMgr->createCamera("MainCamera");
 	mCamera->setPosition(Ogre::Vector3(0, 90, 100));
@@ -392,7 +392,7 @@ bool SB_Ogre::createCamera(void)
 // *************************************************************************
 // *			createViewports:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::createViewports(void)
+bool SB_Ogre_Setup::createViewports(void)
 {
 	mWindow->removeAllViewports();
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -408,7 +408,7 @@ bool SB_Ogre::createViewports(void)
 // *************************************************************************
 // *		createFrameListener:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Ogre::createFrameListener(void)
+bool SB_Ogre_Setup::createFrameListener(void)
 {
 	// Physics Frame Listener
 	OgreListener = new SB_OgreListener();
@@ -443,7 +443,7 @@ bool SB_Ogre::createFrameListener(void)
 // *************************************************************************
 // *			RenderFrame:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-bool SB_Ogre::RenderFrame(void)
+bool SB_Ogre_Setup::RenderFrame(void)
 {
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	return 1;
@@ -452,7 +452,7 @@ bool SB_Ogre::RenderFrame(void)
 // *************************************************************************
 // *		Get_View_Height_Width:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-bool SB_Ogre::Get_View_Height_Width(void)
+bool SB_Ogre_Setup::Get_View_Height_Width(void)
 {
 	Ogre::Viewport* vp = mWindow->getViewport(0);
 
@@ -465,7 +465,7 @@ bool SB_Ogre::Get_View_Height_Width(void)
 // *************************************************************************
 // *			GetVersion:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void SB_Ogre::GetVersion_OpenGL(char* buff)
+void SB_Ogre_Setup::GetVersion_OpenGL(char* buff)
 {
 	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
 	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;
@@ -490,7 +490,7 @@ void SB_Ogre::GetVersion_OpenGL(char* buff)
 // *************************************************************************
 // *	  						ExitFullScreen							   *
 // *************************************************************************
-bool SB_Ogre::ExitFullScreen()
+bool SB_Ogre_Setup::ExitFullScreen()
 {
 	//if(Flags[0]->OgreIsRunning==1)
 	{

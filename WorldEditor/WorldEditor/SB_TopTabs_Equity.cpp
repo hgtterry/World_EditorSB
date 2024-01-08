@@ -486,25 +486,25 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CAMERA_PICK)
 		{
-			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
 				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 0;
 
 				App->CLSB_ImGui->Show_Face_Selection = 0;
 				App->CLSB_FileView->Show_FileView(1);
 
-				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 1;
 				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 1;
 
 				App->CLSB_ImGui->Show_Face_Selection = 1;
 				App->CLSB_FileView->Show_FileView(0);
 
-				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 1;
 			}
 
 			return 1;
@@ -556,7 +556,7 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 {
 	if (App->CLSB_Scene->Player_Added == 1)
 	{
-		App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+		App->CLSB_Ogre_Setup->OgreListener->CameraMode = Enums::CamFirst;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 1;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
@@ -566,11 +566,11 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 		int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
-		App->CLSB_Ogre->RenderFrame();
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+		App->CLSB_Ogre_Setup->RenderFrame();
+		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 
-		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+		App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}

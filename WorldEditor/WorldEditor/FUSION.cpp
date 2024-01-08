@@ -381,10 +381,10 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	//App->CLSB_Doc->Render_WE_World = 0;
 	//App->CLSB_Ogre->RenderHwnd = App->WE_3DView_Hwnd;
-	App->CLSB_Ogre->InitOgre();
+	App->CLSB_Ogre_Setup->InitOgre();
 
 	int test = 0;
-	test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
+	test = SetWindowLong(App->CLSB_Ogre_Setup->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
 
 	if (!test)
 	{
@@ -397,10 +397,10 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	//App->CLSB_SoundMgr->Play_StartUp_Sound();
 
-	App->CLSB_Ogre->OgreIsRunning = 1;
+	App->CLSB_Ogre_Setup->OgreIsRunning = 1;
 
 	App->CLSB_Doc->Render_WE_World = 1;
-	App->CLSB_Ogre->Ogre_Render_Loop();
+	App->CLSB_Ogre_Setup->Ogre_Render_Loop();
 	
 	return TRUE;
 }

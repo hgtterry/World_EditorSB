@@ -115,7 +115,7 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CLSB_Ogre->OgreListener->GD_Selection_Mode);
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode);
 			}
 			return CDRF_DODEFAULT;
 		}
@@ -288,17 +288,17 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_BT_PICK)
 		{
-			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
-				App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 0;
-				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
-				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Brush_Faces = 0;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 0;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
-				App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 1;
 			}
 			return TRUE;
 		}

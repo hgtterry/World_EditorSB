@@ -34,7 +34,7 @@ GD_Bt_Render::GD_Bt_Render(void)
 	
 	ColourMain = ColourValue(1, 1, 1, 1);
 
-	btDebug_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("btManual");
+	btDebug_Manual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("btManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
 
 	btDebug_Manual->setDynamic(true);
@@ -47,7 +47,7 @@ GD_Bt_Render::GD_Bt_Render(void)
 	btDebug_Manual->colour(ColourMain);
 	btDebug_Manual->end();
 
-	btDebug_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
 	vertex_From.resize(100000);

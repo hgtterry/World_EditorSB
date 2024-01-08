@@ -155,7 +155,7 @@ LRESULT CALLBACK SB_ImGui::ImGui_Surface_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->CLSB_Ogre->m_imgui.mouseMoved();
+		App->CLSB_Ogre_Setup->m_imgui.mouseMoved();
 
 		SetFocus(App->CLSB_ImGui->ImGui_Dlg_Surface_hWnd);
 		break;
@@ -207,10 +207,10 @@ void SB_ImGui::Start_Render(void)
 
 	SetParent(App->ViewGLhWnd, ImGui_Dlg_Surface_hWnd);
 
-	App->CLSB_Ogre->mWindow->resize(width, height);
+	App->CLSB_Ogre_Setup->mWindow->resize(width, height);
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }
@@ -221,7 +221,7 @@ void SB_ImGui::Start_Render(void)
 void SB_ImGui::Set_Render_Mode(void)
 {
 	App->CLSB_GameDirector->Show_Objects(false);
-	App->CLSB_Ogre->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
+	App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	App->CLSB_Environment->EnableFog(false);
 	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
 
@@ -241,9 +241,9 @@ void SB_ImGui::Stop_Render(void)
 
 	App->CLSB_Equity->Resize_3DView();
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-	App->CLSB_Ogre->mCamera->yaw(Radian(0));
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
 	Root::getSingletonPtr()->renderOneFrame();
 
 	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
@@ -262,10 +262,10 @@ void SB_ImGui::Render_Surface_Resize(void)
 
 	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, width, height - 15, NULL);
 
-	App->CLSB_Ogre->mWindow->resize(width, height);
+	App->CLSB_Ogre_Setup->mWindow->resize(width, height);
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }
@@ -277,14 +277,14 @@ void SB_ImGui::BackGround_Render_Loop(void)
 {
 	Ogre::WindowEventUtilities::messagePump();
 
-	if (App->CLSB_Ogre->mWindow->isClosed()) return;
+	if (App->CLSB_Ogre_Setup->mWindow->isClosed()) return;
 
-	if (App->CLSB_Ogre->FPStimer.getMilliseconds() > 3)
+	if (App->CLSB_Ogre_Setup->FPStimer.getMilliseconds() > 3)
 	{
-		App->CLSB_Ogre->mRoot->_fireFrameStarted();
-		App->CLSB_Ogre->mRoot->_updateAllRenderTargets();
-		App->CLSB_Ogre->mRoot->_fireFrameEnded();
-		App->CLSB_Ogre->FPStimer.reset();
+		App->CLSB_Ogre_Setup->mRoot->_fireFrameStarted();
+		App->CLSB_Ogre_Setup->mRoot->_updateAllRenderTargets();
+		App->CLSB_Ogre_Setup->mRoot->_fireFrameEnded();
+		App->CLSB_Ogre_Setup->FPStimer.reset();
 	}
 }
 
@@ -484,7 +484,7 @@ void SB_ImGui::Render_FPS(void)
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
 
 		ImGui::PopStyleColor();
@@ -602,8 +602,8 @@ void SB_ImGui::Updating_GUI(void)
 		ImVec2 Size = ImGui::GetWindowSize();
 
 		
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.x / 2);
+		Model_Data_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (Size.x / 2);
 		
 
 		ImGui::End();
@@ -641,7 +641,7 @@ void SB_ImGui::ImGui_FPS(void)
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 
-		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
 		
 		ImGui::End();
@@ -732,8 +732,8 @@ void SB_ImGui::Model_Data_GUI(void)
 		ImGui::Text("  ");
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		Model_Data_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (Size.y / 2);;
 
 		ImGui::Separator();
 
@@ -799,9 +799,9 @@ void SB_ImGui::Camera_Pos_GUI(void)
 		ImGui::Text("  ");
 		ImGui::Text("Equity Position");
 
-		ImGui::Text("X = %f", App->CLSB_Ogre->mCamera->getPosition().x);
-		ImGui::Text("Y = %f", App->CLSB_Ogre->mCamera->getPosition().y);
-		ImGui::Text("Z = %f", App->CLSB_Ogre->mCamera->getPosition().z);
+		ImGui::Text("X = %f", App->CLSB_Ogre_Setup->mCamera->getPosition().x);
+		ImGui::Text("Y = %f", App->CLSB_Ogre_Setup->mCamera->getPosition().y);
+		ImGui::Text("Z = %f", App->CLSB_Ogre_Setup->mCamera->getPosition().z);
 		ImGui::Text("  ");
 
 		// --------------------------------------------------
@@ -815,13 +815,13 @@ void SB_ImGui::Camera_Pos_GUI(void)
 		ImGui::Text("  ");
 		ImGui::Text("Equity Rotation");
 
-		ImGui::Text("X = %f", App->CLSB_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("Y = %f", App->CLSB_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
-		ImGui::Text("Z = %f", App->CLSB_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
+		ImGui::Text("X = %f", App->CLSB_Ogre_Setup->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Y = %f", App->CLSB_Ogre_Setup->mCamera->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("Z = %f", App->CLSB_Ogre_Setup->mCamera->getOrientation().getRoll().valueDegrees());
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		Model_Data_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (Size.y / 2);;
 
 		ImGui::PopStyleVar();
 		ImGui::Columns(0);
@@ -890,8 +890,8 @@ void SB_ImGui::Model_BB_GUI(void)
 		ImGui::Text("Radius:- %f", App->CLSB_Model->radius);
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		Model_Data_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (Size.y / 2);;
 
 		ImGui::Separator();
 
@@ -950,7 +950,7 @@ void SB_ImGui::Physics_Console_Gui(void)
 
 		ImGui::Separator();
 
-		if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+		if (App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
@@ -963,20 +963,20 @@ void SB_ImGui::Physics_Console_Gui(void)
 		{
 			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+				if (App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics == 1)
 				{
-					App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+					App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 0;
 				}
 				else
 				{
-					App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+					App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 				}
 
 				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 			}
 		}
 
-		if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+		if (App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_Draw == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
@@ -1050,7 +1050,7 @@ void SB_ImGui::Physics_Console_Gui(void)
 		{
 			ImVec2 Size = ImGui::GetWindowSize();
 			Physics_PosX = 10;
-			Physics_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height) - (Size.y) - 5;// 50;
+			Physics_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height) - (Size.y) - 5;// 50;
 			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
 			
 			Physics_Console_StartPos = 1;
@@ -1084,8 +1084,8 @@ void SB_ImGui::Start_Dialog_Float(float Step, float StartValue, char* Banner)
 
 	//App->Disable_Panels(true);
 
-	Float_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-	Float_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+	Float_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (200 / 2);
+	Float_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (130 / 2);
 
 	Float_StartPos = 0;
 
@@ -1111,8 +1111,8 @@ void SB_ImGui::Dialog_Float(void)
 	{
 		if (Float_StartPos == 0)
 		{
-			Float_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-			Float_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+			Float_PosX = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Width / 2) - (200 / 2);
+			Float_PosY = ((float)App->CLSB_Ogre_Setup->OgreListener->View_Height / 2) - (130 / 2);
 			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
 			Float_StartPos = 1;
@@ -1197,7 +1197,7 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::Separator();
 
 			ImGui::Text("Internal Name: = %s", App->CLSB_Picking->Pl_Entity_Name.c_str());
-			ImGui::Text("Object Name: = %s", App->CLSB_Ogre->OgreListener->Selected_Object_Name);
+			ImGui::Text("Object Name: = %s", App->CLSB_Ogre_Setup->OgreListener->Selected_Object_Name);
 
 			ImGui::Text("");
 			ImGui::Text("Sub Meshes: = %i", App->CLSB_Picking->Sub_Mesh_Count);

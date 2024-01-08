@@ -100,8 +100,8 @@ void SB_Grid::Reset_Class()
 // *************************************************************************
 void SB_Grid::Load_Crosshair()
 {
-	Crosshair_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
-	Crosshair_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Crosshair_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CLSB_Ogre_Setup->App_Resource_Group);
+	Crosshair_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 
 	Crosshair_Node->setVisible(true);
@@ -119,7 +119,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridManual = App->CLSB_Ogre->mSceneMgr->createManualObject("BoxManual");
+		GridManual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("BoxManual");
 		GridManual->setRenderQueueGroup(1);
 	}
 
@@ -172,7 +172,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		GridNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		GridNode->attachObject(GridManual);
 	}
 
@@ -188,7 +188,7 @@ void SB_Grid::Hair_Update(bool Create)
 {
 	if (Create == 1)
 	{
-		HairManual = App->CLSB_Ogre->mSceneMgr->createManualObject("HairManual");
+		HairManual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("HairManual");
 		HairManual->setRenderQueueGroup(5);
 	}
 
@@ -215,7 +215,7 @@ void SB_Grid::Hair_Update(bool Create)
 
 	if (Create == 1)
 	{
-		HairNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		HairNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		HairNode->attachObject(HairManual);
 	}
 
@@ -252,8 +252,8 @@ void SB_Grid::Reset_View(void)
 	//App->CL_Ogre->OgreListener->RX = 0;
 	//App->CL_Ogre->RenderListener->RZ = 0;
 
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	App->CLSB_Ogre_Setup->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 // *************************************************************************
@@ -262,8 +262,8 @@ void SB_Grid::Reset_View(void)
 void SB_Grid::Load_Gizmo(void)
 {
 	
-	Sight_Entity = App->CLSB_Ogre->mSceneMgr->createEntity("ArrowXYZ", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
-	Sight_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Sight_Entity = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("ArrowXYZ", "axes.mesh", App->CLSB_Ogre_Setup->App_Resource_Group);
+	Sight_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Sight_Node->attachObject(Sight_Entity);
 
 	Sight_Node->setPosition(0, 0, 0);

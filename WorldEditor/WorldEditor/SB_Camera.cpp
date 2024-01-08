@@ -47,11 +47,11 @@ void SB_Camera_EQ::Reset_View(void)
 	App->CLSB_Grid->HairNode->setPosition(0, 0, 0);
 	App->CLSB_Grid->HairNode->resetOrientation();
 
-	App->CLSB_Ogre->RenderListener->RX = 0;
-	App->CLSB_Ogre->RenderListener->RZ = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RX = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RZ = 0;
 
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	App->CLSB_Ogre_Setup->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 // *************************************************************************
@@ -62,8 +62,8 @@ void SB_Camera_EQ::Reset_Orientation(void)
 	App->CLSB_Grid->GridNode->resetOrientation();
 	App->CLSB_Grid->HairNode->resetOrientation();
 
-	App->CLSB_Ogre->RenderListener->RX = 0;
-	App->CLSB_Ogre->RenderListener->RZ = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RX = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RZ = 0;
 }
 
 // *************************************************************************
@@ -71,7 +71,7 @@ void SB_Camera_EQ::Reset_Orientation(void)
 // *************************************************************************
 void SB_Camera_EQ::Set_Camera_Mode(int Mode)
 {
-	App->CLSB_Ogre->OgreListener->CameraMode = Mode;
+	App->CLSB_Ogre_Setup->OgreListener->CameraMode = Mode;
 }
 
 // *************************************************************************
@@ -79,8 +79,8 @@ void SB_Camera_EQ::Set_Camera_Mode(int Mode)
 // *************************************************************************
 void SB_Camera_EQ::Zero_View(void)
 {
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
-	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
+	App->CLSB_Ogre_Setup->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
+	App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
 }
 
 // *************************************************************************
@@ -88,6 +88,6 @@ void SB_Camera_EQ::Zero_View(void)
 // *************************************************************************
 void SB_Camera_EQ::Save_Camera_Pos(void)
 {
-	Saved_Pos = App->CLSB_Ogre->mCamera->getPosition();
-	Saved_Rotation = App->CLSB_Ogre->mCamera->getOrientation();
+	Saved_Pos = App->CLSB_Ogre_Setup->mCamera->getPosition();
+	Saved_Rotation = App->CLSB_Ogre_Setup->mCamera->getOrientation();
 }

@@ -112,8 +112,8 @@ void SB_Picking::Mouse_Pick_Entity()
     Total_index_count = 0;
     // --------------------------------------------------------------
     
-     rw = App->CLSB_Ogre->mWindow;
-     camera = App->CLSB_Ogre->mCamera;
+     rw = App->CLSB_Ogre_Setup->mWindow;
+     camera = App->CLSB_Ogre_Setup->mCamera;
    
 
     ImGuiIO& io = ImGui::GetIO();
@@ -128,7 +128,7 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::MovableObject* target = NULL;
     closest_distance = 0;
 
-    App->CLSB_Ogre->OgreListener->Selected_Object_Name[0] = 0;
+    App->CLSB_Ogre_Setup->OgreListener->Selected_Object_Name[0] = 0;
 
     Ogre::SceneNode* mNode;
 
@@ -157,7 +157,7 @@ void SB_Picking::Mouse_Pick_Entity()
 			{
                 // Test Marker in mesh Triangle
 				Render_Selection();
-                App->CLSB_Ogre->RenderListener->Show_Marker_Face = 1;
+                App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 1;
 
                 // Get Brush
 				int Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Brush_Index;
@@ -165,12 +165,12 @@ void SB_Picking::Mouse_Pick_Entity()
 
                 // Store Brush faces and render
                 App->CLSB_Mesh_Mgr->Store_Faces_Data();
-                App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 1;
+                App->CLSB_Ogre_Setup->RenderListener->Show_Brush_Faces = 1;
 
                 // Select Face and render
                 Real_Face_Index = App->CLSB_Model->Group[SubMesh_Index]->Face_Data[Local_Face].Face_Index+1;
                 Select_Face_In_Brush(Real_Face_Index);
-                App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
+                App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 1;
 
 			}
         }

@@ -88,7 +88,7 @@ void SB_Textures::Load_Textures_Assimp()
 				char buf[MAX_PATH];
 				strcpy(buf, App->CLSB_Model->Texture_FolderPath);
 				strcat(buf, "TTemp.bmp");
-				UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
+				UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
 				Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
 
 				App->CLSB_Loader->LoadError = 1;
@@ -105,7 +105,7 @@ void SB_Textures::Load_Textures_Assimp()
 			char buf[MAX_PATH];
 			strcpy(buf, App->CLSB_Model->Texture_FolderPath);
 			strcat(buf, "TTemp.bmp");
-			UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
+			UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
 			Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
 
 			App->CLSB_Loader->LoadError = 1;
@@ -412,7 +412,7 @@ bool SB_Textures::Load_OpenGL_Textures(int TextureID)
 	strcpy(buf, App->CLSB_Model->Texture_FolderPath);
 	strcat(buf, "Etemp.bmp");
 
-	UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
+	UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
 
 	// ----------------------------------- Bitmap
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)

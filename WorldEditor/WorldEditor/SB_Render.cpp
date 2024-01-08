@@ -177,11 +177,11 @@ void SB_Render::PreRender()
 	glPushMatrix();
 	glLoadIdentity(); //Texture addressing should start out as direct.
 
-	RenderSystem* renderSystem = App->CLSB_Ogre->manObj->_getManager()->getDestinationRenderSystem();
-	Node* parentNode = App->CLSB_Ogre->manObj->getParentNode();
+	RenderSystem* renderSystem = App->CLSB_Ogre_Setup->manObj->_getManager()->getDestinationRenderSystem();
+	Node* parentNode = App->CLSB_Ogre_Setup->manObj->getParentNode();
 	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
-	renderSystem->_setViewMatrix(App->CLSB_Ogre->mCamera->getViewMatrix());
-	renderSystem->_setProjectionMatrix(App->CLSB_Ogre->mCamera->getProjectionMatrixRS());
+	renderSystem->_setViewMatrix(App->CLSB_Ogre_Setup->mCamera->getViewMatrix());
+	renderSystem->_setProjectionMatrix(App->CLSB_Ogre_Setup->mCamera->getProjectionMatrixRS());
 
 	static Pass* clearPass = NULL;
 	if (!clearPass)
@@ -190,7 +190,7 @@ void SB_Render::PreRender()
 		clearPass = clearMat->getTechnique(0)->getPass(0);
 	}
 	//Set a clear pass to give the renderer a clear renderstate
-	App->CLSB_Ogre->mSceneMgr->_setPass(clearPass, true, false);
+	App->CLSB_Ogre_Setup->mSceneMgr->_setPass(clearPass, true, false);
 
 	// save attribs
 	glPushAttrib(GL_ALL_ATTRIB_BITS);

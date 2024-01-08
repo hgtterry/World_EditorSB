@@ -383,7 +383,7 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 // *************************************************************************
 void SB_Bullet::Reset_Physics(void)
 {
-	App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+	App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 0;
 
 	float w = 1;
 	float x = 0;
@@ -459,7 +459,7 @@ void SB_Bullet::Reset_Physics(void)
 	bool Doit = App->CLSB_Dialogs->Canceled;
 	if (Doit == 0)
 	{
-		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+		App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 	}
 
 }

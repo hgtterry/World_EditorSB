@@ -97,7 +97,7 @@ void SB_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	if (Create == 1)
 	{
-		Export_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		Export_Manual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("OgreManual2");
 		Export_Manual->setRenderQueueGroup(2);
 	}
 
@@ -183,7 +183,7 @@ void SB_Ogre3D::Export_To_Ogre3D(bool Create)
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
-	App->CLSB_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
+	App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject(Export_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
@@ -237,7 +237,7 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	if (Create == 1)
 	{
-		World_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		World_Manual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("OgreManual2");
 		World_Manual->setRenderQueueGroup(2);
 	}
 
@@ -326,7 +326,7 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
-	App->CLSB_Ogre->mSceneMgr->destroyManualObject(World_Manual);
+	App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject(World_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
@@ -354,8 +354,8 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 	{
 		App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
 
-		App->CLSB_Ogre->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
-		App->CLSB_Ogre->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
 		
 		App->CLSB_Mesh_Mgr->World_Node = NULL;
 		App->CLSB_Mesh_Mgr->World_Ent = NULL;
@@ -365,22 +365,22 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 
 		//Ogre::MeshManager::getSingleton().remove(Name);
 
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
 
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
 
 	}
 	else
 	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
 	}
 
 	
-	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity(Name);
-	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
+	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	
 	App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
 

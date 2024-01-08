@@ -225,7 +225,7 @@ bool SB_Genesis3D::LoadActorTextures(void)
 			if (App->CLSB_Model->S_TextureInfo[Count]->GEHasAlpha == 1)
 			{
 				//App->CLSB_Textures->Genesis_WriteTGA(TempTextureFile_TGA, App->CLSB_Model->S_TextureInfo[Count]->Bitmap);
-				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_TGA, MatIndex);
+				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_Texture, TempTextureFile_TGA, MatIndex);
 				TgaLoaded = 1;// Signal bmp Loaded for delete
 			}
 			else
@@ -236,7 +236,7 @@ bool SB_Genesis3D::LoadActorTextures(void)
 
 					//App->CLSB_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
 
-					App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, MatIndex);
+					App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_Texture, TempTextureFile_BMP, MatIndex);
 					BmpLoaded = 1;// Signal bmp Loaded for delete
 				}
 			}

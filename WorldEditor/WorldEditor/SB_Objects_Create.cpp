@@ -82,8 +82,8 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CLSB_Scene->Project_Resource_Group);
-	Object->Object_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CLSB_Scene->Project_Resource_Group);
+	Object->Object_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);

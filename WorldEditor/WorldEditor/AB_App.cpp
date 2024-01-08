@@ -60,7 +60,7 @@ SB_App::SB_App()
 	CL_F_View =					NULL;
 
 	// Scene Builder 
-	CLSB_Ogre =					nullptr;
+	CLSB_Ogre_Setup =			nullptr;
 	CLSB_Grid =					nullptr;
 	CLSB_Equity =				nullptr;
 	CLSB_Keyboard =				nullptr;
@@ -283,7 +283,7 @@ bool SB_App::InitApp(void)
 
 
 	// Scene Builder 
-	CLSB_Ogre =						new SB_Ogre();
+	CLSB_Ogre_Setup =				new SB_Ogre_Setup();
 	CLSB_Grid =						new SB_Grid();
 	CLSB_Equity =					new SB_Equity();
 	CLSB_Keyboard =					new SB_Keyboard();
@@ -555,10 +555,10 @@ void SB_App::Error_ToFile(char* Message, char* Message2)
 // *************************************************************************
 void SB_App::Close_WorldEditor()
 {
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 	{
-		delete App->CLSB_Ogre->mRoot;
-		App->CLSB_Ogre->mRoot = NULL;
+		delete App->CLSB_Ogre_Setup->mRoot;
+		App->CLSB_Ogre_Setup->mRoot = NULL;
 	}
 
 	delete App->CLSB_Doc;

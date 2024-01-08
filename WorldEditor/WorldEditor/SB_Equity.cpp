@@ -134,7 +134,7 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		EquitySB_Dialog_Created = 1;
 
-		App->CLSB_Ogre->RenderHwnd = App->ViewGLhWnd;
+		App->CLSB_Ogre_Setup->RenderHwnd = App->ViewGLhWnd;
 
 		Resize_3DView();
 
@@ -212,13 +212,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_RENDER_BRUSEHS)
 		{
-			if (App->CLSB_Ogre->RenderListener->ShowBrushes == 1)
+			if (App->CLSB_Ogre_Setup->RenderListener->ShowBrushes == 1)
 			{
-				App->CLSB_Ogre->RenderListener->ShowBrushes = 0;
+				App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+				App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
 			}
 
 			return TRUE;
@@ -232,7 +232,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_DEBUG_GENERAL)
 		{
-			App->CLSB_Ogre->RenderListener->JustTexture_ID++;
+			App->CLSB_Ogre_Setup->RenderListener->JustTexture_ID++;
 
 			/*if (App->CLSB_Ogre->RenderListener->ShowBoundingGroup == 1)
 			{
@@ -299,13 +299,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		// Physics
 		if (LOWORD(wParam) == ID_PHYSICS_PHYSICS)
 		{
-			if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics == 1)
 			{
-				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 			}
 			return TRUE;
 		}
@@ -314,14 +314,14 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		{
 			int f = App->CLSB_Bullet->Phys_Body->getCollisionFlags();
 			
-			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll == 1)
 			{
-				App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll = 0;
+				App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll = 0;
 				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll = 1;
+				App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll = 1;
 				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f& (~(1 << 5)));
 			}
 			
@@ -596,14 +596,14 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
-				if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 0;
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 1;
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 				}
 			}
@@ -618,15 +618,15 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
 
-				if (App->CLSB_Ogre->RenderListener->ShowTextured == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowTextured == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowTextured = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
@@ -642,15 +642,15 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
-				if (App->CLSB_Ogre->RenderListener->ShowNormals == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowNormals == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowNormals = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowNormals = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowNormals = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowNormals = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
@@ -666,15 +666,15 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWLIGHT2);
 
-				if (App->CLSB_Ogre->RenderListener->Light_Activated == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->Light_Activated == 1)
 				{
-					App->CLSB_Ogre->RenderListener->Light_Activated = 0;
+					App->CLSB_Ogre_Setup->RenderListener->Light_Activated = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->Light_Activated = 1;
+					App->CLSB_Ogre_Setup->RenderListener->Light_Activated = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
 				}
@@ -690,15 +690,15 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
 
-				if (App->CLSB_Ogre->RenderListener->ShowPoints == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowPoints == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowPoints = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowPoints = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowPoints = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowPoints = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 				}
@@ -713,15 +713,15 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 
-				if (App->CLSB_Ogre->RenderListener->ShowBones == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowBones == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowBones = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowBones = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowBones = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowBones = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 				}
@@ -737,16 +737,16 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
-				if (App->CLSB_Ogre->RenderListener->ShowBoundingBox == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowBoundingBox == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowBoundingBox = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowBoundingBox = 0;
 					//App->CLSB_TopBar->Toggle_BBox_Flag = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowBoundingBox = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowBoundingBox = 1;
 					//App->CLSB_TopBar->Toggle_BBox_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
@@ -918,7 +918,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
+		if (App->CLSB_Ogre_Setup->OgreListener->Pl_LeftMouseDown == 0)
 		{
 			{
 		
@@ -926,11 +926,11 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				if (zDelta > 0)
 				{
-					App->CLSB_Ogre->OgreListener->Wheel = -1;
+					App->CLSB_Ogre_Setup->OgreListener->Wheel = -1;
 				}
 				else if (zDelta < 0)
 				{
-					App->CLSB_Ogre->OgreListener->Wheel = 1;
+					App->CLSB_Ogre_Setup->OgreListener->Wheel = 1;
 				}
 				return 1;
 			}
@@ -939,7 +939,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->CLSB_Ogre->m_imgui.mouseMoved();
+		App->CLSB_Ogre_Setup->m_imgui.mouseMoved();
 
 		SetFocus(App->ViewGLhWnd);
 		break;
@@ -948,29 +948,29 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
-			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 			{
 				POINT p;
 				GetCursorPos(&p);
 				//ScreenToClient(App->MainHwnd, &p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_Cent500Y = p.y;
 
 				SetCapture(App->ViewGLhWnd);
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_LeftMouseDown = 1;
 			}
 
 		}
@@ -979,15 +979,15 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	}
 	case WM_RBUTTONUP:
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->CLSB_Ogre_Setup->OgreListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 
-			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
 			{
 				App->CLSB_Picking->Mouse_Pick_Entity();
 
@@ -1009,21 +1009,21 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
+		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
-			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 			{
 
 				POINT p;
 				GetCursorPos(&p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_Cent500Y = p.y;
 
-				if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+				if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
 				{
 					App->CLSB_Picking->Left_MouseDown = 1;
 
@@ -1035,7 +1035,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 				SetCapture(App->ViewGLhWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_LeftMouseDown = 1;
 
 				App->CUR = SetCursor(NULL);
 
@@ -1043,7 +1043,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_Ogre_Setup->OgreListener->Pl_LeftMouseDown = 1;
 			}
 		}
 
@@ -1053,12 +1053,12 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_LBUTTONUP:
 	{
-		App->CLSB_Ogre->m_imgui.mouseReleased();
+		App->CLSB_Ogre_Setup->m_imgui.mouseReleased();
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			App->CLSB_Ogre_Setup->OgreListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -1104,11 +1104,11 @@ void SB_Equity::Resize_3DView()
 		SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
 
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
-			App->CLSB_Ogre->mWindow->windowMovedOrResized();
-			App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-			App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+			App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+			App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
+			App->CLSB_Ogre_Setup->mCamera->yaw(Ogre::Radian(0));
 
 			Root::getSingletonPtr()->renderOneFrame();
 		}
@@ -1135,9 +1135,9 @@ void SB_Equity::Set_Mode_Equity()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 	{
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 	}
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1186,15 +1186,15 @@ void SB_Equity::Go_Equity()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
-			App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+			App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 		}
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		
 		App->CLSB_Model->Render_Type = Enums::Render_Assimp;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Model_Loaded = 1;
 
 		ShowWindow(App->ListPanel, false);
@@ -1214,7 +1214,7 @@ void SB_Equity::Go_Equity()
 
 		App->CLSB_GameDirector->Show_Objects(false);
 
-		App->CLSB_Ogre->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
+		App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	}
 
 	//App->CLSB_Equity->Show_Equity_Dialog(true);
@@ -1226,7 +1226,7 @@ void SB_Equity::Go_Equity()
 void SB_Equity::Set_Camera()
 {
 	geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
-	App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
+	App->CLSB_Ogre_Setup->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
 	geVec3d Angles;
 	App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
@@ -1238,9 +1238,9 @@ void SB_Equity::Set_Camera()
 
 	Angles.X = Angles.X + 3.141;
 
-	App->CLSB_Ogre->OgreListener->mCam->setOrientation(Rotation);
-	App->CLSB_Ogre->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
-	App->CLSB_Ogre->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
+	App->CLSB_Ogre_Setup->OgreListener->mCam->setOrientation(Rotation);
+	App->CLSB_Ogre_Setup->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
+	App->CLSB_Ogre_Setup->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
 }
 
 // *************************************************************************
@@ -1291,13 +1291,13 @@ void SB_Equity::Do_Preview_Selected()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
 		App->CLSB_ImGui->Show_Physics_Console = 0;
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 
 		App->CLSB_Camera_EQ->Reset_View();
 
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
-			App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+			App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 0;
 		}
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1311,8 +1311,8 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Dimensions->Centre_Model_Mid_Brushes();
 
 		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_Brushes;
 
 		ShowWindow(App->ListPanel, false);

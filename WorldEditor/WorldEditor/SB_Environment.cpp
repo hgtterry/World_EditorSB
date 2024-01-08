@@ -175,7 +175,7 @@ void SB_Environment::Set_First_Environment(int Index)
 	float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.y;
 	float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 
-	App->CLSB_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 	if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
@@ -187,16 +187,16 @@ void SB_Environment::Set_First_Environment(int Index)
 		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Enabled == 1)
 	{
-		App->CLSB_Ogre->mSceneMgr->setSkyDome(true,
+		App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(true,
 			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Material,
 			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Curvature,
 			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Tiling,
@@ -232,7 +232,7 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 	float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.x;
 	float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.y;
 	float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.z;
-	App->CLSB_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 
 	// Fog
@@ -246,11 +246,11 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	if (PlayMusic == 1)
@@ -413,7 +413,7 @@ void SB_Environment::Environ_PropertyEditor()
 			Ambient_Int_Blue = Ambient_Colour.z * 255;
 
 			App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
-			App->CLSB_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
+			App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
 
 			Mark_As_Altered_Environ(Eviron_Index);
 		}
@@ -760,7 +760,7 @@ void SB_Environment::Close_Environment_Editor()
 // *************************************************************************
 void SB_Environment::Set_To_PlayerView()
 {
-	App->CLSB_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	App->CLSB_Ogre_Setup->OgreListener->GD_CameraMode = Enums::CamFirst;
 	//App->CLSB_TopTabs->Toggle_FirstCam_Flag = 1;
 	//App->CLSB_TopTabs->Toggle_FreeCam_Flag = 0;
 
@@ -769,10 +769,10 @@ void SB_Environment::Set_To_PlayerView()
 	int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 	App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
-	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 
-	App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 
 	//RedrawWindow(App->CLSB_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -784,7 +784,7 @@ void SB_Environment::SetSky(bool Enable)
 {
 	int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	App->CLSB_Ogre->mSceneMgr->setSkyDome(Enable,
+	App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(Enable,
 		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Material,
 		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Curvature,
 		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Tiling,
@@ -808,11 +808,11 @@ bool SB_Environment::EnableFog(bool SetFog)
 		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->CLSB_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	return 1;

@@ -391,7 +391,7 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* TextureName, int Group
 
 			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
 
-			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
+			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
 
 			DeleteFile((LPCTSTR)TempTextureFile_BMP);
 		}

@@ -29,8 +29,8 @@ distribution.
 
 SB_OgreListener::SB_OgreListener(void)
 {
-	mCam = App->CLSB_Ogre->mCamera;
-	Pl_mDummyCamera = App->CLSB_Ogre->mSceneMgr->createCamera("PickCamera");
+	mCam = App->CLSB_Ogre_Setup->mCamera;
+	Pl_mDummyCamera = App->CLSB_Ogre_Setup->mSceneMgr->createCamera("PickCamera");
 	
 	Wheel = 0;
 	StopOgre = 0;
@@ -86,10 +86,10 @@ SB_OgreListener::SB_OgreListener(void)
 	AnimationScale = 1;
 
 
-	App->CLSB_Picking = new SB_Picking(App->CLSB_Ogre->mSceneMgr);
+	App->CLSB_Picking = new SB_Picking(App->CLSB_Ogre_Setup->mSceneMgr);
 	
 
-	mCollisionTools = new MOC::CollisionTools(App->CLSB_Ogre->mSceneMgr);
+	mCollisionTools = new MOC::CollisionTools(App->CLSB_Ogre_Setup->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 	DistanceToCollision = 0;
 
@@ -131,8 +131,8 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 {
 
-	App->CLSB_Ogre->Get_View_Height_Width();
-	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+	App->CLSB_Ogre_Setup->Get_View_Height_Width();
+	App->CLSB_Ogre_Setup->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 	
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
@@ -232,7 +232,7 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	OgreFrameTime = evt.timeSinceLastFrame;
 
-	App->CLSB_Ogre->m_imgui.render();
+	App->CLSB_Ogre_Setup->m_imgui.render();
 	
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
@@ -264,11 +264,11 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		mYaw = App->CLSB_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
 		Pos.y = Pos.y + App->CLSB_Scene->B_Player[0]->PlayerHeight;
 
-		App->CLSB_Ogre->mCamera->setPosition(Pos);
-		App->CLSB_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-		App->CLSB_Ogre->mCamera->yaw(mYaw);
-		App->CLSB_Ogre->mCamera->pitch(mmPitch);
-		App->CLSB_Ogre->mCamera->yaw(Ogre::Degree(180));
+		App->CLSB_Ogre_Setup->mCamera->setPosition(Pos);
+		App->CLSB_Ogre_Setup->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->CLSB_Ogre_Setup->mCamera->yaw(mYaw);
+		App->CLSB_Ogre_Setup->mCamera->pitch(mmPitch);
+		App->CLSB_Ogre_Setup->mCamera->yaw(Ogre::Degree(180));
 
 
 		App->CLSB_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
@@ -562,7 +562,7 @@ bool SB_OgreListener::Capture_LeftMouse_Model(void)
 			App->CLSB_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CLSB_Ogre->RenderListener->RZ = App->CLSB_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CLSB_Ogre_Setup->RenderListener->RZ = App->CLSB_Ogre_Setup->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -576,7 +576,7 @@ bool SB_OgreListener::Capture_LeftMouse_Model(void)
 			App->CLSB_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CLSB_Ogre->RenderListener->RZ = App->CLSB_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CLSB_Ogre_Setup->RenderListener->RZ = App->CLSB_Ogre_Setup->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -592,7 +592,7 @@ bool SB_OgreListener::Capture_LeftMouse_Model(void)
 			App->CLSB_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CLSB_Ogre->RenderListener->RX = App->CLSB_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CLSB_Ogre_Setup->RenderListener->RX = App->CLSB_Ogre_Setup->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -606,7 +606,7 @@ bool SB_OgreListener::Capture_LeftMouse_Model(void)
 			App->CLSB_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CLSB_Ogre->RenderListener->RX = App->CLSB_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CLSB_Ogre_Setup->RenderListener->RX = App->CLSB_Ogre_Setup->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}

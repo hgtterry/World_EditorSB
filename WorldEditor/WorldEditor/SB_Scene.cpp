@@ -729,7 +729,7 @@ bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int Gro
 
 			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
 
-			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile_BMP, GroupIndex);
+			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_BrushTexture, TempTextureFile_BMP, GroupIndex);
 
 			DeleteFile((LPCTSTR)TempTextureFile_BMP);
 		}
@@ -755,10 +755,10 @@ void SB_Scene::Go_FullScreen_Mode(void)
 
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->CLSB_Ogre->mWindow->resize(cx, cy);
+	App->CLSB_Ogre_Setup->mWindow->resize(cx, cy);
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }

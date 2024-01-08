@@ -47,58 +47,58 @@ void SB_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	if (GetAsyncKeyState(69) < 0) // E key 
 	{
 		Ogre::Real Rate;
-		Rate = (App->CLSB_Ogre->OgreListener->mMoveSensitivity / 1000) * 2;
+		Rate = (App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity / 1000) * 2;
 
 		Ogre::Vector3 OldPos;
-		OldPos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+		OldPos = App->CLSB_Ogre_Setup->OgreListener->mCam->getPosition();
 
 		OldPos.y += Rate;
-		App->CLSB_Ogre->OgreListener->mCam->setPosition(OldPos);
+		App->CLSB_Ogre_Setup->OgreListener->mCam->setPosition(OldPos);
 	}
 
 	// Pan Down
 	if (GetAsyncKeyState(81) < 0)  // Q Key
 	{
 		Ogre::Real Rate;
-		Rate = (App->CLSB_Ogre->OgreListener->mMoveSensitivity / 1000) * 2;
+		Rate = (App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity / 1000) * 2;
 
 		Ogre::Vector3 OldPos;
-		OldPos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+		OldPos = App->CLSB_Ogre_Setup->OgreListener->mCam->getPosition();
 
 		OldPos.y -= Rate;
-		App->CLSB_Ogre->OgreListener->mCam->setPosition(OldPos);
+		App->CLSB_Ogre_Setup->OgreListener->mCam->setPosition(OldPos);
 	}
 
 	// Forward
-	if (App->CLSB_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+	if (App->CLSB_Ogre_Setup->OgreListener->Wheel < 0) // Mouse Wheel Forward
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 	}
 	
 	// Back
-	if (App->CLSB_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+	if (App->CLSB_Ogre_Setup->OgreListener->Wheel > 0) // Mouse Wheel Back
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = App->CLSB_Ogre_Setup->OgreListener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = App->CLSB_Ogre->OgreListener->mMoveScale;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 	}
 
 	// Pan Left
 	if (GetAsyncKeyState(65) < 0) // A Key
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.x = App->CLSB_Ogre->OgreListener->mMoveScale;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.x = App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 	}
 
 	// Pan Right
 	if (GetAsyncKeyState(68) < 0)  // D Key
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.x = -App->CLSB_Ogre->OgreListener->mMoveScale;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.x = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 	}
 
 	//------------------------------------------------ Escape 
@@ -106,7 +106,7 @@ void SB_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	{
 		if (App->CLSB_Scene->FullScreenMode_Flag == 1)
 		{
-			App->CLSB_Ogre->ExitFullScreen();
+			App->CLSB_Ogre_Setup->ExitFullScreen();
 		}
 	}
 }
@@ -117,29 +117,29 @@ void SB_Keyboard::Keyboard_Mode_Model(float deltaTime)
 void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	// Forward
-	if (App->CLSB_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+	if (App->CLSB_Ogre_Setup->OgreListener->Wheel < 0) // Mouse Wheel Forward
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale;
+			App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 			//App->CLSB_Camera_WE->Move_Camera_Forward(App->CLSB_Ogre->OgreListener->mMoveScale);
 		}
 	}
 
 	// Back
-	if (App->CLSB_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+	if (App->CLSB_Ogre_Setup->OgreListener->Wheel > 0) // Mouse Wheel Back
 	{
-		App->CLSB_Ogre->OgreListener->mTranslateVector.z = App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+		App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = App->CLSB_Ogre_Setup->OgreListener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			App->CLSB_Ogre->OgreListener->mTranslateVector.z = App->CLSB_Ogre->OgreListener->mMoveScale;
+			App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.z = App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 		}
 
 	}
@@ -147,48 +147,48 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	// Pan Down
 	if (GetAsyncKeyState(81) < 0) // Q Key	
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			Rate = (App->CLSB_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+			Rate = (App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-			OldPos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+			OldPos = App->CLSB_Ogre_Setup->OgreListener->mCam->getPosition();
 
 			OldPos.y -= Rate;
 
-			App->CLSB_Ogre->OgreListener->mCam->setPosition(OldPos);
+			App->CLSB_Ogre_Setup->OgreListener->mCam->setPosition(OldPos);
 		}
 	}
 
 	//	Pan Up
 	if (GetAsyncKeyState(69) < 0) // E Key
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			Rate = (App->CLSB_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+			Rate = (App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-			OldPos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+			OldPos = App->CLSB_Ogre_Setup->OgreListener->mCam->getPosition();
 
 			OldPos.y += Rate;
 
-			App->CLSB_Ogre->OgreListener->mCam->setPosition(OldPos);
+			App->CLSB_Ogre_Setup->OgreListener->mCam->setPosition(OldPos);
 		}
 	}
 
 	// Pan Left
 	if (GetAsyncKeyState(65) < 0) // A Key
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			App->CLSB_Ogre->OgreListener->mTranslateVector.x = -App->CLSB_Ogre->OgreListener->mMoveScale;
+			App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.x = -App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 		}
 	}
 
 	// Pan Right
 	if (GetAsyncKeyState(68) < 0) // D Key
 	{
-		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
+		if (App->CLSB_Ogre_Setup->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			App->CLSB_Ogre->OgreListener->mTranslateVector.x = App->CLSB_Ogre->OgreListener->mMoveScale;
+			App->CLSB_Ogre_Setup->OgreListener->mTranslateVector.x = App->CLSB_Ogre_Setup->OgreListener->mMoveScale;
 		}
 	}
 
@@ -206,7 +206,7 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			{
 				if (App->CLSB_Scene->FullScreenMode_Flag == 1)
 				{
-					App->CLSB_Ogre->ExitFullScreen();
+					App->CLSB_Ogre_Setup->ExitFullScreen();
 				}
 			}
 		}
@@ -302,7 +302,7 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving == 1 && App->CLSB_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving == 1 && App->CLSB_Ogre_Setup->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->CLSB_Scene->B_Player[0]->IsMOving = 0;
@@ -538,7 +538,7 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 				{
 					if (App->CLSB_Scene->FullScreenMode_Flag == 1)
 					{
-						App->CLSB_Ogre->ExitFullScreen();
+						App->CLSB_Ogre_Setup->ExitFullScreen();
 					}
 				}
 			}
@@ -568,7 +568,7 @@ void SB_Keyboard::Keyboard_Mode_WorldEditor(float deltaTime)
 		}
 
 		// Forward
-		if (App->CLSB_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+		if (App->CLSB_Ogre_Setup->OgreListener->Wheel < 0) // Mouse Wheel Forward
 		{
 		}
 		if (GetAsyncKeyState(87) < 0) // W Key
@@ -577,7 +577,7 @@ void SB_Keyboard::Keyboard_Mode_WorldEditor(float deltaTime)
 		}
 
 		// Back
-		if (App->CLSB_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+		if (App->CLSB_Ogre_Setup->OgreListener->Wheel > 0) // Mouse Wheel Back
 		{
 
 		}

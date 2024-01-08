@@ -198,7 +198,7 @@ void SB_Game_Editor::Go_Game_Editor()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
 
-		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -216,8 +216,8 @@ void SB_Game_Editor::Go_Game_Editor()
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
 
 		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 
 		App->CLSB_Model->Render_Type = Enums::Render_Ogre;
 
@@ -265,7 +265,7 @@ void SB_Game_Editor::Go_Game_Editor()
 void SB_Game_Editor::Set_Camera()
 {
 	geVec3d Pos = App->CLSB_Camera_WE->FindCameraEntity()->mOrigin;
-	App->CLSB_Ogre->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
+	App->CLSB_Ogre_Setup->mCamera->setPosition(Pos.X, Pos.Y, Pos.Z);
 	geVec3d Angles;
 	App->CLSB_Camera_WE->FindCameraEntity()->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
@@ -277,9 +277,9 @@ void SB_Game_Editor::Set_Camera()
 
 	Angles.X = Angles.X + 3.141593;
 
-	App->CLSB_Ogre->OgreListener->mCam->setOrientation(Rotation);
-	App->CLSB_Ogre->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
-	App->CLSB_Ogre->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
+	App->CLSB_Ogre_Setup->OgreListener->mCam->setOrientation(Rotation);
+	App->CLSB_Ogre_Setup->OgreListener->mCam->yaw(Ogre::Radian(-Angles.Y));
+	App->CLSB_Ogre_Setup->OgreListener->mCam->pitch(Ogre::Radian(-Angles.X));
 }
 
 // *************************************************************************
@@ -321,14 +321,14 @@ void SB_Game_Editor::Reset_Camera()
 {
 
 	Ogre::Vector3 Pos;
-	Pos = App->CLSB_Ogre->OgreListener->mCam->getPosition();
+	Pos = App->CLSB_Ogre_Setup->OgreListener->mCam->getPosition();
 	App->CLSB_Camera_WE->CameraPosition.X = Pos.x;
 	App->CLSB_Camera_WE->CameraPosition.Y = Pos.y;
 	App->CLSB_Camera_WE->CameraPosition.Z = Pos.z;
 
 	Ogre::Vector3 Rot;
-	Rot.x = App->CLSB_Ogre->OgreListener->mCam->getOrientation().getPitch().valueRadians();
-	Rot.y = App->CLSB_Ogre->OgreListener->mCam->getOrientation().getYaw().valueRadians();
+	Rot.x = App->CLSB_Ogre_Setup->OgreListener->mCam->getOrientation().getPitch().valueRadians();
+	Rot.y = App->CLSB_Ogre_Setup->OgreListener->mCam->getOrientation().getYaw().valueRadians();
 	Rot.z = 0;
 
 	geVec3d Angles;

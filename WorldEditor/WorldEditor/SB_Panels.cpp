@@ -141,10 +141,10 @@ void SB_Panels::Set_Aplication_Dialogs_Off(void)
 
 	if (App->BR_True3D_Mode_Active == 1)
 	{
-		App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
-		App->CLSB_Ogre->RenderListener->Show_Brush_Faces = 0;
-		App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
-		App->CLSB_Ogre->RenderListener->Show_Marker_Face = 0;
+		App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
+		App->CLSB_Ogre_Setup->RenderListener->Show_Brush_Faces = 0;
+		App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 0;
+		App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 0;
 
 		App->CLSB_BR_Render->Exit_BR_3D_Mode();
 		App->BR_True3D_Mode_Active = 0;

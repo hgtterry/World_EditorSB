@@ -773,8 +773,8 @@ LRESULT CALLBACK SB_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_CKNORMAL)
 		{
 
-			App->CLSB_Ogre->OgreListener->mMoveSensitivity = 50;
-			App->CLSB_Ogre->OgreListener->mMoveSensitivityMouse = 50;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity = 50;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivityMouse = 50;
 
 			App->CLSB_Dialogs->UnCheck_All_SpeedMouseOption();
 			App->CLSB_Dialogs->Mouse_Normal = 1;
@@ -787,8 +787,8 @@ LRESULT CALLBACK SB_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_CKSLOW)
 		{
 
-			App->CLSB_Ogre->OgreListener->mMoveSensitivity = 5;
-			App->CLSB_Ogre->OgreListener->mMoveSensitivityMouse = 5;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity = 5;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivityMouse = 5;
 
 			App->CLSB_Dialogs->UnCheck_All_SpeedMouseOption();
 			App->CLSB_Dialogs->Mouse_Slow = 1;
@@ -801,8 +801,8 @@ LRESULT CALLBACK SB_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_CKVERYSLOW)
 		{
 
-			App->CLSB_Ogre->OgreListener->mMoveSensitivity = 1;
-			App->CLSB_Ogre->OgreListener->mMoveSensitivityMouse = 1;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity = 1;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivityMouse = 1;
 
 
 			App->CLSB_Dialogs->UnCheck_All_SpeedMouseOption();
@@ -816,8 +816,8 @@ LRESULT CALLBACK SB_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_CKFAST)
 		{
 
-			App->CLSB_Ogre->OgreListener->mMoveSensitivity = 250;
-			App->CLSB_Ogre->OgreListener->mMoveSensitivityMouse = 250;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivity = 250;
+			App->CLSB_Ogre_Setup->OgreListener->mMoveSensitivityMouse = 250;
 
 			App->CLSB_Dialogs->UnCheck_All_SpeedMouseOption();
 			App->CLSB_Dialogs->Mouse_Fast = 1;
@@ -974,7 +974,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->CLSB_Dialogs->DropList_Data == 0)
 			{
-				App->CLSB_Ogre->RenderListener->GroupNumber = Index;
+				App->CLSB_Ogre_Setup->RenderListener->GroupNumber = Index;
 			}
 
 			HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
@@ -1212,7 +1212,7 @@ void SB_Dialogs::UpdateGroupDetails(HWND List)
 
 	char buf[MAX_PATH];
 
-	int Num = App->CLSB_Ogre->RenderListener->GroupNumber;
+	int Num = App->CLSB_Ogre_Setup->RenderListener->GroupNumber;
 
 	sprintf(buf, "Centre X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Centre.x, App->CLSB_Model->Group[Num]->Centre.y, App->CLSB_Model->Group[Num]->Centre.z);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
@@ -1251,7 +1251,7 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		App->CLSB_Dialogs->Fill_Face_Combo(hDlg);
 		App->CLSB_Picking->Select_Face_In_Brush(App->CLSB_Picking->Real_Face_Index+1);
 		App->CLSB_Dialogs->Show_Face_Data(App->CLSB_Picking->Real_Face_Index+1, App->CLSB_Picking->Selected_Face, hDlg);
-		App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
+		App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 1;
 
 		return TRUE;
 	}
@@ -1280,7 +1280,7 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (some_item->idFrom == IDC_BT_RENDER && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Show_Selected_Face);
+			App->Custom_Button_Toggle(item, App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1312,13 +1312,13 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_RENDER)
 		{
-			if (App->CLSB_Ogre->RenderListener->Show_Selected_Face == 1)
+			if (App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face == 1)
 			{
-				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 0;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->Show_Selected_Face = 1;
+				App->CLSB_Ogre_Setup->RenderListener->Show_Selected_Face = 1;
 			}
 			return TRUE;
 		}

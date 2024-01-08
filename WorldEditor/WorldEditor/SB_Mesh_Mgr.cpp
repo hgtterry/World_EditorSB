@@ -216,7 +216,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Mesh_Mgr->Populate_RenderMode_Combo(CB_hWnd); // Populate Combo
 
 		HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
-		if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+		if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
 		{
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 		}
@@ -228,7 +228,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
 		App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
 
-		App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
+		App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
 
 		return TRUE;
 	}
@@ -265,7 +265,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Brush);
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush);
 			}
 
 			return CDRF_DODEFAULT;
@@ -321,14 +321,14 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_PICKSELECT)
 		{
-			if (App->CLSB_Ogre->OgreListener->GD_Selection_Mode == 1)
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
 				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 1;
 				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 1;
 			}
 			return TRUE;
@@ -378,14 +378,14 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
 
-			if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+			if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
 			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 0;
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 1;
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 			}
 
@@ -394,8 +394,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BT_LOOKAT)
 		{
-			App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(App->CLSB_Ogre->RenderListener->Selected_Brush_Index);
-			App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
+			App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index);
+			App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
 			return TRUE;
 		}
 
@@ -403,29 +403,29 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
 			{
-				if (App->CLSB_Ogre->RenderListener->Render_Just_Brush == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush == 1)
 				{
-					App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
+					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->Render_Just_Brush = 1;
+					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 1;
 				}
 			}
 
 			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
 			{
-				if (App->CLSB_Ogre->RenderListener->ShowOnlySubMesh == 1)
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh == 1)
 				{
-					App->CLSB_Ogre->RenderListener->ShowOnlySubMesh = 0;
+					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 0;
 				}
 				else
 				{
-					App->CLSB_Ogre->RenderListener->ShowOnlySubMesh = 1;
+					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 1;
 				}
 			}
 
-			App->CLSB_Ogre->RenderFrame();
+			App->CLSB_Ogre_Setup->RenderFrame();
 
 			return TRUE;
 		}
@@ -443,13 +443,13 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
 			{
-				App->CLSB_Ogre->RenderListener->Selected_Brush_Index = Index;
-				App->CLSB_Ogre->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index = Index;
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
 			}
 
 			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
 			{
-				App->CLSB_Ogre->RenderListener->Selected_Group = Index;
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Group = Index;
 			}
 
 			// ------------------- Compiled
@@ -1342,7 +1342,7 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 
 				App->CLSB_Textures->WriteTGA(TempTextureFile, App->CLSB_Textures->Temp_RF_Bitmap);
 
-				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
+				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
 			}
 			else
 			{
@@ -1352,7 +1352,7 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 
 				App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile);
 
-				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
+				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre_Setup->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
 			}
 
 			DeleteFile((LPCTSTR)TempTextureFile);
@@ -1735,10 +1735,10 @@ int SB_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
 bool SB_Mesh_Mgr::Update_World()
 {
 	App->CLSB_ImGui->Updating_F = 1;
-	App->CLSB_Ogre->RenderFrame();
-	App->CLSB_Ogre->RenderFrame();
-	App->CLSB_Ogre->RenderFrame();
-	App->CLSB_Ogre->RenderFrame();
+	App->CLSB_Ogre_Setup->RenderFrame();
+	App->CLSB_Ogre_Setup->RenderFrame();
+	App->CLSB_Ogre_Setup->RenderFrame();
+	App->CLSB_Ogre_Setup->RenderFrame();
 
 	WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);

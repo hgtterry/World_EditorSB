@@ -109,7 +109,7 @@ void SB_Player::Create_Player_Object(void)
 
 	Initialize();
 
-	App->CLSB_Scene->B_Player[Index]->CameraPitch = App->CLSB_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	App->CLSB_Scene->B_Player[Index]->CameraPitch = App->CLSB_Ogre_Setup->mSceneMgr->createCamera("PlayerPitch");
 
 	App->CLSB_Scene->Player_Count++;
 
@@ -129,16 +129,16 @@ void SB_Player::Initialize()
 	// ------------------- Ogre
 	if (pBase->Player_Ent && pBase->Player_Node)
 	{
-		App->CLSB_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
-		App->CLSB_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
-		App->CLSB_Ogre->mSceneMgr->destroyCamera(pBase->CameraPitch);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(pBase->Player_Node);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(pBase->Player_Ent);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyCamera(pBase->CameraPitch);
 		pBase->Player_Ent = nullptr;
 		pBase->Player_Node = nullptr;
 		pBase->CameraPitch = nullptr;
 	}
 
-	pBase->Player_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
-	pBase->Player_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	pBase->Player_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CLSB_Ogre_Setup->App_Resource_Group);
+	pBase->Player_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 	pBase->Player_Node->setVisible(false);
 

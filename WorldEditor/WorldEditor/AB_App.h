@@ -154,7 +154,7 @@ public:
 	F_View*						CL_F_View;
 
 	// Scene Builder 
-	SB_Ogre*					CLSB_Ogre;
+	SB_Ogre_Setup*				CLSB_Ogre_Setup;
 	SB_Grid*					CLSB_Grid;
 	SB_Equity*					CLSB_Equity;
 	SB_Keyboard*				CLSB_Keyboard;

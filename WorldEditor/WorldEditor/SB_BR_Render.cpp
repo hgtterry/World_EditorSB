@@ -48,8 +48,8 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
 
 		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
 		App->CLSB_Camera_EQ->Zero_View();
 
@@ -72,8 +72,8 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 		App->CLSB_TopTabs_Equity->Camera_Set_Free();
 
 		App->CLSB_Model->Model_Loaded = 1;
-		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_None;
 		//App->CLSB_Camera_EQ->Zero_View();
 
@@ -103,10 +103,10 @@ void SB_BR_Render::Go_BR_3D_Mode(void)
 
 	SetParent(App->ViewGLhWnd, App->MainHwnd);
 
-	App->CLSB_Ogre->mWindow->resize(width, height - 15);
+	App->CLSB_Ogre_Setup->mWindow->resize(width, height - 15);
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	App->CLSB_ImGui->Show_Physics_Console = 0;
 
@@ -127,10 +127,10 @@ void SB_BR_Render::BR_3D_Resize(void)
 
 	SetWindowPos(App->ViewGLhWnd, HWND_TOP, rect.left, rect.top - 27, width, height - 15, NULL);
 
-	App->CLSB_Ogre->mWindow->resize(width, height - 15);
+	App->CLSB_Ogre_Setup->mWindow->resize(width, height - 15);
 
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }
@@ -145,9 +145,9 @@ void SB_BR_Render::Exit_BR_3D_Mode(void)
 		
 		App->CLSB_Equity->Resize_3DView();
 		
-		App->CLSB_Ogre->mWindow->windowMovedOrResized();
-		App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-		App->CLSB_Ogre->mCamera->yaw(Radian(0));
+		App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+		App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
+		App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
 		Root::getSingletonPtr()->renderOneFrame();
 
 		App->CLSB_Scene->FullScreenMode_Flag = 0;

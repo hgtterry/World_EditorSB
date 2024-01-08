@@ -34,11 +34,11 @@ distribution.
 
 //#include <chrono>
 
-class SB_Ogre
+class SB_Ogre_Setup
 {
 public:
-	SB_Ogre(void);
-	~SB_Ogre(void);
+	SB_Ogre_Setup(void);
+	~SB_Ogre_Setup(void);
 
 	bool Ogre_Render_Loop(void);
 
