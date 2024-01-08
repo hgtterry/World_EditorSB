@@ -23,7 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
-#include "SB_Ogre.h"
+#include "SB_Ogre_Setup.h"
 
 SB_Ogre_Setup::SB_Ogre_Setup(void)
 {

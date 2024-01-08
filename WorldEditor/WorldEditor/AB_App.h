@@ -62,7 +62,7 @@ distribution.
 #include "F_View.h"
 
 // Scene Builder 
-#include "SB_Ogre.h"
+#include "SB_Ogre_Setup.h"
 #include "SB_Grid.h"
 #include "SB_Equity.h"
 #include "SB_Keyboard.h"
