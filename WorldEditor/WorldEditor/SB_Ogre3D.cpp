@@ -612,7 +612,8 @@ void SB_Ogre3D::AddToScene(void)
 		OgreModel_Node = nullptr;
 	}
 
-	//Ogre::ResourceGroupManager::getSingleton().prepareResourceGroup(TempResourceGroupXX);
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(TempResourceGroupXX);
+	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CLSB_Model->Texture_FolderPath,
 		"FileSystem",
 		TempResourceGroupXX);

@@ -249,8 +249,8 @@ void SB_Grid::Reset_View(void)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->resetOrientation();
 
-	//App->CL_Ogre->OgreListener->RX = 0;
-	//App->CL_Ogre->RenderListener->RZ = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RX = 0;
+	App->CLSB_Ogre_Setup->RenderListener->RZ = 0;
 
 	App->CLSB_Ogre_Setup->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(0, 30, 0));

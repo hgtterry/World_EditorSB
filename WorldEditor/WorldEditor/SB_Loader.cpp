@@ -127,7 +127,6 @@ bool SB_Loader::Ogre_Loader(char* Extension, char* Extension2)
 	App->CLSB_Ogre3D->Load_OgreModel();
 
 	App->CLSB_Assimp->Assimp_Model_Loaded = 1;
-	Debug
 	
 	return 1;
 }
