@@ -46,6 +46,7 @@ private:
 	void Init_Bmps_Globals(void);
 
 	void Get_CurrentDocument();
+	void Set_Title_Bar(char* Title);
 
 	CFusionDoc* m_pDoc;
 };

@@ -417,6 +417,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Dimensions->Rotate_Z_Assimp(90);
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 
+			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
+
 			return TRUE;
 		}
 
@@ -425,6 +427,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Loader->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
 			App->CLSB_Grid->Reset_View();
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
+
+			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
 
 			return TRUE;
 		}
@@ -438,6 +442,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Grid->Reset_View();
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 		
+			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
+
 			return TRUE;
 		}
 
@@ -1322,5 +1328,15 @@ void SB_Equity::Do_Preview_Selected()
 		App->Say("Only Cut Brush Selected","Cant not build Geometry from only Cut Brushes");
 
 	}
+}
 
+// *************************************************************************
+// *			 Set_Title_Bar:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void SB_Equity::Set_Title_Bar(char* Title)
+{
+	char FullTitle[MAX_PATH];
+	strcpy(FullTitle, "Equity ");
+	strcat(FullTitle, Title);
+	SetWindowText(App->Equity_Dlg_hWnd, FullTitle);
 }
