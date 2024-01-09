@@ -52,6 +52,29 @@ SB_Assimp::~SB_Assimp()
 }
 
 // *************************************************************************
+// *				Clear_Data:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+void SB_Assimp::Clear_Data()
+{
+	int Count = 0;
+	while (Count < Total_Assimp_GroupCount)
+	{
+		if (Assimp_Group[Count] != nullptr)
+		{
+			delete Assimp_Group[Count];
+			Assimp_Group[Count] = nullptr;
+		}
+
+		Count++;
+	}
+
+	Total_Assimp_GroupCount = 0;
+	Total_Assimp_VerticeCount = 0;
+	Total_Assimp_FaceCount = 0;
+	Assimp_Model_Loaded = 0;
+}
+
+// *************************************************************************
 // *				logInfo:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
 void SB_Assimp::logInfo(std::string logString)

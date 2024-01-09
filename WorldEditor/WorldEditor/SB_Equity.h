@@ -47,6 +47,7 @@ private:
 
 	void Get_CurrentDocument();
 	void Set_Title_Bar(char* Title);
+	void Clear_Model();
 
 	CFusionDoc* m_pDoc;
 };

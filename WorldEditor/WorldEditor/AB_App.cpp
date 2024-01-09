@@ -563,6 +563,8 @@ void SB_App::Close_WorldEditor()
 
 	delete App->CLSB_Doc;
 
+	App->CLSB_Assimp->Clear_Data();
+
 	App->CLSB_Mesh_Mgr->Delete_Brush_List();
 	App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
 

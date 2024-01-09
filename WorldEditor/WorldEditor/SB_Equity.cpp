@@ -406,10 +406,17 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		// ---------------- Equity -------------------------
 		// -------------------------------------------------
 
+		if (LOWORD(wParam) == ID_FILE_CLEARMODEL_EQUITY)
+		{
+			App->CLSB_Equity->Clear_Model();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_IMPORT_AUTODESK3DS_EQUITY)
 		{
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			bool test = App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			if (test == 0){return TRUE;}
 
 			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
 			App->CLSB_Grid->Reset_View();
@@ -424,7 +431,11 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_OGRE3D_MESHEQUITY)
 		{
-			App->CLSB_Loader->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			bool test = App->CLSB_Loader->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			if (test == 0){return TRUE;}
+
+			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
+
 			App->CLSB_Grid->Reset_View();
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 
@@ -436,7 +447,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ_EQUITY)
 		{
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			bool test = App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			if (test == 0){return TRUE;}
 
 			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
 			App->CLSB_Grid->Reset_View();
@@ -1339,4 +1351,15 @@ void SB_Equity::Set_Title_Bar(char* Title)
 	strcpy(FullTitle, "Equity ");
 	strcat(FullTitle, Title);
 	SetWindowText(App->Equity_Dlg_hWnd, FullTitle);
+}
+
+// *************************************************************************
+// *			 Clear_Model:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Equity::Clear_Model()
+{
+	App->CLSB_Assimp->Clear_Data();
+
+	App->CLSB_Model->Render_Type = Enums::Render_Nothing;
+	App->CLSB_Grid->Reset_View();
 }

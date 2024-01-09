@@ -44,6 +44,7 @@ public:
 
 	bool LoadFile(const char* pFile);
 	void Create_Assimp_Mesh_Group(int Index);
+	void Clear_Data();
 
 	long int SelectedPreset;
 	int mTotalVertices;

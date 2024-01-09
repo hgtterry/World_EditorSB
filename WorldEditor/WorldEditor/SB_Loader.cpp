@@ -80,13 +80,12 @@ SB_Loader::~SB_Loader(void)
 // *************************************************************************
 // *			Assimp_Loader:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
+bool SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 {
 	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd,Extension, Extension2, NULL);
 	if (Result == 0)
 	{
-		App->Say("Failed");
-		return;
+		return 0;
 	}
 
 	//App->CLSB_Model->Clear_Model_And_Reset();
@@ -100,10 +99,10 @@ void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 	if (Test == 0)
 	{
 		App->Say("Failed To Load");
-		return;
+		return 0;
 	}
 
-	return;
+	return 1;
 }
 
 // *************************************************************************
@@ -114,7 +113,7 @@ bool SB_Loader::Ogre_Loader(char* Extension, char* Extension2)
 	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd, Extension, Extension2, NULL);
 	if (Result == 0)
 	{
-		return 1;
+		return 0;
 	}
 
 	//App->CL_Model->Clear_Model_And_Reset();
