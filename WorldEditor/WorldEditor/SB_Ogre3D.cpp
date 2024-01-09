@@ -612,12 +612,13 @@ void SB_Ogre3D::AddToScene(void)
 		OgreModel_Node = nullptr;
 	}
 
+	//Ogre::ResourceGroupManager::getSingleton().prepareResourceGroup(TempResourceGroupXX);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CLSB_Model->Texture_FolderPath,
 		"FileSystem",
 		TempResourceGroupXX);
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(TempResourceGroupXX);
-
+	Ogre::ResourceGroupManager::getSingleton().loadResourceGroup(TempResourceGroupXX);
 
 	OgreModel_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("UserMesh", App->CLSB_Model->FileName, TempResourceGroupXX);
 	OgreModel_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
