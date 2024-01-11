@@ -34,7 +34,7 @@ public:
 	SB_MeshViewer();
 	~SB_MeshViewer();
 
-	bool StartMeshViewer();
+	bool Start_Mesh_Viewer();
 	void Copy_Assets();
 
 	char mResource_Folder[MAX_PATH];

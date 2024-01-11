@@ -75,6 +75,14 @@
 
 namespace Enums
 {
+	enum Mesh_Viewer
+	{
+		Mesh_Viewer_None = -1,
+		Mesh_Viewer_Objects = 0,
+		Mesh_Viewer_Collectables = 1,
+		Mesh_Viewer_Area = 2
+	};
+
 	enum Check_Text
 	{
 		Check_Name_None = 0,

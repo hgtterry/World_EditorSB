@@ -180,6 +180,7 @@
 #define IDD_SB_SELECT_FACE              358
 #define IDR_MENU_EQUITY                 360
 #define IDD_SB_IMGUI_SURFACE2           361
+#define IDD_SB_MESHVIEWER               363
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -571,18 +572,26 @@
 #define IDC_BT_TT_ZEROCAM               1353
 #define IDC_BT_BOXROOM                  1353
 #define IDC_BT_IMPORTTEMPLATE           1353
+#define IDC_DYNAMIC                     1353
 #define IDC_BUTTON5                     1354
+#define IDC_TRIMESH                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_TBSHOWHAIR                  1355
+#define IDC_JUSTOGRE                    1355
 #define IDC_BUTTON6                     1356
 #define IDC_TEXTURELIST2                1357
 #define IDC_TBBOUNDBOX                  1357
+#define IDC_BOX                         1357
 #define IDC_BTTXLOPEN                   1358
 #define IDC_BTSHOWLIGHT2                1358
+#define IDC_SPHERE                      1358
 #define IDC_BTTESTDLG                   1359
 #define IDC_BUTTON7                     1359
 #define IDC_STTDTXLNAME                 1360
+#define IDC_CYLINDER                    1360
 #define IDC_LISTTDTEXTURES              1361
+#define IDC_BUTTON13                    1361
+#define IDC_CONE                        1361
 #define IDC_BASETEXTURE2                1362
 #define IDC_BUTTON1                     1363
 #define IDC_BTTDAPPLY                   1363
@@ -736,7 +745,9 @@
 #define IDC_ST_BANNER                   1467
 #define IDC_UPDATE2                     1467
 #define IDC_BTTB_FULLSCREEN             1467
+#define IDC_BTMV_ZOOMED                 1467
 #define IDC_ST_FN                       1468
+#define IDC_BTMV_CENTRE                 1468
 #define IDC_ST_NAME                     1469
 #define IDC_ST_FLD                      1470
 #define IDC_ST_FOLDER                   1471
@@ -894,6 +905,7 @@
 #define IDC_COMBO1                      1581
 #define IDC_CB_SELECTED_BRUSH           1581
 #define IDC_CB_FACENUMBER               1581
+#define IDC_CB_FOLDERS                  1581
 #define IDC_BT_RENAME                   1582
 #define IDC_LIST_POINTS                 1583
 #define IDC_BT_RENDER                   1584
@@ -904,6 +916,17 @@
 #define IDC_BT_EXPORTTEMPLATE           1589
 #define IDC_BT_FULLSCREEN               1590
 #define IDC_BT_PREVIEWEDITOR            1591
+#define IDC_STFOLDER                    1592
+#define IDC_ST_CURRENTFOLDER            1593
+#define IDC_BT_FOLDERBROWSE             1594
+#define IDC_SELECTEDNAME                1595
+#define IDC_LISTFILES                   1596
+#define IDC_CKPLACECENTER               1597
+#define IDC_CKPLACECAMERA               1598
+#define IDC_STPLACEMENT                 1599
+#define IDC_BT_PROPERTIES               1600
+#define IDC_MVSTATIC                    1601
+#define IDC_CAPSULE                     1602
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1148,9 +1171,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        363
+#define _APS_NEXT_RESOURCE_VALUE        365
 #define _APS_NEXT_COMMAND_VALUE         33123
-#define _APS_NEXT_CONTROL_VALUE         1592
+#define _APS_NEXT_CONTROL_VALUE         1603
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

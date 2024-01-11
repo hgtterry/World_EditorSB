@@ -461,7 +461,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_TEST_TEST)
 		{
-			Debug
+			App->CLSB_Meshviewer->Start_Mesh_Viewer();
+
 			return TRUE;
 		}
 		

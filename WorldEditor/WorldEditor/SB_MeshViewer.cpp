@@ -146,9 +146,9 @@ void SB_MeshViewer::Enable_ShapeButtons(bool state)
 }
 
 // *************************************************************************
-// *			StartMeshViewer:- Terry and Hazel Flanigan 2022			   *
+// *		Start Mesh Viewer:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool SB_MeshViewer::StartMeshViewer()
+bool SB_MeshViewer::Start_Mesh_Viewer()
 {
 	MvEnt = NULL;
 	MvNode = NULL;
@@ -179,12 +179,12 @@ bool SB_MeshViewer::StartMeshViewer()
 	//	strcpy(Selected_MeshFile, "Blueball.mesh");
 	//}
 
-	//Create_Resources_Group();
-	//Add_Resources();
+	Create_Resources_Group();
+	Add_Resources();
 
 	//SetTimer(App->MainHwnd, 1, 1, NULL);
 	//
-	//DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
 
 	//App->CL_Ogre->OgreListener->MeshViewer_Running = 0;
 
@@ -204,92 +204,91 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		//App->SBC_MeshViewer->MainDlgHwnd = hDlg;
+		App->CLSB_Meshviewer->MainDlgHwnd = hDlg;
 
-		//
-		//SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//
-		//SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+//		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+//		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_STPLACEMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CKPLACECAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CKPLACECENTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//
-		//SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//
-		//SendDlgItemMessage(hDlg, IDC_BTMV_CENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTMV_ZOOMED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//
-		//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+		SendDlgItemMessage(hDlg, IDC_STPLACEMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKPLACECAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKPLACECENTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BTMV_CENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTMV_ZOOMED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
 
-		//SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+		SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
-		//HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
-		//SendMessage(temp, BM_SETCHECK, 1, 0);
+		HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+		SendMessage(temp, BM_SETCHECK, 1, 0);
 
-		//App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-
-
-		//App->SBC_MeshViewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
-		//App->SBC_MeshViewer->Set_OgreWindow();
+		App->CLSB_Meshviewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 
-		//HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-
-		//App->SBC_MeshViewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
-
-		//App->SBC_MeshViewer->SelectStatic = 0;
-		//App->SBC_MeshViewer->SelectDynamic = 0;
-		//App->SBC_MeshViewer->SelectTriMesh = 0;
-
-		//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-		//{
-		//	App->SBC_MeshViewer->Set_For_Collectables();
-		//}
-
-		//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-		//{
-		//	App->SBC_MeshViewer->Set_For_Areas(hDlg);
-		//}
+		//App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
+		//App->CLSB_Meshviewer->Set_OgreWindow();
 
 
-		//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
-		//{
-		//	App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
-		//	App->SBC_MeshViewer->Get_Files();
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
-		//	App->SBC_MeshViewer->Enable_ShapeButtons(1);
-		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
+		App->CLSB_Meshviewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
-		//	char ATest[256];
-		//	char ConNum[256];
+		App->CLSB_Meshviewer->SelectStatic = 0;
+		App->CLSB_Meshviewer->SelectDynamic = 0;
+		App->CLSB_Meshviewer->SelectTriMesh = 0;
 
-		//	strcpy_s(ATest, "Object_");
-		//	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
-		//	strcat(ATest, ConNum);
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+		{
+			App->CLSB_Meshviewer->Set_For_Collectables();
+		}
 
-		//	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		//	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->CLSB_Meshviewer->Set_For_Areas(hDlg);
+		}
 
-		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
-		//}
+
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		{
+			App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
+			App->CLSB_Meshviewer->Get_Files();
+
+			App->CLSB_Meshviewer->Enable_ShapeButtons(1);
+			App->CLSB_Meshviewer->Enable_TypeButtons(1);
+
+			char ATest[256];
+			char ConNum[256];
+
+			/*strcpy_s(ATest, "Object_");
+			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+			strcat(ATest, ConNum);
+
+			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+			strcpy(App->CLSB_Meshviewer->Object_Name, ATest);*/
+
+			App->CLSB_Meshviewer->Enable_TypeButtons(1);
+		}
 
 		//App->CL_Ogre->OgreListener->MeshViewer_Running = 1;
 
@@ -299,7 +298,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
@@ -369,7 +368,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
-		}
+		}*/
 
 		return FALSE;
 	}
@@ -394,21 +393,21 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_MVSTATIC && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->SelectStatic);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->SelectStatic);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_DYNAMIC && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->SelectDynamic);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->SelectDynamic);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TRIMESH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->SelectTriMesh);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->SelectTriMesh);
 			return CDRF_DODEFAULT;
 		}
 
@@ -416,35 +415,35 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BOX && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Box);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Box);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_SPHERE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Sphere);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Sphere);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CAPSULE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Capsule);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Capsule);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CYLINDER && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Cylinder);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cylinder);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CONE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Cone);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cone);
 			return CDRF_DODEFAULT;
 		}
 
@@ -472,14 +471,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BTMV_CENTRE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->View_Centred_Flag);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->View_Centred_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BTMV_ZOOMED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->View_Zoomed_Flag);
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->View_Zoomed_Flag);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -640,19 +639,19 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->Get_Files();*/
 			return TRUE;
 		}
-		if (LOWORD(wParam) == ID_TOOLS_MVRESOURCEVIEWER)
-		{
-			//App->SBC_Resources->Start_Resources(App->SBC_MeshViewer->MainDlgHwnd);
-			return TRUE;
-		}
+		//if (LOWORD(wParam) == ID_TOOLS_MVRESOURCEVIEWER)
+		//{
+		//	//App->SBC_Resources->Start_Resources(App->SBC_MeshViewer->MainDlgHwnd);
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == ID_FOLDERS_POO)
-		{
+		//if (LOWORD(wParam) == ID_FOLDERS_POO)
+		//{
 
-			//App->SBC_MeshViewer->Start_Folders();
+		//	//App->SBC_MeshViewer->Start_Folders();
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
 		if (LOWORD(wParam) == IDC_TRIMESH)
 		{
