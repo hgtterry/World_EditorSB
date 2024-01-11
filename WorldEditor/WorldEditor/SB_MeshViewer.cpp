@@ -102,7 +102,7 @@ SB_MeshViewer::SB_MeshViewer()
 	Last_MeshFile[0] = 0;
 	m_Material_File[0] = 0;
 
-	//strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+	strcpy(mResource_Folder, App->WorldEditor_Directory);
 	strcat(mResource_Folder, "\\Media_New\\Walls\\");
 	strcpy(Selected_MeshFile, "Wall_1.mesh");
 
@@ -158,26 +158,26 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 
 	////Set_Debug_Shapes();
 
-	//
-	//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-	//{
-	//	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
-	//	strcat(mResource_Folder, "\\Media_New\\Areas\\");
-	//	strcpy(Selected_MeshFile, "Test1.mesh");
-	//}
-	//else
-	//{
-	//	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
-	//	strcat(mResource_Folder, "\\Media_New\\Walls\\");
-	//	strcpy(Selected_MeshFile, "Wall_1.mesh");
-	//}
+	
+	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	{
+		strcpy(mResource_Folder, App->WorldEditor_Directory);
+		strcat(mResource_Folder, "\\Media_New\\Areas\\");
+		strcpy(Selected_MeshFile, "Test1.mesh");
+	}
+	else
+	{
+		strcpy(mResource_Folder, App->WorldEditor_Directory);
+		strcat(mResource_Folder, "\\Media_New\\Walls\\");
+		strcpy(Selected_MeshFile, "Wall_1.mesh");
+	}
 
-	//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-	//{
-	//	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
-	//	strcat(mResource_Folder, "\\Media_New\\Collectables\\");
-	//	strcpy(Selected_MeshFile, "Blueball.mesh");
-	//}
+	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+	{
+		strcpy(mResource_Folder, App->WorldEditor_Directory);
+		strcat(mResource_Folder, "\\Media_New\\Collectables\\");
+		strcpy(Selected_MeshFile, "Blueball.mesh");
+	}
 
 	Create_Resources_Group();
 	Add_Resources();
@@ -185,8 +185,8 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	//SetTimer(App->MainHwnd, 1, 1, NULL);
 	//
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
-
-	//App->CL_Ogre->OgreListener->MeshViewer_Running = 0;
+	//CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
+	//App->CLSB_Ogre_Setup->OgreListener->MeshViewer_Running = 0;
 
 	//App->RenderBackGround = 0;
 	//KillTimer(App->MainHwnd, 1);
@@ -205,6 +205,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 
 		App->CLSB_Meshviewer->MainDlgHwnd = hDlg;
+		SetTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1, 1, NULL);
 
 		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -246,8 +247,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Meshviewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 
-		//App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
-		//App->CLSB_Meshviewer->Set_OgreWindow();
+		App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
+		App->CLSB_Meshviewer->Set_OgreWindow();
 
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
@@ -491,15 +492,22 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (zDelta > 0)
 		{
-			//App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
+			App->CLSB_Meshviewer->RenderListener->Wheel_Move = -1;
 		}
 		else if (zDelta < 0)
 		{
-			//App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
+			App->CLSB_Meshviewer->RenderListener->Wheel_Move = 1;
 		}
 
 		return 1;
 	}
+
+	case WM_TIMER:
+		if (wParam == 1)
+		{
+			App->CLSB_Ogre_Setup->RenderFrame();
+			break;
+		}
 
 	case WM_COMMAND:
 
@@ -802,8 +810,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			//	App->SBC_MeshViewer->Phys_Body = nullptr;
 			//}
 
-			//App->SBC_MeshViewer->Close_OgreWindow();
-			//App->SBC_MeshViewer->Delete_Resources_Group();
+			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
+			App->CLSB_Meshviewer->Close_OgreWindow();
+			App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 			//{
@@ -841,13 +850,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				App->SBC_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
 				App->SBC_MeshViewer->Phys_Body = nullptr;
-			}
+			}*/
 
-			App->SBC_MeshViewer->Close_OgreWindow();
+			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
+			App->CLSB_Meshviewer->Close_OgreWindow();
+			App->CLSB_Meshviewer->Delete_Resources_Group();
 
-			App->SBC_MeshViewer->Delete_Resources_Group();
-
-			App->SBC_MeshViewer->Set_Debug_Shapes();*/
+			//App->SBC_MeshViewer->Set_Debug_Shapes();*/
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -886,17 +895,16 @@ void SB_MeshViewer::Copy_Assets()
 	//int Count = 0;
 	//while (Count < Texure_Count)
 	//{
-	//	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	//	strcpy(SourceFile, App->CLSB_Meshviewer->mResource_Folder);
 	//	strcat(SourceFile, v_Texture_Names[Count].c_str());
 
-	//	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//	strcat(DestinationFile, v_Texture_Names[Count].c_str());
+	//	//strcpy(DestinationFile, App->CLSB_Meshviewer->m_Main_Assets_Path);
+	//	//strcat(DestinationFile, v_Texture_Names[Count].c_str());
 
 	//	CopyFile(SourceFile, DestinationFile, false);
 
 	//	Count++;
 	//}
-	
 }
 
 // *************************************************************************
@@ -904,70 +912,70 @@ void SB_MeshViewer::Copy_Assets()
 // *************************************************************************
 void SB_MeshViewer::Get_Mesh_Assets()
 {
-	//App->SBC_MeshViewer->m_Material_File[0] = 0;
-	//v_Texture_Names.resize(0);
-	//Texure_Count = 0;
+	App->CLSB_Meshviewer->m_Material_File[0] = 0;
+	v_Texture_Names.resize(0);
+	Texure_Count = 0;
 
-	//int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
-	//char pScriptName[255];
-	//char pMaterialFile[255];
-	//Ogre::String st;
-	//Ogre::MaterialPtr MP;
+	int SubMeshCount = App->CLSB_Meshviewer->MvEnt->getNumSubEntities();
+	char pScriptName[255];
+	char pMaterialFile[255];
+	Ogre::String st;
+	Ogre::MaterialPtr MP;
 
-	//MP.setNull();
-	//bool loaded = 0;
-	//
-	//// ---------------------------------------------------------- Material File
-	//Ogre::SubMesh const *subMesh = App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getSubMesh();
-	//Ogre::String MatName = subMesh->getMaterialName();
-	//strcpy(pScriptName, MatName.c_str());
+	MP.setNull();
+	bool loaded = 0;
+	
+	// ---------------------------------------------------------- Material File
+	Ogre::SubMesh const *subMesh = App->CLSB_Meshviewer->MvEnt->getSubEntity(0)->getSubMesh();
+	Ogre::String MatName = subMesh->getMaterialName();
+	strcpy(pScriptName, MatName.c_str());
 
-	//loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+	loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
 
-	//if (loaded == 1)
-	//{
-	//	MP = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
-	//	st = MP->getOrigin();
-	//	strcpy(pMaterialFile, st.c_str());
+	if (loaded == 1)
+	{
+		MP = Ogre::MaterialManager::getSingleton().getByName(MatName, App->CLSB_Meshviewer->MV_Resource_Group);
+		st = MP->getOrigin();
+		strcpy(pMaterialFile, st.c_str());
 
-	//	strcpy(App->SBC_MeshViewer->m_Material_File, pMaterialFile);
-	//}
-	//else
-	//{
-	//	//strcpy(test, "Not Loaded:- ");
-	//}
+		strcpy(App->CLSB_Meshviewer->m_Material_File, pMaterialFile);
+	}
+	else
+	{
+		//strcpy(test, "Not Loaded:- ");
+	}
 
-	//// ---------------------------------------------------------- Textures
-	//Ogre::ResourcePtr TP;
-	//Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
+	// ---------------------------------------------------------- Textures
+	Ogre::ResourcePtr TP;
+	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
 
-	//while (TextureIterator.hasMoreElements())
-	//{
-	//	//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+	while (TextureIterator.hasMoreElements())
+	{
+		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
 
-	//	if (TextureIterator.peekNextValue()->getGroup() == App->SBC_MeshViewer->MV_Resource_Group)
-	//	{
+		if (TextureIterator.peekNextValue()->getGroup() == App->CLSB_Meshviewer->MV_Resource_Group)
+		{
 
-	//		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-	//		TP = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+			strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
+			TP = Ogre::TextureManager::getSingleton().getByName(pScriptName);
 
-	//		if (TP->isLoaded() == 1)
-	//		{
-	//			v_Texture_Names.push_back(pScriptName);
-	//			Texure_Count = v_Texture_Names.size();
-	//		}
-	//		else
-	//		{
-	//			v_Texture_Names.push_back(pScriptName);
-	//			Texure_Count = v_Texture_Names.size();
-	//			//App->Say(pScriptName);
-	//			//strcpy(test, "Not Loaded:- ");	
-	//		}
+			if (TP->isLoaded() == 1)
+			{
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
+			}
+			else
+			{
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
+				//App->Say(pScriptName);
+				//strcpy(test, "Not Loaded:- ");	
+			}
 
-	//	}
+		}
 
-	//	TextureIterator.moveNext();
-	//}
+		TextureIterator.moveNext();
+	}
 }
 
 
@@ -976,27 +984,27 @@ void SB_MeshViewer::Get_Mesh_Assets()
 // *************************************************************************
 void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 {
-	/*char buff[MAX_PATH];
+	char buff[MAX_PATH];
 
-	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+	strcpy(App->CLSB_Meshviewer->mResource_Folder, App->WorldEditor_Directory);
+	strcat(App->CLSB_Meshviewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->CLSB_Meshviewer->mResource_Folder, App->CLSB_Meshviewer->m_Current_Folder);
+	strcat(App->CLSB_Meshviewer->mResource_Folder, "\\");
 
-	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
+	SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
-	App->SBC_MeshViewer->Add_Resources();
-	App->SBC_MeshViewer->Get_Files();
+	App->CLSB_Meshviewer->Add_Resources();
+	App->CLSB_Meshviewer->Get_Files();
 
 	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->CLSB_Meshviewer->m_Current_Folder));
 	
 
 	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
-	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);*/
+	strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
 }
 
 // *************************************************************************
@@ -1004,7 +1012,7 @@ void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 // *************************************************************************
 void SB_MeshViewer::Update_Mesh(char* MeshFile)
 {
-	/*if (MvEnt && MvNode)
+	if (MvEnt && MvNode)
 	{
 		MvNode->detachAllObjects();
 		mSceneMgrMeshView->destroySceneNode(MvNode);
@@ -1013,12 +1021,12 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 		MvNode = NULL;
 	}
 
-	MvEnt = mSceneMgrMeshView->createEntity("MV",MeshFile, App->SBC_MeshViewer->MV_Resource_Group);
+	MvEnt = mSceneMgrMeshView->createEntity("MV",MeshFile, App->CLSB_Meshviewer->MV_Resource_Group);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setPosition(0, 0, 0);
 
-	if (App->SBC_MeshViewer->View_Zoomed_Flag == 1)
+	if (App->CLSB_Meshviewer->View_Zoomed_Flag == 1)
 	{
 		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 		Ogre::Real Radius = MvEnt->getBoundingRadius();
@@ -1048,15 +1056,15 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 		Show_Physics_Cylinder();
 	}
 
-	if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
+	if (App->CLSB_Meshviewer->Physics_Shape == Enums::Cone)
 	{
 		Show_Physics_Cone();
 	}
 
-	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	if (App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 	{
 		Show_Physics_Trimesh();
-	}*/
+	}
 
 }
 
@@ -1230,7 +1238,6 @@ bool SB_MeshViewer::Add_Resources()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mResource_Folder, "FileSystem", MV_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
-
 	}
 	
 	return 1;
@@ -1241,9 +1248,7 @@ bool SB_MeshViewer::Add_Resources()
 // *************************************************************************
 bool SB_MeshViewer::Delete_Resources_Group()
 {
-
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
-
 	return 1;
 }
 
@@ -1999,15 +2004,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	switch (message)
 	{
 
-	case WM_INITDIALOG: // Bernie as the dialog is created
+	case WM_INITDIALOG:
 	{
-		
 		return TRUE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
-		//if (App->OgreStarted == 0)
+		//if (App->CLSB_Ogre_Setup->OgreIsRunning == 0)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -2037,7 +2041,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
 
-		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
+		SetFocus(App->CLSB_Meshviewer->MeshView_3D_hWnd);
 
 		break;
 	}
@@ -2045,15 +2049,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		
 			//if (App->OgreStarted == 1)
-			//{
-			//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-			//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-			//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
-			//	App->CUR = SetCursor(NULL);
-			//	return 1;
-			//}
+			{
+				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+				App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
 
 		return 1;
 	}
@@ -2075,17 +2078,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
 			//if (App->OgreStarted == 1)
-			//{
+			{
 
-			//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-			//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+				App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
 
-			//	App->CUR = SetCursor(NULL);
+				App->CUR = SetCursor(NULL);
 
-			//	return 1;
-			//}
+				return 1;
+			}
 
 		return 1;
 	}
@@ -2093,13 +2096,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_LBUTTONUP:
 	{
 
-		/*if (App->OgreStarted == 1)
+		//if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
+			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}

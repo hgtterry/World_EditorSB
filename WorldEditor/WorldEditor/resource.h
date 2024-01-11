@@ -181,6 +181,8 @@
 #define IDR_MENU_EQUITY                 360
 #define IDD_SB_IMGUI_SURFACE2           361
 #define IDD_SB_MESHVIEWER               363
+#define IDD_DIALOG4                     365
+#define IDD_SB_VIEWER3D_MV              365
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -590,7 +592,6 @@
 #define IDC_STTDTXLNAME                 1360
 #define IDC_CYLINDER                    1360
 #define IDC_LISTTDTEXTURES              1361
-#define IDC_BUTTON13                    1361
 #define IDC_CONE                        1361
 #define IDC_BASETEXTURE2                1362
 #define IDC_BUTTON1                     1363
@@ -1171,7 +1172,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        365
+#define _APS_NEXT_RESOURCE_VALUE        367
 #define _APS_NEXT_COMMAND_VALUE         33123
 #define _APS_NEXT_CONTROL_VALUE         1603
 #define _APS_NEXT_SYMED_VALUE           112
