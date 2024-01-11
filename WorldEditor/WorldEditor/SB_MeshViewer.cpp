@@ -121,18 +121,18 @@ SB_MeshViewer::~SB_MeshViewer()
 // *************************************************************************
 void SB_MeshViewer::Enable_TypeButtons(bool state)
 {
-	/*ShowWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), state);
+	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), state);
-	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), state);*/
+	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), state);
 }
 // *************************************************************************
 // *					Enable_ShapeButtons Terry Bernie				   *
 // *************************************************************************
 void SB_MeshViewer::Enable_ShapeButtons(bool state)
 {
-	/*EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), state);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_SPHERE), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CAPSULE), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CYLINDER), state);
@@ -142,7 +142,7 @@ void SB_MeshViewer::Enable_ShapeButtons(bool state)
 	Selected_Shape_Sphere = 0;
 	Selected_Shape_Capsule = 0;
 	Selected_Shape_Cylinder = 0;
-	Selected_Shape_Cone = 0;*/
+	Selected_Shape_Cone = 0;
 }
 
 // *************************************************************************
@@ -182,15 +182,8 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	Create_Resources_Group();
 	Add_Resources();
 
-	//SetTimer(App->MainHwnd, 1, 1, NULL);
-	//
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
-	//CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
-	//App->CLSB_Ogre_Setup->OgreListener->MeshViewer_Running = 0;
-
-	//App->RenderBackGround = 0;
-	//KillTimer(App->MainHwnd, 1);
-
+	
 	return 1;
 }
 
@@ -299,7 +292,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
@@ -315,13 +308,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STTYPE) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_STTYPE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
 		if (GetDlgItem(hDlg, IDC_STFOLDER) == (HWND)lParam)
 		{
@@ -369,7 +362,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -514,52 +507,54 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BTMV_CENTRE)
 		{
-			/*App->SBC_MeshViewer->mCameraMeshView->setPosition(0, 0, 0);
+			App->CLSB_Meshviewer->mCameraMeshView->setPosition(0, 0, 0);
 
-			App->SBC_MeshViewer->View_Zoomed_Flag = 0;
-			App->SBC_MeshViewer->View_Centred_Flag = 1;
+			App->CLSB_Meshviewer->View_Zoomed_Flag = 0;
+			App->CLSB_Meshviewer->View_Centred_Flag = 1;
 
-			App->RedrawWindow_Dlg(hDlg);*/
+			App->RedrawWindow_Dlg(hDlg);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BTMV_ZOOMED)
 		{
-			/*App->SBC_MeshViewer->View_Zoomed_Flag = 1;
-			App->SBC_MeshViewer->View_Centred_Flag = 0;
+			App->CLSB_Meshviewer->View_Zoomed_Flag = 1;
+			App->CLSB_Meshviewer->View_Centred_Flag = 0;
 			
-			Ogre::Vector3 Centre = App->SBC_MeshViewer->MvEnt->getBoundingBox().getCenter();
-			Ogre::Real Radius = App->SBC_MeshViewer->MvEnt->getBoundingRadius();
+			Ogre::Vector3 Centre = App->CLSB_Meshviewer->MvEnt->getBoundingBox().getCenter();
+			Ogre::Real Radius = App->CLSB_Meshviewer->MvEnt->getBoundingRadius();
 
-			App->SBC_MeshViewer->mCameraMeshView->setPosition(0, Centre.y, -Radius * (Real(2.5)));
-			App->SBC_MeshViewer->mCameraMeshView->lookAt(0, Centre.y, 0);
+			App->CLSB_Meshviewer->mCameraMeshView->setPosition(0, Centre.y, -Radius * (Real(2.5)));
+			App->CLSB_Meshviewer->mCameraMeshView->lookAt(0, Centre.y, 0);
 
-			App->RedrawWindow_Dlg(hDlg);*/
+			App->RedrawWindow_Dlg(hDlg);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
 		{
-			/*HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 
 			temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->SBC_MeshViewer->Placement_Camera = 1;*/
+			App->CLSB_Meshviewer->Placement_Camera = 1;
+
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CKPLACECENTER)
 		{
 
-			/*HWND temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
+			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 
 			temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->SBC_MeshViewer->Placement_Camera = 0;*/
+			App->CLSB_Meshviewer->Placement_Camera = 0;
+
 			return TRUE;
 		}
 
@@ -580,24 +575,24 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			case CBN_CLOSEUP:
 			{
 
-				/*HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->SBC_MeshViewer->m_Current_Folder);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->CLSB_Meshviewer->m_Current_Folder);
 
-				SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+				SendMessage(App->CLSB_Meshviewer->ListHwnd, LB_RESETCONTENT, 0, 0);
 
-				strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
-				strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-				strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
-				strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+				strcpy(App->CLSB_Meshviewer->mResource_Folder, App->WorldEditor_Directory);
+				strcat(App->CLSB_Meshviewer->mResource_Folder, "\\Media_New\\");
+				strcat(App->CLSB_Meshviewer->mResource_Folder, App->CLSB_Meshviewer->m_Current_Folder);
+				strcat(App->CLSB_Meshviewer->mResource_Folder, "\\");
 
-				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-				SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
+				SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
-				App->SBC_MeshViewer->Add_Resources();
-				App->SBC_MeshViewer->Get_Files();
+				App->CLSB_Meshviewer->Add_Resources();
+				App->CLSB_Meshviewer->Get_Files();
 
-				App->SBC_MeshViewer->GridNode->resetOrientation();*/
+				App->CLSB_Meshviewer->GridNode->resetOrientation();
 			}
 			}
 
@@ -606,7 +601,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
-			/*char buff[256];
+			char buff[256];
 			int Index = 0;
 			Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
@@ -618,13 +613,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
 			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
-			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+			strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
 
-			App->SBC_MeshViewer->Add_Resources();
+			App->CLSB_Meshviewer->Add_Resources();
 
-			App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
+			App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
-			App->SBC_MeshViewer->GridNode->resetOrientation();*/
+			App->CLSB_Meshviewer->GridNode->resetOrientation();
+
 			return TRUE;
 
 		}
@@ -663,56 +659,56 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_TRIMESH)
 		{
-			/*App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_TriMesh;
-			App->SBC_MeshViewer->SelectStatic = 0;
-			App->SBC_MeshViewer->SelectDynamic = 0;
-			App->SBC_MeshViewer->SelectTriMesh = 1;
+			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_TriMesh;
+			App->CLSB_Meshviewer->SelectStatic = 0;
+			App->CLSB_Meshviewer->SelectDynamic = 0;
+			App->CLSB_Meshviewer->SelectTriMesh = 1;
 
-			App->SBC_MeshViewer->Enable_ShapeButtons(false);
+			App->CLSB_Meshviewer->Enable_ShapeButtons(false);
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
 
-			App->SBC_MeshViewer->Show_Physics_Trimesh();*/
+			App->CLSB_Meshviewer->Show_Physics_Trimesh();
 
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_MVSTATIC)
 		{
-			/*if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 			{
 				return 1;
 			}
 
-			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
-			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
-			App->SBC_MeshViewer->SelectStatic = 1;
-			App->SBC_MeshViewer->SelectDynamic = 0;
-			App->SBC_MeshViewer->SelectTriMesh = 0;
+			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->SelectStatic = 1;
+			App->CLSB_Meshviewer->SelectDynamic = 0;
+			App->CLSB_Meshviewer->SelectTriMesh = 0;
 			
-			App->SBC_MeshViewer->Enable_ShapeButtons(true);
+			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
 
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Show_Physics_None();*/
+			App->CLSB_Meshviewer->Show_Physics_None();
 
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_DYNAMIC)
 		{
-			/*App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Dynamic;
-			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
-			App->SBC_MeshViewer->SelectDynamic = 1;
-			App->SBC_MeshViewer->SelectStatic = 0;
-			App->SBC_MeshViewer->SelectTriMesh = 0;
+			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Dynamic;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->SelectDynamic = 1;
+			App->CLSB_Meshviewer->SelectStatic = 0;
+			App->CLSB_Meshviewer->SelectTriMesh = 0;
 
-			App->SBC_MeshViewer->Enable_ShapeButtons(true);
+			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
 
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Show_Physics_None();*/
+			App->CLSB_Meshviewer->Show_Physics_None();
 
 			return 1;
 		}
@@ -720,67 +716,67 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		// --------------------------------------------------------------------- Shapes
 		if (LOWORD(wParam) == IDC_BOX)
 		{
-			/*if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 			{
 				return 1;
 			}
 
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Box = 1;
+			App->CLSB_Meshviewer->Reset_Shape_Flags();
+			App->CLSB_Meshviewer->Selected_Shape_Box = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::Shape_Box;*/
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
 
-			//App->SBC_MeshViewer->Show_Physics_Box();
+			App->CLSB_Meshviewer->Show_Physics_Box();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_SPHERE)
 		{
-			/*App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Sphere = 1;
+			App->CLSB_Meshviewer->Reset_Shape_Flags();
+			App->CLSB_Meshviewer->Selected_Shape_Sphere = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::Sphere;*/
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Sphere;
 
-			//App->SBC_MeshViewer->Show_Physics_Sphere();
+			App->CLSB_Meshviewer->Show_Physics_Sphere();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CAPSULE)
 		{
-			/*App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Capsule = 1;
+			App->CLSB_Meshviewer->Reset_Shape_Flags();
+			App->CLSB_Meshviewer->Selected_Shape_Capsule = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::Capsule;*/
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Capsule;
 
-			//App->SBC_MeshViewer->Show_Physics_Capsule();
+			App->CLSB_Meshviewer->Show_Physics_Capsule();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CYLINDER)
 		{
-			/*App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Cylinder = 1;
+			App->CLSB_Meshviewer->Reset_Shape_Flags();
+			App->CLSB_Meshviewer->Selected_Shape_Cylinder = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::Cylinder;*/
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Cylinder;
 
-			//App->SBC_MeshViewer->Show_Physics_Cylinder();
+			App->CLSB_Meshviewer->Show_Physics_Cylinder();
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CONE)
 		{
-		/*	App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Cone = 1;
+			App->CLSB_Meshviewer->Reset_Shape_Flags();
+			App->CLSB_Meshviewer->Selected_Shape_Cone = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Physics_Shape = Enums::Cone;*/
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Cone;
 
-			//App->SBC_MeshViewer->Show_Physics_Cone();
+			App->CLSB_Meshviewer->Show_Physics_Cone();
 			return TRUE;
 		}
 

@@ -464,6 +464,14 @@ void SB_App::Beep_Win()
 }
 
 // *************************************************************************
+// *						RedrawWindow_Dlg Terry Bernie				   *
+// *************************************************************************
+void SB_App::RedrawWindow_Dlg(HWND hDlg)
+{
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
 // *				Say_Int:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void SB_App::Say_Int(int Value)

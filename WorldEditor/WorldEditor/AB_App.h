@@ -227,6 +227,8 @@ public:
 	void Clear_ErrorLog();
 	void Close_WorldEditor();
 
+	void RedrawWindow_Dlg(HWND hDlg);
+
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);
 	uint64_t Get_Stack(void);
