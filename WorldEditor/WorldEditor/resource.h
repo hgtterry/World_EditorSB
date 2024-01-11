@@ -1139,6 +1139,8 @@
 #define ID_IMPORT_AUTODESK3DS_EQUITY    33118
 #define ID_FILE_CLEARMODEL33119         33119
 #define ID_FILE_CLEARMODEL_EQUITY       33120
+#define ID_OPEN_WORLDEDITOR3DT          33121
+#define ID_OPEN_PROJECT                 33122
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1147,7 +1149,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        363
-#define _APS_NEXT_COMMAND_VALUE         33121
+#define _APS_NEXT_COMMAND_VALUE         33123
 #define _APS_NEXT_CONTROL_VALUE         1592
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

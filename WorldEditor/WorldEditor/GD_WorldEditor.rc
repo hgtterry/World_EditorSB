@@ -1109,7 +1109,11 @@ BEGIN
     POPUP "&File"
     BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        POPUP "&Open..."
+        BEGIN
+            MENUITEM "RFEditPro/World Editor File   3dt...", ID_OPEN_WORLDEDITOR3DT
+            MENUITEM "Project",                     ID_OPEN_PROJECT, GRAYED
+        END
         POPUP "Open Examples"
         BEGIN
             MENUITEM "2_Boxes",                     ID_OPENEXAMPLES_2

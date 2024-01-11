@@ -125,8 +125,10 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_BRUSH_SUBTRACTFROMWORLD, OnUpdateBrushSubtractfromworld)
     ON_UPDATE_COMMAND_UI(ID_ENTITIES_EDITOR, OnUpdateEntitiesEditor)
     ON_COMMAND(ID_NEW_LIB_OBJECT, OnNewLibObject)
-    ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
 
+    // hgtterry menu File
+    ON_COMMAND(ID_OPEN_WORLDEDITOR3DT, SB_OnFileOpen_3dt)
+    
     ON_COMMAND(ID_OPENEXAMPLES_2, OnFileOpen_2Boxes)
 
     ON_COMMAND(ID_TOOLS_BRUSH_ADJUSTMENTMODE, OnToolsBrushAdjustmentmode)
@@ -4749,9 +4751,9 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 /* EOF: FusionDoc.cpp */
 
-void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
+void CFusionDoc::SB_OnFileOpen_3dt() // hgtterry On File Open from menu
 {
-    bool test = App->CLSB_File_WE->Start_Load("",1);
+    bool test = App->CLSB_File_WE->Start_Load("", 1);
     if (test == 0)
     {
         return;
