@@ -73,6 +73,9 @@ public:
 
 	bool Mesh_Render_Running;
 
+	int CursorPosX;
+	int CursorPosY;
+
 	int Mesh_Viewer_Mode;
 	
 protected:

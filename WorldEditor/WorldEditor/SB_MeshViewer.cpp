@@ -95,6 +95,9 @@ SB_MeshViewer::SB_MeshViewer()
 
 	Mesh_Render_Running = 0;
 
+	CursorPosX = 500;
+	CursorPosY = 300;
+
 	Placement_Camera = 1;
 
 	View_Centred_Flag = 0;
@@ -887,6 +890,118 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	
+	return FALSE;
+}
+
+// *************************************************************************
+// *		MeshView_3D_Proc:- Terry and Hazel Flanigan 2022 			   *
+// *************************************************************************
+LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+
+	//case WM_MOUSEWHEEL:
+	//{
+	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
+	//	{
+	//		{
+	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+	//			if (zDelta > 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
+	//			}
+	//			else if (zDelta < 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
+	//			}
+	//			return 1;
+	//		}
+	//	}
+
+	//}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+
+		SetFocus(App->CLSB_Meshviewer->MeshView_3D_hWnd);
+
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
+		{
+			SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
+			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+			return 1;
+		}
+
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
+		{
+			SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
+
+			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
+
+			App->CUR = SetCursor(NULL);
+
+			return 1;
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	}
 	return FALSE;
 }
 
@@ -2021,138 +2136,6 @@ void SB_MeshViewer::Grid_Update(bool Create)
 	GridNode->setPosition(0, 0, 0);
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
-}
-
-// *************************************************************************
-// *		MeshView_3D_Proc:- Terry and Hazel Flanigan 2022 			   *
-// *************************************************************************
-LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG:
-	{
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 0)
-		{
-			return (LONG)App->BlackBrush;
-		}
-	}
-
-	//case WM_MOUSEWHEEL:
-	//{
-	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
-	//	{
-	//		{
-	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-	//			if (zDelta > 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
-	//			}
-	//			else if (zDelta < 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
-	//			}
-	//			return 1;
-	//		}
-	//	}
-
-	//}
-
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-
-		SetFocus(App->CLSB_Meshviewer->MeshView_3D_hWnd);
-
-		break;
-	}
-
-	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-			if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-			{
-				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
-				App->CUR = SetCursor(NULL);
-				return 1;
-			}
-
-		return 1;
-	}
-	case WM_RBUTTONUP:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			ReleaseCapture();
-			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-
-	// Left Mouse Button
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-			if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-			{
-				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-
-				App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
-
-				App->CUR = SetCursor(NULL);
-
-				return 1;
-			}
-
-		return 1;
-	}
-
-	case WM_LBUTTONUP:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			ReleaseCapture();
-			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-			App->Flash_Window();
-
-		//case 'C':
-		//	if (GetAsyncKeyState(VK_CONTROL))
-		//	{
-		////		//		App->CL10_Objects_Com->Copy_Object();
-		////		//		return 1;
-		//	}
-		//case 'V':
-		//	if (GetAsyncKeyState(VK_CONTROL))
-		//	{
-		////		//		App->CL10_Objects_Com->Paste_Object();
-		////		//		return 1;
-		//	}
-		////	return 1;
-		////	//	// more keys here
-		}break;
-	}
-
-	return FALSE;
 }
 
 // *************************************************************************
