@@ -71,6 +71,8 @@ public:
 
 	bool Placement_Camera;
 
+	bool Mesh_Render_Running;
+
 	int Mesh_Viewer_Mode;
 	
 protected:

@@ -93,6 +93,8 @@ SB_MeshViewer::SB_MeshViewer()
 	Selected_Shape_Cylinder = 0;
 	Selected_Shape_Cone = 0;
 
+	Mesh_Render_Running = 0;
+
 	Placement_Camera = 1;
 
 	View_Centred_Flag = 0;
@@ -275,7 +277,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			char ConNum[256];
 
 			/*strcpy_s(ATest, "Object_");
-			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+			_itoa(App->CLSB_Scene->Object_Count, ConNum, 10);
 			strcat(ATest, ConNum);
 
 			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
@@ -808,6 +810,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
 			App->CLSB_Meshviewer->Close_OgreWindow();
+			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 			App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
@@ -850,6 +853,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
 			App->CLSB_Meshviewer->Close_OgreWindow();
+			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 			App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			//App->SBC_MeshViewer->Set_Debug_Shapes();*/
@@ -1135,6 +1139,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
+	Mesh_Render_Running = 1;
 	return 1;
 }
 
@@ -1148,6 +1153,8 @@ void SB_MeshViewer::Close_OgreWindow(void)
 	App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
 	MeshView_Window->destroy();
 	App->CLSB_Ogre_Setup->mRoot->destroySceneManager(mSceneMgrMeshView);
+
+	Mesh_Render_Running = 0;
 }
 
 // *************************************************************************
@@ -2007,7 +2014,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_CTLCOLORDLG:
 	{
-		//if (App->CLSB_Ogre_Setup->OgreIsRunning == 0)
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 0)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -2045,7 +2052,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-			//if (App->OgreStarted == 1)
+			if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 			{
 				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -2058,24 +2065,22 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	}
 	case WM_RBUTTONUP:
 	{
-		
-
-		/*if (App->OgreStarted == 1)
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 		{
 			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
+			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}
+
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-			//if (App->OgreStarted == 1)
+			if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 			{
-
 				SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
@@ -2091,8 +2096,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_LBUTTONUP:
 	{
-
-		//if (App->OgreStarted == 1)
+		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 		{
 			ReleaseCapture();
 			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
