@@ -504,6 +504,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			break;
 		}
 
+
 	case WM_COMMAND:
 
 		
@@ -861,8 +862,31 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		case WM_KEYDOWN:
+			switch (wParam)
+			{
+				App->Flash_Window();
+
+				//case 'C':
+				//	if (GetAsyncKeyState(VK_CONTROL))
+				//	{
+				////		//		App->CL10_Objects_Com->Copy_Object();
+				////		//		return 1;
+				//	}
+				//case 'V':
+				//	if (GetAsyncKeyState(VK_CONTROL))
+				//	{
+				////		//		App->CL10_Objects_Com->Paste_Object();
+				////		//		return 1;
+				//	}
+				////	return 1;
+				////	//	// more keys here
+			}break;
+
 		break;
 	}
+
+	
 	return FALSE;
 }
 
@@ -2109,20 +2133,22 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
-		case 'C':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-		//		//		App->CL10_Objects_Com->Copy_Object();
-		//		//		return 1;
-			}
-		case 'V':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-		//		//		App->CL10_Objects_Com->Paste_Object();
-		//		//		return 1;
-			}
-		//	return 1;
-		//	//	// more keys here
+			App->Flash_Window();
+
+		//case 'C':
+		//	if (GetAsyncKeyState(VK_CONTROL))
+		//	{
+		////		//		App->CL10_Objects_Com->Copy_Object();
+		////		//		return 1;
+		//	}
+		//case 'V':
+		//	if (GetAsyncKeyState(VK_CONTROL))
+		//	{
+		////		//		App->CL10_Objects_Com->Paste_Object();
+		////		//		return 1;
+		//	}
+		////	return 1;
+		////	//	// more keys here
 		}break;
 	}
 
