@@ -673,7 +673,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Enable_ShapeButtons(false);
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->Physics_Type = Enums::Shape_TriMesh;
 
 			App->CLSB_Meshviewer->Show_Physics_Trimesh();
 
@@ -1689,7 +1689,9 @@ void SB_MeshViewer::Show_Physics_Box()
 
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-	//Set_Physics(Index);
+	
+	Physics_Rotation();
+
 }
 
 // *************************************************************************
@@ -1754,6 +1756,8 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
+	Physics_Rotation();
+
 }
 
 // *************************************************************************
@@ -1816,7 +1820,8 @@ void SB_MeshViewer::Show_Physics_Cone()
 
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-	//Set_Physics(Index);
+
+	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1876,7 +1881,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
-	//Set_Physics(Index);
+	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1900,8 +1905,7 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
 	worldAAB.transformAffine(MvNode->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
-	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
-
+	
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
@@ -1941,7 +1945,8 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-	//Set_Physics(Index);
+	
+	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -2082,6 +2087,7 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
+	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -2321,7 +2327,7 @@ float SB_MeshViewer::GetMesh_BB_Radius(SceneNode* mNode)
 }
 
 // *************************************************************************
-// *					Physics_Rotation Terry					   *
+// *			Physics_Rotation:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void SB_MeshViewer::Physics_Rotation(void)
 {
@@ -2338,9 +2344,14 @@ void SB_MeshViewer::Physics_Rotation(void)
 		AxisAlignedBox worldAAB = App->CLSB_Meshviewer->MvEnt->getBoundingBox();
 		worldAAB.transformAffine(App->CLSB_Meshviewer->MvNode->_getFullTransform());
 
-		Ogre::Vector3 Centre = worldAAB.getCenter();
-		App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-
+		if (Physics_Type == Enums::Shape_TriMesh)
+		{
+		}
+		else
+		{
+			Ogre::Vector3 Centre = worldAAB.getCenter();
+			App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+		}
 	}
 }
 

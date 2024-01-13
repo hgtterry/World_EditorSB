@@ -150,6 +150,7 @@ protected:
 	bool View_Zoomed_Flag;
 
 	int Texure_Count;
+	
 	std::vector<std::string> v_Texture_Names;
 
 	HWND ListHwnd;
