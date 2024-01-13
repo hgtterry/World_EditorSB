@@ -39,7 +39,7 @@ SB_MeshViewer::SB_MeshViewer()
 
 	MvEnt = NULL;
 	MvNode = NULL;
-	Phys_Body = nullptr;
+	Phys_Body = NULL;
 	// ------------------------------------------------ 
 	GridManual = nullptr;
 	GridNode = nullptr;
@@ -161,7 +161,7 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 
 	//App->RenderBackGround = 1;
 
-	////Set_Debug_Shapes();
+	Set_Debug_Shapes();
 
 	
 	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
@@ -1278,6 +1278,8 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
+	Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
+
 	Mesh_Render_Running = 1;
 	return 1;
 }
@@ -1287,6 +1289,16 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 // *************************************************************************
 void SB_MeshViewer::Close_OgreWindow(void)
 {
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
 	App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
 
 	App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
@@ -1596,9 +1608,9 @@ void SB_MeshViewer::Set_Debug_Shapes()
 		Count++;
 	}*/
 
-	/*App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
-	App->CL_Ogre->RenderFrame();
-	App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;*/
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+	App->CLSB_Ogre_Setup->RenderFrame();
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -1613,67 +1625,70 @@ void SB_MeshViewer::Show_Physics_None()
 	btDebug_Manual->colour(1, 1, 1);
 	btDebug_Manual->end();
 
-	/*if (Phys_Body)
+	if (Phys_Body)
 	{
-		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
-	}*/
+	}
 }
+
 // *************************************************************************
 // *			Show_Physics_Box:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Box()
 {
-	//btDebug_Manual->beginUpdate(0);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1,1,1);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1,1,1);
-	//btDebug_Manual->end();
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1);
+	btDebug_Manual->end();
 
-	///*if (Phys_Body)
-	//{
-	//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-	//	Phys_Body = nullptr;
-	//}*/
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
 
-	//AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	//worldAAB.transformAffine(MvNode->_getFullTransform());
-	//Ogre::Vector3 Centre = worldAAB.getCenter();
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
 
-	//btTransform startTransform;
-	//startTransform.setIdentity();
-	//startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
 
-	//btScalar mass;
-	//mass = 1.0f;
-	//
-	//btVector3 localInertia(0, 0, 0);
-	//btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	//startTransform.setOrigin(initialPosition);
+	btScalar mass;
+	mass = 0.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
 
-	//Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
-	//float sx = Size.x / 2;
-	//float sy = Size.y / 2;
-	//float sz = Size.z / 2;
+	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
 
-	//btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
-	//newRigidShape->calculateLocalInertia(mass, localInertia);
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	////App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
 
-	//btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
-	//btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	//Phys_Body = new btRigidBody(rbInfo);
-	//Phys_Body->setRestitution(1.0);
-	//Phys_Body->setFriction(1.5);
-	//Phys_Body->setUserPointer(MvNode);
-	//Phys_Body->setWorldTransform(startTransform);
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
 
-	//App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 	//Set_Physics(Index);
 }
 
@@ -1689,17 +1704,15 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	btDebug_Manual->colour(1, 1, 1);
 	btDebug_Manual->end();
 
-	/*if (Phys_Body)
+	if (Phys_Body)
 	{
-		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
-	}*/
+	}
 
 	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
 	worldAAB.transformAffine(MvNode->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
 
 	btTransform startTransform;
 	startTransform.setIdentity();
@@ -1713,30 +1726,33 @@ void SB_MeshViewer::Show_Physics_Capsule()
 
 	startTransform.setOrigin(initialPosition);
 
-	/*Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
+	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);*/
+	float Radius = GetMesh_BB_Radius(MvNode);
 	
-	/*btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
-	newRigidShape->calculateLocalInertia(mass, localInertia);*/
+	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	//App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
-	/*btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
 	Phys_Body = new btRigidBody(rbInfo);
 	Phys_Body->setRestitution(1.0);
 	Phys_Body->setFriction(1.5);
 	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);*/
+	Phys_Body->setWorldTransform(startTransform);
 
 
-	//App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
 }
 
@@ -1745,68 +1761,7 @@ void SB_MeshViewer::Show_Physics_Capsule()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Cone()
 {
-	//btDebug_Manual->beginUpdate(0);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->end();
-
-	//if (Phys_Body)
-	//{
-	//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-	//	Phys_Body = nullptr;
-	//}
-
-	//AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	//worldAAB.transformAffine(MvNode->_getFullTransform());
-	//Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	//btTransform startTransform;
-	//startTransform.setIdentity();
-	//startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	//btScalar mass;
-	//mass = 0.0f;
-	//
-	//btVector3 localInertia(0, 0, 0);
-	//btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	//startTransform.setOrigin(initialPosition);
-
-	//Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
-	//float sx = Size.x / 2;
-	//float sy = Size.y;// / 2;
-	//float sz = Size.z / 2;
-
-	//float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
-	//
-	//btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
-	//newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	//App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
-
-	//btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	//btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	//Phys_Body = new btRigidBody(rbInfo);
-	//Phys_Body->setRestitution(1.0);
-	//Phys_Body->setFriction(1.5);
-	//Phys_Body->setUserPointer(MvNode);
-	//Phys_Body->setWorldTransform(startTransform);
-
-	//App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	//Set_Physics(Index);
-}
-
-// *************************************************************************
-// *		Show_Physics_Sphere:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_MeshViewer::Show_Physics_Sphere()
-{
-	/*btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->beginUpdate(0);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(1, 1, 1);
 	btDebug_Manual->position(0, 0, 0);
@@ -1815,7 +1770,70 @@ void SB_MeshViewer::Show_Physics_Sphere()
 
 	if (Phys_Body)
 	{
-		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y;// / 2;
+	float sz = Size.z / 2;
+
+	float Radius = GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
+	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Sphere:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Sphere()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1836,12 +1854,12 @@ void SB_MeshViewer::Show_Physics_Sphere()
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
+	float Radius = GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1853,7 +1871,10 @@ void SB_MeshViewer::Show_Physics_Sphere()
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
 
-	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);*/
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
 	//Set_Physics(Index);
 }
@@ -1863,61 +1884,63 @@ void SB_MeshViewer::Show_Physics_Sphere()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Cylinder()
 {
-	//btDebug_Manual->beginUpdate(0);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->end();
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
 
-	//if (Phys_Body)
-	//{
-	//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-	//	Phys_Body = nullptr;
-	//}
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
 
-	//AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	//worldAAB.transformAffine(MvNode->_getFullTransform());
-	//Ogre::Vector3 Centre = worldAAB.getCenter();
-	////Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
 
-	//btTransform startTransform;
-	//startTransform.setIdentity();
-	//startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
 
-	//btScalar mass;
-	//mass = 0.0f;
-	//
+	btScalar mass;
+	mass = 0.0f;
+	
 
-	//btVector3 localInertia(0, 0, 0);
-	//btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 
-	//startTransform.setOrigin(initialPosition);
+	startTransform.setOrigin(initialPosition);
 
-	//Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
-	//float sx = Size.x / 2;
-	//float sy = Size.y / 2;
-	//float sz = Size.z / 2;
+	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
 
-	//float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
-	//
-	//btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
-	//newRigidShape->calculateLocalInertia(mass, localInertia);
+	float Radius = GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	//App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
 
-	//btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
-	//btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	//Phys_Body = new btRigidBody(rbInfo);
-	//Phys_Body->setRestitution(1.0);
-	//Phys_Body->setFriction(1.5);
-	//Phys_Body->setUserPointer(MvNode);
-	//Phys_Body->setWorldTransform(startTransform);
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
 
-	//App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 	//Set_Physics(Index);
 }
 
@@ -1926,144 +1949,138 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Trimesh()
 {
-	//btDebug_Manual->beginUpdate(0);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1, 1, 1);
-	//btDebug_Manual->end();
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
 
-	//if (Phys_Body)
-	//{
-	//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-	//	Phys_Body = nullptr;
-	//}
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
 
-	//// Get the mesh from the entity
-	//Ogre::MeshPtr myMesh = MvEnt->getMesh();
-	//Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
+	// Get the mesh from the entity
+	Ogre::MeshPtr myMesh = MvEnt->getMesh();
+	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
 
-	//// Create the triangle mesh
-	//btTriangleMesh* triMesh = NULL;
-	//btVector3 vert0, vert1, vert2;
-	//int i = 0;
+	// Create the triangle mesh
+	btTriangleMesh* triMesh = NULL;
+	btVector3 vert0, vert1, vert2;
+	int i = 0;
 
-	//while (SubMeshIter.hasMoreElements())
-	//{
-	//	i = 0;
-	//	Ogre::SubMesh* subMesh = SubMeshIter.getNext();
-	//	Ogre::IndexData* indexData = subMesh->indexData;
-	//	Ogre::VertexData* vertexData = subMesh->vertexData;
+	while (SubMeshIter.hasMoreElements())
+	{
+		i = 0;
+		Ogre::SubMesh* subMesh = SubMeshIter.getNext();
+		Ogre::IndexData* indexData = subMesh->indexData;
+		Ogre::VertexData* vertexData = subMesh->vertexData;
 
-	//	// -------------------------------------------------------
-	//	// Get the position element
-	//	const Ogre::VertexElement* posElem = vertexData->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
-	//	// Get a pointer to the vertex buffer
-	//	Ogre::HardwareVertexBufferSharedPtr vBuffer = vertexData->vertexBufferBinding->getBuffer(posElem->getSource());
-	//	// Get a pointer to the index buffer
-	//	Ogre::HardwareIndexBufferSharedPtr iBuffer = indexData->indexBuffer;
+		const Ogre::VertexElement* posElem = vertexData->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
+		
+		Ogre::HardwareVertexBufferSharedPtr vBuffer = vertexData->vertexBufferBinding->getBuffer(posElem->getSource());
 
-	//	// -------------------------------------------------------
-	//	// The vertices and indices used to create the triangle mesh
-	//	std::vector<Ogre::Vector3> vertices;
-	//	vertices.reserve(vertexData->vertexCount);
-	//	std::vector<unsigned long> indices;
-	//	indices.reserve(indexData->indexCount);
+		Ogre::HardwareIndexBufferSharedPtr iBuffer = indexData->indexBuffer;
 
-	//	// -------------------------------------------------------
-	//	// Lock the Vertex Buffer (READ ONLY)
-	//	unsigned char* vertex = static_cast<unsigned char*> (vBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-	//	float* pReal = NULL;
+		// Set Sizes
+		std::vector<Ogre::Vector3> vertices;
+		vertices.reserve(vertexData->vertexCount);
+		std::vector<unsigned long> indices;
+		indices.reserve(indexData->indexCount);
 
-	//	for (size_t j = 0; j < vertexData->vertexCount; ++j, vertex += vBuffer->getVertexSize()) {
-	//		posElem->baseVertexPointerToElement(vertex, &pReal);
-	//		Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+		// Lock the Vertex Buffer (READ ONLY)
+		unsigned char* vertex = static_cast<unsigned char*> (vBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		float* pReal = NULL;
 
-	//		vertices.push_back(pt);
-	//	}
-	//	vBuffer->unlock();
-	//	// -------------------------------------------------------
-	//	bool use32bitindexes = (iBuffer->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
+		for (size_t j = 0; j < vertexData->vertexCount; ++j, vertex += vBuffer->getVertexSize()) {
+			posElem->baseVertexPointerToElement(vertex, &pReal);
+			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
 
-	//	// -------------------------------------------------------
-	//	// Lock the Index Buffer (READ ONLY)
-	//	unsigned long* pLong = static_cast<unsigned long*> (iBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-	//	unsigned short* pShort = reinterpret_cast<unsigned short*> (pLong);
+			vertices.push_back(pt);
+		}
+		vBuffer->unlock();
+		
+		bool use32bitindexes = (iBuffer->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
 
-	//	if (use32bitindexes) {
-	//		for (size_t k = 0; k < indexData->indexCount; ++k) {
-	//			//
-	//			indices.push_back(pLong[k]);
-	//		}
-	//	}
-	//	else {
-	//		for (size_t k = 0; k < indexData->indexCount; ++k) {
-	//			//
-	//			indices.push_back(static_cast<unsigned long> (pShort[k]));
-	//		}
-	//	}
-	//	iBuffer->unlock();
+		// Lock the Index Buffer (READ ONLY)
+		unsigned long* pLong = static_cast<unsigned long*> (iBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		unsigned short* pShort = reinterpret_cast<unsigned short*> (pLong);
 
-	//	// -------------------------------------------------------
-	//	// We now have vertices and indices ready to go
-	//	// ----
+		if (use32bitindexes) {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(pLong[k]);
+			}
+		}
+		else {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(static_cast<unsigned long> (pShort[k]));
+			}
+		}
+		iBuffer->unlock();
 
-	//	if (triMesh == nullptr)
-	//	{
-	//		triMesh = new btTriangleMesh(use32bitindexes);
-	//	}
+		// Add Vertices
+		if (triMesh == nullptr)
+		{
+			triMesh = new btTriangleMesh(use32bitindexes);
+		}
 
-	//	for (size_t y = 0; y < indexData->indexCount / 3; y++) {
-	//		// Set each vertex
-	//		vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
-	//		vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
-	//		vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
+		for (size_t y = 0; y < indexData->indexCount / 3; y++) {
+			// Set each vertex
+			vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
+			vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
+			vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
 
-	//		// Add the triangle into the triangle mesh
-	//		triMesh->addTriangle(vert0, vert1, vert2);
+			// Add the triangle into the triangle mesh
+			triMesh->addTriangle(vert0, vert1, vert2);
 
-	//		// Increase index count
-	//		i += 3;
-	//	}
+			i += 3;
+		}
 
-	//	//App->Say("here");
-	//}
+		//App->Say("here");
+	}
 
-	//const bool useQuantizedAABB = true;
-	//btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
-	////mShape->buildOptimizedBvh();
+	const bool useQuantizedAABB = true;
+	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	//mShape->buildOptimizedBvh();
 
-	//float x = MvNode->getPosition().x;
-	//float y = MvNode->getPosition().y;
-	//float z = MvNode->getPosition().z;
+	float x = MvNode->getPosition().x;
+	float y = MvNode->getPosition().y;
+	float z = MvNode->getPosition().z;
 
-	//btVector3 inertia(0, 0, 0);
-	//mShape->calculateLocalInertia(0.0, inertia);
+	btVector3 inertia(0, 0, 0);
+	mShape->calculateLocalInertia(0.0, inertia);
 
-	//btTransform startTransform;
-	//startTransform.setIdentity();
-	//startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-	//btVector3 initialPosition(x, y, z);
-	//startTransform.setOrigin(initialPosition);
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	btVector3 initialPosition(x, y, z);
+	startTransform.setOrigin(initialPosition);
 
-	//btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
 
-	//btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
-	//(
-	//	0,  // mass
-	//	myMotionState,// initial position
-	//	mShape,      // collision shape of body
-	//	inertia   // local inertia
-	//);
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
+	(
+		0,  // mass
+		myMotionState,// initial position
+		mShape,      // collision shape of body
+		inertia   // local inertia
+	);
 
-	//Phys_Body = new btRigidBody(rigidBodyCI);
-	//Phys_Body->clearForces();
-	//Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
-	//Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
-	//Phys_Body->setWorldTransform(startTransform);
+	Phys_Body = new btRigidBody(rigidBodyCI);
+	Phys_Body->clearForces();
+	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Phys_Body->setWorldTransform(startTransform);
 
-	//App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
 }
 
@@ -2192,7 +2209,7 @@ void SB_MeshViewer::Set_For_Collectables()
 void SB_MeshViewer::Set_Shape_Buttons()
 {
 
-	/*EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), 0);
@@ -2208,7 +2225,7 @@ void SB_MeshViewer::Set_Shape_Buttons()
 	Selected_Shape_Sphere = 0;
 	Selected_Shape_Capsule = 0;
 	Selected_Shape_Cylinder = 0;
-	Selected_Shape_Cone = 0;*/
+	Selected_Shape_Cone = 0;
 }
 
 // *************************************************************************
@@ -2216,7 +2233,7 @@ void SB_MeshViewer::Set_Shape_Buttons()
 // *************************************************************************
 void SB_MeshViewer::Set_For_Areas(HWND hDlg)
 {
-	/*EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
@@ -2226,7 +2243,7 @@ void SB_MeshViewer::Set_For_Areas(HWND hDlg)
 
 	Enable_ShapeButtons(0);
 
-	char ConNum[256];
+	/*char ConNum[256];
 	char ATest[256];
 
 	strcpy_s(ATest, "Area_");
@@ -2251,5 +2268,55 @@ void SB_MeshViewer::Set_For_Areas(HWND hDlg)
 
 	App->SBC_MeshViewer->Add_Resources();
 	App->SBC_MeshViewer->Get_Files();*/
+}
+
+// *************************************************************************
+// *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+Ogre::Vector3 SB_MeshViewer::GetMesh_BB_Size(SceneNode* mNode)
+{
+	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
+	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
+	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
+	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
+	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
+	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
+
+	return size;
+}
+
+// *************************************************************************
+//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+Ogre::Vector3 SB_MeshViewer::Get_BoundingBox_World_Centre()
+{
+	//if (App->SBC_Scene->V_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	//{
+		//Ogre::Vector3 Pos = App->SBC_Scene->V_Object[Object_Index]->Object_Node->getPosition();
+		//return Pos;
+	//}
+	//else
+	{
+		AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+		worldAAB.transformAffine(MvNode->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+
+		return Centre;
+	}
+}
+
+// *************************************************************************
+// *	  		GetMesh_BB_Radius:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+float SB_MeshViewer::GetMesh_BB_Radius(SceneNode* mNode)
+{
+	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
+	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
+	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
+	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
+	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
+	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
+
+	return radius;
 }
 

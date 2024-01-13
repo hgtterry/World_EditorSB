@@ -52,8 +52,11 @@ public:
 	Ogre::String MV_Resource_Group;
 	Ogre::SceneNode*		MvNode;
 	
+	Ogre::ManualObject*		Saved_btDebug_Manual;
+
 	Ogre::ManualObject*		btDebug_Manual;
 	Ogre::SceneNode*		btDebug_Node;
+
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::Camera*		mCameraMeshView;
 
@@ -115,6 +118,11 @@ protected:
 
 	void Enable_ShapeButtons(bool state);
 	void Enable_TypeButtons(bool state);
+
+	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
+	Ogre::Vector3 Get_BoundingBox_World_Centre();
+	float GetMesh_BB_Radius(SceneNode* mNode);
+
 
 	bool Get_Files();
 

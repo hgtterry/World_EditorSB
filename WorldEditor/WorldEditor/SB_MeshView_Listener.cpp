@@ -53,6 +53,8 @@ SB_MeshView_Listener::SB_MeshView_Listener()
 	View_Height = 0;
 	View_Width = 0;
 
+	Bullet_Step = 2;
+
 	WE_Cam = App->CLSB_Meshviewer->mCameraMeshView;
 }
 
@@ -92,7 +94,14 @@ bool SB_MeshView_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_MeshView_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
+	if (App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * Bullet_Step);
+		App->CLSB_Bullet->dynamicsWorld->debugDrawWorld();
+	}
+
 	ModelMode(evt.timeSinceLastFrame);
+
 	return 1;
 }
 

@@ -69,5 +69,7 @@ protected:
 	POINT		Pl_pt;
 	long		Pl_Cent500X;
 	long		Pl_Cent500Y;
+
+	int			Bullet_Step;
 };
 
