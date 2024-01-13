@@ -513,7 +513,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BTMV_CENTRE)
 		{
-			App->CLSB_Meshviewer->mCameraMeshView->setPosition(0, 0, 0);
+			App->CLSB_Meshviewer->GridNode->resetOrientation();
+			App->CLSB_Meshviewer->Reset_Camera();
 
 			App->CLSB_Meshviewer->View_Zoomed_Flag = 0;
 			App->CLSB_Meshviewer->View_Centred_Flag = 1;
@@ -599,6 +600,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Meshviewer->Get_Files();
 
 				App->CLSB_Meshviewer->GridNode->resetOrientation();
+				App->CLSB_Meshviewer->Reset_Camera();
+
 			}
 			}
 
@@ -626,6 +629,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
 			App->CLSB_Meshviewer->GridNode->resetOrientation();
+			App->CLSB_Meshviewer->Reset_Camera();
 
 			return TRUE;
 
@@ -1164,14 +1168,15 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setPosition(0, 0, 0);
+	MvNode->resetOrientation();
 
-	if (App->CLSB_Meshviewer->View_Zoomed_Flag == 1)
+	/*if (App->CLSB_Meshviewer->View_Zoomed_Flag == 1)
 	{
 		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 		Ogre::Real Radius = MvEnt->getBoundingRadius();
 		mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
 		mCameraMeshView->lookAt(0, Centre.y, 0);
-	}
+	}*/
 
 	Get_Mesh_Assets();
 
@@ -1212,6 +1217,9 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 // *************************************************************************
 bool SB_MeshViewer::Set_OgreWindow(void)
 {
+	MvEnt = NULL;
+	MvNode = NULL;
+	Phys_Body = NULL;
 
 	Ogre::NameValuePairList options;
 
@@ -1259,22 +1267,17 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	
 	App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
 
-
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
-	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
+	Reset_Camera();
 
 	// Debug Physics Shape
 	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-
 	btDebug_Manual->setDynamic(true);
 	btDebug_Manual->estimateVertexCount(2000);
-
 	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(1,1,1,1);
 	btDebug_Manual->end();
-
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
@@ -1282,6 +1285,23 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	Mesh_Render_Running = 1;
 	return 1;
+}
+
+// *************************************************************************
+// *		Close_MeshWindow:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_MeshViewer::Reset_Camera(void)
+{
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
+	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
+
+	if (MvEnt && MvNode)
+	{
+		App->CLSB_Meshviewer->MvNode->setPosition(0, 0, 0);
+		App->CLSB_Meshviewer->MvNode->resetOrientation();
+	}
+
+	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1532,8 +1552,6 @@ LRESULT CALLBACK SB_MeshViewer::Mesh_Properties_Proc(HWND hDlg, UINT message, WP
 		return TRUE;
 	}
 
-	
-
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
@@ -1749,7 +1767,6 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	Phys_Body->setFriction(1.5);
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
-
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
@@ -2045,7 +2062,6 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 			i += 3;
 		}
 
-		//App->Say("here");
 	}
 
 	const bool useQuantizedAABB = true;

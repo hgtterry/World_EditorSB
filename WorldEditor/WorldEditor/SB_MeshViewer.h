@@ -126,7 +126,13 @@ protected:
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	Ogre::Vector3 Get_BoundingBox_World_Centre();
 	float GetMesh_BB_Radius(SceneNode* mNode);
+	void Reset_Camera(void);
+	bool Create_Resources_Group();
+	bool Add_Resources();
+	bool Delete_Resources_Group();
 
+	bool Get_Media_Folders_Actors(HWND DropHwnd);
+	bool GetMeshFiles(char* Location, bool ResetList);
 
 	bool Get_Files();
 
@@ -138,13 +144,6 @@ protected:
 	bool Selected_Shape_Capsule;
 	bool Selected_Shape_Cylinder;
 	bool Selected_Shape_Cone;
-
-	bool Create_Resources_Group();
-	bool Add_Resources();
-	bool Delete_Resources_Group();
-
-	bool Get_Media_Folders_Actors(HWND DropHwnd);
-	bool GetMeshFiles(char* Location, bool ResetList);
 
 	bool View_Centred_Flag;
 	bool View_Zoomed_Flag;

@@ -26,7 +26,6 @@ distribution.
 #include "SB_OgreListener.h"
 
 
-
 SB_OgreListener::SB_OgreListener(void)
 {
 	mCam = App->CLSB_Ogre_Setup->mCamera;

@@ -117,30 +117,32 @@ void SB_MeshView_Listener::ModelMode(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity * DeltaTime;
 
-	//if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
-	//{
-	//	Ogre::Real Rate;
-	//	Rate = (mMoveSensitivity / 1000) * 4;    //0.1;//FlyRate;
+	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
+	{
+		Ogre::Real Rate;
+		Rate = (mMoveSensitivity / 1000) * 4;    //0.1;//FlyRate;
 
-	//	Ogre::Vector3 OldPos;
-	//	OldPos = WE_Cam->getPosition();
+		Ogre::Vector3 OldPos;
+		OldPos = WE_Cam->getPosition();
 
-	//	OldPos.y += Rate;
-	//	WE_Cam->setPosition(OldPos);
-	//}
-	////------------------------------------------------
-	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
-	//{
-	//	Ogre::Real Rate;
-	//	Rate = (mMoveSensitivity / 1000) * 4;// 0.1;//FlyRate;
+		OldPos.y += Rate;
+		WE_Cam->setPosition(OldPos);
+	}
 
-	//	Ogre::Vector3 OldPos;
-	//	OldPos = WE_Cam->getPosition();
+	//------------------------------------------------
+	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
+	{
+		Ogre::Real Rate;
+		Rate = (mMoveSensitivity / 1000) * 4;// 0.1;//FlyRate;
 
-	//	OldPos.y -= Rate;
-	//	WE_Cam->setPosition(OldPos);
-	//}
-	////------------------------------------------------
+		Ogre::Vector3 OldPos;
+		OldPos = WE_Cam->getPosition();
+
+		OldPos.y -= Rate;
+		WE_Cam->setPosition(OldPos);
+	}
+
+	//------------------------------------------------
 	if (Wheel_Move < 0) // Mouse Wheel Forward
 	{
 		mTranslateVector.z = -mMoveScale * 30;

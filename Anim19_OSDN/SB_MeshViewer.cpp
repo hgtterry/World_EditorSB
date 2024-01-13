@@ -1182,26 +1182,30 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
-
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
-	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
+	Reset_Camera();
 
 	// Debug Physics Shape
 	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-
 	btDebug_Manual->setDynamic(true);
 	btDebug_Manual->estimateVertexCount(2000);
-
 	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(1,1,1,1);
 	btDebug_Manual->end();
-
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Close_MeshWindow:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_MeshViewer::Reset_Camera(void)
+{
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
+	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 // *************************************************************************

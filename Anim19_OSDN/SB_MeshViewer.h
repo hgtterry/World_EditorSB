@@ -114,13 +114,7 @@ protected:
 	bool Get_Files();
 
 	void Show_Mesh_Properties();
-	
-	//----------------------------------
-	bool Selected_Shape_Box;
-	bool Selected_Shape_Sphere;
-	bool Selected_Shape_Capsule;
-	bool Selected_Shape_Cylinder;
-	bool Selected_Shape_Cone;
+	void Reset_Camera(void);
 
 	bool Create_Resources_Group();
 	bool Add_Resources();
@@ -131,6 +125,13 @@ protected:
 
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	float GetMesh_BB_Radius(SceneNode* mNode);
+
+	//----------------------------------
+	bool Selected_Shape_Box;
+	bool Selected_Shape_Sphere;
+	bool Selected_Shape_Capsule;
+	bool Selected_Shape_Cylinder;
+	bool Selected_Shape_Cone;
 
 	bool View_Centred_Flag;
 	bool View_Zoomed_Flag;
