@@ -36,6 +36,7 @@ public:
 
 	bool Start_Mesh_Viewer();
 	void Copy_Assets();
+	void Physics_Rotation(void);
 
 	char mResource_Folder[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
@@ -50,8 +51,10 @@ public:
 	HWND MainDlgHwnd;
 
 	Ogre::String MV_Resource_Group;
+
 	Ogre::SceneNode*		MvNode;
-	
+	Ogre::Entity*			MvEnt;
+
 	Ogre::ManualObject*		Saved_btDebug_Manual;
 
 	Ogre::ManualObject*		btDebug_Manual;
@@ -60,6 +63,7 @@ public:
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::Camera*		mCameraMeshView;
 
+	btRigidBody*		Phys_Body;
 	ManualObject*		GridManual;
 	SceneNode*			GridNode;
 
@@ -152,8 +156,6 @@ protected:
 	HWND MeshView_3D_hWnd;
 	HWND CB_hWnd;
 
-	Ogre::Entity*		MvEnt;
-	btRigidBody			*Phys_Body;
 	btCollisionShape	*Phys_Shape;
 
 	Ogre::RenderWindow* MeshView_Window;

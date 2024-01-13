@@ -226,6 +226,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 			App->CLSB_Meshviewer->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Meshviewer->MvNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+
+			App->CLSB_Meshviewer->Physics_Rotation();
+
 			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
 		}
 	}
@@ -238,6 +241,8 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 			App->CLSB_Meshviewer->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CLSB_Meshviewer->MvNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+
+			App->CLSB_Meshviewer->Physics_Rotation();
 
 			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
 		}
@@ -253,6 +258,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 			App->CLSB_Meshviewer->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Meshviewer->MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+
+			App->CLSB_Meshviewer->Physics_Rotation();
+
 			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
 		}
 	}
@@ -265,6 +273,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 			App->CLSB_Meshviewer->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CLSB_Meshviewer->MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+
+			App->CLSB_Meshviewer->Physics_Rotation();
+
 			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
 		}
 	}

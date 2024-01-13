@@ -2320,3 +2320,27 @@ float SB_MeshViewer::GetMesh_BB_Radius(SceneNode* mNode)
 	return radius;
 }
 
+// *************************************************************************
+// *					Physics_Rotation Terry					   *
+// *************************************************************************
+void SB_MeshViewer::Physics_Rotation(void)
+{
+	if (App->CLSB_Meshviewer->Phys_Body)
+	{
+		Ogre::Quaternion Physics_Quat;
+		Physics_Quat.w = App->CLSB_Meshviewer->MvNode->getOrientation().w;
+		Physics_Quat.x = App->CLSB_Meshviewer->MvNode->getOrientation().x;
+		Physics_Quat.y = App->CLSB_Meshviewer->MvNode->getOrientation().y;
+		Physics_Quat.z = App->CLSB_Meshviewer->MvNode->getOrientation().z;
+
+		App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setRotation(btQuaternion(Physics_Quat.x, Physics_Quat.y, Physics_Quat.z, Physics_Quat.w));
+
+		AxisAlignedBox worldAAB = App->CLSB_Meshviewer->MvEnt->getBoundingBox();
+		worldAAB.transformAffine(App->CLSB_Meshviewer->MvNode->_getFullTransform());
+
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+		App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
+	}
+}
+
