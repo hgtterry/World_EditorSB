@@ -81,7 +81,7 @@ SB_MeshViewer::SB_MeshViewer()
 
 	// ------------------------------------------------ 
 	Physics_Type = Enums::Bullet_Type_None;
-	Physics_Shape = Enums::NoShape;
+	Physics_Shape = Enums::Shape_None;
 
 	SelectDynamic = 0;
 	SelectStatic = 0;
@@ -688,7 +688,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
-			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_None;
 			App->CLSB_Meshviewer->SelectStatic = 1;
 			App->CLSB_Meshviewer->SelectDynamic = 0;
 			App->CLSB_Meshviewer->SelectTriMesh = 0;
@@ -705,7 +705,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_DYNAMIC)
 		{
 			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Dynamic;
-			App->CLSB_Meshviewer->Physics_Shape = Enums::NoShape;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_None;
 			App->CLSB_Meshviewer->SelectDynamic = 1;
 			App->CLSB_Meshviewer->SelectStatic = 0;
 			App->CLSB_Meshviewer->SelectTriMesh = 0;
@@ -743,7 +743,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Selected_Shape_Sphere = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->CLSB_Meshviewer->Physics_Shape = Enums::Sphere;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Sphere;
 
 			App->CLSB_Meshviewer->Show_Physics_Sphere();
 			return TRUE;
@@ -755,7 +755,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Selected_Shape_Capsule = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->CLSB_Meshviewer->Physics_Shape = Enums::Capsule;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Capsule;
 
 			App->CLSB_Meshviewer->Show_Physics_Capsule();
 			return TRUE;
@@ -767,7 +767,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Selected_Shape_Cylinder = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->CLSB_Meshviewer->Physics_Shape = Enums::Cylinder;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Cylinder;
 
 			App->CLSB_Meshviewer->Show_Physics_Cylinder();
 
@@ -780,7 +780,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Selected_Shape_Cone = 1;
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->CLSB_Meshviewer->Physics_Shape = Enums::Cone;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Cone;
 
 			App->CLSB_Meshviewer->Show_Physics_Cone();
 			return TRUE;
@@ -1180,27 +1180,27 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 		Show_Physics_Box();
 	}
 
-	if (Physics_Shape == Enums::Sphere)
+	if (Physics_Shape == Enums::Shape_Sphere)
 	{
 		Show_Physics_Sphere();
 	}
 
-	if (Physics_Shape == Enums::Capsule)
+	if (Physics_Shape == Enums::Shape_Capsule)
 	{
 		Show_Physics_Capsule();
 	}
 
-	if (Physics_Shape == Enums::Cylinder)
+	if (Physics_Shape == Enums::Shape_Cylinder)
 	{
 		Show_Physics_Cylinder();
 	}
 
-	if (App->CLSB_Meshviewer->Physics_Shape == Enums::Cone)
+	if (App->CLSB_Meshviewer->Physics_Shape == Enums::Shape_Cone)
 	{
 		Show_Physics_Cone();
 	}
 
-	if (App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	if (App->CLSB_Meshviewer->Physics_Type == Enums::Shape_TriMesh)
 	{
 		Show_Physics_Trimesh();
 	}

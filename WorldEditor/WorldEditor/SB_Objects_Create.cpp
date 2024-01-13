@@ -150,7 +150,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 			Add_Physics_Box(true, Index);
 		}*/
 
-		if (Object->Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Shape_Sphere)
 		{
 			Add_Physics_Sphere(true, Index);
 		}
@@ -198,13 +198,13 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Sphere;
+		Object->Shape = Enums::Shape_Sphere;
 
 	}
 	else
 	{
 		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Sphere;
+		Object->Shape = Enums::Shape_Sphere;
 	}
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();

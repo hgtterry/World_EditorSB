@@ -178,17 +178,17 @@ namespace Enums
 
 	enum Shape
 	{
-		NoShape = 0,
+		Shape_None = 0,
 		Shape_Box = 1,
-		Sphere = 2,
-		Capsule = 3,
-		Cylinder = 4,
-		Cone = 5,
+		Shape_Sphere = 2,
+		Shape_Capsule = 3,
+		Shape_Cylinder = 4,
+		Shape_Cone = 5,
 		Shape_TriMesh = 6,
-		VolumeBox = 7
+		Shape_VolumeBox = 7
 	};
 
-	enum Bullet_Type // Dont Forget GD19_LookUps::Get_Type_Category_String(void)
+	enum Bullet_Type
 	{
 		Bullet_Type_None = 0,
 		Bullet_Type_Dynamic = 1, // Free Moving Physics
