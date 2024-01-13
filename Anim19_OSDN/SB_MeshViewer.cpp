@@ -2312,3 +2312,33 @@ void SB_MeshViewer::Set_For_Areas(HWND hDlg)
 	App->SBC_MeshViewer->Get_Files();
 }
 
+// *************************************************************************
+// *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+Ogre::Vector3 SB_MeshViewer::GetMesh_BB_Size(SceneNode* mNode)
+{
+	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
+	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
+	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
+	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
+	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
+	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
+
+	return size;
+}
+
+// *************************************************************************
+// *	  		GetMesh_BB_Radius:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+float SB_MeshViewer::GetMesh_BB_Radius(SceneNode* mNode)
+{
+	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
+	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
+	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
+	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
+	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
+	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
+
+	return radius;
+}
+

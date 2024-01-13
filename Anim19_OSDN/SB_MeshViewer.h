@@ -129,6 +129,9 @@ protected:
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
 	bool GetMeshFiles(char* Location, bool ResetList);
 
+	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
+	float GetMesh_BB_Radius(SceneNode* mNode);
+
 	bool View_Centred_Flag;
 	bool View_Zoomed_Flag;
 
