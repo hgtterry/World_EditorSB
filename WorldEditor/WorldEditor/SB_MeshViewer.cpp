@@ -129,7 +129,7 @@ void SB_MeshViewer::Enable_TypeButtons(bool state)
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), state);
-	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), state);
+	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), state);
 	ShowWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), state);
 }
 // *************************************************************************
@@ -159,11 +159,8 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	MvNode = NULL;
 	Last_MeshFile[0] = 0;
 
-	//App->RenderBackGround = 1;
-
 	Set_Debug_Shapes();
 
-	
 	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{
 		strcpy(mResource_Folder, App->WorldEditor_Directory);
@@ -212,16 +209,20 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_JUSTMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-//		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-//		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SHAPE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_TYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STPLACEMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -270,29 +271,29 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Set_For_Areas(hDlg);
 		}
 
-
+		// Default
 		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
 			App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
 			App->CLSB_Meshviewer->Get_Files();
 
-			App->CLSB_Meshviewer->Enable_ShapeButtons(1);
-			App->CLSB_Meshviewer->Enable_TypeButtons(1);
+			SendDlgItemMessage(App->CLSB_Meshviewer->MainDlgHwnd, IDC_LISTFILES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
+			App->CLSB_Meshviewer->Enable_TypeButtons(true);
 
 			char ATest[256];
 			char ConNum[256];
 
-			/*strcpy_s(ATest, "Object_");
+			strcpy_s(ATest, "Object_");
 			_itoa(App->CLSB_Scene->Object_Count, ConNum, 10);
 			strcat(ATest, ConNum);
 
 			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-			strcpy(App->CLSB_Meshviewer->Object_Name, ATest);*/
+			strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
 
 			App->CLSB_Meshviewer->Enable_TypeButtons(1);
 		}
-
-		//App->CL_Ogre->OgreListener->MeshViewer_Running = 1;
 
 		//App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 
@@ -308,21 +309,21 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STSHAPE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_SHAPE2) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_STTYPE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_TYPE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_STFOLDER) == (HWND)lParam)
 		{
@@ -417,35 +418,85 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BOX && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Box);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BOX));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Box);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_SPHERE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Sphere);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_SPHERE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Sphere);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CAPSULE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Capsule);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CAPSULE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Capsule);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CYLINDER && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cylinder);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CYLINDER));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cylinder);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CONE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cone);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CONE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Selected_Shape_Cone);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -678,6 +729,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->SelectTriMesh = 1;
 
 			App->CLSB_Meshviewer->Enable_ShapeButtons(false);
+
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->CLSB_Meshviewer->Physics_Type = Enums::Shape_TriMesh;
@@ -811,7 +863,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			//GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
 			//strcpy(App->SBC_MeshViewer->Object_Name, buff);
 
-			//App->CL_Ogre->OgreListener->MeshViewer_Running = 0;
 			//
 			//if (App->SBC_MeshViewer->Phys_Body)
 			//{
@@ -845,9 +896,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			//Debug
-			/*App->CL_Ogre->OgreListener->MeshViewer_Running = 0;
-
-			if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
+			
+			/*if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
 			{
 				App->SBC_MeshViewer->MvNode->detachAllObjects();
 				App->SBC_MeshViewer->mSceneMgrMeshView->destroySceneNode(App->SBC_MeshViewer->MvNode);
@@ -1585,18 +1635,18 @@ void SB_MeshViewer::Set_Debug_Shapes()
 {
 	int Count = 0;
 
-	/*while (Count < App->SBC_Scene->Player_Count)
+	while (Count < App->CLSB_Scene->Player_Count)
 	{
-		if (App->SBC_Scene->B_Player[Count]->Physics_Debug_On == 1)
+		if (App->CLSB_Scene->B_Player[Count]->Physics_Debug_On == 1)
 		{
-			int f = App->SBC_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
-			App->SBC_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			int f = App->CLSB_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
+			App->CLSB_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 		}
 
 		Count++;
 	}
 
-	Count = 0;
+	/*Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
 		if (App->SBC_Scene->V_Object[Count]->Physics_Debug_On == 1)
@@ -2216,7 +2266,7 @@ void SB_MeshViewer::Set_Shape_Buttons()
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), 0);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), 0);
 
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), 0);
@@ -2240,7 +2290,7 @@ void SB_MeshViewer::Set_For_Areas(HWND hDlg)
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), false);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
 
 	SelectTriMesh = 1;

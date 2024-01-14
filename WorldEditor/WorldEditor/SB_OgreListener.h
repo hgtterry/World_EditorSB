@@ -107,7 +107,7 @@ public:
 	bool	Dubug_Physics_DrawAll;
 
 	bool	Equity_Running;		// Equity Editor Running [191221]
-	bool	MeshViewer_Running;	// Mesh Viewer Running [191221]
+	
 	bool	Show_DemoWindow;
 
 	float	GD_SpinRate;

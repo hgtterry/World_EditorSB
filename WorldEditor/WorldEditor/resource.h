@@ -181,7 +181,6 @@
 #define IDR_MENU_EQUITY                 360
 #define IDD_SB_IMGUI_SURFACE2           361
 #define IDD_SB_MESHVIEWER               363
-#define IDD_DIALOG4                     365
 #define IDD_SB_VIEWER3D_MV              365
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -579,7 +578,7 @@
 #define IDC_TRIMESH                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_TBSHOWHAIR                  1355
-#define IDC_JUSTOGRE                    1355
+#define IDC_JUSTMESH                    1355
 #define IDC_BUTTON6                     1356
 #define IDC_TEXTURELIST2                1357
 #define IDC_TBBOUNDBOX                  1357
@@ -928,6 +927,9 @@
 #define IDC_BT_PROPERTIES               1600
 #define IDC_MVSTATIC                    1601
 #define IDC_CAPSULE                     1602
+#define IDC_ST_TYPE                     1603
+#define IDC_ST_SHAPE2                   1604
+#define IDC_OBJECTNAME                  1605
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1174,7 +1176,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        367
 #define _APS_NEXT_COMMAND_VALUE         33123
-#define _APS_NEXT_CONTROL_VALUE         1603
+#define _APS_NEXT_CONTROL_VALUE         1606
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

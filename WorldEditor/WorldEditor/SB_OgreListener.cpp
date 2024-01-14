@@ -63,8 +63,7 @@ SB_OgreListener::SB_OgreListener(void)
 	Dubug_Physics_DrawAll = 0;
 
 	Equity_Running = 0;
-	MeshViewer_Running = 0;
-
+	
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
 
