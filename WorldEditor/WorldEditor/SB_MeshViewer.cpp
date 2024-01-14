@@ -108,8 +108,8 @@ SB_MeshViewer::SB_MeshViewer()
 	m_Material_File[0] = 0;
 
 	strcpy(mResource_Folder, App->WorldEditor_Directory);
-	strcat(mResource_Folder, "\\Media_New\\Walls\\");
-	strcpy(Selected_MeshFile, "Wall_1.mesh");
+	strcat(mResource_Folder, "\\Media_New\\Structure\\");
+	strcpy(Selected_MeshFile, "Barrel_1.mesh");
 
 	strcpy(m_Current_Folder, "Structure");
 
@@ -173,8 +173,8 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	else
 	{
 		strcpy(mResource_Folder, App->WorldEditor_Directory);
-		strcat(mResource_Folder, "\\Media_New\\Walls\\");
-		strcpy(Selected_MeshFile, "Wall_1.mesh");
+		strcat(mResource_Folder, "\\Media_New\\Structure\\");
+		strcpy(Selected_MeshFile, "Barrel_1.mesh");
 	}
 
 	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
@@ -234,6 +234,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		SendDlgItemMessage(hDlg, IDC_BTMV_CENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMV_ZOOMED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
 
@@ -841,7 +844,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-
+			//Debug
 			/*App->CL_Ogre->OgreListener->MeshViewer_Running = 0;
 
 			if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
@@ -868,27 +871,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
-
-		case WM_KEYDOWN:
-			switch (wParam)
-			{
-				App->Flash_Window();
-
-				//case 'C':
-				//	if (GetAsyncKeyState(VK_CONTROL))
-				//	{
-				////		//		App->CL10_Objects_Com->Copy_Object();
-				////		//		return 1;
-				//	}
-				//case 'V':
-				//	if (GetAsyncKeyState(VK_CONTROL))
-				//	{
-				////		//		App->CL10_Objects_Com->Paste_Object();
-				////		//		return 1;
-				//	}
-				////	return 1;
-				////	//	// more keys here
-			}break;
 
 		break;
 	}
