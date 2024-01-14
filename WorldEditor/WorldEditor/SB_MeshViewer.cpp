@@ -261,11 +261,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Meshviewer->SelectDynamic = 0;
 		App->CLSB_Meshviewer->SelectTriMesh = 0;
 
+		// Collectables
 		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
 			App->CLSB_Meshviewer->Set_For_Collectables();
 		}
 
+		// Areas
 		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 		{
 			App->CLSB_Meshviewer->Set_For_Areas(hDlg);
@@ -274,28 +276,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		// Default
 		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
-			App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
-			App->CLSB_Meshviewer->Get_Files();
-
-			SendDlgItemMessage(App->CLSB_Meshviewer->MainDlgHwnd, IDC_LISTFILES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-
-			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
-			App->CLSB_Meshviewer->Enable_TypeButtons(true);
-
-			char ATest[256];
-			char ConNum[256];
-
-			strcpy_s(ATest, "Object_");
-			_itoa(App->CLSB_Scene->Object_Count, ConNum, 10);
-			strcat(ATest, ConNum);
-
-			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-			strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
-
-			App->CLSB_Meshviewer->Enable_TypeButtons(1);
+			App->CLSB_Meshviewer->Set_For_Objects(hDlg);
 		}
-
-		//App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 
 		return TRUE;
 	}
@@ -1411,12 +1393,14 @@ bool SB_MeshViewer::Get_Files()
 		FindClose(hFind);
 	}
 
-	/*char buff[256];
+	SendMessage(ListHwnd,LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
+	char buff[256];
 	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
-	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
-	App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);*/
+	strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
+	App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
 	return 0;
 }
@@ -2210,6 +2194,105 @@ void SB_MeshViewer::Grid_Update(bool Create)
 }
 
 // *************************************************************************
+// *	  	Set_Shape_Buttons:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Set_Shape_Buttons()
+{
+
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), 0);
+
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_SPHERE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CAPSULE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CYLINDER), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CONE), 0);
+
+	Selected_Shape_Box = 0;
+	Selected_Shape_Sphere = 0;
+	Selected_Shape_Capsule = 0;
+	Selected_Shape_Cylinder = 0;
+	Selected_Shape_Cone = 0;
+}
+
+// *************************************************************************
+// *			Set_For_Objects:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_MeshViewer::Set_For_Objects(HWND hDlg)
+{
+	App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
+	App->CLSB_Meshviewer->Get_Files();
+
+	App->CLSB_Meshviewer->Enable_ShapeButtons(true);
+	App->CLSB_Meshviewer->Enable_TypeButtons(true);
+
+	App->CLSB_Meshviewer->Selected_Shape_Box = 1;
+	App->CLSB_Meshviewer->SelectStatic = 1;
+
+	App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
+	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
+	App->CLSB_Meshviewer->Show_Physics_Box();
+
+
+	char ATest[256];
+	char ConNum[256];
+
+	strcpy_s(ATest, "Object_");
+	_itoa(App->CLSB_Scene->Object_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+	strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
+
+	App->CLSB_Meshviewer->Enable_TypeButtons(1);
+}
+
+// *************************************************************************
+// *			Set_For_Areas:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Set_For_Areas(HWND hDlg)
+{
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
+
+	SelectTriMesh = 1;
+
+	Enable_ShapeButtons(0);
+
+	/*char ConNum[256];
+	char ATest[256];
+
+	strcpy_s(ATest, "Area_");
+	_itoa(App->SBC_Scene->Area_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+
+	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();*/
+}
+
+// *************************************************************************
 // *	  	Set_For_Collectables:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_MeshViewer::Set_For_Collectables()
@@ -2255,73 +2338,6 @@ void SB_MeshViewer::Set_For_Collectables()
 	App->SBC_MeshViewer->Add_Resources();
 	App->SBC_MeshViewer->Get_Files();*/
 
-}
-
-// *************************************************************************
-// *	  	Set_Shape_Buttons:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_MeshViewer::Set_Shape_Buttons()
-{
-
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), 0);
-
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_SPHERE), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CAPSULE), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CYLINDER), 0);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CONE), 0);
-
-	Selected_Shape_Box = 0;
-	Selected_Shape_Sphere = 0;
-	Selected_Shape_Capsule = 0;
-	Selected_Shape_Cylinder = 0;
-	Selected_Shape_Cone = 0;
-}
-
-// *************************************************************************
-// *			Set_For_Areas:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_MeshViewer::Set_For_Areas(HWND hDlg)
-{
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTMESH), false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
-
-	SelectTriMesh = 1;
-
-	Enable_ShapeButtons(0);
-
-	/*char ConNum[256];
-	char ATest[256];
-
-	strcpy_s(ATest, "Area_");
-	_itoa(App->SBC_Scene->Area_Count, ConNum, 10);
-	strcat(ATest, ConNum);
-
-	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
-	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
-	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
-
-	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
-
-	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
-
-	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
-
-	App->SBC_MeshViewer->Add_Resources();
-	App->SBC_MeshViewer->Get_Files();*/
 }
 
 // *************************************************************************
