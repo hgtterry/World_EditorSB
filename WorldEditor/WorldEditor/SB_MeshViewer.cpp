@@ -713,7 +713,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CLSB_Meshviewer->Enable_ShapeButtons(false);
 
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Physics_Type = Enums::Shape_TriMesh;
 
@@ -730,16 +730,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
-			//App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_None;
+			
 			App->CLSB_Meshviewer->SelectStatic = 1;
 			App->CLSB_Meshviewer->SelectDynamic = 0;
 			App->CLSB_Meshviewer->SelectTriMesh = 0;
 			
 			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
 
-			App->RedrawWindow_Dlg(hDlg);
-
-			//App->CLSB_Meshviewer->Show_Physics_None();
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Reselect_Shape();
 			return 1;
@@ -748,16 +746,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_DYNAMIC)
 		{
 			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Dynamic;
-			//App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_None;
+			
 			App->CLSB_Meshviewer->SelectDynamic = 1;
 			App->CLSB_Meshviewer->SelectStatic = 0;
 			App->CLSB_Meshviewer->SelectTriMesh = 0;
 
 			App->CLSB_Meshviewer->Enable_ShapeButtons(true);
 
-			App->RedrawWindow_Dlg(hDlg);
-
-			//App->CLSB_Meshviewer->Show_Physics_None();
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Reselect_Shape();
 			return 1;
@@ -773,7 +769,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CLSB_Meshviewer->Reset_Shape_Flags();
 			App->CLSB_Meshviewer->Selected_Shape_Box = 1;
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
 			App->CLSB_Meshviewer->Last_Selected_Physics_Shape = Enums::Shape_Box;
@@ -786,7 +782,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CLSB_Meshviewer->Reset_Shape_Flags();
 			App->CLSB_Meshviewer->Selected_Shape_Sphere = 1;
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Sphere;
 			App->CLSB_Meshviewer->Last_Selected_Physics_Shape = Enums::Shape_Sphere;
@@ -799,7 +795,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CLSB_Meshviewer->Reset_Shape_Flags();
 			App->CLSB_Meshviewer->Selected_Shape_Capsule = 1;
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Capsule;
 			App->CLSB_Meshviewer->Last_Selected_Physics_Shape = Enums::Shape_Capsule;
@@ -812,7 +808,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CLSB_Meshviewer->Reset_Shape_Flags();
 			App->CLSB_Meshviewer->Selected_Shape_Cylinder = 1;
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 
 			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Cylinder;
 			App->CLSB_Meshviewer->Last_Selected_Physics_Shape = Enums::Shape_Cylinder;
@@ -826,8 +822,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CLSB_Meshviewer->Reset_Shape_Flags();
 			App->CLSB_Meshviewer->Selected_Shape_Cone = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Cone;
 			App->CLSB_Meshviewer->Last_Selected_Physics_Shape = Enums::Shape_Cone;
 
@@ -1034,7 +1029,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 // *	  			Reselect_Shape:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void SB_MeshViewer::Reselect_Shape() const
+void SB_MeshViewer::Reselect_Shape()
 {
 	App->CLSB_Meshviewer->Physics_Shape = App->CLSB_Meshviewer->Last_Selected_Physics_Shape;
 	
@@ -1090,7 +1085,39 @@ void SB_MeshViewer::Reselect_Shape() const
 		App->CLSB_Meshviewer->Show_Physics_Cone();
 	}
 
-	App->RedrawWindow_Dlg(MainDlgHwnd);
+	RedrawWindow_Dlg_Buttons();
+}
+
+// *************************************************************************
+// *		RedrawWindow_Dlg_Buttons:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
+{
+	HWND Temp = NULL;
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_BOX);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_SPHERE);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_CAPSULE);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_CYLINDER);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_CONE);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_MVSTATIC);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_DYNAMIC);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_TRIMESH);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
 

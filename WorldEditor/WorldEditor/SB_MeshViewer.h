@@ -140,7 +140,8 @@ protected:
 	bool Get_Files();
 
 	void Show_Mesh_Properties();
-	void Reselect_Shape() const;
+	void Reselect_Shape();
+	void RedrawWindow_Dlg_Buttons();
 
 	//----------------------------------
 	bool Selected_Shape_Box;
