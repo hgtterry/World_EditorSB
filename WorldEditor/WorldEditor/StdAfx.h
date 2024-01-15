@@ -222,6 +222,43 @@ namespace Enums
 		Edit_Lights = 18,
 		Edit_UserObjects = 19
 	};
+
+	enum FileView_Context
+	{
+		FileView_None = 0,
+		FileView_Objects_Folder = 1,
+		FileView_Objects_File = 2,
+		FileView_Messages_Triggers_Folder = 3,
+		FileView_Messages_Triggers_File = 4,
+		FileView_Sounds_Folder = 5,
+		FileView_Sounds_File = 6,
+		FileView_Cameras_Folder = 7,
+		FileView_Cameras_File = 8,
+		FileView_Areas_Folder = 9,
+		FileView_Areas_File = 10,
+		FileView_Move_Folder = 11,
+		FileView_Move_File = 12,
+		FileView_Player_Folder = 13,
+		FileView_Player_File = 14,
+		FileView_Teleports_Folder = 15,
+		FileView_Teleports_File = 16,
+		FileView_Collectables_Folder = 17,
+		FileView_Collectables_File = 18,
+		FileView_Counters_Folder = 19,
+		FileView_Counters_File = 20,
+		FileView_TextMessage_Folder = 21,
+		FileView_TextMessage_File = 22,
+		FileView_Environments_Folder = 23,
+		FileView_Environments_File = 24,
+		FileView_EnvironEntity_Folder = 25,
+		FileView_EnvironEntity_File = 26,
+		FileView_Particle_Folder = 27,
+		FileView_Particle_File = 28,
+		FileView_Light_Folder = 29,
+		FileView_Light_File = 30,
+		FileView_UserObjects_Folder = 31,
+		FileView_UserObjects_File = 32
+	};
 }
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)

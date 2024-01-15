@@ -25,6 +25,13 @@ distribution.
 #include "AB_App.h"
 #include "SB_FileView.h"
 
+#define IDM_FILE_NEW 1
+#define IDM_FILE_DELETE 2
+#define IDM_FILE_RENAME 3
+#define IDM_COPY 4
+#define IDM_PASTE 5
+#define IDM_GOTO 6
+
 SB_FileView::SB_FileView(void)
 {
 	hImageList = nullptr;
@@ -39,6 +46,8 @@ SB_FileView::SB_FileView(void)
 	FV_Objects_Folder = nullptr;
 	FV_EntitiesFolder = nullptr;
 	FV_Evirons_Folder = nullptr;
+
+	Context_Selection = Enums::FileView_None;
 
 	FileView_Folder[0] = 0;
 	FileView_File[0] = 0;
@@ -88,8 +97,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CONTEXTMENU:
 	{
-		//App->SBC_FileView->Context_Menu(hDlg);
-
+		App->CLSB_FileView->Context_Menu(hDlg);
 		break;
 	}
 
@@ -139,15 +147,15 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->SBC_FileView->Context_Delete(hDlg);
 
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDM_FILE_NEW)
 		{
-			App->SBC_FileView->Context_New(hDlg);
+			App->CLSB_FileView->Context_New(hDlg);
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDM_FILE_RENAME)
+		/*if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
 			App->SBC_FileView->Context_Rename(hDlg);
 			return TRUE;
@@ -453,12 +461,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Objects
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
+		App->CLSB_FileView->Context_Selection = Enums::FileView_Objects_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Objects"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
+		App->CLSB_FileView->Context_Selection = Enums::FileView_Objects_File;
 
 		/*HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
@@ -640,4 +648,519 @@ void SB_FileView::Show_FileView(bool show)
 	{
 		ShowWindow(App->ListPanel, SW_HIDE);
 	}
+}
+
+// *************************************************************************
+// *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void SB_FileView::Context_Menu(HWND hDlg)
+{
+	RECT rcTree;
+	HWND hwndTV;
+	HTREEITEM htvItem;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
+
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	hwndTV = GetDlgItem(hDlg, IDC_TREE1);         // get the tree view 
+	GetWindowRect(hwndTV, &rcTree);              // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;              // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
+		TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
+
+		//------------------------------------- Camera
+		if (!strcmp(FileView_Folder, "Camera")) // Folder
+		{
+			hMenu = CreatePopupMenu();
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Cameras_Folder;
+		}
+
+		if (!strcmp(FileView_File, "Camera"))
+		{
+			hMenu = CreatePopupMenu();
+
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Cameras_File;
+		}
+
+		//------------------------------------- Objects
+		if (!strcmp(FileView_Folder, "Objects")) // Folder
+		{
+			hMenu = CreatePopupMenu();
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Objects_Folder;
+		}
+
+		if (!strcmp(FileView_File, "Objects"))
+		{
+			hMenu = CreatePopupMenu();
+
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+			AppendMenuW(hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+
+			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Objects_File;
+		}
+
+		//------------------------------------- Messages
+		if (!strcmp(FileView_Folder, "Messages")) // Folder
+		{
+			hMenu = CreatePopupMenu();
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Messages_Triggers_Folder;
+		}
+
+		if (!strcmp(FileView_File, "Messages"))
+		{
+			hMenu = CreatePopupMenu();
+
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+			AppendMenuW(hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Messages_Triggers_File;
+		}
+
+		//------------------------------------- Sounds
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Sounds")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Sounds_Folder;
+		//}
+
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Sounds"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+		//	//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Sounds_File;
+		//}
+
+		//------------------------------------- Eviron_Entities
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Evironments")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		//}
+
+		/*if (!strcmp(App->SBC_FileView->FileView_File, "Evironments"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_EnvironEntity_File;
+		}*/
+
+		//------------------------------------- Areas
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Area")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Areas_Folder;
+		//}
+
+		/*if (!strcmp(App->SBC_FileView->FileView_File, "Area"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Areas_File;
+		}*/
+
+		//------------------------------------- Move_Entities
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Move_Entities")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Move_Folder;
+		//}
+
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Move_Entities"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+		//	//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Move_File;
+		//}
+
+		//------------------------------------- Teleport_Entities
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Teleporters")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Teleports_Folder;
+		//}
+
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Teleporters"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+		//	//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Teleports_File;
+		//}
+
+		//------------------------------------- Collectables_Entities
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Collectables")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Collectables_Folder;
+		//}
+
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Collectables"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+		//	//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Collectables_File;
+		//}
+
+		//------------------------------------- Counters
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Counters")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Counters_Folder;
+		//}
+
+		/*if (!strcmp(App->SBC_FileView->FileView_File, "Counters"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Counters_File;
+		}*/
+
+		//------------------------------------- Text_Messages
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Text_Message")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_TextMessage_Folder;
+		//}
+
+		/*if (!strcmp(App->SBC_FileView->FileView_File, "Text_Message"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_TextMessage_File;
+		}*/
+
+		//------------------------------------- Particles
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Particles")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Particle_Folder;
+		//}
+
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Particles"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+		//	//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Particle_File;
+		//}
+	}
+}
+
+// *************************************************************************
+// *				Context_New:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_FileView::Context_New(HWND hDlg)
+{
+	/*if (App->SBC_Project->Project_Loaded == 0)
+	{
+		App->Say("A Project must be created First");
+
+		return;
+	}*/
+
+	/*if (Context_Selection == Enums::FileView_Areas_Folder)
+	{
+		App->SBC_Dialogs->YesNo("Add Area", "Do you want to add a new Area", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+			App->SBC_MeshViewer->StartMeshViewer();
+		}
+
+		return;
+	}*/
+
+	/*if (App->SBC_Scene->Area_Added == 0)
+	{
+		App->Say("An Area must be Added Firest before adding items");
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
+	{
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Camera", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_Camera->Add_New_Camera();
+		}
+
+		return;
+	}*/
+
+	if (Context_Selection == Enums::FileView_Objects_Folder)
+	{
+		App->CLSB_Dialogs->YesNo("Add Object", "Do you want to add a new Object Entity");
+
+		bool Doit = App->CLSB_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CLSB_Meshviewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->CLSB_Meshviewer->Start_Mesh_Viewer();
+		}
+
+		return;
+	}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Triggers_Folder)
+	//{
+	//	App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->CL_Com_Messages->Add_New_Message();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	//{
+	//	App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Sound Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->CL_Com_Sounds->Add_New_Sound();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)
+	//{
+	//	App->SBC_Dialogs->YesNo("Add Environ Entity", "Do you want to add a new Environ Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->SBC_Com_Environments->Add_New_Environ_Entity(0);
+	//	}
+
+	//	return;
+	//}
+
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
+	//{
+	//	App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->SBC_Com_MoveEntity->Add_New_Move_Entity();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
+	//{
+	//	App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Teleport Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->CL_Com_Teleporters->Add_New_Teleporter();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_Folder)
+	//{
+
+	//	App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Collectable", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+	//		App->SBC_MeshViewer->StartMeshViewer();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_Folder)
+	//{
+
+	//	App->SBC_Dialogs->YesNo("Add Counter", "Do you want to add a new Counter", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->SBC_Display->Add_New_Counter();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_Folder)
+	//{
+
+	//	App->SBC_Dialogs->YesNo("Add Environment", "Do you want to add a new Environment", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		//App->SBC_Com_Environments->Add_New_Environment();
+	//	}
+
+	//	return;
+	//}
+
+	//if (App->SBC_FileView->Context_Selection == Enums::FileView_Particle_Folder)
+	//{
+
+	//	App->SBC_Dialogs->YesNo("Add Particle", "Do you want to add a new Particle", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		strcpy(App->SBC_Dialogs->Chr_DropText, "GD_Smoke1");
+	//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Particles;
+	//		App->SBC_Dialogs->Dialog_DropGen();
+
+	//		if (App->SBC_Dialogs->Canceled == 0)
+	//		{
+	//			App->CL_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+	//		}
+
+	//	}
+
+	//	return;
+	//}
+
+	return;
 }

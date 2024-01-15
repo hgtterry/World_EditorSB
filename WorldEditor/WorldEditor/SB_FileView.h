@@ -43,6 +43,8 @@ public:
 	HTREEITEM FV_EntitiesFolder;
 	HTREEITEM FV_Evirons_Folder;
 
+	HMENU hMenu;
+
 private:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -51,8 +53,13 @@ private:
 	void MoreFoldersD(void);
 	void Get_Selection(LPNMHDR lParam);
 
+	void Context_Menu(HWND hDlg);
+	void Context_New(HWND hDlg);
+
 	char FileView_Folder[255];
 	char FileView_File[255];
+
+	int Context_Selection;
 
 	TV_INSERTSTRUCT tvinsert;
 
