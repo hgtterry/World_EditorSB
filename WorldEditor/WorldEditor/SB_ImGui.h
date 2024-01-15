@@ -62,6 +62,7 @@ public:
 	void BackGround_Render_Loop(void);
 	void Face_Selection(void);
 	void WE_Data(void);
+	void ImGui_Debug_Project(void);
 
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
@@ -78,6 +79,7 @@ public:
 	bool Show_Real_Brush_F;
 	bool Show_Global_Data_F;
 	bool Show_Face_Selection;
+	bool Show_Debug_Project;
 
 	bool ImGui_Surface_Active;
 	bool Resize_ImGui_Surface_F;

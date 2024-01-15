@@ -32,5 +32,11 @@ public:
 	bool Add_Objects_From_File();  // From File;
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 	void Add_Physics_Sphere(bool Dynamic, int Index);
+
+	void Add_Objects_From_MeshViewer();
+	void Dispatch_MeshViewer();
+
+	char m_ResourcePath[MAX_PATH];
+
 };
 

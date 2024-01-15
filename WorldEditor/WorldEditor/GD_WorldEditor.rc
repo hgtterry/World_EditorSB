@@ -3031,6 +3031,11 @@ BEGIN
             MENUITEM "Ogre",                        ID_MODE_OGRE
         END
     END
+    POPUP "Physics"
+    BEGIN
+        MENUITEM "Physics On",                  ID_PHYSICS_PHYSICS
+        MENUITEM "Debug Draw",                  ID_PHYSICS_DEBUGDRAW
+    END
     POPUP "Debug"
     BEGIN
         MENUITEM "General",                     ID_DEBUG_GENERAL
@@ -3039,11 +3044,7 @@ BEGIN
         MENUITEM "Bounding Box",                ID_DEBUG_BOUNDINGBOX
         MENUITEM "PreferencesWE",               ID_DEBUG_PREFERENCESWE
         MENUITEM "Show Picking Data",           ID_DEBUG_SHOWPICKINGDATA
-    END
-    POPUP "Physics"
-    BEGIN
-        MENUITEM "Physics On",                  ID_PHYSICS_PHYSICS
-        MENUITEM "Debug Draw",                  ID_PHYSICS_DEBUGDRAW
+        MENUITEM "Project Info",                ID_DEBUG_PROJECTINFO
     END
 END
 

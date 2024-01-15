@@ -246,6 +246,20 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_DEBUG_PROJECTINFO)
+		{
+			if (App->CLSB_ImGui->Show_Debug_Project == 1)
+			{
+				App->CLSB_ImGui->Show_Debug_Project = 0;
+			}
+			else
+			{
+				App->CLSB_ImGui->Show_Debug_Project = 1;
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_DEBUG_SHOWPICKINGDATA)
 		{
 			if (App->CLSB_ImGui->Show_Face_Selection == 1)

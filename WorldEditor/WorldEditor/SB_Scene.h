@@ -51,6 +51,7 @@ public:
 	bool Player_Added;
 	int Player_Count;
 	int Object_Count;
+	int UniqueID_Object_Counter;
 
 	int Brush_Index;
 	char Brush_Name[200];

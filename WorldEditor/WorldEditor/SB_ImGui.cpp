@@ -51,6 +51,7 @@ SB_ImGui::SB_ImGui()
 	Show_Model_Data_F = 0;
 	Show_Camera_Pos_F = 0;
 	Show_BB_Data_F = 0;
+	Show_Debug_Project = 0;
 
 	PosX_Selected = 1;
 	PosY_Selected = 0;
@@ -393,7 +394,11 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	{
 		Face_Selection();
 	}
-	
+
+	if (Show_Debug_Project == 1)
+	{
+		ImGui_Debug_Project();
+	}
 }
 
 // *************************************************************************
@@ -1291,6 +1296,55 @@ void SB_ImGui::Face_Selection(void)
 			ImGui::PopStyleColor();
 			ShowWindow(App->ListPanel, true);
 			ImGui::End();
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *					ImGui_Debug_Project  Terry Bernie				   *
+// *************************************************************************
+void SB_ImGui::ImGui_Debug_Project(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(250, 30), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Project_Debug", &Show_Debug_Project, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Sub_Folder: = %s", App->CLSB_Project->m_Project_Sub_Folder);
+		ImGui::Text("Asset_Path: = %s", App->CLSB_Project->m_Main_Assets_Path);
+
+		//ImGui::Text("SourceFile: = %s", App->CLSB_Objects_Create->SourceFile);
+		//ImGui::Text("DestFile: = %s", App->CLSB_Objects_Create->DestinationFile);
+
+		//ImGui::Text(" ");
+
+		//ImGui::Text("Project Name: = %s", App->SBC_Project->m_Project_Name);
+		//ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_Name);
+		//ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
+
+		//ImGui::Text(" ");
+
+		//ImGui::Text("Aera Folder Path: = %s", App->SBC_Project->m_Aera_Folder_Path);
+		//ImGui::Text("Level Folder Path: = %s", App->SBC_Project->m_Level_Folder_Path);
+		//ImGui::Text("Player Folder Path: = %s", App->SBC_Project->m_Players_Folder_Path);
+		//
+		//ImGui::Text(" ");
+
+		////ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+		//ImGui::Text("Ini Location: = %s", App->SBC_Project->m_Ini_Path_File_Name);
+		//ImGui::Text("Sub Folder Location: = %s", App->SBC_Project->m_Project_Sub_Folder);
+		//
+		//ImGui::Spacing();
+		//ImGui::Spacing();
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Debug_Project = 0;
 		}
 
 		ImGui::End();

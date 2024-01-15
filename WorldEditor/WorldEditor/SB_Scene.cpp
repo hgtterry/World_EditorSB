@@ -149,6 +149,7 @@ SB_Scene::SB_Scene()
 	Player_Count = 0;
 	Player_Added = 0;
 	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
 
 	Brush_Index = 0;
 

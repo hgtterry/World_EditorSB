@@ -80,6 +80,7 @@ public:
 	bool Placement_Camera;
 
 	bool Mesh_Render_Running;
+	bool Do_Timer;
 
 	int CursorPosX;
 	int CursorPosY;

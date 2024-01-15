@@ -71,7 +71,7 @@ bool SB_Project::Load_Project()
 	strcpy(Default_Project, App->WorldEditor_Directory);
 	strcat(Default_Project, "Levels\\First_Project_Prj\\Project.SBProj");
 
-	strcpy(App->CLSB_FileIO->Project_File_Name,"First_Level");
+	strcpy(App->CLSB_FileIO->Project_File_Name,"Project.SBProj");
 	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
 	
 	m_Ini_Path_File_Name[0] = 0;

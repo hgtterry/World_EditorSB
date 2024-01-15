@@ -27,6 +27,7 @@ distribution.
 
 SB_Objects_Create::SB_Objects_Create(void)
 {
+	m_ResourcePath[0] = 0;
 }
 
 SB_Objects_Create::~SB_Objects_Create(void)
@@ -106,7 +107,8 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 	else
 	{*/
-		Object->Object_Node->setPosition(Object->Mesh_Pos);
+	Object->Object_Node->setPosition(0, 0, 0);// Object->Mesh_Pos);
+	Object->Object_Node->setVisible(true);
 	//}
 
 
@@ -273,5 +275,67 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
+}
 
+// *************************************************************************
+//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_Objects_Create::Add_Objects_From_MeshViewer()
+{
+
+	//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	//{
+	//	App->CL_Com_Collectables->Add_New_Collectable();
+	//	return;
+	//}
+
+	int Index = App->CLSB_Scene->Object_Count;
+
+	App->CLSB_GameDirector->V_Object[Index] = new Base_Object();
+
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Object->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
+
+
+	strcpy(Object->Mesh_Name, App->CLSB_Meshviewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->CLSB_Meshviewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
+	strcpy(Object->Material_File, App->CLSB_Meshviewer->m_Material_File);
+
+	Object->Type = App->CLSB_Meshviewer->Physics_Type;
+	Object->Shape = App->CLSB_Meshviewer->Physics_Shape;
+
+
+	App->CLSB_Objects_Create->Dispatch_MeshViewer();
+
+	App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
+
+
+	App->CLSB_Scene->UniqueID_Object_Counter++; // Unique ID
+	App->CLSB_Scene->Object_Count++;  // Must be last line
+
+	App->CLSB_Scene->Scene_Modified = 1;
+}
+
+// *************************************************************************
+//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Objects_Create::Dispatch_MeshViewer()
+{
+	int Index = App->CLSB_Scene->Object_Count;
+
+	//if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	//{
+	//	App->SBC_Com_Area->Add_Aera_To_Project(0, App->App->CLSB_Meshviewer->Selected_MeshFile, m_ResourcePath);
+	//	App->Say("Dispatch_MeshViewer");
+	//}
+	//else
+	{
+		Add_New_Object(Index, 1);
+		App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
+		App->CLSB_GameDirector->V_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CLSB_GameDirector->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
+		App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, Index, true);
+
+	}
 }

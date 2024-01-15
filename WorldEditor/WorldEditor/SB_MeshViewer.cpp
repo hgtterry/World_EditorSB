@@ -31,7 +31,7 @@ distribution.
 
 SB_MeshViewer::SB_MeshViewer()
 {
-	
+	Do_Timer = 0;
 	MeshView_3D_hWnd = nullptr;
 
 	ListHwnd = nullptr;
@@ -201,6 +201,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 
 		App->CLSB_Meshviewer->MainDlgHwnd = hDlg;
+		App->CLSB_Meshviewer->Do_Timer = 1;
 		SetTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1, 1, NULL);
 
 		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -540,7 +541,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_TIMER:
 		if (wParam == 1)
 		{
-			App->CLSB_Ogre_Setup->RenderFrame();
+			if (App->CLSB_Meshviewer->Do_Timer == 1)
+			{
+				App->CLSB_Ogre_Setup->RenderFrame();
+			}
 			break;
 		}
 
@@ -833,46 +837,47 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDOK)
 		{
 
-			//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area || App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
-			//{
-			//	
-			//}
-			//else if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->SBC_MeshViewer->Physics_Shape == Enums::NoShape)
-			//{
-			//	App->Say("No Type or Shape Selected");
-			//	return TRUE;
-			//}
+			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area || App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			{
+				
+			}
+			else if (App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_None || App->CLSB_Meshviewer->Physics_Shape == Enums::Shape_None)
+			{
+				App->Say("No Type or Shape Selected");
+				return TRUE;
+			}
 
 
-			//char buff[255];
-			//GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
-			//strcpy(App->SBC_MeshViewer->Object_Name, buff);
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
+			strcpy(App->CLSB_Meshviewer->Object_Name, buff);
 
-			//
-			//if (App->SBC_MeshViewer->Phys_Body)
-			//{
-			//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
-			//	App->SBC_MeshViewer->Phys_Body = nullptr;
-			//}
+			if (App->CLSB_Meshviewer->Phys_Body)
+			{
+				App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
+				App->CLSB_Meshviewer->Phys_Body = nullptr;
+			}
 
-			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
+			App->CLSB_Meshviewer->Do_Timer = 0;
+			//KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
 			App->CLSB_Meshviewer->Close_OgreWindow();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
-			App->CLSB_Meshviewer->Delete_Resources_Group();
 
-			//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-			//{
-			//	App->SBC_MeshViewer->Copy_Assets();
-			//	App->SBC_Com_Area->Add_New_Area();
-			//}
-			//else // Normal Object
-			//{
-			//	App->SBC_MeshViewer->Copy_Assets();
-			//	App->SBC_Objects_Create->Add_Objects_From_MeshViewer();
-			//}
+			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+			{
+				App->CLSB_Meshviewer->Copy_Assets();
+				//App->SBC_Com_Area->Add_New_Area();
+			}
+			else // Normal Object
+			{
+				App->CLSB_Meshviewer->Copy_Assets();
+				App->CLSB_Objects_Create->Add_Objects_From_MeshViewer();
+			}
 
-			//App->SBC_MeshViewer->Set_Debug_Shapes();
+			//App->CLSB_Meshviewer->Set_Debug_Shapes();
 			
+			//App->CLSB_Meshviewer->Delete_Resources_Group();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1118,40 +1123,40 @@ void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
 // *************************************************************************
 void SB_MeshViewer::Copy_Assets()
 {
-	//App->SBC_Scene->Add_Resource_Location_Project(App->SBC_MeshViewer->mResource_Folder);
+	App->CLSB_Scene->Add_Resource_Location_Project(mResource_Folder);
 
-	//// ------------------ Copy Mesh
-	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	//strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
+	// ------------------ Copy Mesh
+	strcpy(SourceFile, mResource_Folder);
+	strcat(SourceFile, Selected_MeshFile);
 
-	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(DestinationFile, App->CLSB_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, Selected_MeshFile);
 
-	//CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);
 
-	//// ------------------ Copy Material File
-	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	//strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
+	// ------------------ Copy Material File
+	strcpy(SourceFile, mResource_Folder);
+	strcat(SourceFile, m_Material_File);
 
-	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
+	strcpy(DestinationFile, App->CLSB_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, m_Material_File);
 
-	//CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);
 
-	//// ------------------ Copy Textures
-	//int Count = 0;
-	//while (Count < Texure_Count)
-	//{
-	//	strcpy(SourceFile, App->CLSB_Meshviewer->mResource_Folder);
-	//	strcat(SourceFile, v_Texture_Names[Count].c_str());
+	// ------------------ Copy Textures
+	int Count = 0;
+	while (Count < Texure_Count)
+	{
+		strcpy(SourceFile, App->CLSB_Meshviewer->mResource_Folder);
+		strcat(SourceFile, v_Texture_Names[Count].c_str());
 
-	//	//strcpy(DestinationFile, App->CLSB_Meshviewer->m_Main_Assets_Path);
-	//	//strcat(DestinationFile, v_Texture_Names[Count].c_str());
+		strcpy(DestinationFile, App->CLSB_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, v_Texture_Names[Count].c_str());
 
-	//	CopyFile(SourceFile, DestinationFile, false);
+		CopyFile(SourceFile, DestinationFile, false);
 
-	//	Count++;
-	//}
+		Count++;
+	}
 }
 
 // *************************************************************************
@@ -1500,8 +1505,15 @@ bool SB_MeshViewer::Get_Files()
 // *************************************************************************
 bool SB_MeshViewer::Create_Resources_Group()
 {
-
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(MV_Resource_Group);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(MV_Resource_Group);
+	}
+	else
+	{
+		//Ogre::ResourceGroupManager::getSingleton().deleteResource(mResource_Folder, "FileSystem", MV_Resource_Group);
+	}
 
 	return 1;
 }
