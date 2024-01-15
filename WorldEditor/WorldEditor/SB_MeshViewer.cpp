@@ -556,7 +556,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->View_Zoomed_Flag = 0;
 			App->CLSB_Meshviewer->View_Centred_Flag = 1;
 
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			return TRUE;
 		}
 
@@ -571,7 +571,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->mCameraMeshView->setPosition(0, Centre.y, -Radius * (Real(2.5)));
 			App->CLSB_Meshviewer->mCameraMeshView->lookAt(0, Centre.y, 0);
 
-			App->RedrawWindow_Dlg(hDlg);
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			return TRUE;
 		}
 
@@ -606,7 +606,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 
 			//App->SBC_MeshViewer->Show_Mesh_Properties();
-
+			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			return TRUE;
 		}
 
@@ -935,27 +935,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 		}
 	}
 
-	//case WM_MOUSEWHEEL:
-	//{
-	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
-	//	{
-	//		{
-	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-	//			if (zDelta > 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
-	//			}
-	//			else if (zDelta < 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
-	//			}
-	//			return 1;
-	//		}
-	//	}
-
-	//}
-
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
 
@@ -1095,6 +1074,7 @@ void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
 {
 	HWND Temp = NULL;
 
+	// Shapes
 	Temp = GetDlgItem(MainDlgHwnd, IDC_BOX);
 	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -1110,6 +1090,8 @@ void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
 	Temp = GetDlgItem(MainDlgHwnd, IDC_CONE);
 	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
+
+	// Type
 	Temp = GetDlgItem(MainDlgHwnd, IDC_MVSTATIC);
 	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -1117,6 +1099,16 @@ void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
 	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	Temp = GetDlgItem(MainDlgHwnd, IDC_TRIMESH);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	// View
+	Temp = GetDlgItem(MainDlgHwnd, IDC_BT_PROPERTIES);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_BTMV_ZOOMED);
+	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Temp = GetDlgItem(MainDlgHwnd, IDC_BTMV_CENTRE);
 	RedrawWindow(Temp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
@@ -1282,13 +1274,13 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	MvNode->setPosition(0, 0, 0);
 	MvNode->resetOrientation();
 
-	/*if (App->CLSB_Meshviewer->View_Zoomed_Flag == 1)
+	if (App->CLSB_Meshviewer->View_Zoomed_Flag == 1)
 	{
 		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 		Ogre::Real Radius = MvEnt->getBoundingRadius();
 		mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
 		mCameraMeshView->lookAt(0, Centre.y, 0);
-	}*/
+	}
 
 	Get_Mesh_Assets();
 
