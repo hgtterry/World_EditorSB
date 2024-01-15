@@ -71,6 +71,7 @@ public:
 
 	int Physics_Type;
 	int Physics_Shape;
+	int Last_Selected_Physics_Shape;
 
 	bool SelectDynamic;
 	bool SelectStatic;
@@ -139,7 +140,8 @@ protected:
 	bool Get_Files();
 
 	void Show_Mesh_Properties();
-	
+	void Reselect_Shape() const;
+
 	//----------------------------------
 	bool Selected_Shape_Box;
 	bool Selected_Shape_Sphere;
