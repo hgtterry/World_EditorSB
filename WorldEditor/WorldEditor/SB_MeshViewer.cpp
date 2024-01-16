@@ -31,7 +31,6 @@ distribution.
 
 SB_MeshViewer::SB_MeshViewer()
 {
-	Do_Timer = 0;
 	MeshView_3D_hWnd = nullptr;
 
 	ListHwnd = nullptr;
@@ -95,6 +94,7 @@ SB_MeshViewer::SB_MeshViewer()
 	Selected_Shape_Cone = 0;
 
 	Mesh_Render_Running = 0;
+	Mesh_Render_Running_New = 0;
 
 	CursorPosX = 500;
 	CursorPosY = 300;
@@ -156,61 +156,62 @@ void SB_MeshViewer::Enable_ShapeButtons(bool state)
 // *************************************************************************
 bool SB_MeshViewer::Start_Mesh_Viewer()
 {
-	MvEnt = NULL;
-	MvNode = NULL;
-	Last_MeshFile[0] = 0;
-
-	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	if (Mesh_Render_Running_New == 0)
 	{
-		strcpy(mResource_Folder, App->WorldEditor_Directory);
-		strcat(mResource_Folder, "\\Media_New\\Areas\\");
-		strcpy(Selected_MeshFile, "Test1.mesh");
+		MvEnt = NULL;
+		MvNode = NULL;
+		Last_MeshFile[0] = 0;
+
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			strcpy(mResource_Folder, App->WorldEditor_Directory);
+			strcat(mResource_Folder, "\\Media_New\\Areas\\");
+			strcpy(Selected_MeshFile, "Test1.mesh");
+		}
+		else
+		{
+			strcpy(mResource_Folder, App->WorldEditor_Directory);
+			strcat(mResource_Folder, "\\Media_New\\Structure\\");
+			strcpy(Selected_MeshFile, "Barrel_1.mesh");
+		}
+
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+		{
+			strcpy(mResource_Folder, App->WorldEditor_Directory);
+			strcat(mResource_Folder, "\\Media_New\\Collectables\\");
+			strcpy(Selected_MeshFile, "Blueball.mesh");
+		}
+
+		Create_Resources_Group();
+		Add_Resources();
+
+		MainDlgHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
+
+		Start_Render();
+
+		// Collectables
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+		{
+			App->CLSB_Meshviewer->Set_For_Collectables();
+		}
+
+		// Areas
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->CLSB_Meshviewer->Set_For_Areas(MainDlgHwnd);
+		}
+
+		// Default
+		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		{
+			App->CLSB_Meshviewer->Set_For_Objects(MainDlgHwnd);
+		}
+		// 
+		//Set_Debug_Shapes();
+		//App->CLSB_Meshviewer->Set_OgreWindow();
+
+		Mesh_Render_Running_New = 1;
 	}
-	else
-	{
-		strcpy(mResource_Folder, App->WorldEditor_Directory);
-		strcat(mResource_Folder, "\\Media_New\\Structure\\");
-		strcpy(Selected_MeshFile, "Barrel_1.mesh");
-	}
-
-	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-	{
-		strcpy(mResource_Folder, App->WorldEditor_Directory);
-		strcat(mResource_Folder, "\\Media_New\\Collectables\\");
-		strcpy(Selected_MeshFile, "Blueball.mesh");
-	}
-
-	Create_Resources_Group();
-	Add_Resources();
-
-	MainDlgHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
-	
-	Start_Render();
-	
-	// Collectables
-	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-	{
-		App->CLSB_Meshviewer->Set_For_Collectables();
-	}
-
-	// Areas
-	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-	{
-		App->CLSB_Meshviewer->Set_For_Areas(MainDlgHwnd);
-	}
-
-	// Default
-	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
-	{
-		App->CLSB_Meshviewer->Set_For_Objects(MainDlgHwnd);
-	}
-	// 
-	//Set_Debug_Shapes();
-	//App->CLSB_Meshviewer->Set_OgreWindow();
-
-
-	//Do_Timer = 1;
-	//SetTimer(MainDlgHwnd, 1, 1, NULL);
 
 	return 1;
 }
@@ -525,33 +526,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		return CDRF_DODEFAULT;
 	}
-
-	case WM_MOUSEWHEEL:
-	{
-		int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-		if (zDelta > 0)
-		{
-			App->CLSB_Meshviewer->RenderListener->Wheel_Move = -1;
-		}
-		else if (zDelta < 0)
-		{
-			App->CLSB_Meshviewer->RenderListener->Wheel_Move = 1;
-		}
-
-		return 1;
-	}
-
-	case WM_TIMER:
-		if (wParam == 1)
-		{
-			if (App->CLSB_Meshviewer->Do_Timer == 1)
-			{
-				App->CLSB_Ogre_Setup->RenderFrame();
-			}
-			break;
-		}
-
 
 	case WM_COMMAND:
 
@@ -883,9 +857,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			//App->CLSB_Meshviewer->Set_Debug_Shapes();
 			
 			//App->CLSB_Meshviewer->Delete_Resources_Group();
+			// 
 
-			ShowWindow(hDlg, SW_HIDE);
-			//EndDialog(hDlg, LOWORD(wParam));
+			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
+			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
@@ -917,6 +892,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			//App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			//App->SBC_MeshViewer->Set_Debug_Shapes();*/
+			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1060,14 +1036,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
-			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-			return 1;
-		}
+		//if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
+		//{
+		//	SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+		//	SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
+		//	App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
+		//	App->CUR = SetCursor(NULL);
+		//	return 1;
+		//}
 
 		return 1;
 	}
@@ -1075,9 +1051,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 		{
-			ReleaseCapture();
+			/*ReleaseCapture();
 			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
+			SetCursor(App->CUR);*/
 			return 1;
 		}
 
@@ -1089,12 +1065,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 		{
-			SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-			SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
+			//SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
+			//SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
 
-			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
+			//App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
 
-			App->CUR = SetCursor(NULL);
+			//App->CUR = SetCursor(NULL);
 
 			return 1;
 		}
@@ -1106,9 +1082,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
 		{
-			ReleaseCapture();
+			/*ReleaseCapture();
 			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
+			SetCursor(App->CUR);*/
 			return 1;
 		}
 
@@ -1483,9 +1459,9 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	Grid_Update(1);
 	
-	RenderListener = new SB_MeshView_Listener();
+	//RenderListener = new SB_MeshView_Listener();
 	
-	App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
+	//App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
 
 	Reset_Camera();
 
@@ -1539,7 +1515,7 @@ void SB_MeshViewer::Close_OgreWindow(void)
 		Phys_Body = nullptr;
 	}
 
-	App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
+	//App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
 
 	App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
 	MeshView_Window->destroy();

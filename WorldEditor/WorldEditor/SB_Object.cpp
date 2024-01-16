@@ -121,3 +121,43 @@ void SB_Object::Object_Camera_Goto(int Object_Index)
 	App->CLSB_Ogre_Setup->mCamera->setPosition(WS);
 	App->CLSB_Ogre_Setup->mCamera->lookAt(WS2);
 }
+
+// *************************************************************************
+// *	  		GetPlacement:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+Ogre::Vector3 SB_Object::GetPlacement(int Distance)
+{
+
+	Ogre::Vector3 Placement;
+	Ogre::Vector3 CamPos;
+	Ogre::Quaternion CamRot;
+	Ogre::Radian mYaw;
+	Ogre::Vector3 mDirection;
+
+
+	CamPos = App->CLSB_Ogre_Setup->mCamera->getPosition();
+	mYaw = App->CLSB_Ogre_Setup->mCamera->getOrientation().getYaw();
+
+	App->CLSB_Ogre_Setup->PlacementCam->setPosition(CamPos);
+
+	CamRot = Ogre::Quaternion::IDENTITY;
+	App->CLSB_Ogre_Setup->PlacementCam->setOrientation(CamRot);
+	App->CLSB_Ogre_Setup->PlacementCam->yaw(mYaw);
+
+	Ogre::Vector3 TranslateVector = Ogre::Vector3::ZERO;
+
+	//float Radius = OgreNode->getAttachedObject(0)->getBoundingRadius();
+	//Radius = (Radius * 7) + 2;
+
+
+	TranslateVector.z = Distance; // Distance from Camera/Player
+
+	CamPos = App->CLSB_Ogre_Setup->mCamera->getPosition();
+
+	App->CLSB_Ogre_Setup->PlacementCam->moveRelative(TranslateVector);
+
+	Placement = App->CLSB_Ogre_Setup->PlacementCam->getPosition();
+	Placement.y = CamPos.y - 3; // = Placement.y - (float)13.5 / 2;
+
+	return Placement;
+}

@@ -26,8 +26,6 @@ distribution.
 
 #pragma once
 
-#include "SB_MeshView_Listener.h"
-
 class SB_MeshViewer
 {
 public:
@@ -67,8 +65,6 @@ public:
 	ManualObject*		GridManual;
 	SceneNode*			GridNode;
 
-	SB_MeshView_Listener*	RenderListener;
-
 	int Physics_Type;
 	int Physics_Shape;
 	int Last_Selected_Physics_Shape;
@@ -80,7 +76,7 @@ public:
 	bool Placement_Camera;
 
 	bool Mesh_Render_Running;
-	bool Do_Timer;
+	bool Mesh_Render_Running_New;
 
 	int CursorPosX;
 	int CursorPosY;
