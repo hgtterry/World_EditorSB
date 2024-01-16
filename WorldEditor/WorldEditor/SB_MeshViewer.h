@@ -93,6 +93,8 @@ protected:
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Start_Render(void);
+
 	void Set_For_Objects(HWND hDlg);
 	void Set_For_Collectables();
 	void Set_For_Areas(HWND hDlg);
@@ -138,7 +140,7 @@ protected:
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
 	bool GetMeshFiles(char* Location, bool ResetList);
 
-	bool Get_Files();
+	bool Get_Files(HWND hDlg);
 
 	void Show_Mesh_Properties();
 	void Reselect_Shape();

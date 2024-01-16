@@ -160,8 +160,6 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	MvNode = NULL;
 	Last_MeshFile[0] = 0;
 
-	Set_Debug_Shapes();
-
 	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{
 		strcpy(mResource_Folder, App->WorldEditor_Directory);
@@ -185,8 +183,16 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	Create_Resources_Group();
 	Add_Resources();
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
-	
+	MainDlgHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
+	Start_Render();
+
+	//Set_Debug_Shapes();
+	//App->CLSB_Meshviewer->Set_OgreWindow();
+
+
+	//Do_Timer = 1;
+	//SetTimer(MainDlgHwnd, 1, 1, NULL);
+
 	return 1;
 }
 
@@ -199,10 +205,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-
-		App->CLSB_Meshviewer->MainDlgHwnd = hDlg;
-		App->CLSB_Meshviewer->Do_Timer = 1;
-		SetTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1, 1, NULL);
 
 		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -252,17 +254,18 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 
 		App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
-		App->CLSB_Meshviewer->Set_OgreWindow();
+		//App->CLSB_Meshviewer->Set_OgreWindow();
 
-
+		
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
 		App->CLSB_Meshviewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
+		
 		App->CLSB_Meshviewer->SelectStatic = 0;
 		App->CLSB_Meshviewer->SelectDynamic = 0;
 		App->CLSB_Meshviewer->SelectTriMesh = 0;
-
+		
 		// Collectables
 		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
@@ -638,7 +641,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
 				App->CLSB_Meshviewer->Add_Resources();
-				App->CLSB_Meshviewer->Get_Files();
+				App->CLSB_Meshviewer->Get_Files(hDlg);
 
 				App->CLSB_Meshviewer->GridNode->resetOrientation();
 				App->CLSB_Meshviewer->Reset_Camera();
@@ -859,7 +862,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->CLSB_Meshviewer->Do_Timer = 0;
-			//KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
+			//KillTimer(hDlg, 1);
 			App->CLSB_Meshviewer->Close_OgreWindow();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 
@@ -878,7 +881,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			
 			//App->CLSB_Meshviewer->Delete_Resources_Group();
 
-			EndDialog(hDlg, LOWORD(wParam));
+			ShowWindow(hDlg, SW_HIDE);
+			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
@@ -902,7 +906,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_MeshViewer->Phys_Body = nullptr;
 			}*/
 
-			KillTimer(App->CLSB_Meshviewer->MainDlgHwnd, 1);
+			App->CLSB_Meshviewer->Do_Timer = 0;
+			//KillTimer(hDlg, 1);
 			App->CLSB_Meshviewer->Close_OgreWindow();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 			App->CLSB_Meshviewer->Delete_Resources_Group();
@@ -917,6 +922,31 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Render:- Terry and Hazel Flanigan 2022	     	   *
+// *************************************************************************
+void SB_MeshViewer::Start_Render(void)
+{
+	//Set_Render_Mode();
+
+	RECT rect;
+	GetWindowRect(MeshView_3D_hWnd, &rect);
+
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, width, height, NULL);
+
+	SetParent(App->ViewGLhWnd, MeshView_3D_hWnd);
+
+	App->CLSB_Ogre_Setup->mWindow->resize(width, height);
+
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************
@@ -1245,9 +1275,11 @@ void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 
 	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
 	SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
-
+	
 	App->CLSB_Meshviewer->Add_Resources();
-	App->CLSB_Meshviewer->Get_Files();
+
+	App->CLSB_Meshviewer->Get_Files(hDlg);
+	
 
 	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->CLSB_Meshviewer->m_Current_Folder));
@@ -1452,7 +1484,7 @@ void SB_MeshViewer::Reset_Shape_Flags()
 // *************************************************************************
 // *			Get_Files:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
-bool SB_MeshViewer::Get_Files()
+bool SB_MeshViewer::Get_Files(HWND hDlg)
 {
 	SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
 
@@ -1491,11 +1523,11 @@ bool SB_MeshViewer::Get_Files()
 	SendMessage(ListHwnd,LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 
 	char buff[256];
-	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
+	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
 	strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
-	App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
+	//App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
 	return 0;
 }
@@ -2326,17 +2358,18 @@ void SB_MeshViewer::Set_Shape_Buttons()
 void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 {
 	App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
-	App->CLSB_Meshviewer->Get_Files();
+	
+	//App->CLSB_Meshviewer->Get_Files();
 
-	App->CLSB_Meshviewer->Enable_ShapeButtons(true);
-	App->CLSB_Meshviewer->Enable_TypeButtons(true);
+	//App->CLSB_Meshviewer->Enable_ShapeButtons(true);
+	//App->CLSB_Meshviewer->Enable_TypeButtons(true);
 
-	App->CLSB_Meshviewer->Selected_Shape_Box = 1;
+	/*App->CLSB_Meshviewer->Selected_Shape_Box = 1;
 	App->CLSB_Meshviewer->SelectStatic = 1;
 
 	App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
-	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
-	App->CLSB_Meshviewer->Show_Physics_Box();
+	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;*/
+	//App->CLSB_Meshviewer->Show_Physics_Box();
 
 
 	char ATest[256];
@@ -2349,7 +2382,7 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
 	strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
 
-	App->CLSB_Meshviewer->Enable_TypeButtons(1);
+	//App->CLSB_Meshviewer->Enable_TypeButtons(1);
 }
 
 // *************************************************************************

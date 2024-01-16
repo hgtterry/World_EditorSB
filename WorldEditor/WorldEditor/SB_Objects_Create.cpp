@@ -66,6 +66,69 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 }
 
 // *************************************************************************
+//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_Objects_Create::Add_Objects_From_MeshViewer()
+{
+
+	//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	//{
+	//	App->CL_Com_Collectables->Add_New_Collectable();
+	//	return;
+	//}
+
+	int Index = App->CLSB_Scene->Object_Count;
+
+	App->CLSB_GameDirector->V_Object[Index] = new Base_Object();
+
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Object->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
+
+
+	strcpy(Object->Mesh_Name, App->CLSB_Meshviewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->CLSB_Meshviewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
+	strcpy(Object->Material_File, App->CLSB_Meshviewer->m_Material_File);
+
+	Object->Type = App->CLSB_Meshviewer->Physics_Type;
+	Object->Shape = App->CLSB_Meshviewer->Physics_Shape;
+
+
+	App->CLSB_Objects_Create->Dispatch_MeshViewer();
+
+	App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
+
+
+	App->CLSB_Scene->UniqueID_Object_Counter++; // Unique ID
+	App->CLSB_Scene->Object_Count++;  // Must be last line
+
+	App->CLSB_Scene->Scene_Modified = 1;
+}
+
+// *************************************************************************
+//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Objects_Create::Dispatch_MeshViewer()
+{
+	int Index = App->CLSB_Scene->Object_Count;
+
+	//if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	//{
+	//	App->SBC_Com_Area->Add_Aera_To_Project(0, App->App->CLSB_Meshviewer->Selected_MeshFile, m_ResourcePath);
+	//	App->Say("Dispatch_MeshViewer");
+	//}
+	//else
+	{
+		Add_New_Object(Index, 1);
+		App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
+		App->CLSB_GameDirector->V_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CLSB_GameDirector->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
+		App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, Index, true);
+
+	}
+}
+
+// *************************************************************************
 //				Add_New_Object:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
@@ -107,8 +170,8 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 	else
 	{*/
-	Object->Object_Node->setPosition(0, 0, 0);// Object->Mesh_Pos);
-	Object->Object_Node->setVisible(true);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+	
 	//}
 
 
@@ -116,14 +179,14 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 
 	//---------------------- Static
-	/*if (Object->Type == Enums::Bullet_Type_Static)
+	if (Object->Type == Enums::Bullet_Type_Static)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_Physics_Box(false, Index);
+			//Add_Physics_Box(false, Index);
 		}
 
-		if (Object->Shape == Enums::Sphere)
+		/*if (Object->Shape == Enums::Sphere)
 		{
 			Add_Physics_Sphere(false, Index);
 		}
@@ -141,8 +204,8 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 		if (Object->Shape == Enums::Cone)
 		{
 			Add_Physics_Cone(false, Index);
-		}
-	}*/
+		}*/
+	}
 
 	//---------------------- Dynamic
 	if (Object->Type == Enums::Bullet_Type_Dynamic)
@@ -278,64 +341,92 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 }
 
 // *************************************************************************
-//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2024		   *
+//				Add_Physics_Box:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void SB_Objects_Create::Add_Objects_From_MeshViewer()
+void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 {
-
-	//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
-	//{
-	//	App->CL_Com_Collectables->Add_New_Collectable();
-	//	return;
-	//}
-
-	int Index = App->CLSB_Scene->Object_Count;
-
-	App->CLSB_GameDirector->V_Object[Index] = new Base_Object();
 
 	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
-	Object->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
 
-
-	strcpy(Object->Mesh_Name, App->CLSB_Meshviewer->Object_Name);
-	strcpy(Object->Mesh_FileName, App->CLSB_Meshviewer->Selected_MeshFile);
-	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
-	strcpy(Object->Material_File, App->CLSB_Meshviewer->m_Material_File);
-
-	Object->Type = App->CLSB_Meshviewer->Physics_Type;
-	Object->Shape = App->CLSB_Meshviewer->Physics_Shape;
-
-
-	App->CLSB_Objects_Create->Dispatch_MeshViewer();
-
-	App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
-
-
-	App->CLSB_Scene->UniqueID_Object_Counter++; // Unique ID
-	App->CLSB_Scene->Object_Count++;  // Must be last line
-
-	App->CLSB_Scene->Scene_Modified = 1;
-}
-
-// *************************************************************************
-//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void SB_Objects_Create::Dispatch_MeshViewer()
-{
-	int Index = App->CLSB_Scene->Object_Count;
-
-	//if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-	//{
-	//	App->SBC_Com_Area->Add_Aera_To_Project(0, App->App->CLSB_Meshviewer->Selected_MeshFile, m_ResourcePath);
-	//	App->Say("Dispatch_MeshViewer");
-	//}
-	//else
+	if (Dynamic == 1)
 	{
-		Add_New_Object(Index, 1);
-		App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
-		App->CLSB_GameDirector->V_Object[Index]->Folder = Enums::Folder_Objects;
-		App->CLSB_GameDirector->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
-		App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, Index, true);
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Box;
 
 	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Box;
+	}
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->CLSB_Object->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+
+	App->CLSB_Physics->Set_Physics(Index);
 }
+
