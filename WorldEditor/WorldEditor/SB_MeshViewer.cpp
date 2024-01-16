@@ -187,15 +187,23 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	
 	Start_Render();
 	
-	MvEnt = NULL;
-	MvNode = NULL;
-	Phys_Body = NULL;
+	// Collectables
+	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+	{
+		App->CLSB_Meshviewer->Set_For_Collectables();
+	}
 
-	MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	//MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", "Barrel_1.mesh", MV_Resource_Group);
-	MvNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);
-	MvNode->setVisible(true);
+	// Areas
+	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	{
+		App->CLSB_Meshviewer->Set_For_Areas(MainDlgHwnd);
+	}
+
+	// Default
+	if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+	{
+		App->CLSB_Meshviewer->Set_For_Objects(MainDlgHwnd);
+	}
 	// 
 	//Set_Debug_Shapes();
 	//App->CLSB_Meshviewer->Set_OgreWindow();
@@ -277,24 +285,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Meshviewer->SelectDynamic = 0;
 		App->CLSB_Meshviewer->SelectTriMesh = 0;
 		
-		// Collectables
-		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-		{
-			App->CLSB_Meshviewer->Set_For_Collectables();
-		}
-
-		// Areas
-		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-		{
-			App->CLSB_Meshviewer->Set_For_Areas(hDlg);
-		}
-
-		// Default
-		if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
-		{
-			App->CLSB_Meshviewer->Set_For_Objects(hDlg);
-		}
-
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -963,14 +953,30 @@ void SB_MeshViewer::Start_Render(void)
 	Root::getSingletonPtr()->renderOneFrame();
 
 
-	//MvEnt = NULL;
-	//MvNode = NULL;
-	//Phys_Body = NULL;
-	////MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	//MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Barrel_1.mesh", MV_Resource_Group);
-	////MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	////MvNode->attachObject(MvEnt);
-	////MvNode->setVisible(true);
+	MvEnt = NULL;
+	MvNode = NULL;
+	Phys_Body = NULL;
+
+	MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
+	MvNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	MvNode->attachObject(MvEnt);
+	MvNode->setVisible(true);
+
+	// Debug Physics Shape
+	btDebug_Manual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("MVManual");
+	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	btDebug_Manual->setDynamic(true);
+	btDebug_Manual->estimateVertexCount(2000);
+	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1, 1);
+	btDebug_Manual->end();
+	btDebug_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node->attachObject(btDebug_Manual);
+
+	Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
+
+	//Mesh_Render_Running = 1;
 
 }
 
@@ -990,6 +996,36 @@ void SB_MeshViewer::Stop_Render(void)
 	Root::getSingletonPtr()->renderOneFrame();
 
 	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
+
+	if (MvEnt && MvNode)
+	{
+		MvNode->detachAllObjects();
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(MvNode);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(MvEnt);
+		MvEnt = NULL;
+		MvNode = NULL;
+	}
+
+	if (btDebug_Manual)
+	{
+		btDebug_Node->detachAllObjects();
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(btDebug_Node);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject("MVManual");
+		btDebug_Manual = NULL;
+		btDebug_Node = NULL;
+	}
+
+	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
+
+	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	Mesh_Render_Running = 0;
 }
 
 // *************************************************************************
@@ -1364,7 +1400,7 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 
 	Get_Mesh_Assets();
 
-	/*if (Physics_Shape == Enums::Shape_Box)
+	if (Physics_Shape == Enums::Shape_Box)
 	{
 		Show_Physics_Box();
 	}
@@ -1392,7 +1428,7 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	if (App->CLSB_Meshviewer->Physics_Type == Enums::Shape_TriMesh)
 	{
 		Show_Physics_Trimesh();
-	}*/
+	}
 
 }
 
@@ -1580,8 +1616,8 @@ bool SB_MeshViewer::Get_Files(HWND hDlg)
 // *************************************************************************
 bool SB_MeshViewer::Create_Resources_Group()
 {
-	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
-	//if (Test == 0)
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
+	if (Test == 0)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(MV_Resource_Group);
 	}
@@ -2402,17 +2438,17 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 {
 	App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
 	
-	//App->CLSB_Meshviewer->Get_Files();
+	App->CLSB_Meshviewer->Get_Files(hDlg);
 
-	//App->CLSB_Meshviewer->Enable_ShapeButtons(true);
-	//App->CLSB_Meshviewer->Enable_TypeButtons(true);
+	App->CLSB_Meshviewer->Enable_ShapeButtons(true);
+	App->CLSB_Meshviewer->Enable_TypeButtons(true);
 
-	/*App->CLSB_Meshviewer->Selected_Shape_Box = 1;
+	App->CLSB_Meshviewer->Selected_Shape_Box = 1;
 	App->CLSB_Meshviewer->SelectStatic = 1;
 
 	App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
-	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;*/
-	//App->CLSB_Meshviewer->Show_Physics_Box();
+	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
+	App->CLSB_Meshviewer->Show_Physics_Box();
 
 
 	char ATest[256];
@@ -2425,7 +2461,7 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
 	strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
 
-	//App->CLSB_Meshviewer->Enable_TypeButtons(1);
+	App->CLSB_Meshviewer->Enable_TypeButtons(1);
 }
 
 // *************************************************************************
