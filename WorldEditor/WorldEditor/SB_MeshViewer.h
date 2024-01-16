@@ -94,6 +94,7 @@ protected:
 	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Render(void);
+	void Stop_Render(void);
 
 	void Set_For_Objects(HWND hDlg);
 	void Set_For_Collectables();

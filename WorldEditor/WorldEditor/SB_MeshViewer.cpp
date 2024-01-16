@@ -184,8 +184,19 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 	Add_Resources();
 
 	MainDlgHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
+	
 	Start_Render();
+	
+	MvEnt = NULL;
+	MvNode = NULL;
+	Phys_Body = NULL;
 
+	MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
+	//MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", "Barrel_1.mesh", MV_Resource_Group);
+	MvNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	MvNode->attachObject(MvEnt);
+	MvNode->setVisible(true);
+	// 
 	//Set_Debug_Shapes();
 	//App->CLSB_Meshviewer->Set_OgreWindow();
 
@@ -672,8 +683,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
-			App->CLSB_Meshviewer->GridNode->resetOrientation();
-			App->CLSB_Meshviewer->Reset_Camera();
+			//App->CLSB_Meshviewer->GridNode->resetOrientation();
+			//App->CLSB_Meshviewer->Reset_Camera();
 
 			return TRUE;
 
@@ -861,9 +872,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Meshviewer->Phys_Body = nullptr;
 			}
 
-			App->CLSB_Meshviewer->Do_Timer = 0;
+			//App->CLSB_Meshviewer->Do_Timer = 0;
 			//KillTimer(hDlg, 1);
-			App->CLSB_Meshviewer->Close_OgreWindow();
+			//App->CLSB_Meshviewer->Close_OgreWindow();
+
+			App->CLSB_Meshviewer->Stop_Render();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 
 			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
@@ -906,11 +919,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_MeshViewer->Phys_Body = nullptr;
 			}*/
 
-			App->CLSB_Meshviewer->Do_Timer = 0;
+			//App->CLSB_Meshviewer->Do_Timer = 0;
 			//KillTimer(hDlg, 1);
-			App->CLSB_Meshviewer->Close_OgreWindow();
+			//App->CLSB_Meshviewer->Close_OgreWindow();
+			App->CLSB_Meshviewer->Stop_Render();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
-			App->CLSB_Meshviewer->Delete_Resources_Group();
+			//App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			//App->SBC_MeshViewer->Set_Debug_Shapes();*/
 			EndDialog(hDlg, LOWORD(wParam));
@@ -947,6 +961,35 @@ void SB_MeshViewer::Start_Render(void)
 	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
+
+
+	//MvEnt = NULL;
+	//MvNode = NULL;
+	//Phys_Body = NULL;
+	////MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
+	//MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Barrel_1.mesh", MV_Resource_Group);
+	////MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	////MvNode->attachObject(MvEnt);
+	////MvNode->setVisible(true);
+
+}
+
+// *************************************************************************
+// *			Stop_Render:- Terry and Hazel Flanigan 2023	      	   *
+// *************************************************************************
+void SB_MeshViewer::Stop_Render(void)
+{
+	SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
+
+	App->CLSB_Equity->Resize_3DView();
+
+	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
+	App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
+	Root::getSingletonPtr()->renderOneFrame();
+
+	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
 }
 
 // *************************************************************************
@@ -1299,14 +1342,14 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	if (MvEnt && MvNode)
 	{
 		MvNode->detachAllObjects();
-		mSceneMgrMeshView->destroySceneNode(MvNode);
-		mSceneMgrMeshView->destroyEntity(MvEnt);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(MvNode);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(MvEnt);
 		MvEnt = NULL;
 		MvNode = NULL;
 	}
 
-	MvEnt = mSceneMgrMeshView->createEntity("MV",MeshFile, App->CLSB_Meshviewer->MV_Resource_Group);
-	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MV",MeshFile, App->CLSB_Meshviewer->MV_Resource_Group);
+	MvNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setPosition(0, 0, 0);
 	MvNode->resetOrientation();
@@ -1315,13 +1358,13 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	{
 		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 		Ogre::Real Radius = MvEnt->getBoundingRadius();
-		mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
-		mCameraMeshView->lookAt(0, Centre.y, 0);
+		//mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
+		//mCameraMeshView->lookAt(0, Centre.y, 0);
 	}
 
 	Get_Mesh_Assets();
 
-	if (Physics_Shape == Enums::Shape_Box)
+	/*if (Physics_Shape == Enums::Shape_Box)
 	{
 		Show_Physics_Box();
 	}
@@ -1349,7 +1392,7 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	if (App->CLSB_Meshviewer->Physics_Type == Enums::Shape_TriMesh)
 	{
 		Show_Physics_Trimesh();
-	}
+	}*/
 
 }
 
@@ -1537,16 +1580,16 @@ bool SB_MeshViewer::Get_Files(HWND hDlg)
 // *************************************************************************
 bool SB_MeshViewer::Create_Resources_Group()
 {
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
-	if (Test == 0)
+	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
+	//if (Test == 0)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(MV_Resource_Group);
 	}
-	else
-	{
+	//else
+	//{
 		//Ogre::ResourceGroupManager::getSingleton().deleteResource(mResource_Folder, "FileSystem", MV_Resource_Group);
-	}
-
+	//}
+	
 	return 1;
 }
 
