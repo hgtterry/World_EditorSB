@@ -170,8 +170,8 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 	else
 	{*/
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
-	
+	Object->Object_Node->setPosition(0, 0, 0);// Object->Mesh_Pos);
+	Object->Object_Node->setVisible(true);
 	//}
 
 
@@ -183,7 +183,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			//Add_Physics_Box(false, Index);
+			Add_Physics_Box(0, Index);
 		}
 
 		/*if (Object->Shape == Enums::Sphere)
@@ -345,6 +345,15 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 {
+	if (App->CLSB_GameDirector->V_Object[Index])
+	{
+		
+	}
+	else
+	{
+		App->Say("Object Index Out of Bounds");
+		return;
+	}
 
 	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
 
@@ -389,13 +398,13 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
-
+	
 	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -420,13 +429,15 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
+	
 	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
-
+	return;
 	App->CLSB_Physics->Set_Physics(Index);
 }
 

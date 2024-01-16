@@ -32,5 +32,6 @@ public:
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 	float GetMesh_BB_Radius(SceneNode* mNode);
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
+	void Object_Camera_Goto(int Object_Index);
 };
 

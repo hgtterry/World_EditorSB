@@ -995,7 +995,7 @@ void SB_MeshViewer::Stop_Render(void)
 	App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
 	Root::getSingletonPtr()->renderOneFrame();
 
-	App->CLSB_Equity->EquitySB_Dialog_Visible = 0;
+	App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 
 	if (MvEnt && MvNode)
 	{

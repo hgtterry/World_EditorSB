@@ -136,6 +136,13 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BTMESHGOTO)
+		{
+			App->CLSB_Object->Object_Camera_Goto(App->CLSB_Properties->Current_Selected_Object);
+			return 1;
+
+		}
+
 		/*if (LOWORD(wParam) == IDC_BT_OBJECTHELP2)
 		{
 			if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Level)
