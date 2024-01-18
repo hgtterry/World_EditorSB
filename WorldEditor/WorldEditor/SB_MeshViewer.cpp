@@ -532,11 +532,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BTMV_CENTRE)
 		{
-			App->CLSB_Meshviewer->GridNode->resetOrientation();
+			/*App->CLSB_Meshviewer->GridNode->resetOrientation();
 			App->CLSB_Meshviewer->Reset_Camera();
 
 			App->CLSB_Meshviewer->View_Zoomed_Flag = 0;
-			App->CLSB_Meshviewer->View_Centred_Flag = 1;
+			App->CLSB_Meshviewer->View_Centred_Flag = 1;*/
 
 			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			return TRUE;
@@ -544,14 +544,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BTMV_ZOOMED)
 		{
-			App->CLSB_Meshviewer->View_Zoomed_Flag = 1;
+			/*App->CLSB_Meshviewer->View_Zoomed_Flag = 1;
 			App->CLSB_Meshviewer->View_Centred_Flag = 0;
 			
 			Ogre::Vector3 Centre = App->CLSB_Meshviewer->MvEnt->getBoundingBox().getCenter();
 			Ogre::Real Radius = App->CLSB_Meshviewer->MvEnt->getBoundingRadius();
 
 			App->CLSB_Meshviewer->mCameraMeshView->setPosition(0, Centre.y, -Radius * (Real(2.5)));
-			App->CLSB_Meshviewer->mCameraMeshView->lookAt(0, Centre.y, 0);
+			App->CLSB_Meshviewer->mCameraMeshView->lookAt(0, Centre.y, 0);*/
 
 			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
 			return TRUE;
@@ -559,13 +559,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+			/*HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 
 			temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CLSB_Meshviewer->Placement_Camera = 1;
+			App->CLSB_Meshviewer->Placement_Camera = 1;*/
 
 			return TRUE;
 		}
@@ -573,13 +573,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_CKPLACECENTER)
 		{
 
-			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
+			/*HWND temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 
 			temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CLSB_Meshviewer->Placement_Camera = 0;
+			App->CLSB_Meshviewer->Placement_Camera = 0;*/
 
 			return TRUE;
 		}
@@ -825,6 +825,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				return TRUE;
 			}
 
+			App->CLSB_Ogre_Setup->Pause_Render = 1;
 
 			char buff[255];
 			GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
@@ -836,12 +837,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Meshviewer->Phys_Body = nullptr;
 			}
 
-			//App->CLSB_Meshviewer->Do_Timer = 0;
-			//KillTimer(hDlg, 1);
-			//App->CLSB_Meshviewer->Close_OgreWindow();
-
 			App->CLSB_Meshviewer->Stop_Render();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
+
+			
+			App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 			{
@@ -856,9 +856,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			//App->CLSB_Meshviewer->Set_Debug_Shapes();
 			
-			//App->CLSB_Meshviewer->Delete_Resources_Group();
-			// 
-
+			App->CLSB_Ogre_Setup->Pause_Render = 0;
 			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -2412,19 +2410,19 @@ void SB_MeshViewer::Set_Shape_Buttons()
 // *************************************************************************
 void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 {
-	App->CLSB_Meshviewer->Set_ResourceMesh_File(hDlg);
+	Set_ResourceMesh_File(hDlg);
 	
-	App->CLSB_Meshviewer->Get_Files(hDlg);
+	Get_Files(hDlg);
 
-	App->CLSB_Meshviewer->Enable_ShapeButtons(true);
-	App->CLSB_Meshviewer->Enable_TypeButtons(true);
+	Enable_ShapeButtons(true);
+	Enable_TypeButtons(true);
 
-	App->CLSB_Meshviewer->Selected_Shape_Box = 1;
-	App->CLSB_Meshviewer->SelectStatic = 1;
+	Selected_Shape_Box = 1;
+	SelectStatic = 1;
 
-	App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_Static;
-	App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_Box;
-	App->CLSB_Meshviewer->Show_Physics_Box();
+	Physics_Type = Enums::Bullet_Type_Static;
+	Physics_Shape = Enums::Shape_Box;
+	Show_Physics_Box();
 
 
 	char ATest[256];
@@ -2435,9 +2433,10 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 	strcat(ATest, ConNum);
 
 	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-	strcpy(App->CLSB_Meshviewer->Object_Name, ATest);
+	strcpy(Object_Name, ATest);
 
-	App->CLSB_Meshviewer->Enable_TypeButtons(1);
+	Enable_TypeButtons(1);
+	RedrawWindow_Dlg_Buttons();
 }
 
 // *************************************************************************

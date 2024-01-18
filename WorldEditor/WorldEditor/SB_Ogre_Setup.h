@@ -63,6 +63,7 @@ public:
 
 	bool ExitFullScreen();
 	bool ReverseBackSlash(char* buf);
+	bool Pause_Render;
 
 	bool Block_RenderingQueued;
 

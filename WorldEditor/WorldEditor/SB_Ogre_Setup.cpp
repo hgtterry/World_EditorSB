@@ -45,6 +45,7 @@ SB_Ogre_Setup::SB_Ogre_Setup(void)
 
 	Block_RenderingQueued = 0;
 	Pause_Rendring = 0;
+	Pause_Render = 0;
 
 	FPSLock = 4200;
 
@@ -113,27 +114,37 @@ bool SB_Ogre_Setup::Ogre_Render_Loop(void)
 	{
 		Ogre::WindowEventUtilities::messagePump();
 
-		if (mWindow->isClosed()) return false;
-
-		if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
+		if (Pause_Render == 0)
 		{
-			if (Block_RenderingQueued == 0 && Pause_Rendring == 0)
+			if (mWindow->isClosed()) return false;
+
+			if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
 			{
-				if (!mRoot->_fireFrameStarted())
+				if (Block_RenderingQueued == 0 && Pause_Rendring == 0)
 				{
-					return false;
-				}
+					if (!mRoot->_fireFrameStarted())
+					{
+						return false;
+					}
 
-				if (!mRoot->_updateAllRenderTargets())
-				{
-					return false;
-				}
+					if (!mRoot->_updateAllRenderTargets())
+					{
+						return false;
+					}
 
-				if (!mRoot->_fireFrameEnded())
-				{
-					return false;
-				}
+					if (!mRoot->_fireFrameEnded())
+					{
+						return false;
+					}
 
+					FPStimer.reset();
+				}
+			}
+		}
+		else
+		{
+			if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
+			{
 				FPStimer.reset();
 			}
 		}
