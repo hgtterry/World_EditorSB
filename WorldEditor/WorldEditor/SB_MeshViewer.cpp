@@ -273,7 +273,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Meshviewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 
-		App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
+		App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)MeshView_3D_Proc);
 		//App->CLSB_Meshviewer->Set_OgreWindow();
 
 		
@@ -618,8 +618,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Meshviewer->Add_Resources();
 				App->CLSB_Meshviewer->Get_Files(hDlg);
 
-				App->CLSB_Meshviewer->GridNode->resetOrientation();
-				App->CLSB_Meshviewer->Reset_Camera();
+				//App->CLSB_Meshviewer->GridNode->resetOrientation();
+				//App->CLSB_Meshviewer->Reset_Camera();
 
 			}
 			}
@@ -841,7 +841,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 
 			
-			App->CLSB_Meshviewer->Delete_Resources_Group();
+			//App->CLSB_Meshviewer->Delete_Resources_Group();
 
 			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 			{
