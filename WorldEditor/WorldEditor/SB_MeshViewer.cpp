@@ -20,7 +20,7 @@ misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 
-:- Terry and Hazel Flanigan 2022
+:- Terry and Hazel Flanigan 2024
 
 */
 
@@ -39,42 +39,6 @@ SB_MeshViewer::SB_MeshViewer()
 	MvEnt = NULL;
 	MvNode = NULL;
 	Phys_Body = NULL;
-	// ------------------------------------------------ 
-	GridManual = nullptr;
-	GridNode = nullptr;
-
-	Scale_X = 4;
-	Scale_Y = 4;
-	Scale_Z = 4;
-
-	Division_X = 2;
-	Division_Y = 2;
-	Division_Z = 2;
-
-	YAxis_min = -8;
-	YAxis_max = 8;
-
-	ZAxis_min = -8;
-	ZAxis_max = 8;
-
-	XAxis_min = -8;
-	XAxis_max = 8;
-
-	HairExtend = 8;
-
-	ColourHairZ = ColourValue(1, 0, 0, 1);
-	ColourHairX = ColourValue(0, 0, 1, 1);
-	ColourHairY = ColourValue(0, 1, 0, 1);
-	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
-	ColourDivision = ColourValue(1, 1, 1, 0.4);
-
-	ShowDivisions = 1;
-
-	// ------------------------------------------------ 
-	MeshView_Window = NULL;
-	mSceneMgrMeshView = NULL;
-	mCameraMeshView = NULL;
-	CamNode = NULL;
 
 	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
 
@@ -1368,8 +1332,6 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	{
 		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 		Ogre::Real Radius = MvEnt->getBoundingRadius();
-		//mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
-		//mCameraMeshView->lookAt(0, Centre.y, 0);
 	}
 
 	Get_Mesh_Assets();
@@ -1415,87 +1377,70 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	MvNode = NULL;
 	Phys_Body = NULL;
 
-	Ogre::NameValuePairList options;
+	//Ogre::NameValuePairList options;
 
-	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
+	//options["externalWindowHandle"] =
+	//	Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
 
-	MeshView_Window = App->CLSB_Ogre_Setup->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+	//MeshView_Window = App->CLSB_Ogre_Setup->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 
-	mSceneMgrMeshView = App->CLSB_Ogre_Setup->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+	//mSceneMgrMeshView = App->CLSB_Ogre_Setup->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
-	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
-	mCameraMeshView->setNearClipDistance(0.1);
-	mCameraMeshView->setFarClipDistance(8000);
+	////mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
+	////mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
+	////mCameraMeshView->setNearClipDistance(0.1);
+	////mCameraMeshView->setFarClipDistance(8000);
 
-	Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
-	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	////Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
+	////mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
-	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+	////vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
-	CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
-	CamNode->attachObject(mCameraMeshView);
+	//CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
+	//CamNode->attachObject(mCameraMeshView);
 
-	////-------------------------------------------- 
-	
-	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);
-	MvNode->setVisible(true);
+	//////-------------------------------------------- 
+	//
+	//MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
+	//MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	//MvNode->attachObject(MvEnt);
+	//MvNode->setVisible(true);
 
-	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+	//mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	// add a bright light above the scene
-	Light* light = mSceneMgrMeshView->createLight();
-	light->setType(Light::LT_POINT);
-	light->setPosition(-10, 40, 20);
-	light->setSpecularColour(ColourValue::White);
+	//// add a bright light above the scene
+	//Light* light = mSceneMgrMeshView->createLight();
+	//light->setType(Light::LT_POINT);
+	//light->setPosition(-10, 40, 20);
+	//light->setSpecularColour(ColourValue::White);
 
-	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
-	Ogre::Real Radius = MvEnt->getBoundingRadius();
+	//Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
+	//Ogre::Real Radius = MvEnt->getBoundingRadius();
 
-	Grid_Update(1);
-	
-	//RenderListener = new SB_MeshView_Listener();
-	
-	//App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
+	//Grid_Update(1);
+	//
+	////RenderListener = new SB_MeshView_Listener();
+	//
+	////App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
 
-	Reset_Camera();
+	//Reset_Camera();
 
-	// Debug Physics Shape
-	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
-	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-	btDebug_Manual->setDynamic(true);
-	btDebug_Manual->estimateVertexCount(2000);
-	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1,1,1,1);
-	btDebug_Manual->end();
-	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	btDebug_Node->attachObject(btDebug_Manual);
+	//// Debug Physics Shape
+	//btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
+	//btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	//btDebug_Manual->setDynamic(true);
+	//btDebug_Manual->estimateVertexCount(2000);
+	//btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+	//btDebug_Manual->position(0, 0, 0);
+	//btDebug_Manual->colour(1,1,1,1);
+	//btDebug_Manual->end();
+	//btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	//btDebug_Node->attachObject(btDebug_Manual);
 
-	Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
+	//Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
 
-	Mesh_Render_Running = 1;
+	//Mesh_Render_Running = 1;
 	return 1;
-}
-
-// *************************************************************************
-// *		Close_MeshWindow:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void SB_MeshViewer::Reset_Camera(void)
-{
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
-	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
-
-	if (MvEnt && MvNode)
-	{
-		App->CLSB_Meshviewer->MvNode->setPosition(0, 0, 0);
-		App->CLSB_Meshviewer->MvNode->resetOrientation();
-	}
-
-	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1503,23 +1448,23 @@ void SB_MeshViewer::Reset_Camera(void)
 // *************************************************************************
 void SB_MeshViewer::Close_OgreWindow(void)
 {
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
+	//App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
 
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+	//App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
+	//if (Phys_Body)
+	//{
+	//	App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+	//	Phys_Body = nullptr;
+	//}
 
-	//App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
+	////App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
 
-	App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
-	MeshView_Window->destroy();
-	App->CLSB_Ogre_Setup->mRoot->destroySceneManager(mSceneMgrMeshView);
+	//App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
+	//MeshView_Window->destroy();
+	////App->CLSB_Ogre_Setup->mRoot->destroySceneManager(mSceneMgrMeshView);
 
-	Mesh_Render_Running = 0;
+	//Mesh_Render_Running = 0;
 }
 
 // *************************************************************************
@@ -2307,77 +2252,6 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
 
 	Physics_Rotation();
-}
-
-// *************************************************************************
-// *	  		Grid_Update:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-void SB_MeshViewer::Grid_Update(bool Create)
-{
-	int i = 0;
-	Real r;
-
-	if (Create == 1)
-	{
-		GridManual = mSceneMgrMeshView->createManualObject("GridManual");
-		GridManual->setRenderQueueGroup(1);
-	}
-
-	GridManual->clear();
-	GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
-
-	//if (ShowGridFlag == 1)
-	{
-		for (int x = XAxis_min; x <= XAxis_max; ++x)
-		{
-			GridManual->position(x, 0, ZAxis_min);
-			GridManual->colour(ColourMain);
-			GridManual->position(x, 0, ZAxis_max);
-			GridManual->colour(ColourMain);
-			if (x < XAxis_max && ShowDivisions == 1)
-			{
-				for (int d = 0; d < Division_X; ++d)
-				{
-					r = x + (1.0 / Real(Division_X))*Real(d);
-					GridManual->position(r, 0, ZAxis_min);
-					GridManual->colour(ColourDivision);
-					GridManual->position(r, 0, ZAxis_max);
-					GridManual->colour(ColourDivision);
-				}
-			}
-		}
-
-		for (int z = ZAxis_min; z <= ZAxis_max; ++z)
-		{
-			GridManual->position(Ogre::Vector3(XAxis_min, 0, z));
-			GridManual->colour(ColourMain);
-			GridManual->position(Ogre::Vector3(XAxis_max, 0, z));
-			GridManual->colour(ColourMain);
-			if (z < ZAxis_max && ShowDivisions == 1)
-			{
-				for (int d = 1; d < Division_Y; ++d)
-				{
-					r = z + (1.0 / Real(Division_Y))*Real(d);
-					GridManual->position(XAxis_min, 0, r);
-					GridManual->colour(ColourDivision);
-					GridManual->position(XAxis_max, 0, r);
-					GridManual->colour(ColourDivision);
-				}
-			}
-		}
-	}
-
-	GridManual->end();
-
-	if (Create == 1)
-	{
-		GridNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-		GridNode->attachObject(GridManual);
-	}
-
-	GridNode->setPosition(0, 0, 0);
-	GridNode->setVisible(true);
-	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
 
 // *************************************************************************

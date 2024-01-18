@@ -26,11 +26,11 @@ distribution.
 
 Base_Object::Base_Object(void)
 {
+	Init_Object();
 }
 
 Base_Object::~Base_Object(void)
 {
-	Init_Object();
 }
 
 // *************************************************************************

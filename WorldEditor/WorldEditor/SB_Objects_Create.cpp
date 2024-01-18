@@ -210,10 +210,10 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	//---------------------- Dynamic
 	if (Object->Type == Enums::Bullet_Type_Dynamic)
 	{
-		/*if (Object->Shape == Enums::Shape_Box)
+		if (Object->Shape == Enums::Shape_Box)
 		{
 			Add_Physics_Box(true, Index);
-		}*/
+		}
 
 		if (Object->Shape == Enums::Shape_Sphere)
 		{

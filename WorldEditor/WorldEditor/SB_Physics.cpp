@@ -46,7 +46,6 @@ void SB_Physics::Set_Physics(int Index)
 	float z = App->CLSB_GameDirector->V_Object[Index]->Physics_Quat.z;
 
 	App->CLSB_GameDirector->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
 	App->CLSB_GameDirector->V_Object[Index]->Object_Node->setScale(App->CLSB_GameDirector->V_Object[Index]->Mesh_Scale);
 
 	Ogre::Vector3 Scale = App->CLSB_GameDirector->V_Object[Index]->Object_Node->getScale();

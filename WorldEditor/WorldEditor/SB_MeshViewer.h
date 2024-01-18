@@ -48,7 +48,7 @@ public:
 
 	HWND MainDlgHwnd;
 
-	Ogre::String MV_Resource_Group;
+	Ogre::String			MV_Resource_Group;
 
 	Ogre::SceneNode*		MvNode;
 	Ogre::Entity*			MvEnt;
@@ -58,13 +58,8 @@ public:
 	Ogre::ManualObject*		btDebug_Manual;
 	Ogre::SceneNode*		btDebug_Node;
 
-	Ogre::SceneManager* mSceneMgrMeshView;
-	Ogre::Camera*		mCameraMeshView;
-
-	btRigidBody*		Phys_Body;
-	ManualObject*		GridManual;
-	SceneNode*			GridNode;
-
+	btRigidBody*			Phys_Body;
+	
 	int Physics_Type;
 	int Physics_Shape;
 	int Last_Selected_Physics_Shape;
@@ -108,12 +103,6 @@ protected:
 	void Show_Physics_Trimesh();
 	void Show_Physics_None();
 
-	// -------------------------------- 
-
-	void Grid_Update(bool Create);
-
-	// -------------------------------- 
-
 	void Set_ResourceMesh_File(HWND hDlg);
 
 	bool Set_OgreWindow(void);
@@ -129,7 +118,7 @@ protected:
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	Ogre::Vector3 Get_BoundingBox_World_Centre();
 	float GetMesh_BB_Radius(SceneNode* mNode);
-	void Reset_Camera(void);
+
 	bool Create_Resources_Group();
 	bool Add_Resources();
 	bool Delete_Resources_Group();
@@ -163,31 +152,5 @@ protected:
 
 	btCollisionShape	*Phys_Shape;
 
-	Ogre::RenderWindow* MeshView_Window;
-	Ogre::SceneNode*	CamNode;
-
-	int Scale_X;
-	int Scale_Y;
-	int Scale_Z;
-
-	int Division_X;
-	int Division_Y;
-	int Division_Z;
-
-	int XAxis_min;
-	int	XAxis_max;
-	int YAxis_min;
-	int	YAxis_max;
-	int ZAxis_min;
-	int	ZAxis_max;
-	int HairExtend;
-
-	Ogre::ColourValue ColourMain;
-	Ogre::ColourValue ColourHairZ;
-	Ogre::ColourValue ColourHairX;
-	Ogre::ColourValue ColourHairY;
-	Ogre::ColourValue ColourDivision;
-
-	bool ShowDivisions;
 };
 
