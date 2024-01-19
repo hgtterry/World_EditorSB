@@ -57,6 +57,8 @@ SB_MeshViewer::SB_MeshViewer()
 	Selected_Shape_Cylinder = 0;
 	Selected_Shape_Cone = 0;
 
+	Show_Just_This_Mesh = 1;
+
 	Mesh_Render_Running = 0;
 	Mesh_Render_Running_New = 0;
 
@@ -219,16 +221,15 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BTMV_CENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMV_ZOOMED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_JUSTMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
-
 		SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
 		HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
@@ -237,7 +238,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CLSB_Meshviewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 
-		App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)MeshView_3D_Proc);
+		//App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)MeshView_3D_Proc);
 		//App->CLSB_Meshviewer->Set_OgreWindow();
 
 		
@@ -310,14 +311,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_CURRENTFOLDER) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}
-
 		if (GetDlgItem(hDlg, IDC_SELECTEDNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -339,6 +332,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_JUSTMESH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Meshviewer->Show_Just_This_Mesh);
+			
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_BT_FOLDERBROWSE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -493,6 +494,21 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_JUSTMESH)
+		{
+			if (App->CLSB_Meshviewer->Show_Just_This_Mesh == 1)
+			{
+				App->CLSB_Meshviewer->Show_Just_This_Mesh = 0;
+				App->CLSB_Meshviewer->Show_Exsisting_Objects(1);
+			}
+			else
+			{
+				App->CLSB_Meshviewer->Show_Just_This_Mesh = 1;
+				App->CLSB_Meshviewer->Show_Exsisting_Objects(0);
+			}
+
+			return TRUE;
+		}
 		
 		if (LOWORD(wParam) == IDC_BTMV_CENTRE)
 		{
@@ -576,14 +592,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				strcat(App->CLSB_Meshviewer->mResource_Folder, App->CLSB_Meshviewer->m_Current_Folder);
 				strcat(App->CLSB_Meshviewer->mResource_Folder, "\\");
 
-				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
-				SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
+				//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
+				//SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
 				App->CLSB_Meshviewer->Add_Resources();
 				App->CLSB_Meshviewer->Get_Files(hDlg);
-
-				//App->CLSB_Meshviewer->GridNode->resetOrientation();
-				//App->CLSB_Meshviewer->Reset_Camera();
 
 			}
 			}
@@ -829,31 +842,16 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//Debug
 			
-			/*if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
+			if (App->CLSB_Meshviewer->Phys_Body)
 			{
-				App->SBC_MeshViewer->MvNode->detachAllObjects();
-				App->SBC_MeshViewer->mSceneMgrMeshView->destroySceneNode(App->SBC_MeshViewer->MvNode);
-				App->SBC_MeshViewer->mSceneMgrMeshView->destroyEntity(App->SBC_MeshViewer->MvEnt);
-				App->SBC_MeshViewer->MvEnt = NULL;
-				App->SBC_MeshViewer->MvNode = NULL;
+				App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
+				App->CLSB_Meshviewer->Phys_Body = nullptr;
 			}
 
-			if (App->SBC_MeshViewer->Phys_Body)
-			{
-				App->SBC_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
-				App->SBC_MeshViewer->Phys_Body = nullptr;
-			}*/
-
-			//App->CLSB_Meshviewer->Do_Timer = 0;
-			//KillTimer(hDlg, 1);
-			//App->CLSB_Meshviewer->Close_OgreWindow();
 			App->CLSB_Meshviewer->Stop_Render();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
-			//App->CLSB_Meshviewer->Delete_Resources_Group();
 
-			//App->SBC_MeshViewer->Set_Debug_Shapes();*/
 			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -873,7 +871,7 @@ void SB_MeshViewer::Start_Render(void)
 {
 	//Set_Render_Mode();
 
-	RECT rect;
+	/*RECT rect;
 	GetWindowRect(MeshView_3D_hWnd, &rect);
 
 	int width = rect.right - rect.left;
@@ -888,7 +886,7 @@ void SB_MeshViewer::Start_Render(void)
 	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
-	Root::getSingletonPtr()->renderOneFrame();
+	Root::getSingletonPtr()->renderOneFrame();*/
 
 
 	MvEnt = NULL;
@@ -923,7 +921,7 @@ void SB_MeshViewer::Start_Render(void)
 // *************************************************************************
 void SB_MeshViewer::Stop_Render(void)
 {
-	SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
+	/*SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
 	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
 
 	App->CLSB_Equity->Resize_3DView();
@@ -931,7 +929,7 @@ void SB_MeshViewer::Stop_Render(void)
 	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 	App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
-	Root::getSingletonPtr()->renderOneFrame();
+	Root::getSingletonPtr()->renderOneFrame();*/
 
 	App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 
@@ -1290,8 +1288,8 @@ void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 	strcat(App->CLSB_Meshviewer->mResource_Folder, App->CLSB_Meshviewer->m_Current_Folder);
 	strcat(App->CLSB_Meshviewer->mResource_Folder, "\\");
 
-	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
-	SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
+	//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
+	//SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 	
 	App->CLSB_Meshviewer->Add_Resources();
 
@@ -1777,6 +1775,25 @@ void SB_MeshViewer::Set_Debug_Shapes()
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 	App->CLSB_Ogre_Setup->RenderFrame();
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+}
+
+// *************************************************************************
+// *	  	Show_Exsisting_Objects:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Exsisting_Objects(bool flag)
+{
+	int Count = 0;
+
+	while (Count < App->CLSB_Scene->Object_Count)
+	{
+		if (App->CLSB_GameDirector->V_Object[Count]->Object_Node)
+		{
+			App->CLSB_GameDirector->V_Object[Count]->Object_Node->setVisible(flag);
+		}
+
+		Count++;
+	}
+
 }
 
 // *************************************************************************

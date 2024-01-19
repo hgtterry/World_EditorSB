@@ -131,6 +131,7 @@ protected:
 	void Show_Mesh_Properties();
 	void Reselect_Shape();
 	void RedrawWindow_Dlg_Buttons();
+	void Show_Exsisting_Objects(bool flag);
 
 	//----------------------------------
 	bool Selected_Shape_Box;
@@ -138,6 +139,8 @@ protected:
 	bool Selected_Shape_Capsule;
 	bool Selected_Shape_Cylinder;
 	bool Selected_Shape_Cone;
+
+	bool Show_Just_This_Mesh;
 
 	bool View_Centred_Flag;
 	bool View_Zoomed_Flag;

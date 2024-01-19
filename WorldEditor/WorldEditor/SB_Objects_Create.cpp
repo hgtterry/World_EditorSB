@@ -237,10 +237,10 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 
 	//---------------------- Tri_Mesh
-	//if (Object->Type == Enums::Bullet_Type_TriMesh)
-	//{
-	//	create_New_Trimesh(Index);
-	//}
+	if (Object->Type == Enums::Bullet_Type_TriMesh)
+	{
+		//create_New_Trimesh(Index);
+	}
 
 
 	//if (Object->Usage == Enums::Usage_Room) // Rooms

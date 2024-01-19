@@ -917,7 +917,6 @@
 #define IDC_BT_FULLSCREEN               1590
 #define IDC_BT_PREVIEWEDITOR            1591
 #define IDC_STFOLDER                    1592
-#define IDC_ST_CURRENTFOLDER            1593
 #define IDC_BT_FOLDERBROWSE             1594
 #define IDC_SELECTEDNAME                1595
 #define IDC_LISTFILES                   1596
@@ -931,6 +930,7 @@
 #define IDC_ST_SHAPE2                   1604
 #define IDC_OBJECTNAME                  1605
 #define IDC_BTMESHGOTO                  1606
+#define IDC_BT_JUSTMESH                 1607
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1178,7 +1178,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        367
 #define _APS_NEXT_COMMAND_VALUE         33124
-#define _APS_NEXT_CONTROL_VALUE         1607
+#define _APS_NEXT_CONTROL_VALUE         1608
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
