@@ -57,11 +57,12 @@ protected:
 	void ImGui_Position(void);
 	
 	void ImGui_Scale(void);
-	void Set_Scale(bool Mode, float X, float Y, float Z);
+	void Set_Scale(Ogre::Vector3 Scale);
 
 	void ImGui_Rotation(void);
 
-	void Set_Physics_Position(int Index);
+	void Set_Physics_Position();
+	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
 
 	void Rotate_X_Model(float X);
 	void Rotate_Y_Model(float Y);
