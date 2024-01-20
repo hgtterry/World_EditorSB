@@ -127,6 +127,7 @@ private:
 	void RedrawWindow_Dlg_Buttons();
 	void Show_Exsisting_Objects(bool flag);
 
+
 	//----------------------------------
 	bool Selected_Shape_Box;
 	bool Selected_Shape_Sphere;

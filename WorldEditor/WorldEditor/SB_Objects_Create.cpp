@@ -191,25 +191,25 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 			Add_Physics_Box(0, Index);
 		}
 
-		/*if (Object->Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Shape_Sphere)
 		{
 			Add_Physics_Sphere(false, Index);
 		}
 
-		if (Object->Shape == Enums::Capsule)
+		if (Object->Shape == Enums::Shape_Capsule)
 		{
 			Add_Physics_Capsule(false, Index);
 		}
 
-		if (Object->Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Shape_Cylinder)
 		{
 			Add_Physics_Cylinder(false, Index);
 		}
 
-		if (Object->Shape == Enums::Cone)
+		if (Object->Shape == Enums::Shape_Cone)
 		{
 			Add_Physics_Cone(false, Index);
-		}*/
+		}
 	}
 
 	//---------------------- Dynamic
@@ -225,20 +225,20 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 			Add_Physics_Sphere(true, Index);
 		}
 
-		/*if (Object->Shape == Enums::Capsule)
+		if (Object->Shape == Enums::Shape_Capsule)
 		{
 			Add_Physics_Capsule(true, Index);
 		}
 
-		if (Object->Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Shape_Cylinder)
 		{
 			Add_Physics_Cylinder(true, Index);
 		}
 
-		if (Object->Shape == Enums::Cone)
+		if (Object->Shape == Enums::Shape_Cone)
 		{
 			Add_Physics_Cone(true, Index);
-		}*/
+		}
 	}
 
 	//if (Object->Usage == Enums::Usage_Room) // Rooms
@@ -436,6 +436,275 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 
 	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
 	return;
+	App->CLSB_Physics->Set_Physics(Index);
+}
+
+// *************************************************************************
+//			Add_Physics_Cone:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
+{
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Cone;
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Cone;
+	}
+
+	Ogre::Vector3 Centre = App->CLSB_Object->Get_BoundingBox_World_Centre(Index);
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->CLSB_Object->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y;// / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->CLSB_Object->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
+
+	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+
+	App->CLSB_Physics->Set_Physics(Index);
+}
+
+// *************************************************************************
+//			Add_Physics_Cylinder:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
+{
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Cylinder;
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Cylinder;
+	}
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->CLSB_Object->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->CLSB_Object->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+
+	App->CLSB_Physics->Set_Physics(Index);
+}
+
+// *************************************************************************
+//			Add_Physics_Capsule:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
+{
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Capsule;
+
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Capsule;
+	}
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->CLSB_Object->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->CLSB_Object->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
+
+	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+
 	App->CLSB_Physics->Set_Physics(Index);
 }
 

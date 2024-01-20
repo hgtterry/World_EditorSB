@@ -32,8 +32,12 @@ public:
 	bool Add_Objects_From_File();  // From File;
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 
-	void Add_Physics_Sphere(bool Dynamic, int Index);
 	void Add_Physics_Box(bool Dynamic, int Index);
+	void Add_Physics_Sphere(bool Dynamic, int Index);
+	void Add_Physics_Cone(bool Dynamic, int Index);
+	void Add_Physics_Cylinder(bool Dynamic, int Index);
+	void Add_Physics_Capsule(bool Dynamic, int Index);
+
 	void create_New_Trimesh(int Index);
 
 	void Add_Objects_From_MeshViewer();

@@ -143,17 +143,38 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 
 		}
 
-		/*if (LOWORD(wParam) == IDC_BT_OBJECTHELP2)
+		if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
 		{
-			if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Level)
+			int Index = App->CLSB_Properties->Current_Selected_Object;
+
+			// -----------------------  Objects
+			if (App->CLSB_Scene->Object_Count > 0)
 			{
-				App->Cl_Utilities->OpenHTML("Help\\LevelFolder.html");
-				return 1;
+				int f = App->CLSB_GameDirector->V_Object[Index]->Phys_Body->getCollisionFlags();
+
+				if (App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On == 1)
+				{
+					//App->CLSB_Object->Show_Physics_Debug = 0;
+					App->CLSB_GameDirector->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+					App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On = 0;
+
+					App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
+					App->CLSB_Ogre_Setup->RenderFrame();
+					App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
+
+				}
+				else
+				{
+					App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On = 1;
+					//App->CLSB_Object->Show_Physics_Debug = 1;
+					App->CLSB_GameDirector->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+				}
 			}
 
 			return 1;
-
-		}*/
+		}
 
 		break;
 	}
