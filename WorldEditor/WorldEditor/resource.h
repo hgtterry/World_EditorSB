@@ -182,6 +182,7 @@
 #define IDD_SB_IMGUI_SURFACE2           361
 #define IDD_SB_MESHVIEWER               363
 #define IDD_SB_VIEWER3D_MV              365
+#define IDD_SB_PROPS_DIMENSIONS         367
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -932,6 +933,10 @@
 #define IDC_BTMESHGOTO                  1606
 #define IDC_BT_JUSTMESH                 1607
 #define IDC_BT_PHYSDEBUG                1608
+#define IDC_BT_POSITION                 1609
+#define IDC_BT_SCALE                    1610
+#define IDC_BT_ROTATION                 1611
+#define IDC_CK_LOCK                     1612
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1177,9 +1182,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        367
+#define _APS_NEXT_RESOURCE_VALUE        369
 #define _APS_NEXT_COMMAND_VALUE         33124
-#define _APS_NEXT_CONTROL_VALUE         1609
+#define _APS_NEXT_CONTROL_VALUE         1613
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

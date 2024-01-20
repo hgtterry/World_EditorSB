@@ -144,6 +144,8 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		App->CLSB_Properties->Start_GD_Properties();
 
+		App->CLSB_Props_Dialogs->Start_Props_Dialogs();
+
 		Set_Mode_Equity();
 
 	}

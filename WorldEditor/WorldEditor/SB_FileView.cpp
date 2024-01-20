@@ -468,6 +468,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		App->CLSB_FileView->Context_Selection = Enums::FileView_Objects_File;
 
+		App->CLSB_Props_Dialogs->Hide_Dimensions_Dlg(1, App->CLSB_GameDirector->V_Object[Index]->Dimensions_Locked);
+
 		/*HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 

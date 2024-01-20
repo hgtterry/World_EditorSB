@@ -115,6 +115,7 @@ distribution.
 
 #include "SB_Game_Editor.h"
 #include "SB_MeshViewer.h"
+#include "SB_Props_Dialogs.h"
 
 class SB_App
 {
@@ -207,6 +208,7 @@ public:
 	Base_Faces*					CLSB_BaseFaces;
 	SB_Game_Editor*				CLSB_GameDirector;
 	SB_MeshViewer*				CLSB_Meshviewer;
+	SB_Props_Dialogs*			CLSB_Props_Dialogs;
 
 	bool InitApp(void);
 	void InitMFC(void);
