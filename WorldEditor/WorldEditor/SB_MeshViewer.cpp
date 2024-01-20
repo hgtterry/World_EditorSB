@@ -54,7 +54,7 @@ SB_MeshViewer::SB_MeshViewer()
 	Selected_Shape_Cylinder = 0;
 	Selected_Shape_Cone = 0;
 
-	Show_Just_This_Mesh = 1;
+	Show_Just_This_Mesh = 0;
 
 	Mesh_Render_Running = 0;
 	Mesh_Render_Running_New = 0;
@@ -234,11 +234,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->CLSB_Meshviewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
-
-		//App->CLSB_Meshviewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)MeshView_3D_Proc);
-		//App->CLSB_Meshviewer->Set_OgreWindow();
-
-		
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
 		App->CLSB_Meshviewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
@@ -659,6 +654,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_TRIMESH)
 		{
 			App->CLSB_Meshviewer->Physics_Type = Enums::Bullet_Type_TriMesh;
+			App->CLSB_Meshviewer->Physics_Shape = Enums::Shape_None;
+
 			App->CLSB_Meshviewer->SelectStatic = 0;
 			App->CLSB_Meshviewer->SelectDynamic = 0;
 			App->CLSB_Meshviewer->SelectTriMesh = 1;
@@ -666,8 +663,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Enable_ShapeButtons(false);
 
 			App->CLSB_Meshviewer->RedrawWindow_Dlg_Buttons();
-
-			App->CLSB_Meshviewer->Physics_Type = Enums::Shape_TriMesh;
 
 			App->CLSB_Meshviewer->Show_Physics_Trimesh();
 
@@ -784,53 +779,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDOK)
 		{
-
-			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area || App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			bool result = App->CLSB_Meshviewer->Close_MeshViewer(1);
+			if (result == 0)
 			{
-				
-			}
-			else if (App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_None || App->CLSB_Meshviewer->Physics_Shape == Enums::Shape_None)
-			{
-				App->Say("No Type or Shape Selected");
 				return TRUE;
 			}
-
-			App->CLSB_Ogre_Setup->Pause_Render = 1;
-
-			char buff[255];
-			GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
-			strcpy(App->CLSB_Meshviewer->Object_Name, buff);
-
-			if (App->CLSB_Meshviewer->Phys_Body)
-			{
-				App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
-				App->CLSB_Meshviewer->Phys_Body = nullptr;
-			}
-
-			App->CLSB_Meshviewer->Stop_Render();
-			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
-
-			
-			//App->CLSB_Meshviewer->Delete_Resources_Group();
-
-			if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-			{
-				App->CLSB_Meshviewer->Copy_Assets();
-				//App->SBC_Com_Area->Add_New_Area();
-			}
-			else // Normal Object
-			{
-				App->CLSB_Meshviewer->Copy_Assets();
-				App->CLSB_Objects_Create->Add_Objects_From_MeshViewer();
-			}
-
-			//App->CLSB_Meshviewer->Set_Debug_Shapes();
-			
-			App->CLSB_Ogre_Setup->Pause_Render = 0;
-			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
-
-			App->CLSB_Meshviewer->Show_Just_This_Mesh = 0;
-			App->CLSB_Meshviewer->Show_Exsisting_Objects(1);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -850,6 +803,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 
 			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
+
+			App->CLSB_Meshviewer->Show_Just_This_Mesh = 0;
+			App->CLSB_Meshviewer->Show_Exsisting_Objects(1);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -859,6 +816,61 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Close_MeshViewer:- Terry and Hazel Flanigan 2024	     	   *
+// *************************************************************************
+bool SB_MeshViewer::Close_MeshViewer(bool Add_Mesh)
+{
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area || Physics_Type == Enums::Bullet_Type_TriMesh)
+	{
+
+	}
+	else if (Physics_Type == Enums::Bullet_Type_None || Physics_Shape == Enums::Shape_None)
+	{
+		App->Say("No Type or Shape Selected");
+		return 0;
+	}
+
+	App->CLSB_Ogre_Setup->Pause_Render = 1;
+
+	char buff[255];
+	GetDlgItemText(MainDlgHwnd, IDC_OBJECTNAME, (LPTSTR)buff, 256);
+	strcpy(App->CLSB_Meshviewer->Object_Name, buff);
+
+	if (Phys_Body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	Stop_Render();
+	Mesh_Render_Running = 0;
+
+
+	//App->CLSB_Meshviewer->Delete_Resources_Group();
+
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	{
+		Copy_Assets();
+		//App->SBC_Com_Area->Add_New_Area();
+	}
+	else // Normal Object
+	{
+		Copy_Assets();
+		App->CLSB_Objects_Create->Add_Objects_From_MeshViewer();
+	}
+
+	//App->CLSB_Meshviewer->Set_Debug_Shapes();
+
+	App->CLSB_Ogre_Setup->Pause_Render = 0;
+	Mesh_Render_Running_New = 0;
+
+	Show_Just_This_Mesh = 0;
+	Show_Exsisting_Objects(1);
+
+	return 1;
 }
 
 // *************************************************************************
@@ -1208,6 +1220,11 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 
 	Get_Mesh_Assets();
 
+	if (App->CLSB_Meshviewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	{
+		Show_Physics_Trimesh();
+	}
+
 	if (Physics_Shape == Enums::Shape_Box)
 	{
 		Show_Physics_Box();
@@ -1232,12 +1249,6 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	{
 		Show_Physics_Cone();
 	}
-
-	if (App->CLSB_Meshviewer->Physics_Type == Enums::Shape_TriMesh)
-	{
-		Show_Physics_Trimesh();
-	}
-
 }
 
 // *************************************************************************
@@ -2001,7 +2012,6 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 
 			i += 3;
 		}
-
 	}
 
 	const bool useQuantizedAABB = true;
@@ -2262,7 +2272,7 @@ void SB_MeshViewer::Physics_Rotation(void)
 		AxisAlignedBox worldAAB = App->CLSB_Meshviewer->MvEnt->getBoundingBox();
 		worldAAB.transformAffine(App->CLSB_Meshviewer->MvNode->_getFullTransform());
 
-		if (Physics_Type == Enums::Shape_TriMesh)
+		if (Physics_Type == Enums::Bullet_Type_TriMesh)
 		{
 		}
 		else

@@ -183,9 +183,9 @@ namespace Enums
 		Shape_Sphere = 2,
 		Shape_Capsule = 3,
 		Shape_Cylinder = 4,
-		Shape_Cone = 5,
-		Shape_TriMesh = 6,
-		Shape_VolumeBox = 7
+		Shape_Cone = 5
+		//Shape_TriMesh = 6,
+		//Shape_VolumeBox = 7
 	};
 
 	enum Bullet_Type

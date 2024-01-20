@@ -34,6 +34,7 @@ public:
 
 	void Add_Physics_Sphere(bool Dynamic, int Index);
 	void Add_Physics_Box(bool Dynamic, int Index);
+	void create_New_Trimesh(int Index);
 
 	void Add_Objects_From_MeshViewer();
 	void Dispatch_MeshViewer();

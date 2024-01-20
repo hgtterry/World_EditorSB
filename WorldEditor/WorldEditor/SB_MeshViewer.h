@@ -80,6 +80,7 @@ private:
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool Close_MeshViewer(bool Add_Mesh);
 	void Start_Render(void);
 	void Stop_Render(void);
 

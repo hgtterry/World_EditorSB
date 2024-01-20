@@ -61,7 +61,7 @@ void SB_Physics::Set_Physics(int Index)
 // *************************************************************************
 void SB_Physics::UpDate_Physics_And_Visuals(int Index)
 {
-	if (App->CLSB_GameDirector->V_Object[Index]->Shape == Enums::Shape_TriMesh)
+	if (App->CLSB_GameDirector->V_Object[Index]->Shape == Enums::Bullet_Type_TriMesh)
 	{
 
 	}
