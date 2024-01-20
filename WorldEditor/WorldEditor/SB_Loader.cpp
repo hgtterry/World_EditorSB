@@ -232,7 +232,7 @@ void SB_Loader::Adjust()
 				Centre.y = -1 * App->CLSB_Model->Group[Count]->Centre.y;
 				Centre.z = -1 * App->CLSB_Model->Group[Count]->Centre.z;
 
-				App->CLSB_Dimensions->Set_Position(Centre.x, Centre.y, Centre.z);
+				App->CLSB_Dimensions->Set_Position(Centre);
 			}
 
 			Count++;

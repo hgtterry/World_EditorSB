@@ -188,28 +188,28 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 		//	return TRUE;
 		//}
 
-		/*if (LOWORD(wParam) == IDC_BT_POSITION)
+		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
 
-			if (App->SBC_Dimensions->Show_Position == 1)
+			if (App->CLSB_Dimensions->Show_Position == 1)
 			{
-				App->SBC_Dimensions->Show_Position = 0;
-				App->SBC_Markers->Hide_Axis_Marker();
+				App->CLSB_Dimensions->Show_Position = 0;
+				//App->CLSB_Markers->Hide_Axis_Marker();
 			}
 			else
 			{
-				App->SBC_Markers->Hide_Axis_Marker();
+				//App->CLSB_Markers->Hide_Axis_Marker();
 
-				App->SBC_Dimensions->Prepare_Dimensions();
-				App->SBC_Dimensions->Show_Position = 1;
-				App->SBC_Dimensions->Show_Scale = 0;
-				App->SBC_Dimensions->Show_Rotation = 0;
+				App->CLSB_Dimensions->Prepare_Dimensions();
+				App->CLSB_Dimensions->Show_Position = 1;
+				App->CLSB_Dimensions->Show_Scale = 0;
+				App->CLSB_Dimensions->Show_Rotation = 0;
 			}
 
-			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CLSB_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
-		}*/
+		}
 
 		/*if (LOWORD(wParam) == IDC_BT_SCALE)
 		{

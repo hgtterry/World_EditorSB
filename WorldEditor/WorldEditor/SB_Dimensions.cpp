@@ -52,6 +52,23 @@ SB_Dimensions::SB_Dimensions()
 		Model_Rotation_Delta = 1;
 
 		Scale_Lock = 1;
+
+		// -------------------------- Pointers
+		pBase_Mesh_Name = NULL;
+
+		pBase_Shape = NULL;
+
+		pBase_Object_Ent = NULL;
+		pBase_Object_Node = NULL;
+		pBase_Mesh_Pos = NULL;
+		pBase_Mesh_Rot = NULL;
+		pBase_Mesh_Quat = NULL;
+
+		pBase_Phys_Body = NULL;
+		pBase_Physics_Pos = NULL;
+		pBase_Physics_Scale = NULL;
+		pBase_Physics_Rot = NULL;
+		pBase_Physics_Quat = NULL;
 }
 
 SB_Dimensions::~SB_Dimensions()
@@ -73,6 +90,57 @@ void SB_Dimensions::Dimesions_Select(void)
 	else
 	{
 		Show_Dimensions = 0;
+	}
+}
+
+// *************************************************************************
+// *			Prepare_Dimensions:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Dimensions::Prepare_Dimensions(void)
+{
+	int Index = App->CLSB_Properties->Current_Selected_Object;
+
+	if (App->CLSB_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		/*pBase_Mesh_Name = App->SBC_Scene->B_Area[Index]->Area_Name;
+
+		pBase_Shape = &App->SBC_Scene->B_Area[Index]->Shape;
+
+		pBase_Object_Ent = App->SBC_Scene->B_Area[Index]->Area_Ent;
+		pBase_Object_Node = App->SBC_Scene->B_Area[Index]->Area_Node;
+		pBase_Mesh_Pos = &App->SBC_Scene->B_Area[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->SBC_Scene->B_Area[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->SBC_Scene->B_Area[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->SBC_Scene->B_Area[Index]->Mesh_Quat;
+
+		pBase_Phys_Body = App->SBC_Scene->B_Area[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->SBC_Scene->B_Area[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->SBC_Scene->B_Area[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->SBC_Scene->B_Area[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->SBC_Scene->B_Area[Index]->Physics_Quat;*/
+
+		//App->Say("Area");
+	}
+	else
+	{
+		pBase_Mesh_Name = App->CLSB_GameDirector->V_Object[Index]->Mesh_Name;
+
+		pBase_Shape = &App->CLSB_GameDirector->V_Object[Index]->Shape;
+
+		pBase_Object_Ent = App->CLSB_GameDirector->V_Object[Index]->Object_Ent;
+		pBase_Object_Node = App->CLSB_GameDirector->V_Object[Index]->Object_Node;
+		pBase_Mesh_Pos = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Quat;
+
+		pBase_Phys_Body = App->CLSB_GameDirector->V_Object[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->CLSB_GameDirector->V_Object[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->CLSB_GameDirector->V_Object[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->CLSB_GameDirector->V_Object[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->CLSB_GameDirector->V_Object[Index]->Physics_Quat;
+
+		//App->Say("Object");
 	}
 }
 
@@ -207,20 +275,9 @@ void SB_Dimensions::ImGui_Dimensions(void)
 // *************************************************************************
 void SB_Dimensions::ImGui_Position(void)
 {
-	//int Index = App->SBC_Properties->Current_Selected_Object;
+	int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
-
-	if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Assimp)
-	{
-		Pos.x = App->CLSB_Model->Centre.x;
-		Pos.y = App->CLSB_Model->Centre.y;
-		Pos.z = App->CLSB_Model->Centre.z;
-
-		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosX = Pos.x;
-		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosY = Pos.y;
-		App->CLSB_Ogre_Setup->RenderListener->Hair_1PosZ = Pos.z;
-	}
+	Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->V_Object[Index]->Mesh_Pos;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -228,32 +285,37 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	//ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
-	//ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
+	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
 	float vec4a[4] = { Pos.x, Pos.y, Pos.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
-	
+
+
+
 	// ----------------------------------------------------------------------------- Pos CheckBox X 
 	ImGui::Indent();
 	ImGui::Indent();
-	
+
 	style->Colors[ImGuiCol_CheckMark] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
-	ImGui::Checkbox("PX", &PosX_Selected); 
+	ImGui::Checkbox("PX", &PosX_Selected);
 
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	
+
 
 	if (PosX_Selected == 1)
 	{
+		//App->SBC_Markers->Hide_Axis_Marker();
+		//App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+
 		PosY_Selected = 0;
 		PosZ_Selected = 0;
 	}
@@ -271,6 +333,9 @@ void SB_Dimensions::ImGui_Position(void)
 
 	if (PosY_Selected)
 	{
+		//App->SBC_Markers->Hide_Axis_Marker();
+		//App->SBC_Markers->Update_Green_Axis_Marker(Index);
+
 		PosX_Selected = 0;
 		PosZ_Selected = 0;
 	}
@@ -287,11 +352,13 @@ void SB_Dimensions::ImGui_Position(void)
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	if (PosZ_Selected)
 	{
-		
+		//App->SBC_Markers->Hide_Axis_Marker();
+		//App->SBC_Markers->Update_Red_Axis_Marker(Index);
+
 		PosX_Selected = 0;
 		PosY_Selected = 0;
 	}
-	
+
 	ImGui::Indent();
 
 	ImGui::Spacing();
@@ -302,43 +369,49 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
 	{
-		if (App->CLSB_Model->Model_Loaded == 1)
+		if (App->CLSB_GameDirector->Project_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
-				Set_Position(Model_Pos_Delta, 0, 0);
+				Pos.x = Pos.x + Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosY_Selected == 1)
 			{
-				Set_Position(0, Model_Pos_Delta, 0);
+				Pos.y = Pos.y + Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				Set_Position(0, 0, Model_Pos_Delta);
+				Pos.z = Pos.z + Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
-		if (App->CLSB_Model->Model_Loaded == 1)
+		if (App->CLSB_GameDirector->Project_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
-				Set_Position(-Model_Pos_Delta, 0, 0);
+				Pos.x = Pos.x - Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosY_Selected == 1)
 			{
-				Set_Position(0, -Model_Pos_Delta, 0);
+				Pos.y = Pos.y - Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				Set_Position(0, 0,-Model_Pos_Delta);
+				Pos.z = Pos.z - Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 		}
 	}
@@ -366,30 +439,33 @@ void SB_Dimensions::ImGui_Position(void)
 // *************************************************************************
 // *						Set_Position Terry Flanigan					   *
 // *************************************************************************
-void SB_Dimensions::Set_Position(float X, float Y, float Z)
+void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 {
 	if (App->CLSB_Model->Model_Loaded == 1)
 	{
-		int Count = 0;
-		int VertCount = 0;
+		int Index = App->CLSB_Properties->Current_Selected_Object;
 
-		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+		pBase_Object_Node->setPosition(Pos);
 
-		while (Count < GroupCount)
+		pBase_Mesh_Pos->x = Pos.x;
+		pBase_Mesh_Pos->y = Pos.y;
+		pBase_Mesh_Pos->z = Pos.z;
+
+
+
+		if (pBase_Phys_Body)
 		{
-			VertCount = 0;
-			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
-			{
-				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x += X;
-				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y += Y;
-				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z += Z;
-				VertCount++;
-			}
-			Count++;
-		}
 
-		App->CLSB_Model->Set_BondingBox_Model(0);
-		//Set_Physics_Position(0);
+			Ogre::Vector3 Centre = Get_BoundingBox_World_Centre();
+
+			pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
+			UpDate_Physics_And_Visuals(Index);
+		}
+		else
+		{
+			//App->SBC_Markers->MarkerBB_Addjust(Index);
+		}
 	}
 }
 
@@ -1859,5 +1935,26 @@ void SB_Dimensions::ImGui_Scale_Area(void)
 
 	//ImGui::Unindent();
 	//ImGui::Unindent();
+}
+
+// *************************************************************************
+// *	Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+Ogre::Vector3 SB_Dimensions::Get_BoundingBox_World_Centre()
+{
+
+	/*if (*pBase_Type == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
+		return Pos;
+	}
+	else*/
+	{
+		AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+
+		return Centre;
+	}
 }
 
