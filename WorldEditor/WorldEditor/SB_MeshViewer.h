@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2024 Reality Factory Scene Builder -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -19,9 +19,6 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
-
-// :- Terry and Hazel Flanigan 2022
-
 */
 
 #pragma once
@@ -77,12 +74,11 @@ public:
 	int CursorPosY;
 
 	int Mesh_Viewer_Mode;
-	
-protected:
+
+private:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Render(void);
 	void Stop_Render(void);
@@ -105,9 +101,6 @@ protected:
 
 	void Set_ResourceMesh_File(HWND hDlg);
 
-	bool Set_OgreWindow(void);
-	void Close_OgreWindow(void);
-
 	void Update_Mesh(char* MeshFile);
 	void Get_Mesh_Assets();
 	void Reset_Shape_Flags();
@@ -120,13 +113,13 @@ protected:
 	float GetMesh_BB_Radius(SceneNode* mNode);
 
 	bool Create_Resources_Group();
-	bool Add_Resources();
+	bool Add_Resources_Location();
 	bool Delete_Resources_Group();
 
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
-	bool GetMeshFiles(char* Location, bool ResetList);
+	//bool GetMeshFiles(char* Location, bool ResetList);
 
-	bool Get_Files(HWND hDlg);
+	bool Get_Mesh_Files_From_Folder(HWND hDlg);
 
 	void Show_Mesh_Properties();
 	void Reselect_Shape();

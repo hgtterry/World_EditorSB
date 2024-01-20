@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2024 Reality Factory Scene Builder -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -19,9 +19,6 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
-
-:- Terry and Hazel Flanigan 2024
-
 */
 
 #include "stdafx.h"
@@ -149,7 +146,7 @@ bool SB_MeshViewer::Start_Mesh_Viewer()
 		}
 
 		Create_Resources_Group();
-		Add_Resources();
+		Add_Resources_Location();
 
 		MainDlgHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_MESHVIEWER, App->Equity_Dlg_hWnd, (DLGPROC)MeshViewer_Proc);
 
@@ -595,9 +592,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
 				//SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 
-				App->CLSB_Meshviewer->Add_Resources();
-				App->CLSB_Meshviewer->Get_Files(hDlg);
-
+				App->CLSB_Meshviewer->Add_Resources_Location();
+				App->CLSB_Meshviewer->Get_Mesh_Files_From_Folder(hDlg);
 			}
 			}
 
@@ -620,12 +616,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
 
-			App->CLSB_Meshviewer->Add_Resources();
+			//App->CLSB_Meshviewer->Add_Resources_Location();
 
 			App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
-
-			//App->CLSB_Meshviewer->GridNode->resetOrientation();
-			//App->CLSB_Meshviewer->Reset_Camera();
 
 			return TRUE;
 
@@ -835,6 +828,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			
 			App->CLSB_Ogre_Setup->Pause_Render = 0;
 			App->CLSB_Meshviewer->Mesh_Render_Running_New = 0;
+
+			App->CLSB_Meshviewer->Show_Just_This_Mesh = 0;
+			App->CLSB_Meshviewer->Show_Exsisting_Objects(1);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -869,26 +866,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void SB_MeshViewer::Start_Render(void)
 {
-	//Set_Render_Mode();
-
-	/*RECT rect;
-	GetWindowRect(MeshView_3D_hWnd, &rect);
-
-	int width = rect.right - rect.left;
-	int height = rect.bottom - rect.top;
-
-	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, width, height, NULL);
-
-	SetParent(App->ViewGLhWnd, MeshView_3D_hWnd);
-
-	App->CLSB_Ogre_Setup->mWindow->resize(width, height);
-
-	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
-
-	Root::getSingletonPtr()->renderOneFrame();*/
-
-
 	MvEnt = NULL;
 	MvNode = NULL;
 	Phys_Body = NULL;
@@ -912,8 +889,6 @@ void SB_MeshViewer::Start_Render(void)
 
 	Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
 
-	//Mesh_Render_Running = 1;
-
 }
 
 // *************************************************************************
@@ -921,16 +896,6 @@ void SB_MeshViewer::Start_Render(void)
 // *************************************************************************
 void SB_MeshViewer::Stop_Render(void)
 {
-	/*SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
-	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
-
-	App->CLSB_Equity->Resize_3DView();
-
-	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
-	App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
-	Root::getSingletonPtr()->renderOneFrame();*/
-
 	App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 
 	if (MvEnt && MvNode)
@@ -962,97 +927,6 @@ void SB_MeshViewer::Stop_Render(void)
 	}
 
 	Mesh_Render_Running = 0;
-}
-
-// *************************************************************************
-// *		MeshView_3D_Proc:- Terry and Hazel Flanigan 2022 			   *
-// *************************************************************************
-LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG:
-	{
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 0)
-		{
-			return (LONG)App->BlackBrush;
-		}
-	}
-
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-
-		SetFocus(App->CLSB_Meshviewer->MeshView_3D_hWnd);
-
-		break;
-	}
-
-	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		//if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		//{
-		//	SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
-		//	App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 1;
-		//	App->CUR = SetCursor(NULL);
-		//	return 1;
-		//}
-
-		return 1;
-	}
-	case WM_RBUTTONUP:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			/*ReleaseCapture();
-			App->CLSB_Meshviewer->RenderListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);*/
-			return 1;
-		}
-
-		return 1;
-	}
-
-	// Left Mouse Button
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			//SetCapture(App->CLSB_Meshviewer->MeshView_3D_hWnd);// Bernie
-			//SetCursorPos(App->CLSB_Meshviewer->CursorPosX, App->CLSB_Meshviewer->CursorPosY);
-
-			//App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 1;
-
-			//App->CUR = SetCursor(NULL);
-
-			return 1;
-		}
-
-		return 1;
-	}
-
-	case WM_LBUTTONUP:
-	{
-		if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-		{
-			/*ReleaseCapture();
-			App->CLSB_Meshviewer->RenderListener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);*/
-			return 1;
-		}
-
-		return 1;
-	}
-
-	}
-	return FALSE;
 }
 
 // *************************************************************************
@@ -1291,9 +1165,9 @@ void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 	//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->CLSB_Meshviewer->mResource_Folder);
 	//SetWindowText(hDlg, App->CLSB_Meshviewer->mResource_Folder);
 	
-	App->CLSB_Meshviewer->Add_Resources();
+	App->CLSB_Meshviewer->Add_Resources_Location();
 
-	App->CLSB_Meshviewer->Get_Files(hDlg);
+	App->CLSB_Meshviewer->Get_Mesh_Files_From_Folder(hDlg);
 	
 
 	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
@@ -1367,105 +1241,6 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 }
 
 // *************************************************************************
-// *			OgreWindow:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-bool SB_MeshViewer::Set_OgreWindow(void)
-{
-	MvEnt = NULL;
-	MvNode = NULL;
-	Phys_Body = NULL;
-
-	//Ogre::NameValuePairList options;
-
-	//options["externalWindowHandle"] =
-	//	Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
-
-	//MeshView_Window = App->CLSB_Ogre_Setup->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
-
-	//mSceneMgrMeshView = App->CLSB_Ogre_Setup->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
-
-	////mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
-	////mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
-	////mCameraMeshView->setNearClipDistance(0.1);
-	////mCameraMeshView->setFarClipDistance(8000);
-
-	////Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
-	////mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-
-	////vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
-
-	//CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
-	//CamNode->attachObject(mCameraMeshView);
-
-	//////-------------------------------------------- 
-	//
-	//MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	//MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	//MvNode->attachObject(MvEnt);
-	//MvNode->setVisible(true);
-
-	//mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
-
-	//// add a bright light above the scene
-	//Light* light = mSceneMgrMeshView->createLight();
-	//light->setType(Light::LT_POINT);
-	//light->setPosition(-10, 40, 20);
-	//light->setSpecularColour(ColourValue::White);
-
-	//Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
-	//Ogre::Real Radius = MvEnt->getBoundingRadius();
-
-	//Grid_Update(1);
-	//
-	////RenderListener = new SB_MeshView_Listener();
-	//
-	////App->CLSB_Ogre_Setup->mRoot->addFrameListener(RenderListener);
-
-	//Reset_Camera();
-
-	//// Debug Physics Shape
-	//btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
-	//btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-	//btDebug_Manual->setDynamic(true);
-	//btDebug_Manual->estimateVertexCount(2000);
-	//btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
-	//btDebug_Manual->position(0, 0, 0);
-	//btDebug_Manual->colour(1,1,1,1);
-	//btDebug_Manual->end();
-	//btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	//btDebug_Node->attachObject(btDebug_Manual);
-
-	//Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
-
-	//Mesh_Render_Running = 1;
-	return 1;
-}
-
-// *************************************************************************
-// *		Close_MeshWindow:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_MeshViewer::Close_OgreWindow(void)
-{
-	//App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
-
-	//App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-
-	//if (Phys_Body)
-	//{
-	//	App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-	//	Phys_Body = nullptr;
-	//}
-
-	////App->CLSB_Ogre_Setup->mRoot->removeFrameListener(RenderListener);
-
-	//App->CLSB_Ogre_Setup->mRoot->detachRenderTarget("MeshViewWin");
-	//MeshView_Window->destroy();
-	////App->CLSB_Ogre_Setup->mRoot->destroySceneManager(mSceneMgrMeshView);
-
-	//Mesh_Render_Running = 0;
-}
-
-// *************************************************************************
 // *	  	Reset_Shape_Flags:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_MeshViewer::Reset_Shape_Flags()
@@ -1478,9 +1253,9 @@ void SB_MeshViewer::Reset_Shape_Flags()
 }
 
 // *************************************************************************
-// *			Get_Files:- Terry and Hazel Flanigan 2022			 	   *
+// *	Get_Mesh_Files_From_Folder:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_MeshViewer::Get_Files(HWND hDlg)
+bool SB_MeshViewer::Get_Mesh_Files_From_Folder(HWND hDlg)
 {
 	SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
 
@@ -1522,8 +1297,8 @@ bool SB_MeshViewer::Get_Files(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
-	strcpy(App->CLSB_Meshviewer->Selected_MeshFile, buff);
-	//App->CLSB_Meshviewer->Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
+	strcpy(Selected_MeshFile, buff);
+	Update_Mesh(App->CLSB_Meshviewer->Selected_MeshFile);
 
 	return 0;
 }
@@ -1547,9 +1322,9 @@ bool SB_MeshViewer::Create_Resources_Group()
 }
 
 // *************************************************************************
-// *						Add_Resources	Terry Bernie 			 	   *
+// *		Add_Resources_Location:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-bool SB_MeshViewer::Add_Resources()
+bool SB_MeshViewer::Add_Resources_Location()
 {
 	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
 
@@ -1564,7 +1339,7 @@ bool SB_MeshViewer::Add_Resources()
 }
 
 // *************************************************************************
-// *					Delete_Resources_Group	Terry Bernie 		 	   *
+// *		Delete_Resources_Group:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 bool SB_MeshViewer::Delete_Resources_Group()
 {
@@ -1573,7 +1348,7 @@ bool SB_MeshViewer::Delete_Resources_Group()
 }
 
 // *************************************************************************
-// *					Get_Media_FoldersActors Terry Berni			 	   *
+// *		Get_Media_FoldersActors:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 {
@@ -1609,53 +1384,53 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 	return 0;
 }
 
-// *************************************************************************
-// *				GetMeshFiles   Terry Bernie							   *
-// *************************************************************************
-bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
-{
-	if (ResetList == true)
-	{
-		SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
-	}
-
-	WIN32_FIND_DATA ffd;
-	HANDLE hFind = INVALID_HANDLE_VALUE;
-
-	char SearchName[255];
-	strcpy(SearchName, Location);
-
-	hFind = FindFirstFile(SearchName, &ffd);
-	if (hFind == INVALID_HANDLE_VALUE)
-	{
-		return 0;
-	}
-
-	SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
-
-	while (FindNextFile(hFind, &ffd) != 0)
-	{
-		SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
-	}
-
-	SendMessage(ListHwnd, LB_SETCURSEL, 0, 0);
-
-	char buff[256];
-	int Index = 0;
-	Index = SendMessage(ListHwnd, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	if (Index == -1)
-	{
-		return 0;
-	}
-
-	SendMessage(ListHwnd, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-
-	strcpy(Selected_MeshFile, buff);
-	Update_Mesh(Selected_MeshFile);
-
-	return 1;
-}
+//// *************************************************************************
+//// *				GetMeshFiles   Terry Bernie							   *
+//// *************************************************************************
+//bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
+//{
+//	if (ResetList == true)
+//	{
+//		SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
+//	}
+//
+//	WIN32_FIND_DATA ffd;
+//	HANDLE hFind = INVALID_HANDLE_VALUE;
+//
+//	char SearchName[255];
+//	strcpy(SearchName, Location);
+//
+//	hFind = FindFirstFile(SearchName, &ffd);
+//	if (hFind == INVALID_HANDLE_VALUE)
+//	{
+//		return 0;
+//	}
+//
+//	SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
+//
+//	while (FindNextFile(hFind, &ffd) != 0)
+//	{
+//		SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
+//	}
+//
+//	SendMessage(ListHwnd, LB_SETCURSEL, 0, 0);
+//
+//	char buff[256];
+//	int Index = 0;
+//	Index = SendMessage(ListHwnd, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+//
+//	if (Index == -1)
+//	{
+//		return 0;
+//	}
+//
+//	SendMessage(ListHwnd, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+//
+//	strcpy(Selected_MeshFile, buff);
+//	Update_Mesh(Selected_MeshFile);
+//
+//	return 1;
+//}
 
 // *************************************************************************
 // *	  	Show_Mesh_Properties:- Terry and Hazel Flanigan 2022		   *
@@ -2303,7 +2078,7 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 {
 	Set_ResourceMesh_File(hDlg);
 	
-	Get_Files(hDlg);
+	Get_Mesh_Files_From_Folder(hDlg);
 
 	Enable_ShapeButtons(true);
 	Enable_TypeButtons(true);
@@ -2314,7 +2089,6 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 	Physics_Type = Enums::Bullet_Type_Static;
 	Physics_Shape = Enums::Shape_Box;
 	Show_Physics_Box();
-
 
 	char ATest[256];
 	char ConNum[256];
