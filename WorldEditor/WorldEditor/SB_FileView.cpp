@@ -677,7 +677,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Camera")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED | MF_GRAYED, IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Cameras_Folder;
@@ -687,11 +687,11 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		{
 			hMenu = CreatePopupMenu();
 
-			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Cameras_File;
@@ -711,12 +711,12 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		{
 			hMenu = CreatePopupMenu();
 
-			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
-			AppendMenuW(hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_GOTO, L"&Goto Camera");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Objects_File;
