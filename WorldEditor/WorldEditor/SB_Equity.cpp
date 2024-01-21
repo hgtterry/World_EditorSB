@@ -16,26 +16,10 @@ SB_Equity::SB_Equity(void)
 	First_Run = 1;
 	Saved_Camera_Mode = 0;
 	Close_Equity_Flag = 0;
-
-	m_pDoc = nullptr;
 }
 
 SB_Equity::~SB_Equity(void)
 {
-}
-
-
-// *************************************************************************
-// *		Get_CurrentDocument:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void SB_Equity::Get_CurrentDocument()
-{
-	m_pDoc = NULL;
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	if (m_pDoc == NULL)
-	{
-		App->Say("Cant Get Current Document");
-	}
 }
 
 // *************************************************************************
@@ -861,8 +845,6 @@ void SB_Equity::Do_Preview_Selected()
 	bool AllGood = 0;
 
 	Equity_Render_Mode = Enums::EQ_Mode_Selected;
-
-	Get_CurrentDocument();
 
 	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 

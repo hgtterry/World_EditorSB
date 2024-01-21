@@ -38,10 +38,8 @@ private:
 
 	static LRESULT CALLBACK Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Get_CurrentDocument();
 	void Set_Title_Bar(char* Title);
 	void Clear_Model();
 
-	CFusionDoc* m_pDoc;
 };
 
