@@ -55,6 +55,7 @@ SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Tabs(void)
 {
+	Start_Render_Buttons_EQ();
 	Start_Tabs_Headers();
 	Start_Files_TB();
 	Start_Camera_TB();
@@ -580,20 +581,20 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 }
 
 // *************************************************************************
-// *	  		Start_Render_Buttons:- Terry and Hazel Flanigan 2024       *
+// *	  	Start_Render_Buttonss_EQ:- Terry and Hazel Flanigan 2024       *
 // *************************************************************************
-void SB_TopTabs_Equity::Start_Render_Buttons()
+void SB_TopTabs_Equity::Start_Render_Buttons_EQ()
 {
 	Render_Buttons_EQ_hWnd = nullptr;
 
-	Render_Buttons_EQ_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, App->Equity_Dlg_hWnd, (DLGPROC)Render_Buttons_Proc);
-	Init_Bmps_Globals();
+	Render_Buttons_EQ_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, App->Equity_Dlg_hWnd, (DLGPROC)Render_Buttons_Proc_EQ);
+	Init_Bmps_Globals_EQ();
 }
 
 // *************************************************************************
-// *		Render_Buttons_Proc:- Terry and Hazel Flanigan 2024            *
+// *	Render_Buttons_Procs_EQ:- Terry and Hazel Flanigan 2024            *
 // *************************************************************************
-LRESULT CALLBACK SB_TopTabs_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_TopTabs_Equity::Render_Buttons_Proc_EQ(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -858,9 +859,9 @@ LRESULT CALLBACK SB_TopTabs_Equity::Render_Buttons_Proc(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
-// *		Init_Bmps_Globals:- Terry and Hazel Flanigan 2024 			   *
+// *		Init_Bmps_Globalss_EQ:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-void SB_TopTabs_Equity::Init_Bmps_Globals(void)
+void SB_TopTabs_Equity::Init_Bmps_Globals_EQ(void)
 {
 
 	HWND Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBSHOWGRID);

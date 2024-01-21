@@ -27,8 +27,7 @@ public:
 	bool Saved_Camera_Mode;
 
 	HWND OgreView_3D_hWnd;
-	HWND Render_Buttons_hWnd;
-
+	
 	bool Close_Equity_Flag;
 
 	Ogre::Vector3 Position_Offsets;
@@ -38,12 +37,6 @@ public:
 private:
 
 	static LRESULT CALLBACK Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static LRESULT CALLBACK Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-
-	bool Start_Render_Buttons();
-	void Init_Bmps_Globals(void);
 
 	void Get_CurrentDocument();
 	void Set_Title_Bar(char* Title);
