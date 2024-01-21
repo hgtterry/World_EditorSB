@@ -29,6 +29,8 @@ public:
 	SB_TopTabs_Equity(void);
 	~SB_TopTabs_Equity(void);
 
+	void Start_Render_Buttons();
+
 	void Start_Tabs(void);
 	void Start_Tabs_Headers(void);
 
@@ -47,15 +49,19 @@ public:
 	HWND Tabs_TB_hWnd_Eq;
 	HWND Test_TB_hWnd;
 	HWND Camera_TB_hWnd;
+	HWND Render_Buttons_EQ_hWnd;
 
 private:
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Files_TB(void);
 	void Start_Camera_TB(void);
+
+	void Init_Bmps_Globals(void);
 
 	bool Toggle_Tabs_Test_Flag;
 	bool Toggle_Dimensions_Flag;

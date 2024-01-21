@@ -92,6 +92,7 @@ protected:
 	char* pBase_Mesh_Name;
 
 	int* pBase_Shape;
+	int* pBase_Physics_Type;
 
 	Ogre::Entity* pBase_Object_Ent;
 	Ogre::SceneNode* pBase_Object_Node;

@@ -57,6 +57,7 @@ SB_Dimensions::SB_Dimensions()
 		pBase_Mesh_Name = NULL;
 
 		pBase_Shape = NULL;
+		pBase_Physics_Type = NULL;
 
 		pBase_Object_Ent = NULL;
 		pBase_Object_Node = NULL;
@@ -126,6 +127,7 @@ void SB_Dimensions::Prepare_Dimensions(void)
 		pBase_Mesh_Name = App->CLSB_GameDirector->V_Object[Index]->Mesh_Name;
 
 		pBase_Shape = &App->CLSB_GameDirector->V_Object[Index]->Shape;
+		pBase_Physics_Type = &App->CLSB_GameDirector->V_Object[Index]->Type;
 
 		pBase_Object_Ent = App->CLSB_GameDirector->V_Object[Index]->Object_Ent;
 		pBase_Object_Node = App->CLSB_GameDirector->V_Object[Index]->Object_Node;
@@ -1230,11 +1232,11 @@ void SB_Dimensions::Centre_Model_Mid_Brushes(void)
 // *************************************************************************
 void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 {
-	/*if (*pBase_Shape == Enums::Shape_TriMesh)
+	if (*pBase_Physics_Type == Enums::Bullet_Type_TriMesh)
 	{
 
 	}
-	else*/
+	else
 	{
 		{
 			Set_Physics_Position();
@@ -1942,12 +1944,12 @@ void SB_Dimensions::ImGui_Scale_Area(void)
 Ogre::Vector3 SB_Dimensions::Get_BoundingBox_World_Centre()
 {
 
-	/*if (*pBase_Type == Enums::Shape_TriMesh)
+	if (*pBase_Physics_Type == Enums::Bullet_Type_TriMesh)
 	{
 		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
 		return Pos;
 	}
-	else*/
+	else
 	{
 		AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
 		worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
