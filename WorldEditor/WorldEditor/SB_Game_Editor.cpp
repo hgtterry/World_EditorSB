@@ -232,6 +232,8 @@ void SB_Game_Editor::Go_Game_Editor()
 		TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENUGAMEEDITOR));
 		SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 
+		App->CLSB_TopTabs_Equity->Hide_Render_Buttons_EQ(TRUE);
+
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 1;
 

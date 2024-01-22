@@ -35,6 +35,8 @@ public:
 	void Start_Tabs(void);
 	void Start_Tabs_Headers(void);
 
+	void Hide_Render_Buttons_EQ(bool Flag);
+
 	void Camera_Set_Model(void);
 	void Camera_Set_Free(void);
 	void Camera_Set_First(void);

@@ -672,6 +672,24 @@ LRESULT CALLBACK SB_TopTabs_Equity::GridHair_Buttons_Proc(HWND hDlg, UINT messag
 	return FALSE;
 }
 
+
+// *************************************************************************
+// *	  	Hide_Render_Buttons_EQ:- Terry and Hazel Flanigan 2024         *
+// *************************************************************************
+void SB_TopTabs_Equity::Hide_Render_Buttons_EQ(bool Flag)
+{
+	if (Flag == 1)
+	{
+		EnableWindow(Render_Buttons_EQ_hWnd, 0);
+		ShowWindow(Render_Buttons_EQ_hWnd, SW_HIDE);
+	}
+	else
+	{
+		EnableWindow(Render_Buttons_EQ_hWnd, 1);
+		ShowWindow(Render_Buttons_EQ_hWnd, SW_SHOW);
+	}
+}
+
 // *************************************************************************
 // *	  	Start_Render_Buttonss_EQ:- Terry and Hazel Flanigan 2024       *
 // *************************************************************************

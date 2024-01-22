@@ -796,6 +796,9 @@ void SB_Equity::Go_Equity()
 		TestMenu = LoadMenu(App->hInst, MAKEINTRESOURCE(IDR_MENU_EQUITY));
 		SetMenu(App->Equity_Dlg_hWnd, TestMenu);
 
+
+		App->CLSB_TopTabs_Equity->Hide_Render_Buttons_EQ(FALSE);
+
 		EquitySB_Dialog_Visible = 1;
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		//->CLSB_Environment->SetSky(false);
