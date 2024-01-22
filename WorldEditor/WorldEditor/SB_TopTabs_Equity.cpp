@@ -56,7 +56,10 @@ SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Tabs(void)
 {
+	Start_GridHair_Buttons();
 	Start_Render_Buttons_EQ();
+	
+
 	Start_Tabs_Headers();
 	Start_Files_TB();
 	Start_Camera_TB();
@@ -588,8 +591,8 @@ void SB_TopTabs_Equity::Start_GridHair_Buttons()
 {
 	GridHair_Buttons_hWnd = nullptr;
 
-	GridHair_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_GRIDHAIR, App->Equity_Dlg_hWnd, (DLGPROC)Render_Buttons_Proc_EQ);
-	Init_Bmps_Globals_EQ();
+	GridHair_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_GRIDHAIR, App->Equity_Dlg_hWnd, (DLGPROC)GridHair_Buttons_Proc);
+	//Init_Bmps_Globals_EQ();
 }
 
 // *************************************************************************
@@ -721,57 +724,6 @@ LRESULT CALLBACK SB_TopTabs_Equity::Render_Buttons_Proc_EQ(HWND hDlg, UINT messa
 			else
 			{
 				App->CLSB_ImGui->Start_Model_Data();
-			}
-
-			return TRUE;
-		}
-
-		//-------------------------------------------------------- Show Grid
-		if (LOWORD(wParam) == IDC_TBSHOWGRID)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
-
-			if (App->CLSB_Grid->ShowGridFlag == 1)
-			{
-				App->CLSB_Grid->Grid_SetVisible(0);
-				App->CLSB_Grid->ShowGridFlag = 0;
-
-				//App->CLSB_TopBar->Toggle_Grid_Flag = 0;
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
-			}
-			else
-			{
-				App->CLSB_Grid->Grid_SetVisible(1);
-				App->CLSB_Grid->ShowGridFlag = 1;
-
-				//App->CLSB_TopBar->Toggle_Grid_Flag = 1;
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
-
-			}
-
-			return TRUE;
-		}
-
-		//-------------------------------------------------------- Show Hair
-		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
-
-			if (App->CLSB_Grid->ShowHair == 1)
-			{
-				App->CLSB_Grid->ShowHair = 0;
-				App->CLSB_Grid->Hair_SetVisible(0);
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
-			}
-			else
-			{
-				App->CLSB_Grid->ShowHair = 1;
-				App->CLSB_Grid->Hair_SetVisible(1);
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 			}
 
 			return TRUE;
@@ -953,10 +905,10 @@ LRESULT CALLBACK SB_TopTabs_Equity::Render_Buttons_Proc_EQ(HWND hDlg, UINT messa
 void SB_TopTabs_Equity::Init_Bmps_Globals_EQ(void)
 {
 
-	HWND Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBSHOWGRID);
+	HWND Temp = GetDlgItem(GridHair_Buttons_hWnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-	Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBSHOWHAIR);
+	Temp = GetDlgItem(GridHair_Buttons_hWnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
 	Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBINFO2);
@@ -998,7 +950,7 @@ void SB_TopTabs_Equity::Init_Bmps_Globals_EQ(void)
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 
-	Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBSHOWHAIR);
+	Temp = GetDlgItem(GridHair_Buttons_hWnd, IDC_TBSHOWHAIR);
 	TOOLINFO ti9 = { 0 };
 	ti9.cbSize = sizeof(ti9);
 	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -1007,7 +959,7 @@ void SB_TopTabs_Equity::Init_Bmps_Globals_EQ(void)
 	ti9.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
-	Temp = GetDlgItem(Render_Buttons_EQ_hWnd, IDC_TBSHOWGRID);
+	Temp = GetDlgItem(GridHair_Buttons_hWnd, IDC_TBSHOWGRID);
 	TOOLINFO ti10 = { 0 };
 	ti10.cbSize = sizeof(ti10);
 	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
