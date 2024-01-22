@@ -84,7 +84,6 @@ void SB_Equity::Hide_Equity_Dialog()
 	if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
 	{
 		App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
-		App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
 		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 	}
 
@@ -184,6 +183,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == ID_DEBUG_MESHMANAGER)
+		{
+			App->CLSB_Mesh_Mgr->Start_Brush_Viewer();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_MODE_GROUPS)
 		{
 			App->CLSB_Model->Render_Type = Enums::Render_Groups;
@@ -789,7 +794,6 @@ void SB_Equity::Go_Equity()
 		ShowWindow(App->ListPanel, false);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
-		
 		ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
 
 		HMENU TestMenu;

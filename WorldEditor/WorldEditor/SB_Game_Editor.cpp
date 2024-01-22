@@ -310,7 +310,6 @@ void SB_Game_Editor::Hide_Game_Editor_Dialog()
 	if (App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active)
 	{
 		App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
-		App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
 		EndDialog(App->CLSB_Mesh_Mgr->Mesh_Viewer_HWND, 0);
 	}
 

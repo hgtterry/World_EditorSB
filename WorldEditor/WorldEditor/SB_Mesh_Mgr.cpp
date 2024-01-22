@@ -177,7 +177,6 @@ void SB_Mesh_Mgr::Start_Brush_Viewer()
 	{
 		Mesh_Viewer_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
 		Brush_Viewer_Dialog_Active = 1;
-		App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 1;
 	}
 	
 }
@@ -527,7 +526,6 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
-			App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -535,7 +533,6 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
-			App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -350,7 +350,6 @@
 #define IDD_SB_3DSETTINGS               1148
 #define IDC_ENDANGLE                    1149
 #define IDC_STATUSPROGRESS1             1149
-#define IDD_SB_TB_BUTTONS1              1149
 #define IDD_SB_TB_GRIDHAIR              1149
 #define IDC_STATUSPROGRESS2             1150
 #define IDC_RADIUS2                     1150
@@ -1177,6 +1176,7 @@
 #define ID_OPEN_WORLDEDITOR3DT          33121
 #define ID_OPEN_PROJECT                 33122
 #define ID_DEBUG_PROJECTINFO            33123
+#define ID_DEBUG_MESHMANAGER            33124
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1185,7 +1185,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        369
-#define _APS_NEXT_COMMAND_VALUE         33124
+#define _APS_NEXT_COMMAND_VALUE         33125
 #define _APS_NEXT_CONTROL_VALUE         1613
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

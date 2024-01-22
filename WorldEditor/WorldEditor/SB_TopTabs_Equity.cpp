@@ -42,7 +42,6 @@ SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 	Toggle_Camera_Model_Flag = 1;
 
 	Toggle_Tabs_Camera_Flag = 1;
-	Toggle_MeshManager_Flag = 0;
 
 	Picking_Active_Flag = 0;
 }
@@ -94,8 +93,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_BT_TT_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_UPDATE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_MESHMANAGER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+
 		return TRUE;
 	}
 
@@ -135,13 +133,6 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_MESHMANAGER && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs_Equity->Toggle_MeshManager_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -188,11 +179,6 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 			return 1;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_MESHMANAGER)
-		{
-			App->CLSB_Mesh_Mgr->Start_Brush_Viewer();
-			return 1;
-		}
 	}
 	}
 	return FALSE;
