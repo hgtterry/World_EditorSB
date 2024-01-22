@@ -350,6 +350,8 @@
 #define IDD_SB_3DSETTINGS               1148
 #define IDC_ENDANGLE                    1149
 #define IDC_STATUSPROGRESS1             1149
+#define IDD_SB_TB_BUTTONS1              1149
+#define IDD_SB_TB_GRIDHAIR              1149
 #define IDC_STATUSPROGRESS2             1150
 #define IDC_RADIUS2                     1150
 #define IDC_SIDES                       1151

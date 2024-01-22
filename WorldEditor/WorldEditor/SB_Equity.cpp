@@ -109,11 +109,7 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		App->Equity_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_New_Proc);
 
-		//Start_Render_Buttons();
 		App->CLSB_TopTabs_Equity->Start_Tabs();
-
-		
-		
 
 		EquitySB_Dialog_Created = 1;
 

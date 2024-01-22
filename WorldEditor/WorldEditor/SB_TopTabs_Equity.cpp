@@ -27,11 +27,12 @@ distribution.
 
 SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 {
-	Tabs_TB_hWnd_Eq = nullptr;
-	Test_TB_hWnd = nullptr;
-	Camera_TB_hWnd = nullptr;
+	Tabs_TB_hWnd_Eq =	nullptr;
+	Test_TB_hWnd =		nullptr;
+	Camera_TB_hWnd =	nullptr;
 
-	Render_Buttons_EQ_hWnd = nullptr;
+	Render_Buttons_EQ_hWnd =	nullptr;
+	GridHair_Buttons_hWnd =		nullptr;
 
 	Toggle_Tabs_Test_Flag = 0;
 	Toggle_Dimensions_Flag = 0;
@@ -578,6 +579,94 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 		RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
+}
+
+// *************************************************************************
+// *	  	Start_GridHair_Buttons:- Terry and Hazel Flanigan 2024         *
+// *************************************************************************
+void SB_TopTabs_Equity::Start_GridHair_Buttons()
+{
+	GridHair_Buttons_hWnd = nullptr;
+
+	GridHair_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_GRIDHAIR, App->Equity_Dlg_hWnd, (DLGPROC)Render_Buttons_Proc_EQ);
+	Init_Bmps_Globals_EQ();
+}
+
+// *************************************************************************
+// *	   GridHair_Buttons_Proc:- Terry and Hazel Flanigan 2024           *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs_Equity::GridHair_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_COMMAND:
+
+		//-------------------------------------------------------- Show Grid
+		if (LOWORD(wParam) == IDC_TBSHOWGRID)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+
+			if (App->CLSB_Grid->ShowGridFlag == 1)
+			{
+				App->CLSB_Grid->Grid_SetVisible(0);
+				App->CLSB_Grid->ShowGridFlag = 0;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+			}
+			else
+			{
+				App->CLSB_Grid->Grid_SetVisible(1);
+				App->CLSB_Grid->ShowGridFlag = 1;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+			}
+
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Hair
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+
+			if (App->CLSB_Grid->ShowHair == 1)
+			{
+				App->CLSB_Grid->ShowHair = 0;
+				App->CLSB_Grid->Hair_SetVisible(0);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+			}
+			else
+			{
+				App->CLSB_Grid->ShowHair = 1;
+				App->CLSB_Grid->Hair_SetVisible(1);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
 }
 
 // *************************************************************************

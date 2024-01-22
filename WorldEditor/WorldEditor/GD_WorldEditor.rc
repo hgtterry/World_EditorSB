@@ -1460,7 +1460,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [21-01-24] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [22-01-24] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2573,6 +2573,14 @@ BEGIN
     CONTROL         "Lock",IDC_CK_LOCK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,27,43,10
 END
 
+IDD_SB_TB_GRIDHAIR DIALOGEX 2, 2, 26, 44
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "",IDC_TBSHOWGRID,0,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_TBSHOWHAIR,0,0,25,22,BS_BITMAP
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2942,6 +2950,10 @@ BEGIN
     END
 
     IDD_SB_PROPS_DIMENSIONS, DIALOG
+    BEGIN
+    END
+
+    IDD_SB_TB_GRIDHAIR, DIALOG
     BEGIN
     END
 END
@@ -3322,6 +3334,11 @@ BEGIN
 END
 
 IDD_SB_PROPS_DIMENSIONS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SB_TB_GRIDHAIR AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

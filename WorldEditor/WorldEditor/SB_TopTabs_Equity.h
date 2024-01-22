@@ -29,6 +29,7 @@ public:
 	SB_TopTabs_Equity(void);
 	~SB_TopTabs_Equity(void);
 
+	void Start_GridHair_Buttons();
 	void Start_Render_Buttons_EQ();
 
 	void Start_Tabs(void);
@@ -50,6 +51,7 @@ public:
 	HWND Test_TB_hWnd;
 	HWND Camera_TB_hWnd;
 	HWND Render_Buttons_EQ_hWnd;
+	HWND GridHair_Buttons_hWnd;
 
 private:
 
@@ -57,6 +59,7 @@ private:
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Render_Buttons_Proc_EQ(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK GridHair_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Files_TB(void);
 	void Start_Camera_TB(void);
