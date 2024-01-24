@@ -161,3 +161,25 @@ Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 
 	return Placement;
 }
+
+// **************************************************************************
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_Object::Delete_Object()
+{
+	int MeshIndex = App->CLSB_Properties->Current_Selected_Object;
+	btRigidBody* body = App->CLSB_GameDirector->V_Object[MeshIndex]->Phys_Body;
+
+	if (body)
+	{
+		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(body);
+	}
+
+	App->CLSB_FileView->DeleteItem();
+
+	App->CLSB_GameDirector->V_Object[MeshIndex]->Deleted = 1;
+	App->CLSB_GameDirector->V_Object[MeshIndex]->Object_Node->setVisible(false);
+
+	App->CLSB_Scene->Scene_Modified = 1;
+
+}

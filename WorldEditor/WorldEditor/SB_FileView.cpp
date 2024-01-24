@@ -140,14 +140,14 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			App->SBC_FileView->Context_Copy(hDlg);
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDM_FILE_DELETE)
 		{
-			App->SBC_FileView->Context_Delete(hDlg);
+			App->CLSB_FileView->Context_Delete(hDlg);
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDM_FILE_NEW)
 		{
@@ -718,7 +718,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Objects_File;
@@ -974,6 +974,31 @@ void SB_FileView::Context_Menu(HWND hDlg)
 }
 
 // *************************************************************************
+// *		Mark_Altered_Folder:- Terry and Hazel Flanigan 202$		 	   *
+// *************************************************************************
+void SB_FileView::Mark_Altered_Folder(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 8;
+	Sitem.iSelectedImage = 9;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
+	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
+}
+
+// *************************************************************************
+// *				DeleteItem:- Terry and Hazel Flanigan 2022 			   *
+// *************************************************************************
+void SB_FileView::DeleteItem()
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+	TreeView_DeleteItem(Temp, i);
+}
+
+// *************************************************************************
 // *				Context_New:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void SB_FileView::Context_New(HWND hDlg)
@@ -1163,6 +1188,152 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	//	return;
 	//}
+
+	return;
+}
+
+// *************************************************************************
+// *			Context_Delete:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::Context_Delete(HWND hDlg)
+{
+	// ---------------- Areas
+	if (Context_Selection == Enums::FileView_Areas_File)
+	{
+
+		/*if (App->SBC_Scene->B_Area[App->SBC_Properties->Current_Selected_Object]->This_Object_UniqueID == 0)
+		{
+			App->Say("This Area can not be Deleted");
+		}*/
+
+		return;
+	}
+
+	// ---------------- Cameras
+	if (Context_Selection == Enums::FileView_Cameras_File)
+	{
+		/*if (App->SBC_Scene->Camera_Count == 1)
+		{
+			App->Say("This Camera can not be Deleted");
+		}*/
+
+		return;
+	}
+
+	// ---------------- Players
+	if (Context_Selection == Enums::FileView_Player_File)
+	{
+		/*if (App->SBC_Scene->Player_Count == 1)
+		{
+			App->Say("This Player can not be Deleted");
+		}*/
+
+		return;
+	}
+
+	// ---------------- Objects
+	if (Context_Selection == Enums::FileView_Objects_File)
+	{
+		App->CLSB_Dialogs->YesNo("Remove Object", "Are you sure");
+
+		bool Doit = App->CLSB_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CLSB_Object->Delete_Object();
+			Mark_Altered_Folder(FV_Objects_Folder);
+		}
+
+		return;
+	}
+
+	// ---------------- Message Triggers
+	if (Context_Selection == Enums::FileView_Messages_Triggers_File)
+	{
+		/*App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Message_Trigger_Folder);
+		}*/
+
+		return;
+	}
+
+	// ---------------- Sound Entities
+	if (Context_Selection == Enums::FileView_Sounds_File)
+	{
+		/*App->SBC_Dialogs->YesNo("Remove Sound", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Sounds_Folder);
+		}*/
+
+		return;
+	}
+
+	// ---------------- Move Entities
+	if (Context_Selection == Enums::FileView_Move_File)
+	{
+		/*App->SBC_Dialogs->YesNo("Remove Move Entity", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Move_Folder);
+		}*/
+
+		return;
+	}
+
+	// ---------------- Counters
+	if (Context_Selection == Enums::FileView_Counters_File)
+	{
+		/*if (App->SBC_Scene->B_Counter[App->SBC_Properties->Current_Selected_Object]->Unique_ID == 0)
+		{
+			App->Say("This Counter can not be Deleted");
+			return;
+		}
+
+		App->SBC_Dialogs->YesNo("Remove Counter", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Display->Delete_Counter();
+			Mark_Altered_Folder(App->SBC_FileView->FV_Counters_Folder);
+		}*/
+
+		return;
+	}
+
+	// ---------------- Environs
+	if (Context_Selection == Enums::FileView_EnvironEntity_File)
+	{
+	//	//int Test = App->SBC_Com_Environments->Get_First_Environ();
+
+	//	if (App->CLSB_Properties->Current_Selected_Object == Test)
+	//	{
+	//		App->Say("This Environment Entity can not be Deleted");
+	//		return;
+	//	}
+
+	//	App->CLSB_Dialogs->YesNo("Remove Environment Entity", "Are you sure", 1);
+
+	//	bool Doit = App->CLSB_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->CLSB_Object->Delete_Object();
+	//		Mark_Altered_Folder(FV_Evirons_Folder);
+	//	}
+
+		return;
+	}
 
 	return;
 }

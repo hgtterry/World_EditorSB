@@ -34,5 +34,6 @@ public:
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	void Object_Camera_Goto(int Object_Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
+	void Delete_Object();
 };
 

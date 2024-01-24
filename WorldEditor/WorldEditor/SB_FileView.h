@@ -37,6 +37,7 @@ public:
 	void ExpandRoot(void);
 	void Mark_Altered(HTREEITEM Item);
 	void Show_FileView(bool show);
+	void DeleteItem();
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Objects_Folder;
@@ -53,8 +54,12 @@ private:
 	void MoreFoldersD(void);
 	void Get_Selection(LPNMHDR lParam);
 
+	void Mark_Altered_Folder(HTREEITEM Item);
+	
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
+	void Context_Delete(HWND hDlg);
+
 
 	char FileView_Folder[255];
 	char FileView_File[255];
