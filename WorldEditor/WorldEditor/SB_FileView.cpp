@@ -155,11 +155,11 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDM_FILE_RENAME)
+		if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
-			App->SBC_FileView->Context_Rename(hDlg);
+			App->CLSB_FileView->Context_Rename(hDlg);
 			return TRUE;
-		}*/
+		}
 
 		//if (LOWORD(wParam) == IDC_LEVELS)
 		//{
@@ -637,6 +637,18 @@ void SB_FileView::Mark_Altered(HTREEITEM Item)
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
 
+// *************************************************************************
+// *		Change_Item_Name:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void SB_FileView::Change_Item_Name(HTREEITEM Folder, char* FolderName)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT;
+	Sitem.hItem = Folder;
+	Sitem.pszText = FolderName;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
 // **************************************************************************
 // *			Show_FileView:- Terry and Hazel Flanigan 2022				*
 // **************************************************************************
@@ -713,7 +725,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		{
 			hMenu = CreatePopupMenu();
 
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_RENAME, L"&Rename");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 
@@ -1336,4 +1348,43 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	}
 
 	return;
+}
+
+// *************************************************************************
+// *				Context_Rename:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_FileView::Context_Rename(HWND hDlg)
+{
+	int Index = App->CLSB_Properties->Current_Selected_Object;
+
+	/*if (Context_Selection == Enums::FileView_Cameras_File)
+	{
+		App->SBC_Com_Camera->Rename_Camera(Index);
+		App->SBC_Properties->Update_ListView_Camera();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
+	{
+		App->SBC_Display->Rename_Counter(Index);
+		App->SBC_Properties->Update_ListView_Counters();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
+	{
+		App->CL_Object->Rename_Object(Index);
+		App->SBC_Properties->Update_ListView_Collectables();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_File)
+	{
+		App->SBC_Com_Environments->Rename_Environ(Index);
+		App->SBC_Properties->Update_ListView_Environs();
+		return;
+	}*/
+
+	App->CLSB_Object->Rename_Object(Index);
+	App->CLSB_Properties->Update_ListView_Objects();
 }

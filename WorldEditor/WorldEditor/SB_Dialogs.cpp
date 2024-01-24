@@ -161,6 +161,16 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wP
 				}
 			}
 
+			if (App->CLSB_Dialogs->What_Check_Name == Enums::Check_Name_Brushes)
+			{
+				/*bool test = App->CL_Brush->Check_if_Name_Exist(buff);
+				if (test == 1)
+				{
+					App->Say("Brush Name Exist");
+					return TRUE;
+				}*/
+			}
+
 			App->CLSB_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

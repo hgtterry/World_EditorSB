@@ -35,5 +35,6 @@ public:
 	void Object_Camera_Goto(int Object_Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
 	void Delete_Object();
+	void Rename_Object(int Index);
 };
 

@@ -181,5 +181,30 @@ void SB_Object::Delete_Object()
 	App->CLSB_GameDirector->V_Object[MeshIndex]->Object_Node->setVisible(false);
 
 	App->CLSB_Scene->Scene_Modified = 1;
+}
 
+// *************************************************************************
+// *			Rename_Object:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Object::Rename_Object(int Index)
+{
+	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+
+	strcpy(App->CLSB_Dialogs->btext, "Change Object Name");
+	strcpy(App->CLSB_Dialogs->Chr_Text, Object->Mesh_Name);
+
+	App->CLSB_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CLSB_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(Object->Mesh_Name, App->CLSB_Dialogs->Chr_Text);
+
+	Object->Altered = 1;
+	App->CLSB_Scene->Scene_Modified = 1;
+	App->CLSB_FileView->Mark_Altered(Object->FileViewItem);
+
+	App->CLSB_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
 }
