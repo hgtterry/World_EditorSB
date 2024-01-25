@@ -63,6 +63,8 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_BT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_BUILDGAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_PREVIEWEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
@@ -193,6 +195,15 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 				App->Custom_Button_Toggle(item, App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag);
 			}
 
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BUILDGAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			
+			App->Custom_Button_Normal(item);
+			
 			return CDRF_DODEFAULT;
 		}
 

@@ -48,7 +48,7 @@ public:
 
 	char Project_File_Name[MAX_PATH];
 	char Project_Path_File_Name[MAX_PATH];
-
+	char DeskTop_Folder[MAX_PATH];
 	TCHAR szSelectedDir[MAX_PATH];
 
 private:

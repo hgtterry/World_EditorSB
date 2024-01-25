@@ -357,6 +357,17 @@ bool SB_App::InitApp(void)
 		App->Say("Can not access user folder");
 	}
 
+	char Deskdir[MAX_PATH];
+
+	if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_DESKTOP, NULL,0, Deskdir)))
+	{
+		strcpy(App->CLSB_FileIO->DeskTop_Folder, Deskdir);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
+
 	
 	return 1;
 }

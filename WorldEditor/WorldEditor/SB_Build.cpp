@@ -293,52 +293,52 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_COMMAND:
 
-		//if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
-		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-		//	if (test == BST_CHECKED)
-		//	{
-		//		char Desktop[MAX_PATH];
-		//		strcpy(Desktop, App->SBC_FileIO->DeskTop_Folder);
-		//		strcat(Desktop, "\\");
+		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				char Desktop[MAX_PATH];
+				strcpy(Desktop, App->CLSB_FileIO->DeskTop_Folder);
+				strcat(Desktop, "\\");
 
-		//		strcpy(App->Com_CDialogs->szSelectedDir, Desktop);
-		//		strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
-		//		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+				strcpy(App->CLSB_FileIO->szSelectedDir, Desktop);
+				strcpy(App->CLSB_Build->StartFolder, App->CLSB_FileIO->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CLSB_Build->StartFolder);
 
-		//		App->SBC_Build->Directory_Altered = 1;
+				App->CLSB_Build->Directory_Altered = 1;
 
-		//		EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
-		//		EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
-		//	
-		//		return 1;
-		//	}
-		//	else
-		//	{
-		//		EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
-		//		EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
+			
+				return 1;
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
 
-		//		App->SBC_Build->Directory_Altered = 1;
-		//		return 1;
-		//	}
-		//	return TRUE;
-		//}
+				App->CLSB_Build->Directory_Altered = 1;
+				return 1;
+			}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_BTBROWSE)
-		//{
-		//	strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
-		//	int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
-		//	if (Test == 0) { return true; }
+		if (LOWORD(wParam) == IDC_BTBROWSE)
+		{
+			strcpy(App->CLSB_FileIO->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
+			int Test = App->CLSB_FileIO->StartBrowser(App->CLSB_Meshviewer->mResource_Folder);
+			if (Test == 0) { return true; }
 
-		//	strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+			strcpy(App->CLSB_Build->StartFolder, App->CLSB_FileIO->szSelectedDir);
 
-		//	SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CLSB_Build->StartFolder);
 
-		//	App->SBC_Build->Directory_Altered = 1;
+			App->CLSB_Build->Directory_Altered = 1;
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		//if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
 		//{
@@ -408,49 +408,46 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDOK)
-		//{
-		//	char GameName[255];
-		//	char PathName[255];
-		//	GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
-		//	GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
-		//	int result = 1;
+		if (LOWORD(wParam) == IDOK)
+		{
+			char GameName[255];
+			char PathName[255];
+			GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
+			GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
+			int result = 1;
 
-		//	// Check Name Entered
-		//	result = strcmp(GameName, "");
-		//	if (result == 0)
-		//	{
-		//		App->Say("No Game Name Specified");
-		//		return 1;
-		//	}
+			// Check Name Entered
+			result = strcmp(GameName, "");
+			if (result == 0)
+			{
+				App->Say("No Game Name Specified");
+				return 1;
+			}
 
-		//	// Check Path Selected
-		//	result = strcmp(PathName, "");
-		//	if (result == 0)
-		//	{
-		//		App->Say("No Path Specified");
-		//		return 1;
-		//	}
+			// Check Path Selected
+			result = strcmp(PathName, "");
+			if (result == 0)
+			{
+				App->Say("No Path Specified");
+				return 1;
+			}
 
-		//	result = strcmp(GameName, App->SBC_Build->GameName);
-		//	if (result < 0 || result > 0)
-		//	{
-		//		App->SBC_Scene->Scene_Modified = 1;
-		//	}
-		//	
+			result = strcmp(GameName, App->CLSB_Build->GameName);
+			if (result < 0 || result > 0)
+			{
+				App->CLSB_Scene_Data->Scene_Modified = 1;
+			}
+			
+			strcpy(App->CLSB_FileIO->szSelectedDir, PathName);
+			strcpy(App->CLSB_Build->StartFolder, PathName);
 
+			strcpy(App->CLSB_Build->GameName, GameName);
+			App->CLSB_Build->Create_ProjectFolder();
 
+			EndDialog(hDlg, LOWORD(wParam));
 
-		//	strcpy(App->Com_CDialogs->szSelectedDir, PathName);
-		//	strcpy(App->SBC_Build->StartFolder, PathName);
-
-		//	strcpy(App->SBC_Build->GameName, GameName);
-		//	App->SBC_Build->Create_ProjectFolder();
-
-		//	EndDialog(hDlg, LOWORD(wParam));
-
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
@@ -469,7 +466,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void SB_Build::Create_ProjectFolder(void)
 {
-	/*ProjectFolder[0] = 0;
+	ProjectFolder[0] = 0;
 	Sub_ProjectFolder[0] = 0;
 
 	MediaFolder[0] = 0;
@@ -477,12 +474,16 @@ void SB_Build::Create_ProjectFolder(void)
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
-	strcpy(ProjectFolder, App->Com_CDialogs->szSelectedDir);
+	strcpy(ProjectFolder, App->CLSB_FileIO->szSelectedDir);
+	strcat(ProjectFolder, "\\");
 	strcat(ProjectFolder, GameName);
 	strcat(ProjectFolder, "_Project");
+	
 
 	int test = CreateDirectory(ProjectFolder, NULL);
 	
+	App->Say(ProjectFolder);
+
 	strcpy(MediaFolder, ProjectFolder);
 	strcat(MediaFolder, "\\");
 	strcat(MediaFolder, "Media");
@@ -515,7 +516,7 @@ void SB_Build::Create_ProjectFolder(void)
 	Copy_Sound_Files();
 	Copy_Particle_Files();
 
-	App->Cl_PB->Stop_Progress_Bar("Build Completed");*/
+	//App->Cl_PB->Stop_Progress_Bar("Build Completed");
 }
 
 // *************************************************************************
@@ -523,120 +524,120 @@ void SB_Build::Create_ProjectFolder(void)
 // *************************************************************************
 void SB_Build::Copy_SystemFiles(void)
 {
-//	//----------------------------- OgreMain.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\OgreMain.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\OgreMain.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-//
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- RenderSystem_GL.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\RenderSystem_GL.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\RenderSystem_GL.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-//
-////	App->CL10_PB->Nudge();
-//	//----------------------------- cg.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\cg.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\cg.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-//
-//	//----------------------------- OgreOverlay.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\OgreOverlay.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\OgreOverlay.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-//	
-////	App->CL10_PB->Nudge();
-//	//----------------------------- msvcp140.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\msvcp140.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\msvcp140.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-//
-////	App->CL10_PB->Nudge();
-//	//----------------------------- vcruntime140.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\vcruntime140.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\vcruntime140.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- irrKlang.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\irrKlang.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\irrKlang.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- Plugin_CgProgramManager.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
-//
-//	CopyFile(SourceFile, DestinationFile, false);
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- Game FIle
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\GDShell.gex");
-//
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\");
-//	strcat(DestinationFile, GameName);
-//	strcat(DestinationFile, ".exe");
-//	CopyFile(SourceFile, DestinationFile, false);
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- Game FIle
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\plugins.cfg");
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\plugins.cfg");
-//	CopyFile(SourceFile, DestinationFile, false);
-//	//	App->CL10_PB->Nudge();
-//
-//	//----------------------------- Plugin_ParticleFX.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
-//	CopyFile(SourceFile, DestinationFile, false);
-////	App->CL10_PB->Nudge();
-//
-//	//----------------------------- Plugin_ParticleFX.dll
-//	strcpy(SourceFile, App->EquityDirecory_FullPath);
-//	strcat(SourceFile, "\\Roboto-Medium.ttf");
-//	strcpy(DestinationFile, ProjectFolder);
-//	strcat(DestinationFile, "\\Roboto-Medium.ttf");
-//	CopyFile(SourceFile, DestinationFile, false);
-//	//	App->CL10_PB->Nudge();
+	//----------------------------- OgreMain.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\OgreMain.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreMain.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- RenderSystem_GL.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\RenderSystem_GL.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\RenderSystem_GL.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+	//----------------------------- cg.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\cg.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\cg.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	//----------------------------- OgreOverlay.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\OgreOverlay.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreOverlay.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+	
+//	App->CL10_PB->Nudge();
+	//----------------------------- msvcp140.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\msvcp140.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\msvcp140.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+	//----------------------------- vcruntime140.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\vcruntime140.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\vcruntime140.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- irrKlang.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\irrKlang.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\irrKlang.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_CgProgramManager.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Game FIle
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\GDShell.gex");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\");
+	strcat(DestinationFile, GameName);
+	strcat(DestinationFile, ".exe");
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Game FIle
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\plugins.cfg");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\plugins.cfg");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_ParticleFX.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_ParticleFX.dll
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Roboto-Medium.ttf");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Roboto-Medium.ttf");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
 
 }
 
@@ -645,46 +646,46 @@ void SB_Build::Copy_SystemFiles(void)
 // *************************************************************************
 void SB_Build::Copy_ZipFiles(void)
 {
-	////----------------------------- GDCore.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\GDCore.zip");
+	//----------------------------- GDCore.zip
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Media\\Core_Data\\GDCore.zip");
 
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\GDCore.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\GDCore.zip");
 
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
-	////----------------------------- Equity.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\Equity.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+	//----------------------------- Equity.zip
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Media\\Core_Data\\Equity.zip");
 
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\Equity.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\Equity.zip");
 
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
 	//----------------------------- OgreCore.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\OgreCore.zip");
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\OgreCore.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
 
-	////----------------------------- skybox.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\skybox.zip");
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
+	//----------------------------- skybox.zip
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\skybox.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
 
-	////----------------------------- skybox.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\App_Resources.zip");
-	//CopyFile(SourceFile, DestinationFile, false);
+	//----------------------------- skybox.zip
+	strcpy(SourceFile, App->WorldEditor_Directory);
+	strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\App_Resources.zip");
+	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 }
 
@@ -694,8 +695,8 @@ void SB_Build::Copy_ZipFiles(void)
 // *************************************************************************
 void SB_Build::Copy_Sound_Files(void)
 {
-	/*char StartFolder[MAX_PATH];
-	strcpy(StartFolder, App->EquityDirecory_FullPath);
+	char StartFolder[MAX_PATH];
+	strcpy(StartFolder, App->WorldEditor_Directory);
 	strcat(StartFolder, "\\");
 	strcat(StartFolder, "Media\\Sounds\\");
 
@@ -703,7 +704,7 @@ void SB_Build::Copy_Sound_Files(void)
 	strcpy(Destination, SoundFolder);
 	strcat(Destination, "\\");
 
-	Copy_Assets(StartFolder, Destination);*/
+	Copy_Assets(StartFolder, Destination);
 }
 
 // *************************************************************************

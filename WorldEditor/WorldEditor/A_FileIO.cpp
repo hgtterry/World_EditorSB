@@ -36,7 +36,7 @@ SB_FileIO::SB_FileIO()
 
 	Project_File_Name[0] = 0;
 	Project_Path_File_Name[0] = 0;
-
+	DeskTop_Folder[0] = 0;
 	szSelectedDir[0] = 0;
 }
 
