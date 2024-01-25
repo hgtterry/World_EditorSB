@@ -71,7 +71,7 @@ SB_Environment::~SB_Environment(void)
 // *************************************************************************
 void SB_Environment::V_Set_Environ_Defaults(int Index)
 {
-	Base_Object* V_Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* V_Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	V_Object->Altered = 0;
 	
@@ -125,21 +125,21 @@ bool SB_Environment::Add_New_Environ_Entity(bool FirstOne)
 
 	int Index = App->CLSB_Scene->Object_Count;
 
-	App->CLSB_GameDirector->V_Object[Index] = new Base_Object();
-	App->CLSB_GameDirector->V_Object[Index]->S_Environ[0] = new Environ_type;
+	App->CLSB_Game_Editor->V_Object[Index] = new Base_Object();
+	App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0] = new Environ_type;
 	V_Set_Environ_Defaults(Index);
 
 
-	App->CLSB_GameDirector->V_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CLSB_GameDirector->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->CLSB_Game_Editor->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CLSB_Game_Editor->V_Object[Index]->Shape = Enums::Shape_Box;
 	//App->CLSB_Scene->V_Object[Index]->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->CLSB_GameDirector->V_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
+	strcpy(App->CLSB_Game_Editor->V_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Environ_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name, B_Name);
 
 	//if (FirstOne == 0)
 	//{
@@ -153,8 +153,8 @@ bool SB_Environment::Add_New_Environ_Entity(bool FirstOne)
 
 	//Create_Environ_Entity(Index);
 
-	HTREEITEM Temp = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Evirons_Folder, App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, Index, false);
-	App->CLSB_GameDirector->V_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Evirons_Folder, App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name, Index, false);
+	App->CLSB_Game_Editor->V_Object[Index]->FileViewItem = Temp;
 
 	App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Evirons_Folder);
 	//App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
@@ -171,21 +171,21 @@ bool SB_Environment::Add_New_Environ_Entity(bool FirstOne)
 // *************************************************************************
 void SB_Environment::Set_First_Environment(int Index)
 {
-	float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 
 	App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -194,21 +194,21 @@ void SB_Environment::Set_First_Environment(int Index)
 		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
-	if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Enabled == 1)
+	if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Enabled == 1)
 	{
 		App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(true,
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Material,
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Curvature,
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Tiling,
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Distance);
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Material,
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Curvature,
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Tiling,
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Distance);
 	}
 	else
 	{
 
 	}
 
-	App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->IsMainEnvironment = 1;
-	App->CLSB_GameDirector->V_Object[Index]->Usage = Enums::Usage_EnvironEntity;
+	App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->IsMainEnvironment = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Usage = Enums::Usage_EnvironEntity;
 }
 
 // *************************************************************************
@@ -216,11 +216,11 @@ void SB_Environment::Set_First_Environment(int Index)
 // *************************************************************************
 void SB_Environment::Mark_As_Altered_Environ(int Index)
 {
-	App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Altered = 1;
 
 	App->CLSB_Scene->Scene_Modified = 1;
 
-	App->CLSB_FileView->Mark_Altered(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
+	App->CLSB_FileView->Mark_Altered(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
 }
 
 // *************************************************************************
@@ -229,22 +229,22 @@ void SB_Environment::Mark_As_Altered_Environ(int Index)
 int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 {
 
-	float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 	App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 
 	// Fog
-	if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -259,26 +259,26 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 		strcpy(buff, App->WorldEditor_Directory);
 		strcat(buff, "\\Media\\Sounds\\");
 
-		if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Play == 1)
+		if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Play == 1)
 		{
-			strcat(buff, App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Sound_File);
+			strcat(buff, App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Sound_File);
 
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile = App->CLSB_SoundMgr->SoundEngine->play2D(buff, App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Loop, true, true);
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile = App->CLSB_SoundMgr->SoundEngine->play2D(buff, App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Loop, true, true);
 
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndVolume);
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndVolume);
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
 		}
 	}
 	else
 	{
-		if (App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile == NULL)
+		if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile == NULL)
 		{
 		}
 		else
 		{
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile->drop();
-			App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->SndFile = NULL;
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->drop();
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile = NULL;
 		}
 	}
 
@@ -293,7 +293,7 @@ int SB_Environment::Get_First_Environ()
 	int Count = 0;
 	while (Count < App->CLSB_Scene->Object_Count)
 	{
-		if (App->CLSB_GameDirector->V_Object[Count]->Usage == Enums::Usage_EnvironEntity && App->CLSB_GameDirector->V_Object[Count]->S_Environ[0]->IsMainEnvironment == 1)
+		if (App->CLSB_Game_Editor->V_Object[Count]->Usage == Enums::Usage_EnvironEntity && App->CLSB_Game_Editor->V_Object[Count]->S_Environ[0]->IsMainEnvironment == 1)
 		{
 			return Count;
 		}
@@ -315,25 +315,25 @@ void SB_Environment::Start_Environment_Editor(int Index, bool IsTeleport)
 
 	Float_Exit = 0;
 
-	Ambient_Colour_Copy.x = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
-	Ambient_Colour_Copy.y = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
-	Ambient_Colour_Copy.z = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+	Ambient_Colour_Copy.x = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
+	Ambient_Colour_Copy.y = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
+	Ambient_Colour_Copy.z = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
 
-	Ambient_Colour.x = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
-	Ambient_Colour.y = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
-	Ambient_Colour.z = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+	Ambient_Colour.x = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
+	Ambient_Colour.y = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
+	Ambient_Colour.z = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
 
 	Ambient_Int_Red = Ambient_Colour.x * 255;
 	Ambient_Int_Green = Ambient_Colour.y * 255;
 	Ambient_Int_Blue = Ambient_Colour.z * 255;
 
-	Fog_Colour_Copy.x = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
-	Fog_Colour_Copy.y = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
-	Fog_Colour_Copy.z = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+	Fog_Colour_Copy.x = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
+	Fog_Colour_Copy.y = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
+	Fog_Colour_Copy.z = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
 
-	Fog_Colour.x = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
-	Fog_Colour.y = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
-	Fog_Colour.z = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+	Fog_Colour.x = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
+	Fog_Colour.y = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
+	Fog_Colour.z = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
 
 	Fog_Colour_Int_Red = Fog_Colour.x * 255;
 	Fog_Colour_Int_Green = Fog_Colour.y * 255;
@@ -412,7 +412,7 @@ void SB_Environment::Environ_PropertyEditor()
 			Ambient_Int_Green = Ambient_Colour.y * 255;
 			Ambient_Int_Blue = Ambient_Colour.z * 255;
 
-			App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
+			App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
 			App->CLSB_Ogre_Setup->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
 
 			Mark_As_Altered_Environ(Eviron_Index);
@@ -428,14 +428,14 @@ void SB_Environment::Environ_PropertyEditor()
 
 		ImGui::Selectable("Track:- ", &ClickOnTrack);
 		ImGui::SameLine();
-		ImGui::Text("%s", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+		ImGui::Text("%s", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 		if (ClickOnTrack)
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
 			App->CLSB_SoundMgr->Accessed = 1;
-			strcpy(App->CLSB_SoundMgr->Access_File, App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+			strcpy(App->CLSB_SoundMgr->Access_File, App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 			App->CLSB_Environment->Set_Environment_By_Index(0, Eviron_Index);
 			App->CLSB_SoundMgr->Dialog_SoundFile();
@@ -443,8 +443,8 @@ void SB_Environment::Environ_PropertyEditor()
 			if (App->CLSB_SoundMgr->IsCancelled == 0)
 			{
 
-				strcpy(App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CLSB_SoundMgr->Access_File);
-				App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CLSB_SoundMgr->SndVolume;
+				strcpy(App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CLSB_SoundMgr->Access_File);
+				App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CLSB_SoundMgr->SndVolume;
 
 				App->CLSB_Environment->Set_Environment_By_Index(1, Eviron_Index);
 
@@ -461,7 +461,7 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Volume
 		ImGui::Selectable("Volume:- ", &ClickOnVolume);
 		ImGui::SameLine();
-		ImGui::Text("%f", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->SndVolume);
+		ImGui::Text("%f", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->SndVolume);
 		if (ClickOnVolume)
 		{
 			Mark_As_Altered_Environ(Eviron_Index);
@@ -471,12 +471,12 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Play
 		ImGui::Selectable("Play:- ", &ClickOnPlay);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Play);
+		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play);
 		if (ClickOnPlay)
 		{
 			strcpy(App->CLSB_Dialogs->btext, "Set Play Sound Track");
 
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Play;
+			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play;
 
 			App->CLSB_Dialogs->Dialog_TrueFlase();
 
@@ -484,12 +484,12 @@ void SB_Environment::Environ_PropertyEditor()
 			{
 				if (App->CLSB_Dialogs->TrueFlase == 1)
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Play = 1;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play = 1;
 					App->CLSB_Environment->Set_Environment_By_Index(1, Eviron_Index);
 				}
 				else
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Play = 0;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play = 0;
 					App->CLSB_Environment->Set_Environment_By_Index(0, Eviron_Index);
 				}
 
@@ -504,12 +504,12 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Loop
 		ImGui::Selectable("Loop:- ", &ClickOnLoop);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Loop);
+		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop);
 		if (ClickOnLoop)
 		{
 			strcpy(App->CLSB_Dialogs->btext, "Set Play Sound Loop");
 
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Loop;
+			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop;
 
 			App->CLSB_Dialogs->Dialog_TrueFlase();
 
@@ -517,13 +517,13 @@ void SB_Environment::Environ_PropertyEditor()
 			{
 				if (App->CLSB_Dialogs->TrueFlase == 1)
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Loop = 1;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop = 1;
 					Set_Environment_By_Index(0, Eviron_Index);
 					Set_Environment_By_Index(1, Eviron_Index);
 				}
 				else
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Loop = 0;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop = 0;
 					Set_Environment_By_Index(0, Eviron_Index);
 					Set_Environment_By_Index(1, Eviron_Index);
 				}
@@ -544,12 +544,12 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Visible
 		ImGui::Selectable("Visible:- ", &ClickOnFogVisible);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On);
+		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On);
 		if (ClickOnFogVisible)
 		{
 			strcpy(App->CLSB_Dialogs->btext, "Set Fog Visiblity");
 
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On;
+			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On;
 
 			strcpy(App->CLSB_Dialogs->btext, "Set Fog On/Off");
 			App->CLSB_Dialogs->Dialog_TrueFlase();
@@ -558,12 +558,12 @@ void SB_Environment::Environ_PropertyEditor()
 			{
 				if (App->CLSB_Dialogs->TrueFlase == 1)
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
 					EnableFog(true);
 				}
 				else
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
 					EnableFog(false);
 				}
 
@@ -577,7 +577,7 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Mode
 		ImGui::Selectable("Mode:- ", &ClickOnFogMode);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
+		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
 		if (ClickOnFogMode)
 		{
 			ClickOnFogMode = 0;
@@ -593,9 +593,9 @@ void SB_Environment::Environ_PropertyEditor()
 			Ambient_Int_Green = Fog_Colour.y * 255;
 			Ambient_Int_Blue = Fog_Colour.z * 255;
 
-			App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
+			App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
 
-			if (App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -606,12 +606,12 @@ void SB_Environment::Environ_PropertyEditor()
 
 
 		// ----------------- Start
-		ImGui::Text("Start:- ", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
+		ImGui::Text("Start:- ", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##1", &App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
+		if (ImGui::InputFloat("##1", &App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
 		{
-			if (App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -620,12 +620,12 @@ void SB_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- End
-		ImGui::Text("End:-   ", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_End);
+		ImGui::Text("End:-   ", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_End);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##2", &App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
+		if (ImGui::InputFloat("##2", &App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
 		{
-			if (App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -644,12 +644,12 @@ void SB_Environment::Environ_PropertyEditor()
 		// ----------------- Visible
 		ImGui::Selectable("Enabled:- ", &ClickOnSkyEnabled);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled);
+		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled);
 		if (ClickOnSkyEnabled)
 		{
 			strcpy(App->CLSB_Dialogs->btext, "Set Sky Visiblity");
 
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled;
+			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled;
 
 			strcpy(App->CLSB_Dialogs->btext, "Set Sky On/Off");
 			App->CLSB_Dialogs->Dialog_TrueFlase();
@@ -658,12 +658,12 @@ void SB_Environment::Environ_PropertyEditor()
 			{
 				if (App->CLSB_Dialogs->TrueFlase == 1)
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
 					SetSky(1);
 				}
 				else
 				{
-					App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
+					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
 					SetSky(0);
 				}
 
@@ -674,12 +674,12 @@ void SB_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- Tiling
-		ImGui::Text("Tiling:- ", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Tiling);
+		ImGui::Text("Tiling:- ", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Tiling);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##5", &App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##5", &App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
 		{
-			if (App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			if (App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -688,12 +688,12 @@ void SB_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- Curvature
-		ImGui::Text("Curve:- ", App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Curvature);
+		ImGui::Text("Curve:- ", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Curvature);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##6", &App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##6", &App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
 		{
-			if (App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			if (App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -729,7 +729,7 @@ void SB_Environment::Environ_PropertyEditor()
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Enabled", &App->CLSB_GameDirector->V_Object[Eviron_Index]->S_Environ[0]->Environ_Enabled))
+		if (ImGui::Checkbox("Enabled", &App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Environ_Enabled))
 		{
 			//App->SBC_Properties->Update_ListView_Teleport();
 		}
@@ -785,10 +785,10 @@ void SB_Environment::SetSky(bool Enable)
 	int Index = App->CLSB_Properties->Current_Selected_Object;
 
 	App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(Enable,
-		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Material,
-		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Curvature,
-		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Tiling,
-		App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Distance);
+		App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Material,
+		App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Curvature,
+		App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Tiling,
+		App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Distance);
 }
 
 // *************************************************************************
@@ -800,13 +800,13 @@ bool SB_Environment::EnableFog(bool SetFog)
 
 	if (SetFog == true)
 	{
-		float Start = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CLSB_GameDirector->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CLSB_Ogre_Setup->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}

@@ -221,7 +221,7 @@ void SB_ImGui::Start_Render(void)
 // *************************************************************************
 void SB_ImGui::Set_Render_Mode(void)
 {
-	App->CLSB_GameDirector->Show_Objects(false);
+	App->CLSB_Game_Editor->Show_Objects(false);
 	App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	App->CLSB_Environment->EnableFog(false);
 	App->CLSB_Equity->EquitySB_Dialog_Visible = 1;

@@ -206,7 +206,7 @@ public:
 	SB_PB*						CLSB_PB;
 	SB_BR_Render*				CLSB_BR_Render;
 	Base_Faces*					CLSB_BaseFaces;
-	SB_Game_Editor*				CLSB_GameDirector;
+	SB_Game_Editor*				CLSB_Game_Editor;
 	SB_MeshViewer*				CLSB_Meshviewer;
 	SB_Props_Dialogs*			CLSB_Props_Dialogs;
 

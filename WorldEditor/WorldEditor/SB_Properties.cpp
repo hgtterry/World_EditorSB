@@ -150,14 +150,14 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 			// -----------------------  Objects
 			if (App->CLSB_Scene->Object_Count > 0)
 			{
-				int f = App->CLSB_GameDirector->V_Object[Index]->Phys_Body->getCollisionFlags();
+				int f = App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->getCollisionFlags();
 
-				if (App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On == 1)
+				if (App->CLSB_Game_Editor->V_Object[Index]->Physics_Debug_On == 1)
 				{
 					//App->CLSB_Object->Show_Physics_Debug = 0;
-					App->CLSB_GameDirector->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+					App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On = 0;
+					App->CLSB_Game_Editor->V_Object[Index]->Physics_Debug_On = 0;
 
 					App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 					App->CLSB_Ogre_Setup->RenderFrame();
@@ -166,9 +166,9 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 				}
 				else
 				{
-					App->CLSB_GameDirector->V_Object[Index]->Physics_Debug_On = 1;
+					App->CLSB_Game_Editor->V_Object[Index]->Physics_Debug_On = 1;
 					//App->CLSB_Object->Show_Physics_Debug = 1;
-					App->CLSB_GameDirector->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+					App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
 				}
 			}
@@ -799,7 +799,7 @@ bool SB_Properties::Update_ListView_Objects()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CLSB_GameDirector->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CLSB_Game_Editor->V_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -818,9 +818,9 @@ bool SB_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CLSB_GameDirector->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->CLSB_GameDirector->V_Object[index]->Mesh_FileName;
-	grid[0][2] = "Materials", grid[1][2] = App->CLSB_GameDirector->V_Object[index]->Material_File;
+	grid[0][0] = "Name", grid[1][0] = App->CLSB_Game_Editor->V_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CLSB_Game_Editor->V_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CLSB_Game_Editor->V_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
 
 	ListView_DeleteAllItems(Properties_hLV);

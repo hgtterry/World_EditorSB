@@ -124,23 +124,23 @@ void SB_Dimensions::Prepare_Dimensions(void)
 	}
 	else
 	{
-		pBase_Mesh_Name = App->CLSB_GameDirector->V_Object[Index]->Mesh_Name;
+		pBase_Mesh_Name = App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name;
 
-		pBase_Shape = &App->CLSB_GameDirector->V_Object[Index]->Shape;
-		pBase_Physics_Type = &App->CLSB_GameDirector->V_Object[Index]->Type;
+		pBase_Shape = &App->CLSB_Game_Editor->V_Object[Index]->Shape;
+		pBase_Physics_Type = &App->CLSB_Game_Editor->V_Object[Index]->Type;
 
-		pBase_Object_Ent = App->CLSB_GameDirector->V_Object[Index]->Object_Ent;
-		pBase_Object_Node = App->CLSB_GameDirector->V_Object[Index]->Object_Node;
-		pBase_Mesh_Pos = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->CLSB_GameDirector->V_Object[Index]->Mesh_Quat;
+		pBase_Object_Ent = App->CLSB_Game_Editor->V_Object[Index]->Object_Ent;
+		pBase_Object_Node = App->CLSB_Game_Editor->V_Object[Index]->Object_Node;
+		pBase_Mesh_Pos = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Quat;
 
-		pBase_Phys_Body = App->CLSB_GameDirector->V_Object[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->CLSB_GameDirector->V_Object[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->CLSB_GameDirector->V_Object[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->CLSB_GameDirector->V_Object[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->CLSB_GameDirector->V_Object[Index]->Physics_Quat;
+		pBase_Phys_Body = App->CLSB_Game_Editor->V_Object[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Quat;
 
 		//App->Say("Object");
 	}
@@ -371,7 +371,7 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
@@ -396,7 +396,7 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
@@ -594,7 +594,7 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 			if (Scale_Lock == 1)
 			{
@@ -635,7 +635,7 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 			if (Scale_Lock == 1)
 			{
@@ -807,7 +807,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 			if (RotationX_Selected == 1)
 			{
@@ -834,7 +834,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
 	{
-		if (App->CLSB_GameDirector->Project_Loaded == 1)
+		if (App->CLSB_Game_Editor->Project_Loaded == 1)
 		{
 
 			if (RotationX_Selected == 1)
@@ -1247,8 +1247,8 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 	//App->SBC_Markers->MarkerBB_Addjust(Index);
 
 	// Needs Looking at
-	App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
-	App->CLSB_FileView->Mark_Altered(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
+	App->CLSB_Game_Editor->V_Object[Index]->Altered = 1;
+	App->CLSB_FileView->Mark_Altered(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
 	App->CLSB_Scene->Scene_Modified = 1;
 }
 

@@ -203,7 +203,7 @@ bool SB_Project::Load_Project()
 	//	App->SBC_Com_Environments->Set_First_Environment(Test);
 	//}
 
-	App->CLSB_GameDirector->Project_Loaded = 1;
+	App->CLSB_Game_Editor->Project_Loaded = 1;
 	//App->SBC_Project->Project_Loaded = 1;
 
 	//delete Options;
@@ -265,9 +265,9 @@ bool SB_Project::V_Load_Project_Objects()
 		_itoa(Count, mNumChr, 10);
 		strcat(mSection, mNumChr);
 
-		App->CLSB_GameDirector->V_Object.push_back(new Base_Object());
+		App->CLSB_Game_Editor->V_Object.push_back(new Base_Object());
 
-		Base_Object* V_Object = App->CLSB_GameDirector->V_Object[Count];
+		Base_Object* V_Object = App->CLSB_Game_Editor->V_Object[Count];
 
 		App->CLSB_Ini->GetString(mSection, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
 		App->CLSB_Ini->GetString(mSection, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);

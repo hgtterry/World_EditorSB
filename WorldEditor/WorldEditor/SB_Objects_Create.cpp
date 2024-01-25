@@ -47,9 +47,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		{
 			App->CLSB_Objects_Create->Add_New_Object(Count, 0);
-			App->CLSB_GameDirector->V_Object[Count]->Altered = 0;
-			App->CLSB_GameDirector->V_Object[Count]->Folder = Enums::Folder_Objects;
-			App->CLSB_GameDirector->V_Object[Count]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder, App->CLSB_GameDirector->V_Object[Count]->Mesh_Name, Count, false);
+			App->CLSB_Game_Editor->V_Object[Count]->Altered = 0;
+			App->CLSB_Game_Editor->V_Object[Count]->Folder = Enums::Folder_Objects;
+			App->CLSB_Game_Editor->V_Object[Count]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder, App->CLSB_Game_Editor->V_Object[Count]->Mesh_Name, Count, false);
 		}
 
 		Count++;
@@ -59,7 +59,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Objects_Folder);
 		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[0]->FileViewItem);
+		App->CLSB_FileView->SelectItem(App->CLSB_Game_Editor->V_Object[0]->FileViewItem);
 	}
 
 	return 1;
@@ -79,9 +79,9 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	int Index = App->CLSB_Scene->Object_Count;
 
-	App->CLSB_GameDirector->V_Object[Index] = new Base_Object();
+	App->CLSB_Game_Editor->V_Object[Index] = new Base_Object();
 
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 	Object->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
 
 
@@ -96,7 +96,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CLSB_Objects_Create->Dispatch_MeshViewer();
 
-	App->CLSB_FileView->SelectItem(App->CLSB_GameDirector->V_Object[Index]->FileViewItem);
+	App->CLSB_FileView->SelectItem(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
 
 
 	App->CLSB_Scene->UniqueID_Object_Counter++; // Unique ID
@@ -120,10 +120,10 @@ void SB_Objects_Create::Dispatch_MeshViewer()
 	//else
 	{
 		Add_New_Object(Index, 1);
-		App->CLSB_GameDirector->V_Object[Index]->Altered = 1;
-		App->CLSB_GameDirector->V_Object[Index]->Folder = Enums::Folder_Objects;
-		App->CLSB_GameDirector->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
-		App->CLSB_GameDirector->V_Object[Index]->Mesh_Name, Index, true);
+		App->CLSB_Game_Editor->V_Object[Index]->Altered = 1;
+		App->CLSB_Game_Editor->V_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CLSB_Game_Editor->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
+		App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name, Index, true);
 
 	}
 }
@@ -137,7 +137,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -175,7 +175,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	//}
 
 
-	App->CLSB_GameDirector->Project_Loaded = 1;
+	App->CLSB_Game_Editor->Project_Loaded = 1;
 
 	//---------------------- Tri_Mesh
 	if (Object->Type == Enums::Bullet_Type_TriMesh)
@@ -256,7 +256,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -333,7 +333,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
 }
@@ -343,7 +343,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 {
-	if (App->CLSB_GameDirector->V_Object[Index])
+	if (App->CLSB_Game_Editor->V_Object[Index])
 	{
 		
 	}
@@ -353,7 +353,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 		return;
 	}
 
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -434,7 +434,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Physics_Valid = 1;
 	return;
 	App->CLSB_Physics->Set_Physics(Index);
 }
@@ -444,7 +444,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -521,7 +521,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
 }
@@ -531,7 +531,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -611,7 +611,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
 }
@@ -621,7 +621,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -703,7 +703,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CLSB_GameDirector->V_Object[Index]->Physics_Valid = 1;
+	App->CLSB_Game_Editor->V_Object[Index]->Physics_Valid = 1;
 
 	App->CLSB_Physics->Set_Physics(Index);
 }
@@ -713,7 +713,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::create_New_Trimesh(int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Object_Ent->getMesh();

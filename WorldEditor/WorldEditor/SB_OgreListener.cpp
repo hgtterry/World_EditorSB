@@ -196,13 +196,13 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 					float y = trans.getOrigin().getY();
 					float z = trans.getOrigin().getZ();
 
-					App->CLSB_GameDirector->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
-					App->CLSB_GameDirector->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+					App->CLSB_Game_Editor->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
+					App->CLSB_Game_Editor->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
 					Ogre::Vector3 WC = App->CLSB_Object->Get_BoundingBox_World_Centre(Index);
 
 					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
-					App->CLSB_GameDirector->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+					App->CLSB_Game_Editor->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
 				}
 
 			}

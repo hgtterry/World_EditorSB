@@ -393,7 +393,7 @@ void SB_Bullet::Reset_Physics(void)
 	int Count = 0;
 	while (Count < App->CLSB_Scene->Object_Count)
 	{
-		if (App->CLSB_GameDirector->V_Object[Count]->Usage == Enums::Usage_Dynamic)
+		if (App->CLSB_Game_Editor->V_Object[Count]->Usage == Enums::Usage_Dynamic)
 		{
 			btVector3 zeroVector(0, 0, 0);
 
@@ -412,15 +412,15 @@ void SB_Bullet::Reset_Physics(void)
 
 			startTransform.setOrigin(initialPosition);
 
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->clearForces();
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->clearForces();
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
 
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->setWorldTransform(startTransform);
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-			App->CLSB_GameDirector->V_Object[Count]->Phys_Body->activate(true);
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->CLSB_Game_Editor->V_Object[Count]->Phys_Body->activate(true);
 
-			App->CLSB_GameDirector->V_Object[Count]->Object_Node->setPosition(0, -10, -50);
+			App->CLSB_Game_Editor->V_Object[Count]->Object_Node->setPosition(0, -10, -50);
 			//App->CLSB_Scene->V_Object[Count]->Object_Node->setOrientation(App->CLSB_Scene->V_Object[Count]->Mesh_Quat);
 
 		}

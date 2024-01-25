@@ -249,7 +249,7 @@ void SB_Game_Editor::Go_Game_Editor()
 		Set_Camera();
 		App->CLSB_Mesh_Mgr->Update_World();
 
-		if (App->CLSB_GameDirector->Project_Loaded == 0)
+		if (App->CLSB_Game_Editor->Project_Loaded == 0)
 		{
 			App->CLSB_Project->Load_Project();
 			App->CLSB_Environment->Add_New_Environ_Entity(true);

@@ -490,7 +490,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			}
 			else
 			{
-				App->CLSB_GameDirector->Hide_Game_Editor_Dialog();
+				App->CLSB_Game_Editor->Hide_Game_Editor_Dialog();
 			}
 
 			return TRUE;
@@ -814,7 +814,7 @@ void SB_Equity::Go_Equity()
 		//->CLSB_Environment->SetSky(false);
 		App->CLSB_Environment->EnableFog(false);
 
-		App->CLSB_GameDirector->Show_Objects(false);
+		App->CLSB_Game_Editor->Show_Objects(false);
 
 		App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);
 	}

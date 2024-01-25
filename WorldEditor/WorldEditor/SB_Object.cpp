@@ -46,8 +46,8 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 	}
 	else*/
 	{
-		AxisAlignedBox worldAAB = App->CLSB_GameDirector->V_Object[Object_Index]->Object_Ent->getBoundingBox();
-		worldAAB.transformAffine(App->CLSB_GameDirector->V_Object[Object_Index]->Object_Node->_getFullTransform());
+		AxisAlignedBox worldAAB = App->CLSB_Game_Editor->V_Object[Object_Index]->Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->CLSB_Game_Editor->V_Object[Object_Index]->Object_Node->_getFullTransform());
 		Ogre::Vector3 Centre = worldAAB.getCenter();
 
 		return Centre;
@@ -106,15 +106,15 @@ void SB_Object::Object_Camera_Goto(int Object_Index)
 	}
 	else
 	{
-		CentreNode = App->CLSB_GameDirector->V_Object[Index]->Object_Node->getPosition();
+		CentreNode = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->getPosition();
 
-		Centre = App->CLSB_GameDirector->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-		Size = App->CLSB_GameDirector->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getMaximum();
+		Centre = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+		Size = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getMaximum();
 
 		//Centre.z = Centre.z + Size.z;
 
-		WS = App->CLSB_GameDirector->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Size);
-		WS2 = App->CLSB_GameDirector->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+		WS = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Size);
+		WS2 = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
 		//WS.z = WS.z - 40;// Size.z;
 	}
 
@@ -168,7 +168,7 @@ Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 void SB_Object::Delete_Object()
 {
 	int MeshIndex = App->CLSB_Properties->Current_Selected_Object;
-	btRigidBody* body = App->CLSB_GameDirector->V_Object[MeshIndex]->Phys_Body;
+	btRigidBody* body = App->CLSB_Game_Editor->V_Object[MeshIndex]->Phys_Body;
 
 	if (body)
 	{
@@ -177,8 +177,8 @@ void SB_Object::Delete_Object()
 
 	App->CLSB_FileView->DeleteItem();
 
-	App->CLSB_GameDirector->V_Object[MeshIndex]->Deleted = 1;
-	App->CLSB_GameDirector->V_Object[MeshIndex]->Object_Node->setVisible(false);
+	App->CLSB_Game_Editor->V_Object[MeshIndex]->Deleted = 1;
+	App->CLSB_Game_Editor->V_Object[MeshIndex]->Object_Node->setVisible(false);
 
 	App->CLSB_Scene->Scene_Modified = 1;
 }
@@ -188,7 +188,7 @@ void SB_Object::Delete_Object()
 // *************************************************************************
 void SB_Object::Rename_Object(int Index)
 {
-	Base_Object* Object = App->CLSB_GameDirector->V_Object[Index];
+	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
 
 	strcpy(App->CLSB_Dialogs->btext, "Change Object Name");
 	strcpy(App->CLSB_Dialogs->Chr_Text, Object->Mesh_Name);

@@ -41,7 +41,7 @@ SB_BR_Render::~SB_BR_Render()
 void SB_BR_Render::Start_BR_3D_Mode(void)
 {
 	return;
-	if (App->CLSB_GameDirector->Project_Loaded == 0)
+	if (App->CLSB_Game_Editor->Project_Loaded == 0)
 	{
 		App->CLSB_Camera_EQ->Reset_Orientation();
 		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);

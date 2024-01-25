@@ -1572,9 +1572,9 @@ void SB_MeshViewer::Show_Exsisting_Objects(bool flag)
 
 	while (Count < App->CLSB_Scene->Object_Count)
 	{
-		if (App->CLSB_GameDirector->V_Object[Count]->Object_Node && App->CLSB_GameDirector->V_Object[Count]->Deleted == 0)
+		if (App->CLSB_Game_Editor->V_Object[Count]->Object_Node && App->CLSB_Game_Editor->V_Object[Count]->Deleted == 0)
 		{
-			App->CLSB_GameDirector->V_Object[Count]->Object_Node->setVisible(flag);
+			App->CLSB_Game_Editor->V_Object[Count]->Object_Node->setVisible(flag);
 		}
 
 		Count++;
