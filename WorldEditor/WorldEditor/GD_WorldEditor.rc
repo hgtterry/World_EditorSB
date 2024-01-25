@@ -1460,7 +1460,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [24-01-24] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [25-01-24] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2494,7 +2494,7 @@ BEGIN
     PUSHBUTTON      "First",IDC_BT_FIRST,36,261,87,20,NOT WS_VISIBLE | WS_DISABLED
     PUSHBUTTON      "Free",IDC_BT_FREE,36,239,87,20,NOT WS_VISIBLE | WS_DISABLED
     PUSHBUTTON      "Full Screen",IDC_BT_FULLSCREEN,36,283,87,20,NOT WS_VISIBLE | WS_DISABLED
-    PUSHBUTTON      "Preview Editor",IDC_BT_PREVIEWEDITOR,36,17,87,20
+    PUSHBUTTON      "Game Editor",IDC_BT_PREVIEWEDITOR,36,17,87,20
 END
 
 IDD_SB_SELECT_FACE DIALOGEX 0, 0, 309, 255
@@ -3033,6 +3033,10 @@ BEGIN
         MENUITEM "Import",                      ID_FILE_IMPORT33111
         MENUITEM "Save Scene",                  ID_FILE_SAVESCENE
         MENUITEM SEPARATOR
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Delete",                      ID_EDIT_DELETEMENU
     END
     POPUP "Camera"
     BEGIN

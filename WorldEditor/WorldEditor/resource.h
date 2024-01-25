@@ -1177,6 +1177,8 @@
 #define ID_OPEN_PROJECT                 33122
 #define ID_DEBUG_PROJECTINFO            33123
 #define ID_DEBUG_MESHMANAGER            33124
+#define ID_EDIT_DELETE33125             33125
+#define ID_EDIT_DELETEMENU              33126
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1185,7 +1187,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        369
-#define _APS_NEXT_COMMAND_VALUE         33125
+#define _APS_NEXT_COMMAND_VALUE         33127
 #define _APS_NEXT_CONTROL_VALUE         1613
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

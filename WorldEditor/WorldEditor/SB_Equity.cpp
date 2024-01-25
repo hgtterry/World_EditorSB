@@ -296,6 +296,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_EDIT_DELETEMENU)
+		{
+			App->CLSB_FileView->Context_Delete(App->ListPanel);
+			return TRUE;
+		}
+		
 		// Physics
 		if (LOWORD(wParam) == ID_PHYSICS_PHYSICS)
 		{

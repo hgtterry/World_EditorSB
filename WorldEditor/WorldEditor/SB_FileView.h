@@ -40,6 +40,8 @@ public:
 	void DeleteItem();
 	void Change_Item_Name(HTREEITEM Folder, char* FolderName);
 
+	void Context_Delete(HWND hDlg);
+
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_EntitiesFolder;
@@ -59,7 +61,6 @@ private:
 	
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
-	void Context_Delete(HWND hDlg);
 	void Context_Rename(HWND hDlg);
 
 	char FileView_Folder[255];
