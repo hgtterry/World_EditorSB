@@ -56,6 +56,8 @@ SB_Project::SB_Project(void)
 	//Set_QuickLoad_Flag = 1;
 
 	m_Ini_Path_File_Name[0] = 0;
+
+	WriteFile = nullptr;
 }
 
 SB_Project::~SB_Project(void)
@@ -363,6 +365,145 @@ bool SB_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "\\");
 
 	App->CLSB_Scene->Add_Resource_Location_Project(m_Main_Assets_Path);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Save_Project()
+{
+	if (_mkdir(m_Project_Sub_Folder) == 0)
+	{
+		_chdir(m_Project_Sub_Folder);
+	}
+	else
+	{
+		_chdir(m_Project_Sub_Folder);
+	}
+
+	bool test = Save_Project_Ini();
+	if (test == 0)
+	{
+		return 0;
+	}
+
+//	Save_Level_Folder();
+//	Save_Main_Asset_Folder();
+
+	_chdir(m_Level_Folder_Path);
+
+	if (App->CLSB_Scene->Area_Added == 1)
+	{
+//		Save_Aera_Folder();
+	}
+
+	if (App->CLSB_Scene->Player_Added == 1)
+	{
+//		Save_Players_Folder();
+	}
+
+//	Save_Cameras_Folder();
+//	Save_Objects_Folder();
+//	Save_Display_Folder();
+
+	/*App->CLSB_FileView->Change_Level_Name();
+	App->CLSB_FileView->Change_Project_Name();*/
+
+//	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+
+//	App->CLSB_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+
+//	App->SBC_Project->Directory_Changed_Flag = 0;
+
+//	strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
+//	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+//	App->SBC_FileIO->RecentFileHistory_Update();
+
+
+	/*if (Set_QuickLoad_Flag == 1)
+	{
+		strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
+		App->CL_Prefs->Prefs_QuickLoad_Default_f = 0;
+		App->CL_Prefs->Write_Preferences();
+	}*/
+
+
+	App->Say("Scene Saved");
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Project_Ini:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool SB_Project::Save_Project_Ini()
+{
+	m_Ini_Path_File_Name[0] = 0;
+
+	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
+	strcat(m_Ini_Path_File_Name, "\\");
+	strcat(m_Ini_Path_File_Name, "Project.SBProj");
+
+	int test = App->CLSB_FileIO->SearchFolders(m_Project_Sub_Folder, "\\Project.SBProj");
+	if (test == 1)
+	{
+		App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
+
+		bool Doit = App->CLSB_Dialogs->Canceled;
+		if (Doit == 1)
+		{
+			return 0;
+		}
+	}
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(m_Ini_Path_File_Name, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Files]");
+	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->CLSB_Project->m_Project_Name);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->CLSB_Project->m_Level_Name);
+//	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CLSB_Build->GameName);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Options]");
+//	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
+//	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CLSB_Scene->UniqueID_Area_Count);
+
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CLSB_Scene->Player_Count);
+//	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CLSB_Scene->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CLSB_Scene->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CLSB_Scene->UniqueID_Object_Counter);
+
+
+//	int Adjusted = App->CLSB_LookUps->Get_Adjusted_Counters_Count();
+
+//	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+//	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene->UniqueID_Counters_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Config]");
+//	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CLSB_Build->GameOptions->Show_FPS);
+//	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CLSB_Build->GameOptions->FullScreen);
+//	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CLSB_Build->GameOptions->Zipped_Assets_Flag);
+//	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CLSB_Build->GameOptions->Front_Dialog_Flag);
+
+	fclose(WriteFile);
 
 	return 1;
 }

@@ -51,7 +51,7 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include "btBulletDynamicsCommon.h"
-
+#include <direct.h>
 #include "Genesis.h"
 
 #include "Ogre.h"

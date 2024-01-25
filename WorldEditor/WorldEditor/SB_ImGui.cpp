@@ -88,6 +88,8 @@ SB_ImGui::SB_ImGui()
 	Show_Assimp_Data_F = 0;
 	Show_WE_Data_F = 0;
 
+	Show_Game_Editor_Data_F = 0;
+
 	Pick_Face = 1;
 
 	m_pDoc = nullptr;
@@ -1309,14 +1311,35 @@ void SB_ImGui::ImGui_Debug_Project(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(250, 30), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Project_Debug", &Show_Debug_Project, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("App_Information", &Show_Debug_Project, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Text("Sub_Folder: = %s", App->CLSB_Project->m_Project_Sub_Folder);
-		ImGui::Text("Asset_Path: = %s", App->CLSB_Project->m_Main_Assets_Path);
+		if (ImGui::Button("Game Editor"))
+		{
+			if (Show_Game_Editor_Data_F == 1)
+			{
+				Show_Game_Editor_Data_F = 0;
+			}
+			else
+			{
+				Show_Game_Editor_Data_F = 1;
+			}
+		}
+
+		if (Show_Game_Editor_Data_F == 1)
+		{
+			ImGui::Text("Sub_Folder: = %s", App->CLSB_Project->m_Project_Sub_Folder);
+			ImGui::Text("Asset_Path: = %s", App->CLSB_Project->m_Main_Assets_Path);
+
+			ImGui::Text(" ");
+
+			ImGui::Text("Project Name: = %s", App->CLSB_Project->m_Project_Name);
+			ImGui::Text("Level Name: = %s", App->CLSB_Project->m_Level_Name);
+			ImGui::Text("Level File Name: = %s", App->CLSB_Project->m_Level_File_Name);
+		}
 
 		//ImGui::Text("SourceFile: = %s", App->CLSB_Objects_Create->SourceFile);
 		//ImGui::Text("DestFile: = %s", App->CLSB_Objects_Create->DestinationFile);

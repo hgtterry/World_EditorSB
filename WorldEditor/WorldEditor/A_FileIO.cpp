@@ -295,3 +295,30 @@ bool SB_FileIO::Delete_Directory_Contents(char* dir)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					SearchFolders Terry Bernie			 		 	   *
+// *************************************************************************
+bool SB_FileIO::SearchFolders(char* Path, char* File)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Path);
+	strcat(pSearchPath, File);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
+}

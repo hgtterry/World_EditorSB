@@ -40,6 +40,8 @@ public:
 	// 1 = File Exsits    0 = No File
 	bool Check_File_Exist(char* Full_Path);
 
+	bool SearchFolders(char* Path, char* File);
+
 	char FileName[MAX_PATH];
 	char PathFileName[MAX_PATH];
 	char BrowserMessage[MAX_PATH];

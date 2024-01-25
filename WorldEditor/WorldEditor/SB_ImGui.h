@@ -81,6 +81,8 @@ public:
 	bool Show_Face_Selection;
 	bool Show_Debug_Project;
 
+	bool Show_Game_Editor_Data_F;
+
 	bool ImGui_Surface_Active;
 	bool Resize_ImGui_Surface_F;
 
