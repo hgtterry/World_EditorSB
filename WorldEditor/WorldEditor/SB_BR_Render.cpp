@@ -61,7 +61,7 @@ void SB_BR_Render::Start_BR_3D_Mode(void)
 		App->CLSB_Project->Load_Project();
 
 		App->CLSB_Environment->Add_New_Environ_Entity(true);
-		App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
+		App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene_Data->Object_Count - 1);
 
 	}
 	else
@@ -150,7 +150,7 @@ void SB_BR_Render::Exit_BR_3D_Mode(void)
 		App->CLSB_Ogre_Setup->mCamera->yaw(Radian(0));
 		Root::getSingletonPtr()->renderOneFrame();
 
-		App->CLSB_Scene->FullScreenMode_Flag = 0;
+		App->CLSB_Scene_Data->FullScreenMode_Flag = 0;
 		App->CLSB_ImGui->Show_Physics_Console = 1;
 		
 		App->Block_RB_Actions = 0;

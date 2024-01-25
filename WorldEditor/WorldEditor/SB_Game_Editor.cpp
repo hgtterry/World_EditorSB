@@ -253,7 +253,7 @@ void SB_Game_Editor::Go_Game_Editor()
 		{
 			App->CLSB_Project->Load_Project();
 			App->CLSB_Environment->Add_New_Environ_Entity(true);
-			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
+			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene_Data->Object_Count - 1);
 		}
 
 		//Set_Camera();
@@ -356,7 +356,7 @@ void SB_Game_Editor::Reset_Camera()
 // *************************************************************************
 void SB_Game_Editor::Show_Objects(bool Flag)
 {
-	int Object_Count = App->CLSB_Scene->Object_Count-1;
+	int Object_Count = App->CLSB_Scene_Data->Object_Count-1;
 	int Count = 0;
 
 	while (Count < Object_Count)

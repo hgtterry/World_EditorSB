@@ -40,7 +40,7 @@ SB_Objects_Create::~SB_Objects_Create(void)
 bool SB_Objects_Create::Add_Objects_From_File() // From File
 {
 
-	int Object_Count = App->CLSB_Scene->Object_Count;
+	int Object_Count = App->CLSB_Scene_Data->Object_Count;
 	int Count = 0;
 
 	while (Count < Object_Count)
@@ -77,12 +77,12 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	//	return;
 	//}
 
-	int Index = App->CLSB_Scene->Object_Count;
+	int Index = App->CLSB_Scene_Data->Object_Count;
 
 	App->CLSB_Game_Editor->V_Object[Index] = new Base_Object();
 
 	Base_Object* Object = App->CLSB_Game_Editor->V_Object[Index];
-	Object->This_Object_UniqueID = App->CLSB_Scene->UniqueID_Object_Counter; // Unique ID
+	Object->This_Object_UniqueID = App->CLSB_Scene_Data->UniqueID_Object_Counter; // Unique ID
 
 
 	strcpy(Object->Mesh_Name, App->CLSB_Meshviewer->Object_Name);
@@ -99,10 +99,10 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	App->CLSB_FileView->SelectItem(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
 
 
-	App->CLSB_Scene->UniqueID_Object_Counter++; // Unique ID
-	App->CLSB_Scene->Object_Count++;  // Must be last line
+	App->CLSB_Scene_Data->UniqueID_Object_Counter++; // Unique ID
+	App->CLSB_Scene_Data->Object_Count++;  // Must be last line
 
-	App->CLSB_Scene->Scene_Modified = 1;
+	App->CLSB_Scene_Data->Scene_Modified = 1;
 }
 
 // *************************************************************************
@@ -110,7 +110,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 // *************************************************************************
 void SB_Objects_Create::Dispatch_MeshViewer()
 {
-	int Index = App->CLSB_Scene->Object_Count;
+	int Index = App->CLSB_Scene_Data->Object_Count;
 
 	//if (App->CLSB_Meshviewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	//{
@@ -146,7 +146,7 @@ bool SB_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CLSB_Scene->Project_Resource_Group);
+	Object->Object_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CLSB_Scene_Data->Project_Resource_Group);
 	Object->Object_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 

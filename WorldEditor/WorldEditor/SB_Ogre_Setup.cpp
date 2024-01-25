@@ -517,7 +517,7 @@ bool SB_Ogre_Setup::ExitFullScreen()
 		mCamera->yaw(Radian(0));
 		Root::getSingletonPtr()->renderOneFrame();
 
-		App->CLSB_Scene->FullScreenMode_Flag = 0;
+		App->CLSB_Scene_Data->FullScreenMode_Flag = 0;
 		App->CLSB_ImGui->Show_Physics_Console = 1;
 		//App->SBC_Scene->Editor_Mode();
 

@@ -123,7 +123,7 @@ bool SB_Environment::Add_New_Environ_Entity(bool FirstOne)
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	int Index = App->CLSB_Scene->Object_Count;
+	int Index = App->CLSB_Scene_Data->Object_Count;
 
 	App->CLSB_Game_Editor->V_Object[Index] = new Base_Object();
 	App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0] = new Environ_type;
@@ -160,7 +160,7 @@ bool SB_Environment::Add_New_Environ_Entity(bool FirstOne)
 	//App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	//App->SBC_Scene->UniqueID_Object_Counter++;
-	App->CLSB_Scene->Object_Count++;
+	App->CLSB_Scene_Data->Object_Count++;
 
 	//App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Sounds_Folder);
 	return 1;
@@ -218,7 +218,7 @@ void SB_Environment::Mark_As_Altered_Environ(int Index)
 {
 	App->CLSB_Game_Editor->V_Object[Index]->Altered = 1;
 
-	App->CLSB_Scene->Scene_Modified = 1;
+	App->CLSB_Scene_Data->Scene_Modified = 1;
 
 	App->CLSB_FileView->Mark_Altered(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
 }
@@ -291,7 +291,7 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 int SB_Environment::Get_First_Environ()
 {
 	int Count = 0;
-	while (Count < App->CLSB_Scene->Object_Count)
+	while (Count < App->CLSB_Scene_Data->Object_Count)
 	{
 		if (App->CLSB_Game_Editor->V_Object[Count]->Usage == Enums::Usage_EnvironEntity && App->CLSB_Game_Editor->V_Object[Count]->S_Environ[0]->IsMainEnvironment == 1)
 		{
@@ -764,10 +764,10 @@ void SB_Environment::Set_To_PlayerView()
 	//App->CLSB_TopTabs->Toggle_FirstCam_Flag = 1;
 	//App->CLSB_TopTabs->Toggle_FreeCam_Flag = 0;
 
-	App->CLSB_Scene->B_Player[0]->Player_Node->setVisible(false);
+	App->CLSB_Scene_Data->B_Player[0]->Player_Node->setVisible(false);
 
-	int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-	App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+	int f = App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getCollisionFlags();
+	App->CLSB_Scene_Data->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;

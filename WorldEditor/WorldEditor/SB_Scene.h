@@ -24,11 +24,11 @@ distribution.
 
 #include "Base_Player.h"
 
-class SB_Scene
+class SB_Scene_Data
 {
 public:
-	SB_Scene();
-	~SB_Scene();
+	SB_Scene_Data();
+	~SB_Scene_Data();
 
 	bool Clear_Level();
 	void Go_FullScreen_Mode(void);

@@ -88,7 +88,7 @@ SB_App::SB_App()
 	CLSB_Doc =					nullptr;
 	CLSB_Panels =				nullptr;
 	CLSB_Level =				nullptr;
-	CLSB_Scene =				nullptr;
+	CLSB_Scene_Data =			nullptr;
 	CLSB_ViewMgrDlg =			nullptr;
 
 
@@ -314,7 +314,7 @@ bool SB_App::InitApp(void)
 	CLSB_Doc =						new SB_Doc();
 	CLSB_Panels =					new	SB_Panels();
 	CLSB_Level =					new SB_Level();
-	CLSB_Scene =					new SB_Scene();
+	CLSB_Scene_Data =				new SB_Scene_Data();
 	CLSB_ViewMgrDlg =				new SB_ViewMgrDlg();
 	
 	CLSB_Bullet =					new SB_Bullet();

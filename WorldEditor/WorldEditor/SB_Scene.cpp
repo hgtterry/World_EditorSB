@@ -135,7 +135,7 @@ struct tag_FaceList
 	Box3d Bounds;
 };
 
-SB_Scene::SB_Scene()
+SB_Scene_Data::SB_Scene_Data()
 {
 	Project_Resource_Group = "Project_Resource_Group";
 
@@ -168,7 +168,7 @@ SB_Scene::SB_Scene()
 	B_Player.reserve(2);
 }
 
-SB_Scene::~SB_Scene()
+SB_Scene_Data::~SB_Scene_Data()
 {
 }
 
@@ -180,7 +180,7 @@ static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
 // *************************************************************************
 // *			Clear_Level:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-bool SB_Scene::Clear_Level()
+bool SB_Scene_Data::Clear_Level()
 {
 	//App->SBC_Gui_Environ->Reset_Class();
 	//App->SBC_Project->Reset_Class();
@@ -237,7 +237,7 @@ bool SB_Scene::Clear_Level()
 // *************************************************************************
 // * 				Build_World:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Scene::Build_World(int ExpSelected)
+void SB_Scene_Data::Build_World(int ExpSelected)
 {
 	BrushChange = -1;
 	SubBrushChange = 0;
@@ -316,7 +316,7 @@ void SB_Scene::Build_World(int ExpSelected)
 // *************************************************************************
 // *		Level_Build_G3ds:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+bool SB_Scene_Data::Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
 	App->CLSB_Model->XBrushCount = 0;
 	AdjustedIndex_Count = 0;
@@ -363,7 +363,7 @@ static int	SubBrushCount;
 // *************************************************************************
 // *		BrushList_Export:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
+bool SB_Scene_Data::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -423,7 +423,7 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 // *************************************************************************
 // *			Brush_Export:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::Brush_Export(const Brush* b)
+bool SB_Scene_Data::Brush_Export(const Brush* b)
 {
 	
 	switch (b->Type)
@@ -471,7 +471,7 @@ bool SB_Scene::Brush_Export(const Brush* b)
 // *************************************************************************
 // *						FaceList_Export								   *
 // *************************************************************************
-bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+bool SB_Scene_Data::FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 	if (BrushCount > BrushChange)
 	{
@@ -689,7 +689,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 // *************************************************************************
 // *							Get_Adjusted_Index						   *
 // *************************************************************************
-int SB_Scene::Get_Adjusted_Index(int RealIndex)
+int SB_Scene_Data::Get_Adjusted_Index(int RealIndex)
 {
 	int Count = 0;
 	while (Count < 500)
@@ -708,7 +708,7 @@ int SB_Scene::Get_Adjusted_Index(int RealIndex)
 // *************************************************************************
 // *			AddTexture_GL:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
+bool SB_Scene_Data::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
 {
 	App->Get_Current_Document();
 
@@ -752,7 +752,7 @@ bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int Gro
 // *************************************************************************
 // *		Go_FullScreen_Mode:- Terry and Hazel Flanigan 2022		  	   *
 // *************************************************************************
-void SB_Scene::Go_FullScreen_Mode(void)
+void SB_Scene_Data::Go_FullScreen_Mode(void)
 {
 	FullScreenMode_Flag = 1;
 
@@ -777,7 +777,7 @@ void SB_Scene::Go_FullScreen_Mode(void)
 // *************************************************************************
 // *		Create_Resources_Group:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Scene::Create_Resources_Group()
+bool SB_Scene_Data::Create_Resources_Group()
 {
 	if (Project_Resources_Created == 0)
 	{
@@ -791,7 +791,7 @@ bool SB_Scene::Create_Resources_Group()
 // *************************************************************************
 // *		Delete_Resources_Group:- Terry and Hazel Flanigan 2022 		   *
 // *************************************************************************
-bool SB_Scene::Delete_Resources_Group()
+bool SB_Scene_Data::Delete_Resources_Group()
 {
 
 	if (Project_Resources_Created == 1)
@@ -806,7 +806,7 @@ bool SB_Scene::Delete_Resources_Group()
 // *************************************************************************
 // *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
+bool SB_Scene_Data::Add_Resource_Location_Project(char* Resource_Location)
 {
 	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
 
@@ -823,7 +823,7 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 // *************************************************************************
 // *	  Get_Adjusted_Counters_Count:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-int SB_Scene::Get_Adjusted_Counters_Count(void)
+int SB_Scene_Data::Get_Adjusted_Counters_Count(void)
 {
 	int New_Count = 0;
 	int Count = 0;

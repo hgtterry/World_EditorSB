@@ -185,7 +185,7 @@ public:
 	SB_Doc*						CLSB_Doc;
 	SB_Panels*					CLSB_Panels;
 	SB_Level*					CLSB_Level;
-	SB_Scene*					CLSB_Scene;
+	SB_Scene_Data*				CLSB_Scene_Data;
 	SB_ViewMgrDlg*				CLSB_ViewMgrDlg;
 
 	SB_Bullet*					CLSB_Bullet;

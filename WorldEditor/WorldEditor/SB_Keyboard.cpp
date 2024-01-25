@@ -104,7 +104,7 @@ void SB_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	//------------------------------------------------ Escape 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
-		if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+		if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
 		{
 			App->CLSB_Ogre_Setup->ExitFullScreen();
 		}
@@ -204,7 +204,7 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			}
 			else
 			{
-				if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+				if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
 				{
 					App->CLSB_Ogre_Setup->ExitFullScreen();
 				}
@@ -217,12 +217,12 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
 	{
 		
-		if (App->CLSB_Scene->Player_Added == 1)
+		if (App->CLSB_Scene_Data->Player_Added == 1)
 		{
 			//App->Flash_Window();
 			App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
 			//App->CL_Player->Check_Collisions_New();
-			App->CLSB_Scene->B_Player[0]->IsMOving = 1;
+			App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
 		}
 	}
 
@@ -293,19 +293,19 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
 		{
 			//App->Flash_Window();
-			if (App->CLSB_Scene->Player_Added == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene->B_Player[0]->IsMOving = 1;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
 			}
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving == 1 && App->CLSB_Ogre_Setup->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving == 1 && App->CLSB_Ogre_Setup->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CLSB_Scene->B_Player[0]->IsMOving = 0;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 0;
 			}
 		}
 		//	------------------------------------------------ Back
@@ -429,21 +429,21 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(87) < 0) // W Key
 		{
 
-			if (App->CLSB_Scene->Player_Added == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
 				//App->Flash_Window();
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));
 				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene->B_Player[0]->IsMOving = 1;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CLSB_Scene->B_Player[0]->IsMOving = 0;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 0;
 			}
 		}
 
@@ -466,20 +466,20 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(83) < 0) // S Key	
 		{
 
-			if (App->CLSB_Scene->Player_Added == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 1));
 				//App->SBC_Player->Check_Collisions_New();
-				App->CLSB_Scene->B_Player[0]->IsMOving_Back = 1;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving_Back == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CLSB_Scene->B_Player[0]->IsMOving_Back = 0;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back = 0;
 			}
 		}
 
@@ -487,19 +487,19 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(65) < 0)
 		{
 
-			if (App->CLSB_Scene->Player_Added == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene->B_Player[0]->IsMOving_Right = 1;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right = 1;
 			}
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving_Right == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CLSB_Scene->B_Player[0]->IsMOving_Right = 0;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right = 0;
 			}
 		}
 
@@ -507,20 +507,20 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(68) < 0)
 		{
 
-			if (App->CLSB_Scene->Player_Added == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene->B_Player[0]->IsMOving_Left = 1;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CLSB_Scene->Player_Added == 1 && App->CLSB_Scene->B_Player[0]->IsMOving_Left == 1)
+			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left == 1)
 			{
 				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CLSB_Scene->B_Player[0]->IsMOving_Left = 0;
+				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left = 0;
 			}
 		}
 
@@ -536,7 +536,7 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 				}
 				else
 				{
-					if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+					if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
 					{
 						App->CLSB_Ogre_Setup->ExitFullScreen();
 					}

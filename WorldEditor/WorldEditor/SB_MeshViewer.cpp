@@ -1054,7 +1054,7 @@ void SB_MeshViewer::RedrawWindow_Dlg_Buttons()
 // *************************************************************************
 void SB_MeshViewer::Copy_Assets()
 {
-	App->CLSB_Scene->Add_Resource_Location_Project(mResource_Folder);
+	App->CLSB_Scene_Data->Add_Resource_Location_Project(mResource_Folder);
 
 	// ------------------ Copy Mesh
 	strcpy(SourceFile, mResource_Folder);
@@ -1535,12 +1535,12 @@ void SB_MeshViewer::Set_Debug_Shapes()
 {
 	int Count = 0;
 
-	while (Count < App->CLSB_Scene->Player_Count)
+	while (Count < App->CLSB_Scene_Data->Player_Count)
 	{
-		if (App->CLSB_Scene->B_Player[Count]->Physics_Debug_On == 1)
+		if (App->CLSB_Scene_Data->B_Player[Count]->Physics_Debug_On == 1)
 		{
-			int f = App->CLSB_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
-			App->CLSB_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			int f = App->CLSB_Scene_Data->B_Player[Count]->Phys_Body->getCollisionFlags();
+			App->CLSB_Scene_Data->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 		}
 
 		Count++;
@@ -1570,7 +1570,7 @@ void SB_MeshViewer::Show_Exsisting_Objects(bool flag)
 {
 	int Count = 0;
 
-	while (Count < App->CLSB_Scene->Object_Count)
+	while (Count < App->CLSB_Scene_Data->Object_Count)
 	{
 		if (App->CLSB_Game_Editor->V_Object[Count]->Object_Node && App->CLSB_Game_Editor->V_Object[Count]->Deleted == 0)
 		{
@@ -2104,7 +2104,7 @@ void SB_MeshViewer::Set_For_Objects(HWND hDlg)
 	char ConNum[256];
 
 	strcpy_s(ATest, "Object_");
-	_itoa(App->CLSB_Scene->Object_Count, ConNum, 10);
+	_itoa(App->CLSB_Scene_Data->Object_Count, ConNum, 10);
 	strcat(ATest, ConNum);
 
 	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);

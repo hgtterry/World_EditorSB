@@ -78,8 +78,8 @@ bool SB_Project::Load_Project()
 	
 	m_Ini_Path_File_Name[0] = 0;
 
-	App->CLSB_Scene->Clear_Level();
-	App->CLSB_Scene->Create_Resources_Group();
+	App->CLSB_Scene_Data->Clear_Level();
+	App->CLSB_Scene_Data->Create_Resources_Group();
 
 	Set_Paths();
 
@@ -141,7 +141,7 @@ bool SB_Project::Load_Project()
 
 		//App->CLSB_Model->Set_BondingBox_Brushes();
 
-		App->CLSB_Scene->Area_Added = 1;
+		App->CLSB_Scene_Data->Area_Added = 1;
 	}
 
 	// ------------------------------------- Player
@@ -153,7 +153,7 @@ bool SB_Project::Load_Project()
 		App->CLSB_Player->Create_Player_Object();
 		App->CLSB_Properties->Update_ListView_Player();
 
-		App->CLSB_Scene->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
+		App->CLSB_Scene_Data->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
 		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Players_Folder);
 		App->CLSB_FileView->SelectItem(App->CLSB_FileView->FV_Players_Folder);
 		App->CLSB_FileView->ExpandRoot();
@@ -171,7 +171,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-		V_Load_Project_Objects();
+		Load_Project_Objects();
 		App->CLSB_Objects_Create->Add_Objects_From_File();
 	}
 
@@ -222,9 +222,9 @@ bool SB_Project::Load_Project()
 }
 
 // *************************************************************************
-// *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool SB_Project::V_Load_Project_Objects()
+bool SB_Project::Load_Project_Objects()
 {
 	int Int_Tag = 0;
 	char Object_Ini_Path[MAX_PATH];
@@ -321,7 +321,7 @@ bool SB_Project::V_Load_Project_Objects()
 
 	}
 
-	App->CLSB_Scene->Object_Count = Count;
+	App->CLSB_Scene_Data->Object_Count = Count;
 
 	return 1;
 }
@@ -364,7 +364,7 @@ bool SB_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
-	App->CLSB_Scene->Add_Resource_Location_Project(m_Main_Assets_Path);
+	App->CLSB_Scene_Data->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;
 }
@@ -394,12 +394,12 @@ bool SB_Project::Save_Project()
 
 	_chdir(m_Level_Folder_Path);
 
-	if (App->CLSB_Scene->Area_Added == 1)
+	if (App->CLSB_Scene_Data->Area_Added == 1)
 	{
 		Save_Aera_Folder();
 	}
 
-	if (App->CLSB_Scene->Player_Added == 1)
+	if (App->CLSB_Scene_Data->Player_Added == 1)
 	{
 //		Save_Players_Folder();
 	}
@@ -481,19 +481,19 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Options]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
-	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CLSB_Scene->UniqueID_Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene_Data->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CLSB_Scene_Data->UniqueID_Area_Count);
 
-	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CLSB_Scene->Player_Count);
-	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CLSB_Scene->Camera_Count);
-	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CLSB_Scene->Object_Count);
-	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CLSB_Scene->UniqueID_Object_Counter);
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CLSB_Scene_Data->Player_Count);
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CLSB_Scene_Data->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CLSB_Scene_Data->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CLSB_Scene_Data->UniqueID_Object_Counter);
 
 
-	int Adjusted = App->CLSB_Scene->Get_Adjusted_Counters_Count();
+	int Adjusted = App->CLSB_Scene_Data->Get_Adjusted_Counters_Count();
 
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
-	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene->UniqueID_Counters_Count);
+	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene_Data->UniqueID_Counters_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -661,7 +661,7 @@ bool SB_Project::Save_Aeras_Data()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene_Data->Area_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -674,7 +674,7 @@ bool SB_Project::Save_Aeras_Data()
 	float z = 0;
 
 	int Count = 0;
-	while (Count < App->CLSB_Scene->Area_Count)
+	while (Count < App->CLSB_Scene_Data->Area_Count)
 	{
 		strcpy(buff, "[Area_");
 		_itoa(Count, Cbuff, 10);
@@ -788,7 +788,7 @@ bool SB_Project::Save_Objects_Data()
 	int new_Count = 0;
 
 	int Count = 0;
-	while (Count < App->CLSB_Scene->Object_Count)
+	while (Count < App->CLSB_Scene_Data->Object_Count)
 	{
 		if (App->CLSB_Game_Editor->V_Object[Count]->Deleted == 0)
 		{

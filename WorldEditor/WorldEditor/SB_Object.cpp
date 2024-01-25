@@ -180,7 +180,7 @@ void SB_Object::Delete_Object()
 	App->CLSB_Game_Editor->V_Object[MeshIndex]->Deleted = 1;
 	App->CLSB_Game_Editor->V_Object[MeshIndex]->Object_Node->setVisible(false);
 
-	App->CLSB_Scene->Scene_Modified = 1;
+	App->CLSB_Scene_Data->Scene_Modified = 1;
 }
 
 // *************************************************************************
@@ -203,7 +203,7 @@ void SB_Object::Rename_Object(int Index)
 	strcpy(Object->Mesh_Name, App->CLSB_Dialogs->Chr_Text);
 
 	Object->Altered = 1;
-	App->CLSB_Scene->Scene_Modified = 1;
+	App->CLSB_Scene_Data->Scene_Modified = 1;
 	App->CLSB_FileView->Mark_Altered(Object->FileViewItem);
 
 	App->CLSB_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
