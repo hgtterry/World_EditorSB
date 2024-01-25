@@ -183,6 +183,7 @@
 #define IDD_SB_MESHVIEWER               363
 #define IDD_SB_VIEWER3D_MV              365
 #define IDD_SB_PROPS_DIMENSIONS         367
+#define IDD_SB_BUILD_DIALOG             369
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -938,6 +939,17 @@
 #define IDC_BT_SCALE                    1610
 #define IDC_BT_ROTATION                 1611
 #define IDC_CK_LOCK                     1612
+#define IDC_STGAMENAME                  1613
+#define IDC_EDGAMENAME                  1614
+#define IDC_STPATH                      1615
+#define IDC_STLOCATION                  1616
+#define IDC_CK_BL_DESKTOP               1617
+#define IDC_BTBROWSE                    1618
+#define IDC_CK_BO_SHOWFPS               1619
+#define IDC_CK_FULLSCREEN               1620
+#define IDC_BT_BUILDGAME                1620
+#define IDC_CK_BO_FRONTDLG              1621
+#define IDC_CK_BO_ZIPFILES              1622
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1186,9 +1198,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        369
+#define _APS_NEXT_RESOURCE_VALUE        371
 #define _APS_NEXT_COMMAND_VALUE         33127
-#define _APS_NEXT_CONTROL_VALUE         1613
+#define _APS_NEXT_CONTROL_VALUE         1621
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

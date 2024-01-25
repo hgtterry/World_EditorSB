@@ -93,7 +93,7 @@ void SB_Build::Start_Project_Build()
 {
 	DlgHwnd = nullptr;
 
-	//DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Project_Build_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_BUILD_DIALOG, App->MainHwnd, (DLGPROC)Project_Build_Proc);
 }
 
 // *************************************************************************
@@ -106,7 +106,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 	case WM_INITDIALOG:
 	{
-		/*App->SBC_Build->DlgHwnd = hDlg;
+		App->CLSB_Build->DlgHwnd = hDlg;
 
 		SendDlgItemMessage(hDlg, IDC_EDGAMENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -119,7 +119,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_CK_BO_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -127,50 +127,50 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_CK_BO_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 
-		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
+		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->CLSB_Build->GameName);
 		
-		App->SBC_Build->Banner = hDlg;
+		App->CLSB_Build->Banner = hDlg;
 
-		if (App->SBC_Build->Directory_Altered == 0)
+		if (App->CLSB_Build->Directory_Altered == 0)
 		{
-			strcpy(App->SBC_Build->Desktop, App->SBC_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Build->Desktop, "\\");
-			strcpy(App->SBC_Build->StartFolder, App->SBC_Build->Desktop);
+			//strcpy(App->CLSB_Build->Desktop, App->CLSB_FileIO->DeskTop_Folder);
+			strcat(App->CLSB_Build->Desktop, "\\");
+			strcpy(App->CLSB_Build->StartFolder, App->CLSB_Build->Desktop);
 		}
 
-		if (App->SBC_Build->GameOptions->Show_FPS == 1)
+		if (App->CLSB_Build->GameOptions->Show_FPS == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->FullScreen == 1)
+		if (App->CLSB_Build->GameOptions->FullScreen == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->Front_Dialog_Flag == 1)
+		if (App->CLSB_Build->GameOptions->Front_Dialog_Flag == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->Zipped_Assets_Flag == 1)
+		if (App->CLSB_Build->GameOptions->Zipped_Assets_Flag == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
 
-		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);*/
+		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CLSB_Build->StartFolder);
 
 	
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -184,13 +184,13 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
-		if (GetDlgItem(hDlg, IDC_CKFULLSCREEN) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_CKFULLSCREEN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 		if (GetDlgItem(hDlg, IDC_STGAMENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -253,7 +253,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 	
 		return FALSE;
 	}
@@ -267,7 +267,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -286,7 +286,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -452,12 +452,11 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDCANCEL)
-		//{
-
-		//	EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
 
 		break;
 

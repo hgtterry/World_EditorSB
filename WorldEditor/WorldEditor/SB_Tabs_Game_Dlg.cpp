@@ -231,6 +231,12 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == IDC_BT_BUILDGAME)
+		{
+			App->CLSB_Build->Start_Project_Build();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TRUE3D)
 		{
 			if (App->BR_True3D_Mode_Active == 1)
@@ -305,7 +311,7 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_BT_FULLSCREEN)
 		{
-			App->CLSB_Scene->Go_FullScreen_Mode();
+			App->CLSB_Scene_Data->Go_FullScreen_Mode();
 			return TRUE;
 		}
 		
