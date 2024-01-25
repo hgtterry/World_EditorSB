@@ -462,11 +462,13 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
 		App->CLSB_FileView->Context_Selection = Enums::FileView_Objects_Folder;
+		EnableMenuItem(App->CLSB_GameDirector->GE_Menu, ID_EDIT_DELETEMENU, MF_DISABLED);
 		return;
 	}
 	if (!strcmp(FileView_File, "Objects"))
 	{
 		App->CLSB_FileView->Context_Selection = Enums::FileView_Objects_File;
+		EnableMenuItem(App->CLSB_GameDirector->GE_Menu, ID_EDIT_DELETEMENU, MF_ENABLED);
 
 		App->CLSB_Props_Dialogs->Hide_Dimensions_Dlg(1, App->CLSB_GameDirector->V_Object[Index]->Dimensions_Locked);
 

@@ -40,6 +40,8 @@ public:
 
 	bool Project_Loaded;
 
+	HMENU GE_Menu;
+
 	std::vector<Base_Object*> V_Object;
 };
 
