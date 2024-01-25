@@ -68,8 +68,13 @@ private:
 	bool Save_Level_Folder();
 	bool Save_Main_Asset_Folder();
 	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
+
 	bool Save_Aera_Folder();
 	bool Save_Aeras_Data();
+
+	bool Save_Objects_Folder();
+	bool Save_Objects_Data();
+
 
 	bool Directory_Changed_Flag;
 
