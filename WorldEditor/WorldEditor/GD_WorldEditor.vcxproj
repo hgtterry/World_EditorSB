@@ -272,6 +272,7 @@
     <ClCompile Include="TypeParser\type.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="zip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GD_WorldEditor.rc" />
@@ -421,6 +422,7 @@
     <ClInclude Include="units.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="WadFile.h" />
+    <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource.hm" />
