@@ -22,7 +22,7 @@ distribution.
 */
 
 #include "stdafx.h"
-#include "GD19_App.h"
+#include "AB_App.h"
 #include "resource.h"
 #include "SB_Build.h"
 #include "zip.h"
@@ -72,7 +72,7 @@ SB_Build::~SB_Build()
 // *************************************************************************
 void SB_Build::Init_Build_Game_Class()
 {
-	HZIP hz;
+	//HZIP hz;
 
 	//hz = CreateZip(_T("Test.zip"), 0);
 	//ZipAdd(hz, _T("Barrel_B2.dds"), _T("Barrel_B2.dds"));
@@ -93,7 +93,7 @@ void SB_Build::Start_Project_Build()
 {
 	DlgHwnd = nullptr;
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Project_Build_Proc);
+	//DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Project_Build_Proc);
 }
 
 // *************************************************************************
@@ -106,7 +106,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 	case WM_INITDIALOG:
 	{
-		App->SBC_Build->DlgHwnd = hDlg;
+		/*App->SBC_Build->DlgHwnd = hDlg;
 
 		SendDlgItemMessage(hDlg, IDC_EDGAMENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -163,14 +163,14 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		}
 
 
-		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);*/
 
 	
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -253,7 +253,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 	
 		return FALSE;
 	}
@@ -267,7 +267,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -286,178 +286,178 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				char Desktop[MAX_PATH];
-				strcpy(Desktop, App->SBC_FileIO->DeskTop_Folder);
-				strcat(Desktop, "\\");
+		//if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		//{
+		//	HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+		//	if (test == BST_CHECKED)
+		//	{
+		//		char Desktop[MAX_PATH];
+		//		strcpy(Desktop, App->SBC_FileIO->DeskTop_Folder);
+		//		strcat(Desktop, "\\");
 
-				strcpy(App->Com_CDialogs->szSelectedDir, Desktop);
-				strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
-				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+		//		strcpy(App->Com_CDialogs->szSelectedDir, Desktop);
+		//		strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+		//		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
-				App->SBC_Build->Directory_Altered = 1;
+		//		App->SBC_Build->Directory_Altered = 1;
 
-				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
-				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
-			
-				return 1;
-			}
-			else
-			{
-				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
-				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
+		//		EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
+		//		EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
+		//	
+		//		return 1;
+		//	}
+		//	else
+		//	{
+		//		EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
+		//		EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
 
-				App->SBC_Build->Directory_Altered = 1;
-				return 1;
-			}
-			return TRUE;
-		}
+		//		App->SBC_Build->Directory_Altered = 1;
+		//		return 1;
+		//	}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDC_BTBROWSE)
-		{
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
-			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
-			if (Test == 0) { return true; }
+		//if (LOWORD(wParam) == IDC_BTBROWSE)
+		//{
+		//	strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
+		//	int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
+		//	if (Test == 0) { return true; }
 
-			strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+		//	strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
 
-			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+		//	SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
-			App->SBC_Build->Directory_Altered = 1;
+		//	App->SBC_Build->Directory_Altered = 1;
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
+		//if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
+		//{
+		//	HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
 
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->Show_FPS = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->Show_FPS = 0;
-			}
+		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+		//	if (test == BST_CHECKED)
+		//	{
+		//		App->SBC_Build->GameOptions->Show_FPS = 1;
+		//	}
+		//	else
+		//	{
+		//		App->SBC_Build->GameOptions->Show_FPS = 0;
+		//	}
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+		//if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
+		//{
+		//	HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
 
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->FullScreen = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->FullScreen = 0;
-			}
+		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+		//	if (test == BST_CHECKED)
+		//	{
+		//		App->SBC_Build->GameOptions->FullScreen = 1;
+		//	}
+		//	else
+		//	{
+		//		App->SBC_Build->GameOptions->FullScreen = 0;
+		//	}
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDC_CK_BO_FRONTDLG)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
+		//if (LOWORD(wParam) == IDC_CK_BO_FRONTDLG)
+		//{
+		//	HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
 
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->Front_Dialog_Flag = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->Front_Dialog_Flag = 0;
-			}
+		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+		//	if (test == BST_CHECKED)
+		//	{
+		//		App->SBC_Build->GameOptions->Front_Dialog_Flag = 1;
+		//	}
+		//	else
+		//	{
+		//		App->SBC_Build->GameOptions->Front_Dialog_Flag = 0;
+		//	}
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
+		//if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
+		//{
+		//	HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
 
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
-			}
+		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+		//	if (test == BST_CHECKED)
+		//	{
+		//		App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
+		//	}
+		//	else
+		//	{
+		//		App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
+		//	}
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDOK)
-		{
-			char GameName[255];
-			char PathName[255];
-			GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
-			GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
-			int result = 1;
+		//if (LOWORD(wParam) == IDOK)
+		//{
+		//	char GameName[255];
+		//	char PathName[255];
+		//	GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
+		//	GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
+		//	int result = 1;
 
-			// Check Name Entered
-			result = strcmp(GameName, "");
-			if (result == 0)
-			{
-				App->Say("No Game Name Specified");
-				return 1;
-			}
+		//	// Check Name Entered
+		//	result = strcmp(GameName, "");
+		//	if (result == 0)
+		//	{
+		//		App->Say("No Game Name Specified");
+		//		return 1;
+		//	}
 
-			// Check Path Selected
-			result = strcmp(PathName, "");
-			if (result == 0)
-			{
-				App->Say("No Path Specified");
-				return 1;
-			}
+		//	// Check Path Selected
+		//	result = strcmp(PathName, "");
+		//	if (result == 0)
+		//	{
+		//		App->Say("No Path Specified");
+		//		return 1;
+		//	}
 
-			result = strcmp(GameName, App->SBC_Build->GameName);
-			if (result < 0 || result > 0)
-			{
-				App->SBC_Scene->Scene_Modified = 1;
-			}
-			
+		//	result = strcmp(GameName, App->SBC_Build->GameName);
+		//	if (result < 0 || result > 0)
+		//	{
+		//		App->SBC_Scene->Scene_Modified = 1;
+		//	}
+		//	
 
 
 
-			strcpy(App->Com_CDialogs->szSelectedDir, PathName);
-			strcpy(App->SBC_Build->StartFolder, PathName);
+		//	strcpy(App->Com_CDialogs->szSelectedDir, PathName);
+		//	strcpy(App->SBC_Build->StartFolder, PathName);
 
-			strcpy(App->SBC_Build->GameName, GameName);
-			App->SBC_Build->Create_ProjectFolder();
+		//	strcpy(App->SBC_Build->GameName, GameName);
+		//	App->SBC_Build->Create_ProjectFolder();
 
-			EndDialog(hDlg, LOWORD(wParam));
+		//	EndDialog(hDlg, LOWORD(wParam));
 
-			return TRUE;
-		}
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDCANCEL)
-		{
+		//if (LOWORD(wParam) == IDCANCEL)
+		//{
 
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
+		//	EndDialog(hDlg, LOWORD(wParam));
+		//	return TRUE;
+		//}
 
 		break;
 
@@ -470,9 +470,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void SB_Build::Create_ProjectFolder(void)
 {
-
-
-	ProjectFolder[0] = 0;
+	/*ProjectFolder[0] = 0;
 	Sub_ProjectFolder[0] = 0;
 
 	MediaFolder[0] = 0;
@@ -518,7 +516,7 @@ void SB_Build::Create_ProjectFolder(void)
 	Copy_Sound_Files();
 	Copy_Particle_Files();
 
-	App->Cl_PB->Stop_Progress_Bar("Build Completed");
+	App->Cl_PB->Stop_Progress_Bar("Build Completed");*/
 }
 
 // *************************************************************************
@@ -526,121 +524,120 @@ void SB_Build::Create_ProjectFolder(void)
 // *************************************************************************
 void SB_Build::Copy_SystemFiles(void)
 {
-
-	//----------------------------- OgreMain.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\OgreMain.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\OgreMain.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- RenderSystem_GL.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\RenderSystem_GL.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\RenderSystem_GL.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-
-//	App->CL10_PB->Nudge();
-	//----------------------------- cg.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\cg.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\cg.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-
-	//----------------------------- OgreOverlay.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\OgreOverlay.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\OgreOverlay.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-	
-//	App->CL10_PB->Nudge();
-	//----------------------------- msvcp140.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\msvcp140.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\msvcp140.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-
-//	App->CL10_PB->Nudge();
-	//----------------------------- vcruntime140.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\vcruntime140.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\vcruntime140.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- irrKlang.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\irrKlang.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\irrKlang.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- Plugin_CgProgramManager.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- Game FIle
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\GDShell.gex");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\");
-	strcat(DestinationFile, GameName);
-	strcat(DestinationFile, ".exe");
-	CopyFile(SourceFile, DestinationFile, false);
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- Game FIle
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\plugins.cfg");
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\plugins.cfg");
-	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
-	//----------------------------- Plugin_ParticleFX.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
-	CopyFile(SourceFile, DestinationFile, false);
-//	App->CL10_PB->Nudge();
-
-	//----------------------------- Plugin_ParticleFX.dll
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Roboto-Medium.ttf");
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\Roboto-Medium.ttf");
-	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
+//	//----------------------------- OgreMain.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\OgreMain.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\OgreMain.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+//
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- RenderSystem_GL.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\RenderSystem_GL.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\RenderSystem_GL.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+//
+////	App->CL10_PB->Nudge();
+//	//----------------------------- cg.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\cg.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\cg.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+//
+//	//----------------------------- OgreOverlay.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\OgreOverlay.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\OgreOverlay.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+//	
+////	App->CL10_PB->Nudge();
+//	//----------------------------- msvcp140.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\msvcp140.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\msvcp140.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+//
+////	App->CL10_PB->Nudge();
+//	//----------------------------- vcruntime140.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\vcruntime140.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\vcruntime140.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- irrKlang.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\irrKlang.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\irrKlang.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- Plugin_CgProgramManager.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
+//
+//	CopyFile(SourceFile, DestinationFile, false);
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- Game FIle
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\GDShell.gex");
+//
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\");
+//	strcat(DestinationFile, GameName);
+//	strcat(DestinationFile, ".exe");
+//	CopyFile(SourceFile, DestinationFile, false);
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- Game FIle
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\plugins.cfg");
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\plugins.cfg");
+//	CopyFile(SourceFile, DestinationFile, false);
+//	//	App->CL10_PB->Nudge();
+//
+//	//----------------------------- Plugin_ParticleFX.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
+//	CopyFile(SourceFile, DestinationFile, false);
+////	App->CL10_PB->Nudge();
+//
+//	//----------------------------- Plugin_ParticleFX.dll
+//	strcpy(SourceFile, App->EquityDirecory_FullPath);
+//	strcat(SourceFile, "\\Roboto-Medium.ttf");
+//	strcpy(DestinationFile, ProjectFolder);
+//	strcat(DestinationFile, "\\Roboto-Medium.ttf");
+//	CopyFile(SourceFile, DestinationFile, false);
+//	//	App->CL10_PB->Nudge();
 
 }
 
@@ -668,27 +665,27 @@ void SB_Build::Copy_ZipFiles(void)
 	//CopyFile(SourceFile, DestinationFile, false);
 	////App->CL10_PB->Nudge();
 	//----------------------------- OgreCore.zip
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
-	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\OgreCore.zip");
-	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\OgreCore.zip");
+	//CopyFile(SourceFile, DestinationFile, false);
+	////App->CL10_PB->Nudge();
 
-	//----------------------------- skybox.zip
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
-	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\skybox.zip");
-	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
+	////----------------------------- skybox.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\skybox.zip");
+	//CopyFile(SourceFile, DestinationFile, false);
+	////App->CL10_PB->Nudge();
 
-	//----------------------------- skybox.zip
-	strcpy(SourceFile, App->EquityDirecory_FullPath);
-	strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
-	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\App_Resources.zip");
-	CopyFile(SourceFile, DestinationFile, false);
+	////----------------------------- skybox.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\App_Resources.zip");
+	//CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 }
 
@@ -698,7 +695,7 @@ void SB_Build::Copy_ZipFiles(void)
 // *************************************************************************
 void SB_Build::Copy_Sound_Files(void)
 {
-	char StartFolder[MAX_PATH];
+	/*char StartFolder[MAX_PATH];
 	strcpy(StartFolder, App->EquityDirecory_FullPath);
 	strcat(StartFolder, "\\");
 	strcat(StartFolder, "Media\\Sounds\\");
@@ -707,7 +704,7 @@ void SB_Build::Copy_Sound_Files(void)
 	strcpy(Destination, SoundFolder);
 	strcat(Destination, "\\");
 
-	Copy_Assets(StartFolder, Destination);
+	Copy_Assets(StartFolder, Destination);*/
 }
 
 // *************************************************************************
@@ -715,7 +712,7 @@ void SB_Build::Copy_Sound_Files(void)
 // *************************************************************************
 void SB_Build::Copy_Particle_Files(void)
 {
-	char StartFolder[MAX_PATH];
+	/*char StartFolder[MAX_PATH];
 	strcpy(StartFolder, App->EquityDirecory_FullPath);
 	strcat(StartFolder, "\\");
 	strcat(StartFolder, "Media\\New_Particles\\");
@@ -724,7 +721,7 @@ void SB_Build::Copy_Particle_Files(void)
 	strcpy(Destination, ParticleFolder);
 	strcat(Destination, "\\");
 
-	Copy_Assets(StartFolder, Destination);
+	Copy_Assets(StartFolder, Destination);*/
 }
 
 // *************************************************************************
@@ -733,10 +730,10 @@ void SB_Build::Copy_Particle_Files(void)
 void SB_Build::Read_From_Config(void)
 {
 	//char chr_Tag1[1024];
-	char StartFile[1024];
+	/*char StartFile[1024];
 	strcpy(StartFile, App->EquityDirecory_FullPath);
 	strcat(StartFile, "\\");
-	strcat(StartFile, "Data\\StartUp.gcf");
+	strcat(StartFile, "Data\\StartUp.gcf");*/
 
 	/*App->CL_Ini->SetPathName(StartFile);
 
@@ -754,7 +751,7 @@ void SB_Build::Read_From_Config(void)
 // *************************************************************************
 bool SB_Build::Build_Project()
 {
-	ShowWindow(Banner, SW_HIDE);
+	/*ShowWindow(Banner, SW_HIDE);
 
 	App->Cl_PB->StartNewProgressBar();
 	App->Cl_PB->Set_Progress("Building Scene/Game", 10);
@@ -806,7 +803,7 @@ bool SB_Build::Build_Project()
 	App->Cl_PB->Nudge("Creating Display Folder");
 	Build_Display_Folder();
 
-	App->Cl_PB->Nudge("Finished");
+	App->Cl_PB->Nudge("Finished");*/
 	
 	return 1;
 }
@@ -817,7 +814,7 @@ bool SB_Build::Build_Project()
 // *************************************************************************
 bool SB_Build::Build_Project_Ini()
 {
-	m_Ini_Path_File_Name[0] = 0;
+	/*m_Ini_Path_File_Name[0] = 0;
 
 	strcpy(m_Ini_Path_File_Name, m_Build_Sub_Folder);
 	strcat(m_Ini_Path_File_Name, "\\");
@@ -876,7 +873,7 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);
 	fprintf(WriteFile, "%s%i\n", "Player_CanJump=", App->CL_Prefs->Prefs_PlayerCanJump_Flag);
 
-	fclose(WriteFile);
+	fclose(WriteFile);*/
 
 	return 1;
 }
@@ -912,7 +909,7 @@ bool SB_Build::Build_Main_Asset_Folder()
 
 //	if (Directory_Changed_Flag == 1)
 	{
-		strcpy(LastFolder, App->SBC_Project->m_Main_Assets_Path);
+		strcpy(LastFolder, App->CLSB_Project->m_Main_Assets_Path);
 	}
 
 	m_Main_Assets_Path[0] = 0;
@@ -978,91 +975,91 @@ bool SB_Build::Build_Area_Folder()
 // *************************************************************************
 bool SB_Build::Build_Areas_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
+	//Ogre::Vector3 Pos;
+	//char File[1024];
 
-	strcpy(File, m_Aera_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Areas.aer");
+	//strcpy(File, m_Aera_Folder_Path);
+	//strcat(File, "\\");
+	//strcat(File, "Areas.aer");
 
-	WriteFile = nullptr;
+	//WriteFile = nullptr;
 
-	WriteFile = fopen(File, "wt");
+	//WriteFile = fopen(File, "wt");
 
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
+	//if (!WriteFile)
+	//{
+	//	App->Say("Cant Create File");
+	//	App->Say(File);
+	//	return 0;
+	//}
 
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	//fprintf(WriteFile, "%s\n", "[Version_Data]");
+	//fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->SBC_Scene->Area_Count);
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	char Cbuff[255];
-	char buff[255];
+	//char Cbuff[255];
+	//char buff[255];
 
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	//float w = 0;
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
 
-	int Count = 0;
-	while (Count < App->SBC_Scene->Area_Count)
-	{
-		strcpy(buff, "[Area_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Area_Count)
+	//{
+	//	strcpy(buff, "[Area_");
+	//	_itoa(Count, Cbuff, 10);
+	//	strcat(buff, Cbuff);
+	//	strcat(buff, "]");
 
-		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+	//	fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->B_Area[Count]->Area_Name); // Change
+	//	fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->B_Area[Count]->Area_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->B_Area[Count]->Area_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
-		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
-		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
+	//	fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->B_Area[Count]->Area_FileName);
+	//	fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
+	//	fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
+	//	fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
+	//	fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
 
-		// ------------ Position
-		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
-		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
-		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+	//	// ------------ Position
+	//	x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
+	//	y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
+	//	z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
-		// ------------ Scale
-		x = App->SBC_Scene->B_Area[Count]->Mesh_Scale.x;
-		y = App->SBC_Scene->B_Area[Count]->Mesh_Scale.y;
-		z = App->SBC_Scene->B_Area[Count]->Mesh_Scale.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+	//	// ------------ Scale
+	//	x = App->SBC_Scene->B_Area[Count]->Mesh_Scale.x;
+	//	y = App->SBC_Scene->B_Area[Count]->Mesh_Scale.y;
+	//	z = App->SBC_Scene->B_Area[Count]->Mesh_Scale.z;
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
-		// ------------ Mesh_Rot
-		x = App->SBC_Scene->B_Area[Count]->Mesh_Rot.x;
-		y = App->SBC_Scene->B_Area[Count]->Mesh_Rot.y;
-		z = App->SBC_Scene->B_Area[Count]->Mesh_Rot.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+	//	// ------------ Mesh_Rot
+	//	x = App->SBC_Scene->B_Area[Count]->Mesh_Rot.x;
+	//	y = App->SBC_Scene->B_Area[Count]->Mesh_Rot.y;
+	//	z = App->SBC_Scene->B_Area[Count]->Mesh_Rot.z;
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
-		// ------------ Mesh_Quat
-		w = App->SBC_Scene->B_Area[Count]->Mesh_Quat.w;
-		x = App->SBC_Scene->B_Area[Count]->Mesh_Quat.x;
-		y = App->SBC_Scene->B_Area[Count]->Mesh_Quat.y;
-		z = App->SBC_Scene->B_Area[Count]->Mesh_Quat.z;
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+	//	// ------------ Mesh_Quat
+	//	w = App->SBC_Scene->B_Area[Count]->Mesh_Quat.w;
+	//	x = App->SBC_Scene->B_Area[Count]->Mesh_Quat.x;
+	//	y = App->SBC_Scene->B_Area[Count]->Mesh_Quat.y;
+	//	z = App->SBC_Scene->B_Area[Count]->Mesh_Quat.z;
+	//	fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
 
-		fprintf(WriteFile, "%s\n", " ");
-		Count++;
-	}
+	//	fprintf(WriteFile, "%s\n", " ");
+	//	Count++;
+	//}
 
-	fclose(WriteFile);
+	//fclose(WriteFile);
 
 	return 1;
 }
@@ -1094,135 +1091,135 @@ bool SB_Build::Build_Players_Folder()
 // *************************************************************************
 bool SB_Build::Build_Player_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
+	//Ogre::Vector3 Pos;
+	//char File[1024];
 
-	float W = 0;
-	float X = 0;
-	float Y = 0;
-	float Z = 0;
+	//float W = 0;
+	//float X = 0;
+	//float Y = 0;
+	//float Z = 0;
 
-	strcpy(File, m_Players_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Players.ply");
+	//strcpy(File, m_Players_Folder_Path);
+	//strcat(File, "\\");
+	//strcat(File, "Players.ply");
 
-	WriteFile = nullptr;
+	//WriteFile = nullptr;
 
-	WriteFile = fopen(File, "wt");
+	//WriteFile = fopen(File, "wt");
 
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
+	//if (!WriteFile)
+	//{
+	//	App->Say("Cant Create File");
+	//	App->Say(File);
+	//	return 0;
+	//}
 
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	//fprintf(WriteFile, "%s\n", "[Version_Data]");
+	//fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	char Cbuff[255];
-	char buff[255];
-	int Count = 0;
-	while (Count < App->SBC_Scene->Player_Count)
-	{
-		strcpy(buff, "[Player_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
+	//char Cbuff[255];
+	//char buff[255];
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Player_Count)
+	//{
+	//	strcpy(buff, "[Player_");
+	//	_itoa(Count, Cbuff, 10);
+	//	strcat(buff, Cbuff);
+	//	strcat(buff, "]");
 
-		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+	//	fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->B_Player[Count]->Player_Name);
+	//	fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->B_Player[Count]->Player_Name);
 
-		Pos.x = App->SBC_Scene->B_Player[Count]->StartPos.x;
-		Pos.y = App->SBC_Scene->B_Player[Count]->StartPos.y;
-		Pos.z = App->SBC_Scene->B_Player[Count]->StartPos.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+	//	Pos.x = App->SBC_Scene->B_Player[Count]->StartPos.x;
+	//	Pos.y = App->SBC_Scene->B_Player[Count]->StartPos.y;
+	//	Pos.z = App->SBC_Scene->B_Player[Count]->StartPos.z;
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
 
-		W = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getW();
-		X = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getX();
-		Y = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getY();
-		Z = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getZ();
+	//	W = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getW();
+	//	X = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getX();
+	//	Y = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getY();
+	//	Z = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getZ();
 
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
+	//	fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
 
-		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
-		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->B_Player[Count]->Capsule_Mass);
-		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->B_Player[Count]->Capsule_Radius);
-		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->B_Player[Count]->Capsule_Height);
-		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
-		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
-		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
-		fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->SBC_Scene->B_Player[Count]->Limit_Look_Up);
-		fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->SBC_Scene->B_Player[Count]->Limit_Look_Down);
-		fprintf(WriteFile, "%s%f\n", "Player_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
+	//	fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
+	//	fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->B_Player[Count]->Capsule_Mass);
+	//	fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->B_Player[Count]->Capsule_Radius);
+	//	fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->B_Player[Count]->Capsule_Height);
+	//	fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
+	//	fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
+	//	fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
+	//	fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->SBC_Scene->B_Player[Count]->Limit_Look_Up);
+	//	fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->SBC_Scene->B_Player[Count]->Limit_Look_Down);
+	//	fprintf(WriteFile, "%s%f\n", "Player_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	// ---------------------------------------- Player Locations
+	//// ---------------------------------------- Player Locations
 
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	//float w = 0;
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
 
-	fprintf(WriteFile, "%s\n", " ");
-	fprintf(WriteFile, "%s\n", "[Locations]");
+	//fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", "[Locations]");
 
-	int RealCount = App->Cl_LookUps->Player_Location_GetCount(); // Get The real Count Minus Deleted Files
+	//int RealCount = App->Cl_LookUps->Player_Location_GetCount(); // Get The real Count Minus Deleted Files
 
-	fprintf(WriteFile, "%s%i\n", "Locations_Count=", RealCount);
+	//fprintf(WriteFile, "%s%i\n", "Locations_Count=", RealCount);
 
-	int Location = 0; // Correct for Deleted Files
+	//int Location = 0; // Correct for Deleted Files
 
-	Count = 0;
-	while (Count < App->SBC_Scene->Player_Location_Count)
-	{
-		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
-		{
-			fprintf(WriteFile, "%s\n", " ");
+	//Count = 0;
+	//while (Count < App->SBC_Scene->Player_Location_Count)
+	//{
+	//	if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+	//	{
+	//		fprintf(WriteFile, "%s\n", " ");
 
-			char Cbuff[255];
-			char buff[255];
-			strcpy(buff, "[Location_");
-			_itoa(Location, Cbuff, 10);
-			strcat(buff, Cbuff);
-			strcat(buff, "]");
-			fprintf(WriteFile, "%s\n", buff);
+	//		char Cbuff[255];
+	//		char buff[255];
+	//		strcpy(buff, "[Location_");
+	//		_itoa(Location, Cbuff, 10);
+	//		strcat(buff, Cbuff);
+	//		strcat(buff, "]");
+	//		fprintf(WriteFile, "%s\n", buff);
 
-			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID);
-			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
+	//		fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID);
+	//		fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
 
-			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
-			y = App->SBC_Scene->B_Locations[Count]->Current_Position.y;
-			z = App->SBC_Scene->B_Locations[Count]->Current_Position.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Position=", x, y, z);
+	//		x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
+	//		y = App->SBC_Scene->B_Locations[Count]->Current_Position.y;
+	//		z = App->SBC_Scene->B_Locations[Count]->Current_Position.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Position=", x, y, z);
 
-			x = App->SBC_Scene->B_Locations[Count]->Physics_Position.getX();
-			y = App->SBC_Scene->B_Locations[Count]->Physics_Position.getY();
-			z = App->SBC_Scene->B_Locations[Count]->Physics_Position.getZ();
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Physics_Position=", x, y, z);
+	//		x = App->SBC_Scene->B_Locations[Count]->Physics_Position.getX();
+	//		y = App->SBC_Scene->B_Locations[Count]->Physics_Position.getY();
+	//		z = App->SBC_Scene->B_Locations[Count]->Physics_Position.getZ();
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Physics_Position=", x, y, z);
 
-			w = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getW();
-			x = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getX();
-			y = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getY();
-			z = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getZ();
-			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Rotation=", w, x, y, z);
-			Location++;
-		}
+	//		w = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getW();
+	//		x = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getX();
+	//		y = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getY();
+	//		z = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getZ();
+	//		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Rotation=", w, x, y, z);
+	//		Location++;
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	fclose(WriteFile);
+	//fclose(WriteFile);
 
 	return 1;
 }
@@ -1259,80 +1256,80 @@ bool SB_Build::Build_Cameras_Folder()
 // *************************************************************************
 bool SB_Build::Build_Cameras_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
+	//Ogre::Vector3 Pos;
+	//char File[1024];
 
-	strcpy(File, m_Cameras_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Cameras.epf");
+	//strcpy(File, m_Cameras_Folder_Path);
+	//strcat(File, "\\");
+	//strcat(File, "Cameras.epf");
 
-	WriteFile = nullptr;
+	//WriteFile = nullptr;
 
-	WriteFile = fopen(File, "wt");
+	//WriteFile = fopen(File, "wt");
 
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
+	//if (!WriteFile)
+	//{
+	//	App->Say("Cant Create File");
+	//	App->Say_Win(File);
+	//	return 0;
+	//}
 
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	//fprintf(WriteFile, "%s\n", "[Version_Data]");
+	//fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	char Cbuff[255];
-	char buff[255];
+	//char Cbuff[255];
+	//char buff[255];
 
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	//float w = 0;
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
 
-	int Count = 0;
-	while (Count < App->SBC_Scene->Camera_Count)
-	{
-		strcpy(buff, "[Camera_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Camera_Count)
+	//{
+	//	strcpy(buff, "[Camera_");
+	//	_itoa(Count, Cbuff, 10);
+	//	strcat(buff, Cbuff);
+	//	strcat(buff, "]");
 
-		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+	//	fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Scene->B_Camera[Count]->Camera_Name); // Change
+	//	fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Scene->B_Camera[Count]->Camera_Name); // Change
 
-		//---------------------------------- Camera Pos
-		x = App->SBC_Scene->B_Camera[Count]->CamPos.x;
-		y = App->SBC_Scene->B_Camera[Count]->CamPos.y;
-		z = App->SBC_Scene->B_Camera[Count]->CamPos.z;
+	//	//---------------------------------- Camera Pos
+	//	x = App->SBC_Scene->B_Camera[Count]->CamPos.x;
+	//	y = App->SBC_Scene->B_Camera[Count]->CamPos.y;
+	//	z = App->SBC_Scene->B_Camera[Count]->CamPos.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
 
-		//---------------------------------- Camera Look At
-		x = App->SBC_Scene->B_Camera[Count]->LookAt.x;
-		y = App->SBC_Scene->B_Camera[Count]->LookAt.y;
-		z = App->SBC_Scene->B_Camera[Count]->LookAt.z;
+	//	//---------------------------------- Camera Look At
+	//	x = App->SBC_Scene->B_Camera[Count]->LookAt.x;
+	//	y = App->SBC_Scene->B_Camera[Count]->LookAt.y;
+	//	z = App->SBC_Scene->B_Camera[Count]->LookAt.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
 
-		//---------------------------------- Camera Quaternion
-		w = App->SBC_Scene->B_Camera[Count]->Cam_Quat.w;
-		x = App->SBC_Scene->B_Camera[Count]->Cam_Quat.x;
-		y = App->SBC_Scene->B_Camera[Count]->Cam_Quat.y;
-		z = App->SBC_Scene->B_Camera[Count]->Cam_Quat.z;
+	//	//---------------------------------- Camera Quaternion
+	//	w = App->SBC_Scene->B_Camera[Count]->Cam_Quat.w;
+	//	x = App->SBC_Scene->B_Camera[Count]->Cam_Quat.x;
+	//	y = App->SBC_Scene->B_Camera[Count]->Cam_Quat.y;
+	//	z = App->SBC_Scene->B_Camera[Count]->Cam_Quat.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
+	//	fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	fclose(WriteFile);
+	//fclose(WriteFile);
 
 	return 1;
 }
@@ -1362,327 +1359,327 @@ bool SB_Build::Build_Objects_Folder()
 // *************************************************************************
 bool SB_Build::Build_Objects_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
-
-	strcpy(File, m_Objects_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Objects.efd");
-
-	WriteFile = nullptr;
-
-	WriteFile = fopen(File, "wt");
-
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	char Cbuff[255];
-	char buff[255];
-
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	int new_Count = 0;
-
-	int Count = 0;
-	while (Count < App->SBC_Scene->Object_Count)
-	{
-		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
-		{
-			strcpy(buff, "[Object_");
-			_itoa(new_Count, Cbuff, 10);
-			strcat(buff, Cbuff);
-			strcat(buff, "]");
-
-			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
-
-			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->V_Object[Count]->Mesh_Name); // Change
-
-			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->V_Object[Count]->Mesh_FileName);
-			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->V_Object[Count]->Mesh_Resource_Path);
-			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->V_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->V_Object[Count]->This_Object_UniqueID);
-			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->V_Object[Count]->Type);
-			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->V_Object[Count]->Shape);
-			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->V_Object[Count]->Usage);
-
-			// Position
-			x = App->SBC_Scene->V_Object[Count]->Mesh_Pos.x;
-			y = App->SBC_Scene->V_Object[Count]->Mesh_Pos.y;
-			z = App->SBC_Scene->V_Object[Count]->Mesh_Pos.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
-
-			// Mesh_Scale
-			x = App->SBC_Scene->V_Object[Count]->Mesh_Scale.x;
-			y = App->SBC_Scene->V_Object[Count]->Mesh_Scale.y;
-			z = App->SBC_Scene->V_Object[Count]->Mesh_Scale.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
-
-			// Mesh_Rot
-			x = App->SBC_Scene->V_Object[Count]->Mesh_Rot.x;
-			y = App->SBC_Scene->V_Object[Count]->Mesh_Rot.y;
-			z = App->SBC_Scene->V_Object[Count]->Mesh_Rot.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
-
-			// Mesh_Quat
-			w = App->SBC_Scene->V_Object[Count]->Mesh_Quat.w;
-			x = App->SBC_Scene->V_Object[Count]->Mesh_Quat.x;
-			y = App->SBC_Scene->V_Object[Count]->Mesh_Quat.y;
-			z = App->SBC_Scene->V_Object[Count]->Mesh_Quat.z;
-			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
-
-			// Physics_Quat
-			w = App->SBC_Scene->V_Object[Count]->Physics_Quat.w;
-			x = App->SBC_Scene->V_Object[Count]->Physics_Quat.x;
-			y = App->SBC_Scene->V_Object[Count]->Physics_Quat.y;
-			z = App->SBC_Scene->V_Object[Count]->Physics_Quat.z;
-			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
-			//---------------------------------------------------------------------------------- Message Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
-			{
-				fprintf(WriteFile, "%s\n", "------------------- Message");
-				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_Text);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosX;
-				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosY;
-				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=", x, y);
-
-				// Message Counter
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_Disabled);
-
-				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosXCentre_Flag);
-				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosYCentre_Flag);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.z;
-				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.w;
-				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y, z, w);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.z;
-				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.w;
-				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
-
-				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Show_BackGround);
-			}
-
-			//---------------------------------------------------------------------------------- Sound Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Sound)
-			{
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
-			}
-
-			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
-			{
-				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Play);
-				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Name);
-				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Maths);
-				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Value);
-				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Disabled);
-
-			}
-
-			//---------------------------------------------------------------------------------- Move Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
-			{
-				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Move_Distance);
-				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->IsNegative);
-				//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->MeshPos);
-				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Newpos);
-				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
-				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
-				//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->PhysicsPos);
-				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Re_Trigger);
-				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Speed);
-				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Triggered);
-				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->WhatDirection);
-
-				// Move Sound
-				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->V_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->V_Object[Count]->Play_Sound);
-				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
-
-				// Move Counter
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_Disabled);
-	
-			}
-
-			//---------------------------------------------------------------------------------- Teleport Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Teleport)
-			{
-				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Name);
-
-				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Location_ID);
-
-				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Play);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getX();
-				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getY();
-				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
-
-				w = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
-				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
-				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
-				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
-				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
-
-				// Teleport Counter
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_Disabled);
-
-				//--------------- Environment
-				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
-				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environ_Enabled);
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
-
-				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
-
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
-
-				//--------------- Light
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
-
-				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
-
-				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
-
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
-
-				
-			}
-
-			//---------------------------------------------------------------------------------- Environ Entity
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
-			{
-				fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
-
-				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
-
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
-
-				//--------------- Light
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
-
-				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
-
-				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
-
-				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
-
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
-
-			}
-			
-			//---------------------------------------------------------------------------------- Particle
-			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
-			{
-				fprintf(WriteFile, "%s\n", "-- Particle");
-				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->ParticleScript);
-				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->SpeedFactor);
-
-			}
-
-			fprintf(WriteFile, "%s\n", " ");
-			fprintf(WriteFile, "%s\n", "***************************************************************************************");
-
-			new_Count++;
-		}
-
-		Count++;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
-
-	fclose(WriteFile);
+	//Ogre::Vector3 Pos;
+	//char File[1024];
+
+	//strcpy(File, m_Objects_Folder_Path);
+	//strcat(File, "\\");
+	//strcat(File, "Objects.efd");
+
+	//WriteFile = nullptr;
+
+	//WriteFile = fopen(File, "wt");
+
+	//if (!WriteFile)
+	//{
+	//	App->Say("Cant Create File");
+	//	App->Say(File);
+	//	return 0;
+	//}
+
+	//fprintf(WriteFile, "%s\n", "[Version_Data]");
+	//fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	//fprintf(WriteFile, "%s\n", " ");
+
+	//fprintf(WriteFile, "%s\n", " ");
+
+	//char Cbuff[255];
+	//char buff[255];
+
+	//float w = 0;
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
+
+	//int new_Count = 0;
+
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Object_Count)
+	//{
+	//	if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
+	//	{
+	//		strcpy(buff, "[Object_");
+	//		_itoa(new_Count, Cbuff, 10);
+	//		strcat(buff, Cbuff);
+	//		strcat(buff, "]");
+
+	//		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+	//		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->V_Object[Count]->Mesh_Name); // Change
+
+	//		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->V_Object[Count]->Mesh_FileName);
+	//		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->V_Object[Count]->Mesh_Resource_Path);
+	//		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->V_Object[Count]->Material_File);
+	//		fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->V_Object[Count]->This_Object_UniqueID);
+	//		fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->V_Object[Count]->Type);
+	//		fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->V_Object[Count]->Shape);
+	//		fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->V_Object[Count]->Usage);
+
+	//		// Position
+	//		x = App->SBC_Scene->V_Object[Count]->Mesh_Pos.x;
+	//		y = App->SBC_Scene->V_Object[Count]->Mesh_Pos.y;
+	//		z = App->SBC_Scene->V_Object[Count]->Mesh_Pos.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+	//		// Mesh_Scale
+	//		x = App->SBC_Scene->V_Object[Count]->Mesh_Scale.x;
+	//		y = App->SBC_Scene->V_Object[Count]->Mesh_Scale.y;
+	//		z = App->SBC_Scene->V_Object[Count]->Mesh_Scale.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+	//		// Mesh_Rot
+	//		x = App->SBC_Scene->V_Object[Count]->Mesh_Rot.x;
+	//		y = App->SBC_Scene->V_Object[Count]->Mesh_Rot.y;
+	//		z = App->SBC_Scene->V_Object[Count]->Mesh_Rot.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+	//		// Mesh_Quat
+	//		w = App->SBC_Scene->V_Object[Count]->Mesh_Quat.w;
+	//		x = App->SBC_Scene->V_Object[Count]->Mesh_Quat.x;
+	//		y = App->SBC_Scene->V_Object[Count]->Mesh_Quat.y;
+	//		z = App->SBC_Scene->V_Object[Count]->Mesh_Quat.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
+	//		// Physics_Quat
+	//		w = App->SBC_Scene->V_Object[Count]->Physics_Quat.w;
+	//		x = App->SBC_Scene->V_Object[Count]->Physics_Quat.x;
+	//		y = App->SBC_Scene->V_Object[Count]->Physics_Quat.y;
+	//		z = App->SBC_Scene->V_Object[Count]->Physics_Quat.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
+	//		//---------------------------------------------------------------------------------- Message Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
+	//		{
+	//			fprintf(WriteFile, "%s\n", "------------------- Message");
+	//			fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_Text);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosX;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosY;
+	//			fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=", x, y);
+
+	//			// Message Counter
+	//			fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_ID);
+	//			fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Trigger_Value);
+	//			fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_Disabled);
+
+	//			fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosXCentre_Flag);
+	//			fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosYCentre_Flag);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.z;
+	//			w = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.w;
+	//			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y, z, w);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.z;
+	//			w = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.w;
+	//			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
+
+	//			fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Show_BackGround);
+	//		}
+
+	//		//---------------------------------------------------------------------------------- Sound Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Sound)
+	//		{
+	//			fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->Sound_File);
+	//			fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
+	//		}
+
+	//		//---------------------------------------------------------------------------------- Colectable Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
+	//		{
+	//			fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Sound_File);
+	//			fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->SndVolume);
+	//			fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Play);
+	//			fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Name);
+	//			fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_ID);
+	//			fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Maths);
+	//			fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Value);
+	//			fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Disabled);
+
+	//		}
+
+	//		//---------------------------------------------------------------------------------- Move Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
+	//		{
+	//			fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Move_Distance);
+	//			fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->IsNegative);
+	//			//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->MeshPos);
+	//			fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Newpos);
+	//			fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
+	//			fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
+	//			//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->PhysicsPos);
+	//			fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Re_Trigger);
+	//			fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Speed);
+	//			fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Triggered);
+	//			fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->WhatDirection);
+
+	//			// Move Sound
+	//			fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->V_Object[Count]->Sound_File);
+	//			fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->V_Object[Count]->Play_Sound);
+	//			fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
+
+	//			// Move Counter
+	//			fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_ID);
+	//			fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Trigger_Value);
+	//			fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_Disabled);
+	//
+	//		}
+
+	//		//---------------------------------------------------------------------------------- Teleport Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Teleport)
+	//		{
+	//			fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Name);
+
+	//			fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Location_ID);
+
+	//			fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Sound_File);
+	//			fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->SndVolume);
+	//			fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Play);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getX();
+	//			y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getY();
+	//			z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
+
+	//			w = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
+	//			x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
+	//			y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
+	//			z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+	//			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
+
+	//			// Teleport Counter
+	//			fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_ID);
+	//			fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Trigger_Value);
+	//			fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_Disabled);
+
+	//			//--------------- Environment
+	//			fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
+	//			fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environ_Enabled);
+	//			fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+	//			fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
+
+	//			//--------------- Sound
+	//			fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+	//			fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
+
+	//			fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+	//			fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
+
+	//			//--------------- Light
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
+
+	//			//--------------- Sky
+	//			fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+	//			fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+	//			fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
+
+	//			//--------------- Fog
+	//			fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+	//			fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+
+	//			fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+	//			fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+	//			fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
+
+	//			
+	//		}
+
+	//		//---------------------------------------------------------------------------------- Environ Entity
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+	//		{
+	//			fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
+	//			fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+	//			fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
+
+	//			//--------------- Sound
+	//			fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+	//			fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
+
+	//			fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+	//			fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
+
+	//			//--------------- Light
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
+
+	//			//--------------- Sky
+	//			fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+	//			fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+	//			fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+	//			fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
+
+	//			//--------------- Fog
+	//			fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+	//			fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
+
+	//			x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+	//			y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+	//			z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
+	//			fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+
+	//			fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+	//			fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+	//			fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
+
+	//		}
+	//		
+	//		//---------------------------------------------------------------------------------- Particle
+	//		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
+	//		{
+	//			fprintf(WriteFile, "%s\n", "-- Particle");
+	//			fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->ParticleScript);
+	//			fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->SpeedFactor);
+
+	//		}
+
+	//		fprintf(WriteFile, "%s\n", " ");
+	//		fprintf(WriteFile, "%s\n", "***************************************************************************************");
+
+	//		new_Count++;
+	//	}
+
+	//	Count++;
+	//}
+
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
+
+	//fclose(WriteFile);
 
 	return 1;
 }
@@ -1712,75 +1709,75 @@ bool SB_Build::Build_Display_Folder()
 // *************************************************************************
 bool SB_Build::Build_Display_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
+	//Ogre::Vector3 Pos;
+	//char File[1024];
 
-	strcpy(File, m_Display_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Counters.edf");
+	//strcpy(File, m_Display_Folder_Path);
+	//strcat(File, "\\");
+	//strcat(File, "Counters.edf");
 
-	WriteFile = nullptr;
+	//WriteFile = nullptr;
 
-	WriteFile = fopen(File, "wt");
+	//WriteFile = fopen(File, "wt");
 
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
+	//if (!WriteFile)
+	//{
+	//	App->Say("Cant Create File");
+	//	App->Say(File);
+	//	return 0;
+	//}
 
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	//fprintf(WriteFile, "%s\n", "[Version_Data]");
+	//fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(WriteFile, "%s\n", " ");
+	//fprintf(WriteFile, "%s\n", " ");
 
-	char Cbuff[255];
-	char buff[255];
+	//char Cbuff[255];
+	//char buff[255];
 
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	//float w = 0;
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
 
-	int new_Count = 0;
+	//int new_Count = 0;
 
-	int Count = 0;
-	while (Count < App->SBC_Scene->Counters_Count)
-	{
-		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
-		{
-			strcpy(buff, "[Counter_");
-			_itoa(new_Count, Cbuff, 10);
-			strcat(buff, Cbuff);
-			strcat(buff, "]");
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Counters_Count)
+	//{
+	//	if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+	//	{
+	//		strcpy(buff, "[Counter_");
+	//		_itoa(new_Count, Cbuff, 10);
+	//		strcat(buff, Cbuff);
+	//		strcat(buff, "]");
 
-			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+	//		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Counter_Name=", App->SBC_Scene->B_Counter[Count]->Panel_Name); // Change
-			fprintf(WriteFile, "%s%i\n", "Counter_ID=", App->SBC_Scene->B_Counter[Count]->Unique_ID);
+	//		fprintf(WriteFile, "%s%s\n", "Counter_Name=", App->SBC_Scene->B_Counter[Count]->Panel_Name); // Change
+	//		fprintf(WriteFile, "%s%i\n", "Counter_ID=", App->SBC_Scene->B_Counter[Count]->Unique_ID);
 
-			x = App->SBC_Scene->B_Counter[Count]->PosX;
-			y = App->SBC_Scene->B_Counter[Count]->PosY;
-			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
+	//		x = App->SBC_Scene->B_Counter[Count]->PosX;
+	//		y = App->SBC_Scene->B_Counter[Count]->PosY;
+	//		fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
 
-			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
-			fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag);
-			fprintf(WriteFile, "%s%i\n", "Counter_Start=", App->SBC_Scene->B_Counter[Count]->Start_Value);
+	//		fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
+	//		fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag);
+	//		fprintf(WriteFile, "%s%i\n", "Counter_Start=", App->SBC_Scene->B_Counter[Count]->Start_Value);
 
-			fprintf(WriteFile, "%s\n", " ");
-			new_Count++;
-		}
+	//		fprintf(WriteFile, "%s\n", " ");
+	//		new_Count++;
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
 
-	fclose(WriteFile);
+	//fclose(WriteFile);
 
 	return 1;
 }
@@ -1825,39 +1822,39 @@ bool SB_Build::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 // *************************************************************************
 bool SB_Build::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 {
-	HZIP hz;
+	//HZIP hz;
 
-	hz = CreateZip(_T("Assets.zip"), 0);
+	//hz = CreateZip(_T("Assets.zip"), 0);
 
-	char SourceFile[MAX_PATH];
-	char DestinationFile[MAX_PATH];
+	//char SourceFile[MAX_PATH];
+	//char DestinationFile[MAX_PATH];
 
-	char Path[MAX_PATH];
-	strcpy(Path, SourceFolder);
-	strcat(Path, "*.*");
+	//char Path[MAX_PATH];
+	//strcpy(Path, SourceFolder);
+	//strcat(Path, "*.*");
 
-	WIN32_FIND_DATA fd;
-	HANDLE hFind = ::FindFirstFile(Path, &fd);
-	if (hFind != INVALID_HANDLE_VALUE) {
-		do {
+	//WIN32_FIND_DATA fd;
+	//HANDLE hFind = ::FindFirstFile(Path, &fd);
+	//if (hFind != INVALID_HANDLE_VALUE) {
+	//	do {
 
-			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-			{
+	//		if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+	//		{
 
-				strcpy(SourceFile, SourceFolder);
-				strcat(SourceFile, fd.cFileName);
+	//			strcpy(SourceFile, SourceFolder);
+	//			strcat(SourceFile, fd.cFileName);
 
-				strcpy(DestinationFile, DestinationFolder);
-				strcat(DestinationFile, fd.cFileName);
+	//			strcpy(DestinationFile, DestinationFolder);
+	//			strcat(DestinationFile, fd.cFileName);
 
-				//CopyFile(SourceFile, DestinationFile, false);
-				ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
-			}
+	//			//CopyFile(SourceFile, DestinationFile, false);
+	//			ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
+	//		}
 
-		} while (::FindNextFile(hFind, &fd));
-		::FindClose(hFind);
-	}
+	//	} while (::FindNextFile(hFind, &fd));
+	//	::FindClose(hFind);
+	//}
 
-	CloseZip(hz);
+	//CloseZip(hz);
 	return 1;
 }
