@@ -42,6 +42,7 @@ public:
 	bool Create_Resources_Group();
 	bool Delete_Resources_Group();
 	bool Add_Resource_Location_Project(char* Resource_Location);
+	int Get_Adjusted_Counters_Count(void);
 
 	Brush* Selected_Brush;
 
@@ -55,6 +56,15 @@ public:
 
 	int Brush_Index;
 	char Brush_Name[200];
+
+	int Area_Count;
+	int UniqueID_Area_Count;
+
+	int Camera_Count;
+	int UniqueID_Camera_Count;
+
+	int Counters_Count;
+	int UniqueID_Counters_Count;
 
 	int AdjusedIndex_Store[500];
 	int AdjustedIndex_Count;

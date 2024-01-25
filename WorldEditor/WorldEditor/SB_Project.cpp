@@ -52,7 +52,7 @@ SB_Project::SB_Project(void)
 	//WriteFile = NULL;
 
 	//Project_Loaded = 0;
-	//Directory_Changed_Flag = 0;
+	Directory_Changed_Flag = 0;
 	//Set_QuickLoad_Flag = 1;
 
 	m_Ini_Path_File_Name[0] = 0;
@@ -389,14 +389,14 @@ bool SB_Project::Save_Project()
 		return 0;
 	}
 
-//	Save_Level_Folder();
-//	Save_Main_Asset_Folder();
+	Save_Level_Folder();
+	Save_Main_Asset_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
 	if (App->CLSB_Scene->Area_Added == 1)
 	{
-//		Save_Aera_Folder();
+		Save_Aera_Folder();
 	}
 
 	if (App->CLSB_Scene->Player_Added == 1)
@@ -476,32 +476,251 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->CLSB_Project->m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->CLSB_Project->m_Level_Name);
-//	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CLSB_Build->GameName);
+	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CLSB_Build->GameName);
 
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Options]");
-//	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
-//	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CLSB_Scene->UniqueID_Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CLSB_Scene->UniqueID_Area_Count);
 
 	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CLSB_Scene->Player_Count);
-//	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CLSB_Scene->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CLSB_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CLSB_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CLSB_Scene->UniqueID_Object_Counter);
 
 
-//	int Adjusted = App->CLSB_LookUps->Get_Adjusted_Counters_Count();
+	int Adjusted = App->CLSB_Scene->Get_Adjusted_Counters_Count();
 
-//	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
-//	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene->UniqueID_Counters_Count);
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene->UniqueID_Counters_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Config]");
-//	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CLSB_Build->GameOptions->Show_FPS);
-//	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CLSB_Build->GameOptions->FullScreen);
-//	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CLSB_Build->GameOptions->Zipped_Assets_Flag);
-//	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CLSB_Build->GameOptions->Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CLSB_Build->GameOptions->Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CLSB_Build->GameOptions->FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CLSB_Build->GameOptions->Zipped_Assets_Flag);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CLSB_Build->GameOptions->Front_Dialog_Flag);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Level_Folder:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Save_Level_Folder()
+{
+	strcpy(m_Level_Folder_Path, m_Project_Sub_Folder);
+	strcat(m_Level_Folder_Path, "\\");
+	strcat(m_Level_Folder_Path, m_Level_Name);
+
+	// First Level Folder
+	if (_mkdir(m_Level_Folder_Path) == 0)
+	{
+		_chdir(m_Level_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Level_Folder_Path);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Main_Asset_Folder:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool SB_Project::Save_Main_Asset_Folder()
+{
+	char LastFolder[MAX_PATH];
+
+	if (Directory_Changed_Flag == 1)
+	{
+		strcpy(LastFolder, m_Main_Assets_Path);
+	}
+
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
+	strcat(m_Main_Assets_Path, "\\");
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	if (_mkdir(m_Main_Assets_Path) == 0)
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+	else
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+
+	if (Directory_Changed_Flag == 1)
+	{
+		Copy_Assets(LastFolder, m_Main_Assets_Path);
+	}
+
+	Directory_Changed_Flag = 0;
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Copy_Assets:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+bool SB_Project::Copy_Assets(char* SourceFolder, char* DestinationFolder)
+{
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
+
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
+
+				CopyFile(SourceFile, DestinationFile, false);
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Aera_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Project::Save_Aera_Folder()
+{
+	m_Aera_Folder_Path[0] = 0;
+
+	strcpy(m_Aera_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Aera_Folder_Path, "\\");
+	strcat(m_Aera_Folder_Path, "Areas");
+
+
+	if (_mkdir(m_Aera_Folder_Path) == 0)
+	{
+		_chdir(m_Aera_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Aera_Folder_Path);
+	}
+
+	Save_Aeras_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Aeras_Data:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Save_Aeras_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Aera_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Areas.aer");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CLSB_Scene->Area_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->CLSB_Scene->Area_Count)
+	{
+		strcpy(buff, "[Area_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		//fprintf(WriteFile, "%s%s\n", "Area_Name=", App->CLSB_Scene->B_Area[Count]->Area_Name); // Change
+
+		//fprintf(WriteFile, "%s%s\n", "Area_File=", App->CLSB_Scene->B_Area[Count]->Area_FileName);
+		//fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->CLSB_Scene->B_Area[Count]->Area_Path_And_FileName);
+		//fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->CLSB_Scene->B_Area[Count]->Area_Resource_Path);
+		//fprintf(WriteFile, "%s%s\n", "Material_File=", App->CLSB_Scene->B_Area[Count]->Material_File);
+		//fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->CLSB_Scene->B_Area[Count]->This_Object_UniqueID);
+
+		// ------------ Position
+//		x = App->CLSB_Scene->B_Area[Count]->Area_Node->getPosition().x;
+//		y = App->CLSB_Scene->B_Area[Count]->Area_Node->getPosition().y;
+//		z = App->CLSB_Scene->B_Area[Count]->Area_Node->getPosition().z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+		// ------------ Scale
+//		x = App->CLSB_Scene->B_Area[Count]->Mesh_Scale.x;
+//		y = App->CLSB_Scene->B_Area[Count]->Mesh_Scale.y;
+//		z = App->CLSB_Scene->B_Area[Count]->Mesh_Scale.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+		// ------------ Mesh_Rot
+//		x = App->CLSB_Scene->B_Area[Count]->Mesh_Rot.x;
+//		y = App->CLSB_Scene->B_Area[Count]->Mesh_Rot.y;
+//		z = App->CLSB_Scene->B_Area[Count]->Mesh_Rot.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+		// ------------ Mesh_Quat
+//		w = App->CLSB_Scene->B_Area[Count]->Mesh_Quat.w;
+//		x = App->CLSB_Scene->B_Area[Count]->Mesh_Quat.x;
+//		y = App->CLSB_Scene->B_Area[Count]->Mesh_Quat.y;
+//		z = App->CLSB_Scene->B_Area[Count]->Mesh_Quat.z;
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
+
+		fprintf(WriteFile, "%s\n", " ");
+
+		Count++;
+	}
 
 	fclose(WriteFile);
 

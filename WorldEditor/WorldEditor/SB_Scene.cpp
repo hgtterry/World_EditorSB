@@ -148,8 +148,18 @@ SB_Scene::SB_Scene()
 
 	Player_Count = 0;
 	Player_Added = 0;
+
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
+
+	Area_Count = 0;
+	UniqueID_Area_Count = 0;
+
+	Camera_Count = 0;
+	UniqueID_Camera_Count = 0;
+
+	Counters_Count = 0;
+	UniqueID_Counters_Count = 0;
 
 	Brush_Index = 0;
 
@@ -808,5 +818,27 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  Get_Adjusted_Counters_Count:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int SB_Scene::Get_Adjusted_Counters_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = Counters_Count;
+
+	while (Count < Total)
+	{
+		/*if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			New_Count++;
+		}*/
+
+		Count++;
+	}
+
+	return New_Count;
 }
 
