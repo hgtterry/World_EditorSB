@@ -123,7 +123,7 @@ typedef struct FaceTag
 	geFloat		MipMapBias;
 	geFloat		LightXScale, LightYScale;
 	TexInfo		Tex;
-	geVec3d* Points;
+	geVec3d*	Points;
 } Face;
 
 struct tag_FaceList

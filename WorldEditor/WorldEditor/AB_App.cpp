@@ -115,6 +115,7 @@ SB_App::SB_App()
 	CLSB_Meshviewer =			nullptr;
 	CLSB_Props_Dialogs =		nullptr;
 	CLSB_Build =				nullptr;
+	CLSB_Create_Project =		nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -337,6 +338,7 @@ bool SB_App::InitApp(void)
 	CLSB_Meshviewer =				new SB_MeshViewer();
 	CLSB_Props_Dialogs =			new SB_Props_Dialogs();
 	CLSB_Build =					new SB_Build();
+	CLSB_Create_Project =			new SB_Project();
 
 	InitCommonControls();
 
