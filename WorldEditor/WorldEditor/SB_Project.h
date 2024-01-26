@@ -41,8 +41,7 @@ public:
 	~SB_Project(void);
 
 	bool Load_Project();
-	void Start_Save_Project_Dialog();
-
+	
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
 	char m_Level_File_Name[MAX_PATH];
@@ -60,8 +59,6 @@ public:
 	char m_Ini_Path_File_Name[MAX_PATH];
 
 private:
-
-	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Paths();
 	bool Load_Get_Resource_Path();

@@ -184,6 +184,8 @@
 #define IDD_SB_VIEWER3D_MV              365
 #define IDD_SB_PROPS_DIMENSIONS         367
 #define IDD_SB_BUILD_DIALOG             369
+#define IDD_DIALOG4                     371
+#define IDD_SB_NEW_PROJECT              371
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -1198,7 +1200,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        371
+#define _APS_NEXT_RESOURCE_VALUE        373
 #define _APS_NEXT_COMMAND_VALUE         33127
 #define _APS_NEXT_CONTROL_VALUE         1621
 #define _APS_NEXT_SYMED_VALUE           112

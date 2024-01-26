@@ -117,7 +117,7 @@ distribution.
 #include "SB_MeshViewer.h"
 #include "SB_Props_Dialogs.h"
 #include "SB_Build.h"
-#include "SB_Project.h"
+#include "SB_Project_Create.h"
 
 class SB_App
 {
@@ -212,7 +212,7 @@ public:
 	SB_MeshViewer*				CLSB_Meshviewer;
 	SB_Props_Dialogs*			CLSB_Props_Dialogs;
 	SB_Build*					CLSB_Build;
-	SB_Project*					CLSB_Create_Project;
+	SB_Project_Create*			CLSB_Project_Create;
 
 	bool InitApp(void);
 	void InitMFC(void);

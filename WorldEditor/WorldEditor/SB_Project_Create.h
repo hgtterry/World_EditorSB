@@ -30,8 +30,10 @@ public:
 
 	void Start_New_Project();
 	void Add_First_New_Area();
+	void Start_Save_Project_Dialog();
 
 protected:
+	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool First_Area_Build_Project(bool NoArea);
 };

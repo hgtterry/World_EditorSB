@@ -34,14 +34,14 @@ SB_Project_Create::~SB_Project_Create()
 }
 
 // *************************************************************************
-// *	  		Start_New_Project:- Terry and Hazel Flanigan 2022		   *
+// *	  		Start_New_Project:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void SB_Project_Create::Start_New_Project()
 {
 	App->CLSB_Scene_Data->Clear_Level();
 	App->CLSB_Scene_Data->Create_Resources_Group();
 
-	App->CLSB_Project->Start_Save_Project_Dialog();
+	App->CLSB_Project_Create->Start_Save_Project_Dialog();
 
 	App->CLSB_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
 
@@ -132,4 +132,323 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 	//App->CL_Ogre->Block_RenderingQueued = 0;
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  Start_Save_Project_Dialog:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_Project_Create::Start_Save_Project_Dialog()
+{
+	//DialogBox(App->hInst, (LPCTSTR)IDD_SB_NEW_PROJECT, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
+
+}
+
+// *************************************************************************
+// *		Save_Project_Dialog_Proc:- Terry and Hazel Flanigan 2024  	   *
+// *************************************************************************
+LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CK_SP_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+
+		SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
+		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
+
+		HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+		SendMessage(temp, BM_SETCHECK, 1, 0);*/
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		/*if (GetDlgItem(hDlg, IDC_STPJFOLDERPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPROJECTNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STLEVELNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STLN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_SP_DESKTOP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCHANGELEVEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTPJBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+
+		/*if (LOWORD(wParam) == IDC_CK_SP_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_FileIO->DeskTop_Folder);
+				strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
+				strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+				strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+
+				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+				App->SBC_Project->Directory_Changed_Flag = 1;
+
+				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
+
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 1);
+			}
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BTPJBROWSE)
+		{
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
+			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
+
+			if (Test == 0) { return true; }
+
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BTCHANGE)
+		{
+			strcpy(App->SBC_Dialogs->btext, "Change Project Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Project_Name);
+
+			App->SBC_Dialogs->Dialog_Text();
+
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
+
+			int len1 = strlen(App->SBC_Project->m_Project_Sub_Folder);
+			int len2 = strlen(App->SBC_Project->m_Project_Name);
+			App->SBC_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
+
+
+			strcpy(App->SBC_Project->m_Project_Name, App->SBC_Dialogs->Chr_Text);
+
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Sub_Folder);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+
+			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
+		{
+			strcpy(App->SBC_Dialogs->btext, "Change Level Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
+
+			App->SBC_Dialogs->Dialog_Text();
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
+
+			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
+			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_CKQUICKLOAD)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 0;
+			}
+
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->SBC_Project->Directory_Changed_Flag = 0;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		/*if (LOWORD(wParam) == IDOK)
+		{
+
+			App->SBC_Project->Save_Project();
+			App->SBC_Project->Project_Loaded = 1;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}*/
+
+		break;
+
+	}
+	return FALSE;
 }
