@@ -1108,11 +1108,15 @@ IDR_FUSIONTYPE MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        POPUP "New"
+        BEGIN
+            MENUITEM "Project",                     ID_NEW_PROJECT
+            MENUITEM "RFEditPro/World 3dt...",      ID_OPEN_WORLDEDITOR3DT
+        END
         POPUP "&Open..."
         BEGIN
-            MENUITEM "RFEditPro/World Editor File   3dt...", ID_OPEN_WORLDEDITOR3DT
             MENUITEM "Project",                     ID_OPEN_PROJECT, GRAYED
+            MENUITEM "RFEditPro/World Editor File   3dt...", ID_OPEN_WORLDEDITOR3DT
         END
         POPUP "Open Examples"
         BEGIN
@@ -1460,7 +1464,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [26-01-24] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [27-01-24] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2601,13 +2605,26 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,196,355,1
 END
 
-IDD_SB_NEW_PROJECT DIALOGEX 0, 0, 309, 176
+IDD_SB_NEW_PROJECT DIALOGEX 0, 0, 433, 180
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
+CAPTION "Create Project"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,198,155,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,252,155,50,14
+    DEFPUSHBUTTON   "OK",IDOK,163,159,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,221,159,50,14
+    CTEXT           "Static",IDC_STBANNER,7,7,419,15,SS_CENTERIMAGE
+    LTEXT           "Project Name",IDC_STPN,7,36,48,19,SS_CENTERIMAGE
+    LTEXT           "Static",IDC_STPROJECTNAME,57,36,303,19,SS_CENTERIMAGE | WS_BORDER
+    LTEXT           "Level Name",IDC_STLN,7,62,48,19,SS_CENTERIMAGE
+    LTEXT           "Static",IDC_STLEVELNAME,57,62,303,19,SS_CENTERIMAGE | WS_BORDER
+    LTEXT           "Location",IDC_STPATH,7,105,48,19,SS_CENTERIMAGE
+    LTEXT           "Static",IDC_STPJFOLDERPATH,57,105,303,19,SS_CENTERIMAGE | WS_BORDER
+    CONTROL         "Quick Load",IDC_CKQUICKLOAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,133,108,10
+    CONTROL         "Desktop",IDC_CK_SP_DESKTOP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,163,133,108,10
+    PUSHBUTTON      "Change",IDC_BTCHANGE,364,36,50,19
+    PUSHBUTTON      "Change",IDC_BTCHANGELEVEL,364,62,50,19
+    PUSHBUTTON      "Browse",IDC_BTPJBROWSE,364,105,50,19
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,153,419,1
 END
 
 
@@ -2997,9 +3014,9 @@ BEGIN
     IDD_SB_NEW_PROJECT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 302
+        RIGHTMARGIN, 426
         TOPMARGIN, 7
-        BOTTOMMARGIN, 169
+        BOTTOMMARGIN, 173
     END
 END
 #endif    // APSTUDIO_INVOKED

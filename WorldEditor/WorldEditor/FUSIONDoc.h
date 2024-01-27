@@ -329,6 +329,7 @@ protected:
 	afx_msg void SB_OnFileOpen_3dt();
 
 	afx_msg void OnFileOpen_2Boxes();
+	afx_msg void On_New_Project();
 
 	afx_msg void OnToolsBrushAdjustmentmode();
 	afx_msg void OnToolsFaceAdjustmentmode();

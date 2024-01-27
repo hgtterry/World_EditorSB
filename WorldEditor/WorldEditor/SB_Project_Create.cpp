@@ -41,20 +41,20 @@ void SB_Project_Create::Start_New_Project()
 	App->CLSB_Scene_Data->Clear_Level();
 	App->CLSB_Scene_Data->Create_Resources_Group();
 
-	App->CLSB_Project_Create->Start_Save_Project_Dialog();
+	Start_Save_Project_Dialog();
 
-	App->CLSB_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
+	//App->CLSB_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
 
-	bool Doit = App->CLSB_Dialogs->Canceled;
-	if (Doit == 0)
-	{
-		App->CLSB_Meshviewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
-		//App->CLSB_Meshviewer->StartMeshViewer();
-	}
-	else
-	{
-		//First_Area_Build_Project(1);
-	}
+	//bool Doit = App->CLSB_Dialogs->Canceled;
+	//if (Doit == 0)
+	//{
+	//	App->CLSB_Meshviewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+	//	//App->CLSB_Meshviewer->StartMeshViewer();
+	//}
+	//else
+	//{
+	//	//First_Area_Build_Project(1);
+	//}
 }
 
 // *************************************************************************
@@ -139,8 +139,7 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 // *************************************************************************
 void SB_Project_Create::Start_Save_Project_Dialog()
 {
-	//DialogBox(App->hInst, (LPCTSTR)IDD_SB_NEW_PROJECT, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
-
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_NEW_PROJECT, App->MainHwnd, (DLGPROC)Save_Project_Dialog_Proc);
 }
 
 // *************************************************************************
@@ -152,7 +151,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -174,16 +173,16 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 
 		SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CLSB_Project->m_Project_Name);
+		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CLSB_Project->m_Level_Name);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
 
 		HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
-		SendMessage(temp, BM_SETCHECK, 1, 0);*/
+		SendMessage(temp, BM_SETCHECK, 1, 0);
 
 		return TRUE;
 	}
@@ -191,7 +190,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 	case WM_CTLCOLORSTATIC:
 	{
 
-		/*if (GetDlgItem(hDlg, IDC_STPJFOLDERPATH) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STPJFOLDERPATH) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -261,7 +260,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -275,7 +274,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -308,27 +307,27 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_CK_SP_DESKTOP)
+		if (LOWORD(wParam) == IDC_CK_SP_DESKTOP)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_FileIO->DeskTop_Folder);
-				strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
-				strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
-				strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+				strcpy(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_FileIO->DeskTop_Folder);
+				strcat(App->CLSB_Project->m_Project_Sub_Folder, "\\");
+				strcat(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_Project->m_Project_Name);
+				strcat(App->CLSB_Project->m_Project_Sub_Folder, "_Prj");
 
-				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
-				App->SBC_Project->Directory_Changed_Flag = 1;
+				//App->CLSB_Project->Directory_Changed_Flag = 1;
 
 				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
@@ -341,25 +340,25 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			}
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BTPJBROWSE)
+		if (LOWORD(wParam) == IDC_BTPJBROWSE)
 		{
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
-			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
+			strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
+			int Test = App->CLSB_FileIO->StartBrowser("");
 
 			if (Test == 0) { return true; }
 
-			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+			strcpy(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_FileIO->szSelectedDir);
+			strcat(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_Project->m_Project_Name);
+			strcat(App->CLSB_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			//App->CLSB_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
-		}*/
+		}
 
 		/*if (LOWORD(wParam) == IDC_BTCHANGE)
 		{

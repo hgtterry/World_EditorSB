@@ -184,7 +184,6 @@
 #define IDD_SB_VIEWER3D_MV              365
 #define IDD_SB_PROPS_DIMENSIONS         367
 #define IDD_SB_BUILD_DIALOG             369
-#define IDD_DIALOG4                     371
 #define IDD_SB_NEW_PROJECT              371
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -951,7 +950,18 @@
 #define IDC_CK_FULLSCREEN               1620
 #define IDC_BT_BUILDGAME                1620
 #define IDC_CK_BO_FRONTDLG              1621
+#define IDC_CHECK2                      1621
+#define IDC_CK_SP_DESKTOP               1621
 #define IDC_CK_BO_ZIPFILES              1622
+#define IDC_STPN                        1622
+#define IDC_STLN                        1623
+#define IDC_CKQUICKLOAD                 1624
+#define IDC_STPROJECTNAME               1625
+#define IDC_STLEVELNAME                 1626
+#define IDC_STPJFOLDERPATH              1627
+#define IDC_BTCHANGE                    1628
+#define IDC_BTCHANGELEVEL               1629
+#define IDC_BTPJBROWSE                  1630
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1193,6 +1203,7 @@
 #define ID_DEBUG_MESHMANAGER            33124
 #define ID_EDIT_DELETE33125             33125
 #define ID_EDIT_DELETEMENU              33126
+#define ID_NEW_PROJECT                  33127
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1201,8 +1212,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        373
-#define _APS_NEXT_COMMAND_VALUE         33127
-#define _APS_NEXT_CONTROL_VALUE         1621
+#define _APS_NEXT_COMMAND_VALUE         33128
+#define _APS_NEXT_CONTROL_VALUE         1631
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

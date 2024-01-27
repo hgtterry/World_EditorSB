@@ -130,6 +130,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_OPEN_WORLDEDITOR3DT, SB_OnFileOpen_3dt)
     
     ON_COMMAND(ID_OPENEXAMPLES_2, OnFileOpen_2Boxes)
+    ON_COMMAND(ID_NEW_PROJECT, On_New_Project)
 
     ON_COMMAND(ID_TOOLS_BRUSH_ADJUSTMENTMODE, OnToolsBrushAdjustmentmode)
     ON_COMMAND(ID_TOOLS_FACE_ADJUSTMENTMODE, OnToolsFaceAdjustmentmode)
@@ -4772,6 +4773,11 @@ void CFusionDoc::OnFileOpen_2Boxes() // hgtterry Open 2 Boxes
     strcpy(App->CLSB_File_WE->FileName_3dt, "2_Boxes.3dt");
 
     App->CLSB_File_WE->Open_Example_File();
+}
+
+void CFusionDoc::On_New_Project() // hgtterry Open 2 Boxes
+{
+    App->CLSB_Project_Create->Start_New_Project();
 }
 
 void CFusionDoc::OnFileImportActor()
