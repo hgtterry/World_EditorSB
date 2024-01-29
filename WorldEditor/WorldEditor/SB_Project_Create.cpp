@@ -360,56 +360,56 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_BTCHANGE)
+		if (LOWORD(wParam) == IDC_BTCHANGE)
 		{
-			strcpy(App->SBC_Dialogs->btext, "Change Project Name");
-			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Project_Name);
+			strcpy(App->CLSB_Dialogs->btext, "Change Project Name");
+			strcpy(App->CLSB_Dialogs->Chr_Text, App->CLSB_Project->m_Project_Name);
 
-			App->SBC_Dialogs->Dialog_Text();
+			App->CLSB_Dialogs->Dialog_Text(10);
 
-			if (App->SBC_Dialogs->Canceled == 1)
+			if (App->CLSB_Dialogs->Canceled == 1)
 			{
 				return TRUE;
 			}
 
-			int len1 = strlen(App->SBC_Project->m_Project_Sub_Folder);
-			int len2 = strlen(App->SBC_Project->m_Project_Name);
-			App->SBC_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
+			int len1 = strlen(App->CLSB_Project->m_Project_Sub_Folder);
+			int len2 = strlen(App->CLSB_Project->m_Project_Name);
+			App->CLSB_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
 
 
-			strcpy(App->SBC_Project->m_Project_Name, App->SBC_Dialogs->Chr_Text);
+			strcpy(App->CLSB_Project->m_Project_Name, App->CLSB_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Sub_Folder);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
-			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+			strcpy(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_Project->m_Project_Sub_Folder);
+			strcat(App->CLSB_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_Project->m_Project_Name);
+			strcat(App->CLSB_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CLSB_Project->m_Project_Name);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			//App->CLSB_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
+		if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
 		{
-			strcpy(App->SBC_Dialogs->btext, "Change Level Name");
-			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
+			strcpy(App->CLSB_Dialogs->btext, "Change Level Name");
+			strcpy(App->CLSB_Dialogs->Chr_Text, App->CLSB_Project->m_Level_Name);
 
-			App->SBC_Dialogs->Dialog_Text();
-			if (App->SBC_Dialogs->Canceled == 1)
+			App->CLSB_Dialogs->Dialog_Text(10);
+			if (App->CLSB_Dialogs->Canceled == 1)
 			{
 				return TRUE;
 			}
 
-			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
-			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+			strcpy(App->CLSB_Project->m_Level_Name, App->CLSB_Dialogs->Chr_Text);
+			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CLSB_Project->m_Level_Name);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			//App->CLSB_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
-		}*/
+		}
 
 		/*if (LOWORD(wParam) == IDC_CKQUICKLOAD)
 		{
@@ -436,15 +436,15 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDOK)
 		{
 
-			App->SBC_Project->Save_Project();
-			App->SBC_Project->Project_Loaded = 1;
+			//App->SBC_Project->Save_Project();
+			//App->SBC_Project->Project_Loaded = 1;
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
-		}*/
+		}
 
 		break;
 
