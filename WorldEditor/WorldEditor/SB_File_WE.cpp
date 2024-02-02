@@ -1044,8 +1044,6 @@ void SB_File_WE::Save_Document()
 
 	App->CLSB_Doc->IsNewDocument = 0;
 	App->m_pDoc->SetModifiedFlag(FALSE);
-
-	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
 }
 
 // *************************************************************************

@@ -668,24 +668,13 @@ bool SB_Project::Create_New_Area()
 	}
 
 	// ---------------------------------------------
-	App->Get_Current_Document();
 
 	strcpy(App->CL_World->mCurrent_3DT_PathAndFile, m_Aera_Folder_Path);
 	strcat(App->CL_World->mCurrent_3DT_PathAndFile,"\\");
 	strcat(App->CL_World->mCurrent_3DT_PathAndFile, m_Level_Name);
 	strcat(App->CL_World->mCurrent_3DT_PathAndFile, ".3dt");
 
-	App->Say(App->CL_World->mCurrent_3DT_PathAndFile);
-	if (App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile) == GE_FALSE)
-	{
-		App->Say("Error: Unable to save file");
-		return 0;
-	}
-
-	App->CLSB_Doc->IsNewDocument = 0;
-	App->m_pDoc->SetModifiedFlag(FALSE);
-
-	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
+	App->CLSB_File_WE->Save_Document();
 
 	return 1;
 }

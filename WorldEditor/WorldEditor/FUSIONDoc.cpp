@@ -2851,6 +2851,7 @@ void CFusionDoc::Save_SB()
     if (Test == 1)
     {
         App->CLSB_File_WE->Save_Document();
+        App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
     }
 }
 
