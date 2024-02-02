@@ -36,5 +36,7 @@ protected:
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool First_Area_Build_Project(bool NoArea);
+
+	bool Dialog_cancelled_F;
 };
 

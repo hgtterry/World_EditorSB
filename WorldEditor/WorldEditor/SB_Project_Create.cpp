@@ -27,6 +27,7 @@ distribution.
 
 SB_Project_Create::SB_Project_Create()
 {
+	Dialog_cancelled_F = 0;
 }
 
 SB_Project_Create::~SB_Project_Create()
@@ -38,100 +39,20 @@ SB_Project_Create::~SB_Project_Create()
 // *************************************************************************
 void SB_Project_Create::Start_New_Project()
 {
-	App->CLSB_Scene_Data->Clear_Level();
-	App->CLSB_Scene_Data->Create_Resources_Group();
+	//App->CLSB_Scene_Data->Clear_Level();
+	//App->CLSB_Scene_Data->Create_Resources_Group();
 
 	Start_Save_Project_Dialog();
 
-	//App->CLSB_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
+	if (App->CLSB_Project_Create->Dialog_cancelled_F == 1)
+	{
+		App->Say("Cancelled");
+	}
+	else
+	{
+		App->CLSB_Project->Save_Project();
+	}
 
-	//bool Doit = App->CLSB_Dialogs->Canceled;
-	//if (Doit == 0)
-	//{
-	//	App->CLSB_Meshviewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
-	//	//App->CLSB_Meshviewer->StartMeshViewer();
-	//}
-	//else
-	//{
-	//	//First_Area_Build_Project(1);
-	//}
-}
-
-// *************************************************************************
-// *	  	Add_First_New_Area:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Project_Create::Add_First_New_Area()
-{
-	First_Area_Build_Project(0);
-}
-
-// *************************************************************************
-//		First_Area_Build_Project:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
-{
-	
-	//char Temp[MAX_PATH];
-	//strcpy(Temp, App->SBC_Scene->Project_Resource_Group.c_str());
-
-	//// ------------------------ Add Area
-	//if (NoArea == 0)
-	//{
-	//	App->SBC_Scene->B_Area[0] = new Base_Area();
-	//	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, Temp);
-	//	strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
-	//	App->SBC_Scene->Area_Count++;
-	//	App->SBC_Scene->Area_Added = 1;
-
-	//	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
-	//	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
-	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
-	//}
-
-	//// ------------------------ Add Default Camera
-	//App->SBC_Com_Camera->Add_New_Camera();
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
-	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-	//// ------------------------ Add Default Player
-	//App->SBC_Player->Create_Player_Object();
-	//strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
-
-	//HTREEITEM Temp1 =App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
-	//App->SBC_Scene->B_Player[0]->FileViewItem = Temp1;
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
-
-	//// ------------------------ Add Counter
-	//App->SBC_Display->Add_New_Counter();
-
-	//// ------------------------ Add Location
-	//App->SBC_Locations->Create_Location_Entity("Start_Position");
-
-	//// ------------------------ Add Environ
-
-	//App->SBC_Com_Environments->Add_New_Environ_Entity(1);
-	//int mIndex = App->SBC_Com_Environments->Get_First_Environ();
-	//App->SBC_Com_Environments->Set_First_Environment(mIndex);
-
-	//// ------------------------ Set Scene
-	//App->SBC_Grid->Grid_SetVisible(1);
-	//App->SBC_FileView->Redraw_FileView();
-
-	//App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
-
-	//App->SBC_Physics->Reset_Physics();
-	//App->SBC_Physics->Enable_Physics(1);
-	//App->SBC_Scene->Scene_Loaded = 1;
-	////App->SBC_Scene->Area_Added = 1;
-	//App->CL_Ogre->Block_RenderingQueued = 0;
-
-	////------------------------------------------------------------------------------ WHY
-	//int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-	//App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	//App->CL_Ogre->Block_RenderingQueued = 0;
-
-	return 1;
 }
 
 // *************************************************************************
@@ -139,6 +60,8 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 // *************************************************************************
 void SB_Project_Create::Start_Save_Project_Dialog()
 {
+	Dialog_cancelled_F = 0;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_NEW_PROJECT, App->MainHwnd, (DLGPROC)Save_Project_Dialog_Proc);
 }
 
@@ -432,6 +355,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 		{
 			//App->SBC_Project->Directory_Changed_Flag = 0;
 
+			App->CLSB_Project_Create->Dialog_cancelled_F = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -442,6 +366,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			//App->SBC_Project->Save_Project();
 			//App->SBC_Project->Project_Loaded = 1;
 
+			App->CLSB_Project_Create->Dialog_cancelled_F = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -451,3 +376,81 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 	}
 	return FALSE;
 }
+
+// *************************************************************************
+// *	  	Add_First_New_Area:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Project_Create::Add_First_New_Area()
+{
+	First_Area_Build_Project(0);
+}
+
+// *************************************************************************
+//		First_Area_Build_Project:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
+{
+	
+	//char Temp[MAX_PATH];
+	//strcpy(Temp, App->SBC_Scene->Project_Resource_Group.c_str());
+
+	//// ------------------------ Add Area
+	//if (NoArea == 0)
+	//{
+	//	App->SBC_Scene->B_Area[0] = new Base_Area();
+	//	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, Temp);
+	//	strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
+	//	App->SBC_Scene->Area_Count++;
+	//	App->SBC_Scene->Area_Added = 1;
+
+	//	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+	//	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
+	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+	//}
+
+	//// ------------------------ Add Default Camera
+	//App->SBC_Com_Camera->Add_New_Camera();
+	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
+	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	//// ------------------------ Add Default Player
+	//App->SBC_Player->Create_Player_Object();
+	//strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
+
+	//HTREEITEM Temp1 =App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
+	//App->SBC_Scene->B_Player[0]->FileViewItem = Temp1;
+	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
+
+	//// ------------------------ Add Counter
+	//App->SBC_Display->Add_New_Counter();
+
+	//// ------------------------ Add Location
+	//App->SBC_Locations->Create_Location_Entity("Start_Position");
+
+	//// ------------------------ Add Environ
+
+	//App->SBC_Com_Environments->Add_New_Environ_Entity(1);
+	//int mIndex = App->SBC_Com_Environments->Get_First_Environ();
+	//App->SBC_Com_Environments->Set_First_Environment(mIndex);
+
+	//// ------------------------ Set Scene
+	//App->SBC_Grid->Grid_SetVisible(1);
+	//App->SBC_FileView->Redraw_FileView();
+
+	//App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
+
+	//App->SBC_Physics->Reset_Physics();
+	//App->SBC_Physics->Enable_Physics(1);
+	//App->SBC_Scene->Scene_Loaded = 1;
+	////App->SBC_Scene->Area_Added = 1;
+	//App->CL_Ogre->Block_RenderingQueued = 0;
+
+	////------------------------------------------------------------------------------ WHY
+	//int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+	//App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	//App->CL_Ogre->Block_RenderingQueued = 0;
+
+	return 1;
+}
+

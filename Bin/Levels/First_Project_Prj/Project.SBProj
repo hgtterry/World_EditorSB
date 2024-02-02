@@ -7,14 +7,14 @@ Level_Name=First_Level
 Game_Name=YourGameName
  
 [Options]
-Areas_Count=1
-Areas_ID_Count=2
+Areas_Count=0
+Areas_ID_Count=0
 Players_Count=1
-Cameras_Count=1
-Objects_Count=1
-Objects_ID_Count=1
-Counters_Count=2
-Counters_ID_Count=3
+Cameras_Count=0
+Objects_Count=3
+Objects_ID_Count=0
+Counters_Count=0
+Counters_ID_Count=0
  
 [Config]
 Show_FPS=0

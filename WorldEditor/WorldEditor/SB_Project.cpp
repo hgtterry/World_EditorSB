@@ -394,14 +394,14 @@ bool SB_Project::Save_Project()
 
 	_chdir(m_Level_Folder_Path);
 
-	if (App->CLSB_Scene_Data->Area_Added == 1)
+	//if (App->CLSB_Scene_Data->Area_Added == 1)
 	{
 		Save_Aera_Folder();
 	}
 
 	if (App->CLSB_Scene_Data->Player_Added == 1)
 	{
-//		Save_Players_Folder();
+		Save_Players_Folder();
 	}
 
 //	Save_Cameras_Folder();
@@ -626,9 +626,67 @@ bool SB_Project::Save_Aera_Folder()
 		_chdir(m_Aera_Folder_Path);
 	}
 
+	Create_New_Area();
 	Save_Aeras_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Create_New_Area:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Create_New_Area()
+{
+	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		if (App->CL_Brush->Get_Brush_Count() == 0)
+		{
+			App->CLSB_Doc->AddBrushToWorld();
+			App->m_pDoc->SetModifiedFlag();
+			App->CLSB_TopTabs->Update_Dlg_Controls();
+		}
+		else
+		{
+			App->CLSB_Doc->AddBrushToWorld();
+			App->m_pDoc->SetModifiedFlag();
+		}
+	}
+
+	App->CLSB_Doc->DoGeneralSelect();
+
+	App->CL_World->Reset_Editor();
+
+	App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
+	App->CLSB_Panels->Set_Aplication_Dialogs_On();
+
+	App->File_Loaded_Flag = 1;
+
+	if (App->BR_True3D_Mode_Active == 1)
+	{
+		App->CLSB_Mesh_Mgr->Update_World();
+	}
+
+	// ---------------------------------------------
+	App->Get_Current_Document();
+
+	strcpy(App->CL_World->mCurrent_3DT_PathAndFile, m_Aera_Folder_Path);
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile,"\\");
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile, m_Level_Name);
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile, ".3dt");
+
+	App->Say(App->CL_World->mCurrent_3DT_PathAndFile);
+	if (App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile) == GE_FALSE)
+	{
+		App->Say("Error: Unable to save file");
+		return 0;
+	}
+
+	App->CLSB_Doc->IsNewDocument = 0;
+	App->m_pDoc->SetModifiedFlag(FALSE);
+
+	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
+
 	return 1;
 }
 
@@ -642,7 +700,7 @@ bool SB_Project::Save_Aeras_Data()
 
 	strcpy(File, m_Aera_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Areas.aer");
+	strcat(File, "Areas.adat");
 
 	WriteFile = nullptr;
 
@@ -757,7 +815,7 @@ bool SB_Project::Save_Objects_Data()
 
 	strcpy(File, m_Objects_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Objects.efd");
+	strcat(File, "Objects.odat");
 
 	WriteFile = nullptr;
 
@@ -1073,6 +1131,166 @@ bool SB_Project::Save_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Players_Folder:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Save_Players_Folder()
+{
+	m_Players_Folder_Path[0] = 0;
+
+	strcpy(m_Players_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Players_Folder_Path, "\\");
+	strcat(m_Players_Folder_Path, "Players");
+
+
+	_mkdir(m_Players_Folder_Path);
+
+	_chdir(m_Players_Folder_Path);
+
+	Save_Player_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Player_Data:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project::Save_Player_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	float W = 0;
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
+	strcpy(File, m_Players_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Players.pdat");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->CLSB_Scene_Data->Player_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
+	while (Count < App->CLSB_Scene_Data->Player_Count)
+	{
+		strcpy(buff, "[Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->CLSB_Scene_Data->B_Player[Count]->Player_Name);
+
+		Pos.x = App->CLSB_Scene_Data->B_Player[Count]->StartPos.x;
+		Pos.y = App->CLSB_Scene_Data->B_Player[Count]->StartPos.y;
+		Pos.z = App->CLSB_Scene_Data->B_Player[Count]->StartPos.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+
+		W = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getW();
+		X = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getX();
+		Y = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getY();
+		Z = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getZ();
+
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
+
+		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
+		fprintf(WriteFile, "%s%f\n", "Mass=", App->CLSB_Scene_Data->B_Player[Count]->Capsule_Mass);
+		fprintf(WriteFile, "%s%f\n", "Radius=", App->CLSB_Scene_Data->B_Player[Count]->Capsule_Radius);
+		fprintf(WriteFile, "%s%f\n", "Height=", App->CLSB_Scene_Data->B_Player[Count]->Capsule_Height);
+		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->CLSB_Scene_Data->B_Player[Count]->Ground_speed);
+		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->CLSB_Scene_Data->B_Player[Count]->PlayerHeight);
+		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->CLSB_Scene_Data->B_Player[Count]->TurnRate);
+		fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->CLSB_Scene_Data->B_Player[Count]->Limit_Look_Up);
+		fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->CLSB_Scene_Data->B_Player[Count]->Limit_Look_Down);
+		fprintf(WriteFile, "%s%f\n", "Player_Height=", App->CLSB_Scene_Data->B_Player[Count]->PlayerHeight);
+
+		Count++;
+	}
+
+	// ---------------------------------------- Player Locations
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	fprintf(WriteFile, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", "[Locations]");
+	
+	//int RealCount = App->Cl_LookUps->Player_Location_GetCount(); // Get The real Count Minus Deleted Files
+
+	//fprintf(WriteFile, "%s%i\n", "Locations_Count=", RealCount);
+
+	//int Location = 0; // Correct for Deleted Files
+
+	//Count = 0;
+	//while (Count < App->CLSB_Scene_Data->Player_Location_Count)
+	//{
+	//	if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+	//	{
+	//		fprintf(WriteFile, "%s\n", " ");
+
+	//		char Cbuff[255];
+	//		char buff[255];
+	//		strcpy(buff, "[Location_");
+	//		_itoa(Location, Cbuff, 10);
+	//		strcat(buff, Cbuff);
+	//		strcat(buff, "]");
+	//		fprintf(WriteFile, "%s\n", buff);
+
+	//		fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID);
+	//		fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
+
+	//		x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
+	//		y = App->SBC_Scene->B_Locations[Count]->Current_Position.y;
+	//		z = App->SBC_Scene->B_Locations[Count]->Current_Position.z;
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Position=", x, y, z);
+
+	//		x = App->SBC_Scene->B_Locations[Count]->Physics_Position.getX();
+	//		y = App->SBC_Scene->B_Locations[Count]->Physics_Position.getY();
+	//		z = App->SBC_Scene->B_Locations[Count]->Physics_Position.getZ();
+	//		fprintf(WriteFile, "%s%f,%f,%f\n", "Physics_Position=", x, y, z);
+
+	//		w = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getW();
+	//		x = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getX();
+	//		y = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getY();
+	//		z = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getZ();
+	//		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Rotation=", w, x, y, z);
+	//		Location++;
+	//	}
+
+	//	Count++;
+	//}
 
 	fclose(WriteFile);
 
