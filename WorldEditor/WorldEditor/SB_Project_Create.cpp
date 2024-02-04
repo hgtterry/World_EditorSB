@@ -489,6 +489,8 @@ bool SB_Project_Create::Create_New_Area()
 
 	App->CLSB_File_WE->Save_Document();
 
+
+
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();

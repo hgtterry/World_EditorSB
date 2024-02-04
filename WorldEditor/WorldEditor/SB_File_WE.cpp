@@ -282,7 +282,7 @@ bool SB_File_WE::Open_3dt_File()
 	{
 		char Txlpath[MAX_PATH];
 		strcpy(Txlpath, App->WorldEditor_Directory);
-		strcat(Txlpath, "Levels\\First_Project_Prj\\Equity.txl");
+		strcat(Txlpath, "Data\\Default.txl");
 
 		Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();

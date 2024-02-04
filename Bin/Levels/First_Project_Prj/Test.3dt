@@ -1,5 +1,5 @@
 3dtVersion 1.34
-TextureLib "C:\\Users\\Terry\\Desktop\\World_EditorSB\\Bin\\Levels\\First_Project_Prj\\Equity.txl"
+TextureLib "C:\\Users\\Terry\\Desktop\\World_EditorSB\\Bin\\Data\\Default.txl"
 HeadersDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Headers"
 ActorsDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Actors"
 PawnIni "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Pawn.ini"
