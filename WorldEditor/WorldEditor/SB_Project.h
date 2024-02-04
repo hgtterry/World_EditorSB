@@ -43,6 +43,13 @@ public:
 	bool Load_Project();
 	bool Save_Project();
 
+	bool Save_Project_Ini();
+	bool Save_Level_Folder();
+	bool Save_Main_Asset_Folder();
+	bool Save_Aera_Folder();
+	bool Save_Players_Folder();
+	bool Save_Objects_Folder();
+
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
 	char m_Level_File_Name[MAX_PATH];
@@ -65,18 +72,12 @@ private:
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Objects();
 	
-	bool Save_Project_Ini();
-	bool Save_Level_Folder();
-	bool Save_Main_Asset_Folder();
 	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
 
-	bool Save_Aera_Folder();
 	bool Save_Aeras_Data();
 
-	bool Save_Objects_Folder();
 	bool Save_Objects_Data();
 
-	bool Save_Players_Folder();
 	bool Save_Player_Data();
 
 	bool Directory_Changed_Flag;
