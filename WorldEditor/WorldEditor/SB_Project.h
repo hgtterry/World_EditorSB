@@ -71,7 +71,6 @@ private:
 	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
 
 	bool Save_Aera_Folder();
-	bool Create_New_Area();
 	bool Save_Aeras_Data();
 
 	bool Save_Objects_Folder();

@@ -46,7 +46,7 @@ void SB_Project_Create::Start_New_Project()
 
 	if (App->CLSB_Project_Create->Dialog_cancelled_F == 1)
 	{
-		App->Say("Cancelled");
+		//App->Say("Cancelled");
 	}
 	else
 	{
@@ -98,11 +98,14 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CLSB_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CLSB_Project->m_Level_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
-
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
-
+		
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
+
+		strcpy(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_FileIO->DeskTop_Folder);
+		strcat(App->CLSB_Project->m_Project_Sub_Folder, "\\");
+		strcat(App->CLSB_Project->m_Project_Sub_Folder, App->CLSB_Project->m_Project_Name);
+		strcat(App->CLSB_Project->m_Project_Sub_Folder, "_Prj");
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CLSB_Project->m_Project_Sub_Folder);
 
 		HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
 		SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -450,6 +453,57 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 	//App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	//App->CL_Ogre->Block_RenderingQueued = 0;
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Create_New_Area:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool SB_Project_Create::Create_New_Area()
+{
+	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		if (App->CL_Brush->Get_Brush_Count() == 0)
+		{
+			App->CLSB_Doc->AddBrushToWorld();
+			App->m_pDoc->SetModifiedFlag();
+			App->CLSB_TopTabs->Update_Dlg_Controls();
+		}
+		else
+		{
+			App->CLSB_Doc->AddBrushToWorld();
+			App->m_pDoc->SetModifiedFlag();
+		}
+	}
+
+	App->CLSB_Doc->DoGeneralSelect();
+
+	App->CL_World->Reset_Editor();
+
+	App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
+	App->CLSB_Panels->Set_Aplication_Dialogs_On();
+
+	App->File_Loaded_Flag = 1;
+
+	if (App->BR_True3D_Mode_Active == 1)
+	{
+		App->CLSB_Mesh_Mgr->Update_World();
+	}
+
+	// ---------------------------------------------
+
+	strcpy(App->CL_World->mCurrent_3DT_PathAndFile, App->CLSB_Project->m_Aera_Folder_Path);
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile, "\\");
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile, App->CLSB_Project->m_Level_Name);
+	strcat(App->CL_World->mCurrent_3DT_PathAndFile, ".3dt");
+
+	App->CLSB_File_WE->Save_Document();
+
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+	App->CLSB_Ogre3D->Convert_ToOgre3D(1, 0);
 
 	return 1;
 }

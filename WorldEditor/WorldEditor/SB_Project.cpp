@@ -626,58 +626,14 @@ bool SB_Project::Save_Aera_Folder()
 		_chdir(m_Aera_Folder_Path);
 	}
 
-	Create_New_Area();
+	App->CLSB_Project_Create->Create_New_Area();
 	Save_Aeras_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
-// *************************************************************************
-// *	  		Create_New_Area:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-bool SB_Project::Create_New_Area()
-{
-	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-	{
-		if (App->CL_Brush->Get_Brush_Count() == 0)
-		{
-			App->CLSB_Doc->AddBrushToWorld();
-			App->m_pDoc->SetModifiedFlag();
-			App->CLSB_TopTabs->Update_Dlg_Controls();
-		}
-		else
-		{
-			App->CLSB_Doc->AddBrushToWorld();
-			App->m_pDoc->SetModifiedFlag();
-		}
-	}
 
-	App->CLSB_Doc->DoGeneralSelect();
-
-	App->CL_World->Reset_Editor();
-
-	App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
-	App->CLSB_Panels->Set_Aplication_Dialogs_On();
-
-	App->File_Loaded_Flag = 1;
-
-	if (App->BR_True3D_Mode_Active == 1)
-	{
-		App->CLSB_Mesh_Mgr->Update_World();
-	}
-
-	// ---------------------------------------------
-
-	strcpy(App->CL_World->mCurrent_3DT_PathAndFile, m_Aera_Folder_Path);
-	strcat(App->CL_World->mCurrent_3DT_PathAndFile,"\\");
-	strcat(App->CL_World->mCurrent_3DT_PathAndFile, m_Level_Name);
-	strcat(App->CL_World->mCurrent_3DT_PathAndFile, ".3dt");
-
-	App->CLSB_File_WE->Save_Document();
-
-	return 1;
-}
 
 // *************************************************************************
 // *	  		Save_Aeras_Data:- Terry and Hazel Flanigan 2024			   *

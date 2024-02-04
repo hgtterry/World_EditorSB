@@ -238,9 +238,13 @@ void SB_Ogre3D::Set_World_Paths(void)
 // *************************************************************************
 // *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Ogre3D::Convert_ToOgre3D(bool Create)
+void SB_Ogre3D::Convert_ToOgre3D(bool Create, bool Use_Project_Path)
 {
-	Set_World_Paths();
+	if (Use_Project_Path == 0)
+	{
+		Set_World_Paths();
+	}
+
 	App->CLSB_Model->Ogre_Face_Count = 0;
 
 	if (Create == 1)
@@ -396,8 +400,11 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
 	App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 
-	remove(mWorld_File_PathAndFile);
-	remove(Material_PathAndFile);
+	if (Use_Project_Path == 0)
+	{
+		remove(mWorld_File_PathAndFile);
+		remove(Material_PathAndFile);
+	}
 
 }
 

@@ -33,7 +33,7 @@ public:
 	~SB_Ogre3D(void);
 
 	void Export_To_Ogre3D(bool Create);
-	void Convert_ToOgre3D(bool Create);
+	void Convert_ToOgre3D(bool Create, bool Use_Project_Path);
 	bool Clean_Direcory();
 
 	bool Load_OgreModel(void);

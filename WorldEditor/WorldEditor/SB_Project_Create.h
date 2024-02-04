@@ -31,6 +31,7 @@ public:
 	void Start_New_Project();
 	void Add_First_New_Area();
 	void Start_Save_Project_Dialog();
+	bool Create_New_Area();
 
 protected:
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
