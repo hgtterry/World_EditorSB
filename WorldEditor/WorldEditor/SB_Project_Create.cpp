@@ -487,14 +487,26 @@ bool SB_Project_Create::Create_New_Area()
 	strcat(App->CL_World->mCurrent_3DT_PathAndFile, App->CLSB_Project->m_Level_Name);
 	strcat(App->CL_World->mCurrent_3DT_PathAndFile, ".3dt");
 
+	Level_SetWadPath(App->CLSB_Doc->pLevel, "Default.txl");
+	
 	App->CLSB_File_WE->Save_Document();
 
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
 
+	strcpy(SourceFile,App->WorldEditor_Directory);
+	strcat(SourceFile,"Data\\Default.txl");
 
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	strcpy(DestinationFile, App->CLSB_Project->m_Aera_Folder_Path);
+	strcat(DestinationFile, "\\");
+	strcat(DestinationFile, "Default.txl");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	/*App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-	App->CLSB_Ogre3D->Convert_ToOgre3D(1, 0);
+	App->CLSB_Ogre3D->Convert_ToOgre3D(1, 0);*/
 
 	return 1;
 }
