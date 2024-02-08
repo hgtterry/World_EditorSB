@@ -236,15 +236,13 @@ void SB_Ogre3D::Set_World_Paths(void)
 }
 
 // *************************************************************************
-// *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2022		   *
+// *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void SB_Ogre3D::Convert_ToOgre3D(bool Create, bool Use_Project_Path)
+void SB_Ogre3D::Convert_ToOgre3D(bool Create)
 {
-	if (Use_Project_Path == 0)
-	{
-		Set_World_Paths();
-	}
-
+	
+	Set_World_Paths();
+	
 	App->CLSB_Model->Ogre_Face_Count = 0;
 
 	if (Create == 1)
@@ -390,7 +388,6 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create, bool Use_Project_Path)
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
 	}
 
-	
 	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
 	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	
@@ -400,12 +397,8 @@ void SB_Ogre3D::Convert_ToOgre3D(bool Create, bool Use_Project_Path)
 	App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
 	App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 
-	if (Use_Project_Path == 0)
-	{
-		remove(mWorld_File_PathAndFile);
-		remove(Material_PathAndFile);
-	}
-
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
 }
 
 // *************************************************************************
