@@ -503,11 +503,277 @@ bool SB_Project_Create::Create_New_Area()
 
 	CopyFile(SourceFile, DestinationFile, false);
 
-	/*App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-	App->CLSB_Ogre3D->Convert_ToOgre3D(1, 0);*/
+	Create_Ogre_Model(1, 0);
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  		Create_Ogre_Model:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void SB_Project_Create::Create_Ogre_Model(bool Create, bool Use_Project_Path)
+{
+	if (Use_Project_Path == 0)
+	{
+		//Set_World_Paths();
+	}
+
+	App->CLSB_Model->Ogre_Face_Count = 0;
+
+	if (Create == 1)
+	{
+		World_Manual = App->CLSB_Ogre_Setup->mSceneMgr->createManualObject("OgreManual2");
+		World_Manual->setRenderQueueGroup(2);
+	}
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	World_Manual->setDynamic(false);
+	World_Manual->setCastShadows(false);
+
+	World_Manual->estimateVertexCount(App->CLSB_Model->VerticeCount);
+	World_Manual->estimateIndexCount(App->CLSB_Model->FaceCount);
+
+	char MaterialNumber[255];
+	char MatName[255];
+
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+	int Count = 0;
+	int FaceCount = 0;
+	int FaceIndex = 0;
+	int TotalFaces = 0;
+
+	while (Count < GroupCountTotal)
+	{
+		_itoa(Count, MaterialNumber, 10);
+		strcpy(MatName, mWorld_Mesh_JustName);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+		FaceCount = 0;
+		FaceIndex = 0;
+
+		TotalFaces = TotalFaces + App->CLSB_Model->Group[Count]->GroupFaceCount;
+
+		while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+		{
+			A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
+
+			// --------------------------------------------------
+
+			Get_Data(Count, A);
+
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
+			FaceIndex++;
+
+			Get_Data(Count, B);
+
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
+			FaceIndex++;
+
+			Get_Data(Count, C);
+
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
+
+			FaceIndex++;
+			FaceCount++;
+		}
+
+		World_Manual->end();
+
+		Count++;
+	}
+
+	App->CLSB_Model->Ogre_Face_Count = TotalFaces;
+
+	if (World_Manual->getNumSections() == 0)
+	{
+		App->Say("Can not create Ogre Sections");
+	}
+
+	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
+
+	mesh->setAutoBuildEdgeLists(true);
+	mesh->buildEdgeList();
+
+	App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject(World_Manual);
+
+	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
+	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
+	delete(ms);
+
+	char OutputFolder[MAX_PATH];
+	strcpy(OutputFolder, mWorld_File_Path);
+	strcat(OutputFolder, "\\");
+
+	DecompileTextures_TXL(OutputFolder);
+
+	char Material_PathAndFile[MAX_PATH];
+	strcpy(Material_PathAndFile, mWorld_File_Path);
+	strcat(Material_PathAndFile, "\\");
+	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
+	strcat(Material_PathAndFile, ".material");
+
+	CreateMaterialFile(Material_PathAndFile);
+
+	char Name[MAX_PATH];
+	strcpy(Name, mWorld_Mesh_JustName);
+	strcat(Name, ".mesh");
+
+	if (App->CLSB_Mesh_Mgr->World_Ent)
+	{
+		App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
+
+		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
+		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
+
+		App->CLSB_Mesh_Mgr->World_Node = NULL;
+		App->CLSB_Mesh_Mgr->World_Ent = NULL;
+
+		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
+		//ptr->unload();
+
+		//Ogre::MeshManager::getSingleton().remove(Name);
+
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+
+	}
+	else
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
+	}
+
+
+	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
+	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+	App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
+
+	App->CLSB_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
+	App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
+	App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
+
+	if (Use_Project_Path == 0)
+	{
+		remove(mWorld_File_PathAndFile);
+		remove(Material_PathAndFile);
+	}
+}
+
+// *************************************************************************
+// *			Get_Data:- Terry and Hazel Flanigan 2023  			   	   *
+// *************************************************************************
+void SB_Project_Create::Get_Data(int Index, int FaceIndex)
+{
+	x = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].x;
+	y = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].y;
+	z = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].z;
+
+	u = App->CLSB_Model->Group[Index]->MapCord_Data[FaceIndex].u;
+	v = App->CLSB_Model->Group[Index]->MapCord_Data[FaceIndex].v;
+
+	nx = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].x;
+	ny = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].y;
+	nz = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].z;
+}
+
+// *************************************************************************
+// *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
+// *************************************************************************
+bool SB_Project_Create::DecompileTextures_TXL(char* PathAndFile)
+{
+
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+
+		App->CLSB_Textures->Extract_TXL_Texture(buf, PathAndFile);
+
+		GroupCount++;
+	}
+
+
+	return 1;
+}
+
+// *************************************************************************
+// *		CreateMaterialFile:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+void SB_Project_Create::CreateMaterialFile(char* MatFileName)
+{
+	char MatName[255];
+	char File[255];
+	char MaterialNumber[255];
+
+	Ogre::String OMatFileName = MatFileName;
+	Ogre::String OFile;
+	Ogre::String OMatName;
+
+	int numMaterials = App->CLSB_Model->GroupCount;
+
+	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
+
+	Ogre::MaterialSerializer matSer;
+
+	for (int i = 0; i < numMaterials; ++i)
+	{
+		_itoa(i, MaterialNumber, 10);
+		strcpy(MatName, mExport_Just_Name);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		strcpy(File, App->CLSB_Model->Group[i]->Text_FileName);
+
+		OMatName = MatName;
+		OFile = File;
+
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+
+		if (0 < strlen(File))
+		{
+			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
+
+			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
+		}
+
+		matSer.queueForExport(ogremat);
+	}
+
+	matSer.exportQueued(OMatFileName);
 }
 
