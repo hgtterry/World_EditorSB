@@ -1,4 +1,5 @@
-#include "StdAfx.h"
+//#include "StdAfx.h"
+#include "windows.h"
 #include "SB_Ini.h"
 
 #include <string.h>

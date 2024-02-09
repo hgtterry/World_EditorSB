@@ -196,7 +196,9 @@
     <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
-    <ClCompile Include="SB_Ini.cpp" />
+    <ClCompile Include="SB_Ini.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Level.cpp" />
     <ClCompile Include="SB_Loader.cpp" />
