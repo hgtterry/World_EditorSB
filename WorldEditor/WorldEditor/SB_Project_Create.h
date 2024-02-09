@@ -36,13 +36,14 @@ protected:
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Create_New_Project();
-	void Create_Ogre_Model(bool Create, bool Use_Project_Path);
+	void Create_Ogre_Model(bool Create);
 	void Get_Data(int Index, int FaceIndex);
 	bool DecompileTextures_TXL(char* PathAndFile);
 	void CreateMaterialFile(char* MatFileName);
+	void Set_Paths(void);
 
 	char mWorld_Mesh_JustName[MAX_PATH];
-	char mWorld_File_PathAndFile[MAX_PATH];
+	char User_Mesh_PathAndFile[MAX_PATH];
 	char mWorld_File_Path[MAX_PATH];
 	char mExport_Just_Name[MAX_PATH];
 

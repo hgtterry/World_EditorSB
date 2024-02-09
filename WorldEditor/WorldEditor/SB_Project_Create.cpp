@@ -506,20 +506,53 @@ bool SB_Project_Create::Create_New_Area()
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-	Create_Ogre_Model(1, 0);
+
+	Create_Ogre_Model(1);
 
 	return 1;
 }
 
 // *************************************************************************
+// *		   Set_Paths:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void SB_Project_Create::Set_Paths(void)
+{
+	char Num[100];
+	//itoa(NameIndex, Num, 10);
+
+	strcpy(mWorld_Mesh_JustName, "World");
+	strcat(mWorld_Mesh_JustName, Num);
+
+	strcpy(User_Mesh_PathAndFile, App->CLSB_Project->m_Aera_Folder_Path);
+	strcat(User_Mesh_PathAndFile, "\\");
+	strcat(User_Mesh_PathAndFile, App->CLSB_Project->m_Level_Name);
+	//strcat(User_Mesh_PathAndFile, "\\");
+	strcat(User_Mesh_PathAndFile, ".mesh");
+
+	/*strcpy(mWorld_File_Path, User_Mesh_PathAndFile);
+
+	strcat(User_Mesh_PathAndFile, "\\");
+	strcat(User_Mesh_PathAndFile, mWorld_Mesh_JustName);
+	strcat(User_Mesh_PathAndFile, ".mesh");
+
+	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);*/
+
+	//NameIndex++;
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+}
+
+// *************************************************************************
 // *	  		Create_Ogre_Model:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void SB_Project_Create::Create_Ogre_Model(bool Create, bool Use_Project_Path)
+void SB_Project_Create::Create_Ogre_Model(bool Create)
 {
-	if (Use_Project_Path == 0)
-	{
-		//Set_World_Paths();
-	}
+	
+	Set_Paths();
+	//App->Say(User_Mesh_PathAndFile);
+	//return;
 
 	App->CLSB_Model->Ogre_Face_Count = 0;
 
@@ -617,14 +650,14 @@ void SB_Project_Create::Create_Ogre_Model(bool Create, bool Use_Project_Path)
 	App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject(World_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
-	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
+	ms->exportMesh(mesh.get(), User_Mesh_PathAndFile);
 	delete(ms);
 
 	char OutputFolder[MAX_PATH];
 	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
-	DecompileTextures_TXL(OutputFolder);
+	//DecompileTextures_TXL(OutputFolder);
 
 	char Material_PathAndFile[MAX_PATH];
 	strcpy(Material_PathAndFile, mWorld_File_Path);
@@ -632,55 +665,53 @@ void SB_Project_Create::Create_Ogre_Model(bool Create, bool Use_Project_Path)
 	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
 	strcat(Material_PathAndFile, ".material");
 
-	CreateMaterialFile(Material_PathAndFile);
+	//CreateMaterialFile(Material_PathAndFile);
 
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
 
-	if (App->CLSB_Mesh_Mgr->World_Ent)
-	{
-		App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
+	//if (App->CLSB_Mesh_Mgr->World_Ent)
+	//{
+	//	App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
 
-		App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
-		App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
+	//	App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
+	//	App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
 
-		App->CLSB_Mesh_Mgr->World_Node = NULL;
-		App->CLSB_Mesh_Mgr->World_Ent = NULL;
+	//	App->CLSB_Mesh_Mgr->World_Node = NULL;
+	//	App->CLSB_Mesh_Mgr->World_Ent = NULL;
 
-		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
-		//ptr->unload();
+	//	//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
+	//	//ptr->unload();
 
-		//Ogre::MeshManager::getSingleton().remove(Name);
+	//	//Ogre::MeshManager::getSingleton().remove(Name);
 
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
 
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
 
-	}
-	else
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
-	}
+	//}
+	//else
+	//{
+	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
+	//}
 
 
-	App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
-	App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
+	//App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
+	//App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
 
-	App->CLSB_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
-	App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
-	App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
+	//App->CLSB_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
+	//App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
+	//App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 
-	if (Use_Project_Path == 0)
-	{
-		remove(mWorld_File_PathAndFile);
-		remove(Material_PathAndFile);
-	}
+	//remove(mWorld_File_PathAndFile);
+	//remove(Material_PathAndFile);
+
 }
 
 // *************************************************************************
