@@ -43,7 +43,10 @@ protected:
 	void Set_Paths(void);
 
 	char mWorld_Mesh_JustName[MAX_PATH];
+
 	char User_Mesh_PathAndFile[MAX_PATH];
+	char User_Mesh_Path[MAX_PATH];
+
 	char mWorld_File_Path[MAX_PATH];
 	char mExport_Just_Name[MAX_PATH];
 

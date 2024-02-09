@@ -526,8 +526,11 @@ void SB_Project_Create::Set_Paths(void)
 	strcpy(User_Mesh_PathAndFile, App->CLSB_Project->m_Aera_Folder_Path);
 	strcat(User_Mesh_PathAndFile, "\\");
 	strcat(User_Mesh_PathAndFile, App->CLSB_Project->m_Level_Name);
-	//strcat(User_Mesh_PathAndFile, "\\");
 	strcat(User_Mesh_PathAndFile, ".mesh");
+
+
+	strcpy(User_Mesh_Path, App->CLSB_Project->m_Aera_Folder_Path);
+	strcat(User_Mesh_Path, "\\");
 
 	/*strcpy(mWorld_File_Path, User_Mesh_PathAndFile);
 
@@ -584,7 +587,7 @@ void SB_Project_Create::Create_Ogre_Model(bool Create)
 	while (Count < GroupCountTotal)
 	{
 		_itoa(Count, MaterialNumber, 10);
-		strcpy(MatName, mWorld_Mesh_JustName);
+		strcpy(MatName, App->CLSB_Project->m_Level_Name);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
@@ -657,15 +660,15 @@ void SB_Project_Create::Create_Ogre_Model(bool Create)
 	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
-	//DecompileTextures_TXL(OutputFolder);
+	DecompileTextures_TXL(User_Mesh_Path);
 
 	char Material_PathAndFile[MAX_PATH];
-	strcpy(Material_PathAndFile, mWorld_File_Path);
+	strcpy(Material_PathAndFile, User_Mesh_Path);
 	strcat(Material_PathAndFile, "\\");
-	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
+	strcat(Material_PathAndFile, App->CLSB_Project->m_Level_Name);
 	strcat(Material_PathAndFile, ".material");
 
-	//CreateMaterialFile(Material_PathAndFile);
+	CreateMaterialFile(Material_PathAndFile);
 
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
