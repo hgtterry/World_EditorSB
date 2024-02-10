@@ -587,7 +587,7 @@ void SB_Project_Create::Create_Ogre_Model(bool Create)
 	while (Count < GroupCountTotal)
 	{
 		_itoa(Count, MaterialNumber, 10);
-		strcpy(MatName, App->CLSB_Project->m_Level_Name);
+		strcpy(MatName, "Poo");// App->CLSB_Project->m_Level_Name);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
@@ -782,7 +782,7 @@ void SB_Project_Create::CreateMaterialFile(char* MatFileName)
 	for (int i = 0; i < numMaterials; ++i)
 	{
 		_itoa(i, MaterialNumber, 10);
-		strcpy(MatName, mExport_Just_Name);
+		strcpy(MatName, "Poo");// mExport_Just_Name);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
