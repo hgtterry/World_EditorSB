@@ -31,12 +31,13 @@ public:
 	void Start_New_Project();
 	void Start_Save_Project_Dialog();
 	bool Create_New_Area();
+	void Create_Ogre_Model(bool Create);
 
 protected:
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Create_New_Project();
-	void Create_Ogre_Model(bool Create);
+	
 	void Get_Data(int Index, int FaceIndex);
 	bool DecompileTextures_TXL(char* PathAndFile);
 	void CreateMaterialFile(char* MatFileName);

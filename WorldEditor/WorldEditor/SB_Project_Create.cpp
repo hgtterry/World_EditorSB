@@ -503,10 +503,6 @@ bool SB_Project_Create::Create_New_Area()
 
 	CopyFile(SourceFile, DestinationFile, false);
 
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-
 	Create_Ogre_Model(1);
 
 	return 1;
@@ -553,10 +549,12 @@ void SB_Project_Create::Set_Paths(void)
 void SB_Project_Create::Create_Ogre_Model(bool Create)
 {
 	
-	Set_Paths();
-	//App->Say(User_Mesh_PathAndFile);
-	//return;
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
+	Set_Paths();
+	
 	App->CLSB_Model->Ogre_Face_Count = 0;
 
 	if (Create == 1)
@@ -673,47 +671,6 @@ void SB_Project_Create::Create_Ogre_Model(bool Create)
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
-
-	//if (App->CLSB_Mesh_Mgr->World_Ent)
-	//{
-	//	App->CLSB_Mesh_Mgr->World_Node->detachAllObjects();
-
-	//	App->CLSB_Ogre_Setup->mSceneMgr->destroySceneNode(App->CLSB_Mesh_Mgr->World_Node);
-	//	App->CLSB_Ogre_Setup->mSceneMgr->destroyEntity(App->CLSB_Mesh_Mgr->World_Ent);
-
-	//	App->CLSB_Mesh_Mgr->World_Node = NULL;
-	//	App->CLSB_Mesh_Mgr->World_Ent = NULL;
-
-	//	//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
-	//	//ptr->unload();
-
-	//	//Ogre::MeshManager::getSingleton().remove(Name);
-
-	//	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-	//	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
-	//	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-	//	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre_Setup->World_Resource_Group);
-
-	//}
-	//else
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre_Setup->World_Resource_Group);
-	//}
-
-
-	//App->CLSB_Mesh_Mgr->World_Ent = App->CLSB_Ogre_Setup->mSceneMgr->createEntity(Name);
-	//App->CLSB_Mesh_Mgr->World_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-
-	//App->CLSB_Mesh_Mgr->World_Node->attachObject(App->CLSB_Mesh_Mgr->World_Ent);
-
-	//App->CLSB_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
-	//App->CLSB_Mesh_Mgr->World_Node->setVisible(true);
-	//App->CLSB_Mesh_Mgr->World_Node->setScale(1, 1, 1);
-
-	//remove(mWorld_File_PathAndFile);
-	//remove(Material_PathAndFile);
 
 }
 
