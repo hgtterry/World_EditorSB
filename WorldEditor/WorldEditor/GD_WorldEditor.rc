@@ -1110,8 +1110,9 @@ BEGIN
     BEGIN
         POPUP "New"
         BEGIN
-            MENUITEM "Project",                     ID_NEW_PROJECT
+            MENUITEM "Project",                     ID_NEW_PROJECT, GRAYED
             MENUITEM "RFEditPro/World 3dt...",      ID_OPEN_WORLDEDITOR3DT
+            MENUITEM SEPARATOR
         END
         POPUP "&Open..."
         BEGIN

@@ -190,10 +190,10 @@ SB_App::SB_App()
 
 	Write_DebugFile = NULL;
 
-	Debug_App = 1;
+	Debug_App = 0;
 	Block_RB_Actions = 0;
 	BR_True3D_Mode_Active = 0;
-	Create_User_Mesh = 1;
+	Create_User_Mesh = 0;
 }
 
 SB_App::~SB_App()
