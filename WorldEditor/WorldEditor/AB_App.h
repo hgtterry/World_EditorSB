@@ -250,7 +250,7 @@ public:
 	void Debug_Int(int Value, bool NewLine);
 	void Debug_Float(float Value, bool NewLine);
 	bool Check_World_Loaded(void);
-
+	
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
 	char WorldEditor_Directory[MAX_PATH];
@@ -314,7 +314,7 @@ public:
 	bool File_Loaded_Flag;
 	bool Block_RB_Actions;
 	bool BR_True3D_Mode_Active;
-
+	bool Create_User_Mesh;
 	HCURSOR CUR;
 
 	int CursorPosX;

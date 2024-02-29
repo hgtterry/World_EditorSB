@@ -193,6 +193,7 @@ SB_App::SB_App()
 	Debug_App = 1;
 	Block_RB_Actions = 0;
 	BR_True3D_Mode_Active = 0;
+	Create_User_Mesh = 1;
 }
 
 SB_App::~SB_App()
@@ -582,6 +583,11 @@ void SB_App::Error_ToFile(char* Message, char* Message2)
 // *************************************************************************
 void SB_App::Close_WorldEditor()
 {
+	if (App->Create_User_Mesh == 1)
+	{
+		//Debug
+	}
+
 	if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 	{
 		delete App->CLSB_Ogre_Setup->mRoot;
