@@ -166,13 +166,14 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_CAMERA_UP, OnCameraUp)
     ON_COMMAND(ID_CAMERA_DOWN, OnCameraDown)
 
+    // Export
     ON_COMMAND(ID_FILE_EXPORT2, OnFileExport) // Old Exporter
     ON_COMMAND(ID_FILE_EXPORT_OLDEXPORT, OnFileExport) // Old Exporter
-    ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_OLDEXPORT, OnUpdateFileExport) // Old Exporter
 
-    ON_COMMAND(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnFileExportGDSB) //  hgtterry [100123]
-    ON_COMMAND(ID_EXPORT_WAVEFRONTOBJECT, OnFileExportObject) //  WaveFront Object
-    ON_COMMAND(ID_OGRE3D_MESH, OnFileExport_Ogre3D_Mesh) //  Ogre3D Mesh
+ //  ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_OLDEXPORT, OnUpdateFileExport) // Old Exporter
+ //  ON_COMMAND(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnFileExportGDSB) //  hgtterry [100123]
+ //  ON_COMMAND(ID_EXPORT_WAVEFRONTOBJECT, OnFileExportObject) //  WaveFront Object
+ //  ON_COMMAND(ID_OGRE3D_MESH, OnFileExport_Ogre3D_Mesh) //  Ogre3D Mesh
     
     ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnUpdateFileExportGDSB) //  hgtterry [100123]
 

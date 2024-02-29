@@ -1132,19 +1132,8 @@ BEGIN
         BEGIN
             MENUITEM "Genesis3d Actor",             ID_IMPORT_GENESIS3DACTOR
         END
-        MENUITEM "Export...",                   ID_FILE_EXPORT2
         MENUITEM SEPARATOR
-        POPUP "Export..."
-        BEGIN
-            MENUITEM "GameDirector .G3ds",          ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, GRAYED
-            MENUITEM "Old Export",                  ID_FILE_EXPORT_OLDEXPORT
-            MENUITEM SEPARATOR
-            POPUP "Ogre3D..."
-            BEGIN
-                MENUITEM "Mesh",                        ID_OGRE3D_MESH
-            END
-            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJECT
-        END
+        MENUITEM "Export...",                   ID_FILE_EXPORT2
         MENUITEM SEPARATOR
         MENUITEM "&Properties...",              IDM_LEVELOPTIONS
         MENUITEM SEPARATOR
