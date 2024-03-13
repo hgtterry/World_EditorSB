@@ -551,30 +551,33 @@ void SB_App::Message_ToFile(char* Message, char* Message2)
 // *************************************************************************
 void SB_App::Error_ToFile(char* Message, char* Message2)
 {
-	char text[MAX_PATH];
-	char text2[MAX_PATH];
-	char OutMessage[MAX_PATH];
-
-	strcpy(text, Message);
-
-	if (Message2 == NULL)
+	if (App->Debug_App == 1)
 	{
-		strcpy(text2," ");
-		strcpy(OutMessage, Message);
-		strcat(OutMessage, " ");
-		strcat(OutMessage, text2);
-	}
-	else
-	{
-		strcpy(text2, Message2);
-		strcpy(OutMessage, Message);
-		strcat(OutMessage, " ");
-		strcat(OutMessage, text2);
-	}
+		char text[MAX_PATH];
+		char text2[MAX_PATH];
+		char OutMessage[MAX_PATH];
 
-	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("Error.log"));
-	Ogre::LogManager::getSingleton().logMessage(OutMessage);
-	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("WWSB.log"));
+		strcpy(text, Message);
+
+		if (Message2 == NULL)
+		{
+			strcpy(text2, " ");
+			strcpy(OutMessage, Message);
+			strcat(OutMessage, " ");
+			strcat(OutMessage, text2);
+		}
+		else
+		{
+			strcpy(text2, Message2);
+			strcpy(OutMessage, Message);
+			strcat(OutMessage, " ");
+			strcat(OutMessage, text2);
+		}
+
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("Error.log"));
+		Ogre::LogManager::getSingleton().logMessage(OutMessage);
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("WWSB.log"));
+	}
 
 }
 

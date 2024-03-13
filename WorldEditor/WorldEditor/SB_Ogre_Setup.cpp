@@ -171,7 +171,7 @@ bool SB_Ogre_Setup::OgreCreateRoot(void)
 	else
 	{
 		mRoot = new Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
-		Ogre::LogManager::getSingleton().createLog(mResourcePath + "Error.log");
+		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "Error.log");
 	}
 	
 	return 1;

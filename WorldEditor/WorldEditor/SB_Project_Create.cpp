@@ -441,7 +441,7 @@ bool SB_Project_Create::Create_New_Project()
 			}*/
 
 
-	App->Say("Scene Saved");
+	App->Say("Project Created");
 
 	return 1;
 }

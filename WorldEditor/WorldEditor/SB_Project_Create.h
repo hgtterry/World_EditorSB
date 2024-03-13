@@ -22,6 +22,7 @@ distribution.
 */
 
 #pragma once
+
 class SB_Project_Create
 {
 public:

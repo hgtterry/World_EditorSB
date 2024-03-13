@@ -664,31 +664,34 @@ void SB_Dialogs::List_BoundingBox(HWND hDlg)
 // *************************************************************************
 void SB_Dialogs::Read_ErrorLog(HWND hDlg)
 {
-	FILE* fp = NULL;
-
-	char buffer[MAX_PATH];
-
-	char Path[MAX_PATH];
-	strcpy(Path, App->WorldEditor_Directory);
-	strcat(Path,"Error.log");
-
-	fp = fopen(Path, "r");
-	if (!fp)
+	if (App->Debug_App == 1)
 	{
-		App->Say("Cant Find File", Path);
-		return;
+		FILE* fp = NULL;
+
+		char buffer[MAX_PATH];
+
+		char Path[MAX_PATH];
+		strcpy(Path, App->WorldEditor_Directory);
+		strcat(Path, "Error.log");
+
+		fp = fopen(Path, "r");
+		if (!fp)
+		{
+			App->Say("Cant Find File", Path);
+			return;
+		}
+
+		while (!feof(fp))
+		{
+			buffer[0] = 0;
+			fgets(buffer, MAX_PATH, fp);
+			SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buffer);
+		}
+
+		fclose(fp);
+
+		unlink(Path);
 	}
-
-	while (!feof(fp))
-	{
-		buffer[0] = 0;
-		fgets(buffer, MAX_PATH, fp);
-		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buffer);
-	}
-
-	fclose(fp);
-
-	unlink(Path);
 }
 
 // *************************************************************************
