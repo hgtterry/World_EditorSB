@@ -122,6 +122,9 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 		temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
 		SetWindowTheme(temp, L"wstr", L"wstr");
 		
+		//temp = GetDlgItem(hDlg, IDC_BTPJBROWSE);
+		//SetWindowTheme(temp, L"wstr", L"wstr");
+		
 		return TRUE;
 	}
 
@@ -200,6 +203,14 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 			return (UINT)App->Brush_Black;
 		}
 
+		/*if (GetDlgItem(hDlg, IDC_BTPJBROWSE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Black;
+		}*/
+
 		return FALSE;
 	}
 
@@ -215,35 +226,35 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 		if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Change");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BTCHANGELEVEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Change");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BTPJBROWSE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item,"Browse");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Ok");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Cancel");
 			return CDRF_DODEFAULT;
 		}
 

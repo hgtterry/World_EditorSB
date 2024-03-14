@@ -240,7 +240,10 @@ public:
 	uint64_t Get_Stack(void);
 
 	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);
+
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+	bool Custom_Button_Normal_DM(LPNMCUSTOMDRAW item, char* Text);
+
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 	
@@ -265,6 +268,11 @@ public:
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
+
+	HBRUSH Brush_But_Pressed_DM;
+	HBRUSH Brush_But_Normal_DM;
+	HBRUSH Brush_But_Hover_DM;
+
 	HBRUSH Brush_Tabs_UnSelected;
 	HBRUSH Brush_Tabs;
 
