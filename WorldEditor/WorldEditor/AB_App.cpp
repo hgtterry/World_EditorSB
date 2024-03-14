@@ -121,6 +121,9 @@ SB_App::SB_App()
 	BlackBrush =	NULL;
 	Brush_White =	NULL;
 	Brush_Green =	NULL;
+	Brush_Black =	NULL;
+	Brush_Text =	NULL;
+
 	Brush_Tabs_UnSelected = NULL;
 	Brush_Tabs = NULL;
 
@@ -385,6 +388,9 @@ void SB_App::SetBrushes_Fonts(void)
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
+
+	Brush_Black = CreateSolidBrush(RGB(0, 0, 0));
+	Brush_Text = CreateSolidBrush(RGB(220, 220, 220));
 
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240,240,240));

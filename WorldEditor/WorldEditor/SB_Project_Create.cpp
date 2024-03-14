@@ -35,7 +35,6 @@ SB_Project_Create::SB_Project_Create()
 	x, y, z = 0;
 
 	Project_Loaded_F = 0;
-
 }
 
 SB_Project_Create::~SB_Project_Create()
@@ -118,6 +117,11 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 		HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
 		SendMessage(temp, BM_SETCHECK, 1, 0);
 
+		SetWindowTheme(temp, L"wstr", L"wstr");
+
+		temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
+		SetWindowTheme(temp, L"wstr", L"wstr");
+		
 		return TRUE;
 	}
 
@@ -151,49 +155,49 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		if (GetDlgItem(hDlg, IDC_STLN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 255));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			//SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		if (GetDlgItem(hDlg, IDC_CK_SP_DESKTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 
 		return FALSE;
@@ -201,7 +205,7 @@ LRESULT CALLBACK SB_Project_Create::Save_Project_Dialog_Proc(HWND hDlg, UINT mes
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Black;
 	}
 
 	case WM_NOTIFY:
@@ -449,6 +453,7 @@ bool SB_Project_Create::Create_New_Project()
 				App->CL_Prefs->Write_Preferences();
 			}*/
 
+	Project_Loaded_F = 1;
 
 	App->Say("Project Created");
 

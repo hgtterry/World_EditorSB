@@ -259,6 +259,8 @@ public:
 	HBRUSH BlackBrush;		
 	HBRUSH Brush_White;		
 	HBRUSH Brush_Green;		
+	HBRUSH Brush_Black;
+	HBRUSH Brush_Text;
 
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_But_Normal;
