@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2024 Reality Factory Scene Builder -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -27,7 +27,13 @@ distribution.
 
 SB_Project_Create::SB_Project_Create()
 {
+	World_Manual = NULL;
 	Dialog_cancelled_F = 0;
+
+	nx, ny, nz = 0;
+	u, v = 0;
+	x, y, z = 0;
+
 }
 
 SB_Project_Create::~SB_Project_Create()
