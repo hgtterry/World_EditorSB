@@ -236,16 +236,16 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->BlackBrush;
 		}
 		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->BlackBrush;
 		}
 		return FALSE;
 	}
@@ -256,14 +256,14 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Ok");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Cancel");
 			return CDRF_DODEFAULT;
 		}
 
@@ -272,7 +272,7 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->BlackBrush;
 	}
 	case WM_COMMAND:
 
@@ -338,16 +338,16 @@ LRESULT CALLBACK SB_Dialogs::YesNoCancel_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(220, 220, 220));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Black;
 		}
 		return FALSE;
 	}
@@ -359,21 +359,21 @@ LRESULT CALLBACK SB_Dialogs::YesNoCancel_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Yes");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "Cancel");
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_NONO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Normal_DM(item, "No");
 			return CDRF_DODEFAULT;
 		}
 
@@ -382,7 +382,7 @@ LRESULT CALLBACK SB_Dialogs::YesNoCancel_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Black;
 	}
 	case WM_COMMAND:
 
