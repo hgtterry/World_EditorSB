@@ -111,7 +111,7 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(220, 220, 220));
+			SetTextColor((HDC)wParam, RGB(200,200,255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_Black;
 		}
