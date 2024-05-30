@@ -123,6 +123,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, nullptr);// (DLGPROC)ViewerMain_Proc);
 
+   int cx = GetSystemMetrics(SM_CXSCREEN);
+   int cy = GetSystemMetrics(SM_CYSCREEN);
+   MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
+
    App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
 
    if (!App->MainHwnd)
