@@ -47,6 +47,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    InitCommonControls();
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -112,7 +114,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+       0, 0, 1200, 800, nullptr, nullptr, hInstance, nullptr);
+
+   HWND Fdlg = CreateDialog(hInst, (LPCTSTR)IDD_FILEVIEW, hWnd, nullptr);// (DLGPROC)ViewerMain_Proc);
+
+   HWND ViewGLhWnd = CreateDialog(hInst, (LPCTSTR)IDD_VIEWER3D,Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
 
    if (!hWnd)
    {
