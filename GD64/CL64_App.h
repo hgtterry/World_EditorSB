@@ -43,6 +43,8 @@ public:
 	HWND Fdlg;
 	HWND ViewGLhWnd;
 
+	char GD_Directory_FullPath[MAX_PATH];
+
 };
 
 extern CL64_App* App;

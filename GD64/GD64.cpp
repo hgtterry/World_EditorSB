@@ -51,6 +51,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     InitCommonControls();
 
     App = new CL64_App();
+
+    _getcwd(App->GD_Directory_FullPath, MAX_PATH);
+
     App->InitApp();
 
 
