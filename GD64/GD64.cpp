@@ -51,8 +51,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     InitCommonControls();
 
     App = new CL64_App();
+    App->InitApp();
 
-    //App->Say("Ok");
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);

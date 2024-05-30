@@ -22,6 +22,9 @@ distribution.
 */
 
 #pragma once
+
+#include "CL64_Ogre_Init.h"
+
 class CL64_App
 {
 public:
@@ -29,6 +32,9 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
+	CL64_Ogre_Init*		CL_Ogre;
+
+	void InitApp(void);
 
 	void Say(const char* Message);
 

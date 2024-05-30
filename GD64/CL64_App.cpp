@@ -26,6 +26,10 @@ distribution.
 
 CL64_App::CL64_App(void)
 {
+	CL_Ogre = nullptr;
+
+
+
 	hInst = nullptr;
 	MainHwnd = nullptr;
 	Fdlg = nullptr;
@@ -37,6 +41,14 @@ CL64_App::CL64_App(void)
 CL64_App::~CL64_App(void)
 {
 	Say("Destroyed");
+}
+
+// *************************************************************************
+// *			InitApp:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CL64_App::InitApp(void)
+{
+	CL_Ogre = new CL64_Ogre_Init();
 }
 
 // *************************************************************************
