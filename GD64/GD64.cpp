@@ -38,6 +38,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+CL64_App* App = NULL;
 
 // *************************************************************************
 // *				WinMain:- Terry and Hazel Flanigan 2024		  		   *
@@ -48,6 +49,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     InitCommonControls();
+
+    App = new CL64_App();
+
+    //App->Say("Ok");
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -111,22 +116,22 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 // *************************************************************************
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // Store instance handle in our global variable
+   App->hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-       0, 0, 1200, 800, nullptr, nullptr, hInstance, nullptr);
+   App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+       0, 0, 1200, 800, nullptr, nullptr, App->hInst, nullptr);
 
-   HWND Fdlg = CreateDialog(hInst, (LPCTSTR)IDD_FILEVIEW, hWnd, nullptr);// (DLGPROC)ViewerMain_Proc);
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, nullptr);// (DLGPROC)ViewerMain_Proc);
 
-   HWND ViewGLhWnd = CreateDialog(hInst, (LPCTSTR)IDD_VIEWER3D,Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
+   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
 
-   if (!hWnd)
+   if (!App->MainHwnd)
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ShowWindow(App->MainHwnd, nCmdShow);
+   UpdateWindow(App->MainHwnd);
 
    return TRUE;
 }
