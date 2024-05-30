@@ -72,6 +72,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
 
+    App->CL_Ogre->InitOgre();
+
     MSG msg;
 
     // Main message loop:

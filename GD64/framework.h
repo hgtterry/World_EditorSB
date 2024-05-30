@@ -19,3 +19,5 @@
 #include <Commctrl.h>   // includes the Common control header
 #include <string>
 
+#include "Ogre.h"
+
