@@ -27,7 +27,11 @@ distribution.
 
 CL64_Ogre_Init::CL64_Ogre_Init(void)
 {
+	RenderHwnd = nullptr;
+
 	mRoot = nullptr;
+	mWindow = nullptr;
+
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
@@ -44,6 +48,7 @@ void CL64_Ogre_Init::InitOgre(void)
 {
 	OgreCreateRoot();
 	SetUpResources();
+	Configure();
 
 	App->Say("Ogre Init Done");
 }
@@ -86,13 +91,45 @@ bool CL64_Ogre_Init::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
 	////-------------------------------- Zip Files
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip", App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Sinbad.zip", "Zip", App_Resource_Group);
 
 	////-------------------------------- File System
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", App_Resource_Group);
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/New_Particles", "FileSystem", App_Resource_Group);
 
 	return 1;
+}
+
+// *************************************************************************
+// *				Configure:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Ogre_Init::Configure(void)
+{
+	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+	if (!(rs->getName() == "OpenGL Rendering Subsystem"))
+	{
+		return false; //No RenderSystem found
+	}
+
+	//	rs->setConfigOption("Full Screen", "No");
+	//	rs->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+
+	mRoot->setRenderSystem(rs);
+
+	mWindow = mRoot->initialise(false);
+	Ogre::NameValuePairList options;
+
+	options["vsync"] = true;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)RenderHwnd);
+
+	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+
+	//App->Cl_Panels->Width = mWindow->getWidth();
+	//App->Cl_Panels->Height = mWindow->getHeight();
+
+	return true;
 }
 
 // *************************************************************************

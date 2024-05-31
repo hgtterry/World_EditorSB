@@ -134,6 +134,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
 
+   App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
+
    if (!App->MainHwnd)
    {
       return FALSE;

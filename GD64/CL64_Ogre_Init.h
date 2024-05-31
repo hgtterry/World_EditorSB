@@ -32,10 +32,14 @@ public:
 	void InitOgre(void);
 	bool OgreCreateRoot(void);
 	bool SetUpResources(void);
+	bool Configure(void);
 
 	bool ReverseBackSlash(char* buf);
 
+	HWND RenderHwnd;
+
 	Ogre::Root* mRoot;
+	Ogre::RenderWindow* mWindow;
 
 	Ogre::String mResourcePath;
 	Ogre::String App_Resource_Group;		// App Resource Group
