@@ -33,6 +33,11 @@ public:
 	bool OgreCreateRoot(void);
 	bool SetUpResources(void);
 	bool Configure(void);
+	bool chooseSceneManager(void);
+	bool createCamera(void);
+	bool createViewports(void);
+	bool Initialise_Resources(void);
+	bool createFrameListener(void);
 
 	bool ReverseBackSlash(char* buf);
 
@@ -40,10 +45,13 @@ public:
 
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
+	Ogre::SceneManager* mSceneMgr;
+	Ogre::Camera* mCamera;
 
 	Ogre::String mResourcePath;
 	Ogre::String App_Resource_Group;		// App Resource Group
 
+	//GD19_OgreListener* OgreListener;
 
 	char Return_Chr[MAX_PATH];
 };

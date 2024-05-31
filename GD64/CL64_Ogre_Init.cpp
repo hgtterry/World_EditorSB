@@ -31,7 +31,8 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	mRoot = nullptr;
 	mWindow = nullptr;
-
+	mSceneMgr = nullptr;
+	mCamera = nullptr;
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
@@ -49,6 +50,12 @@ void CL64_Ogre_Init::InitOgre(void)
 	OgreCreateRoot();
 	SetUpResources();
 	Configure();
+	chooseSceneManager();
+	createCamera();
+	createViewports();
+	Initialise_Resources();
+
+	createFrameListener();
 
 	App->Say("Ogre Init Done");
 }
@@ -133,7 +140,90 @@ bool CL64_Ogre_Init::Configure(void)
 }
 
 // *************************************************************************
-// *				ReverseBackSlash  Terry Bernie				  	 	   *
+// *		chooseSceneManager:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Ogre_Init::chooseSceneManager(void)
+{
+	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
+	//ImGui::ImguiManager::getSingleton().init(scnMgr);
+
+	//mOverlaySystem = new Ogre::OverlaySystem();
+	//mSceneMgr->addRenderQueueListener(mOverlaySystem);
+
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+	//mSceneMgr->setDisplaySceneNodes(true);
+
+	// add a bright light above the scene
+	/*Light* light = mSceneMgr->createLight();
+	light->setType(Light::LT_SPOTLIGHT);
+	light->setPosition(0, 0, 0);
+	light->setSpecularColour(ColourValue::White);
+
+	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	PartNode->attachObject(light);*/
+
+	return 1;
+}
+
+// *************************************************************************
+// *			createCamera:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Ogre_Init::createCamera(void)
+{
+	// create the camera
+	//Camera* cam = scnMgr->createCamera("myCam");
+	//cam->setNearClipDistance(5); // specific to this sample
+	//cam->setAutoAspectRatio(true);
+	//camNode->attachObject(cam);
+	//camNode->setPosition(0, 0, 140);
+
+	// and tell it to render into the main window
+	//getRenderWindow()->addViewport(cam);
+
+	Ogre::SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+	mCamera = mSceneMgr->createCamera("MainCamera");
+	//mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	//mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	mCamera->setNearClipDistance(Ogre::Real(0.1));
+	mCamera->setFarClipDistance(Ogre::Real(8000));
+
+	camNode->attachObject(mCamera);
+	camNode->setPosition(0, 30, 0);
+	//camNode->lookAt(Ogre::Vector3(0, 30, 0),);
+	//PlacementCam = mSceneMgr->createCamera("PlacementCam");
+	return 1;
+}
+
+// *************************************************************************
+// *		createViewports:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+bool CL64_Ogre_Init::createViewports(void)
+{
+	mWindow->removeAllViewports();
+	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(0);
+
+	vp->setBackgroundColour(Ogre::ColourValue(0.5, 0.5, 0.5));
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Initialise_Resources:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Ogre_Init::Initialise_Resources(void)
+{
+	// Initialize, parse scripts etc
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	return 1;
+}
+
+// *************************************************************************
+// *			ReverseBackSlash:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 {
@@ -164,5 +254,33 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 		tt = 0;
 		strcpy(Return_Chr, buf);
 	}
+	return 1;
+}
+
+// *************************************************************************
+// *				createFrameListener (Terry Bernie)					   *
+// *************************************************************************
+bool CL64_Ogre_Init::createFrameListener(void)
+{
+	//// Physics Frame Listener
+	//OgreListener = new GD19_OgreListener();
+	//mRoot->addFrameListener(OgreListener);
+
+	//Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
+
+	//BulletListener = NULL;
+
+	//if ("OpenGL Rendering Subsystem" == RenderSystemName)
+	{
+		//BulletListener = new GD_Bt_Render();
+
+		//mSceneMgr->addRenderQueueListener(BulletListener);
+
+		//BulletListener->setDebugMode(BulletListener->getDebugMode()
+			//| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
+		//App->SBC_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
+
+	}
+
 	return 1;
 }

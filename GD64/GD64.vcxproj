@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_OgreListener.h" />
     <ClInclude Include="CL64_Ogre_Init.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
@@ -164,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_OgreListener.cpp" />
     <ClCompile Include="CL64_Ogre_Init.cpp" />
     <ClCompile Include="GD64.cpp" />
     <ClCompile Include="pch.cpp">
