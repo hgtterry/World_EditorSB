@@ -7,6 +7,7 @@
 #endif
 
 #pragma warning( disable : 4251 4193 4275 4005 4267 4244)
+#pragma warning( disable : 4305)
 
 #include "targetver.h"
 

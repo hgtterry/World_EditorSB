@@ -24,15 +24,17 @@ distribution.
 #pragma once
 
 #include "CL64_Ogre_Init.h"
+#include "CL64_Grid.h"
 
 class CL64_App
 {
-public:
 
+public:
 	CL64_App(void);
 	~CL64_App(void);
 
 	CL64_Ogre_Init*		CL_Ogre;
+	CL64_Grid*			CL_Grid;
 
 	void InitApp(void);
 

@@ -22,6 +22,9 @@ distribution.
 */
 
 #pragma once
+
+#include "CL64_OgreListener.h"
+
 class CL64_Ogre_Init
 {
 public:
@@ -51,7 +54,7 @@ public:
 	Ogre::String mResourcePath;
 	Ogre::String App_Resource_Group;		// App Resource Group
 
-	//GD19_OgreListener* OgreListener;
+	CL64_OgreListener* OgreListener;
 
 	char Return_Chr[MAX_PATH];
 };

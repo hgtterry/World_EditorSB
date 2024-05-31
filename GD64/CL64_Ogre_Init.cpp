@@ -34,6 +34,8 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 	mSceneMgr = nullptr;
 	mCamera = nullptr;
 
+	OgreListener = nullptr;
+
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
 }
@@ -57,7 +59,15 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	createFrameListener();
 
+	// Set Up Grid Functions
+	App->CL_Grid->Grid_Update(1);
+
 	App->Say("Ogre Init Done");
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************
@@ -189,8 +199,8 @@ bool CL64_Ogre_Init::createCamera(void)
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 30, 0);
-	//camNode->lookAt(Ogre::Vector3(0, 30, 0),);
+	camNode->setPosition(0, 90, 100);
+	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
 	//PlacementCam = mSceneMgr->createCamera("PlacementCam");
 	return 1;
 }
@@ -263,15 +273,16 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 bool CL64_Ogre_Init::createFrameListener(void)
 {
 	//// Physics Frame Listener
-	//OgreListener = new GD19_OgreListener();
-	//mRoot->addFrameListener(OgreListener);
+	OgreListener = new CL64_OgreListener();
+	mRoot->addFrameListener(OgreListener);
 
-	//Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
+	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 
 	//BulletListener = NULL;
 
-	//if ("OpenGL Rendering Subsystem" == RenderSystemName)
+	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
+		App->Say("OpenGL Rendering Subsystem");
 		//BulletListener = new GD_Bt_Render();
 
 		//mSceneMgr->addRenderQueueListener(BulletListener);
