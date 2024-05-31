@@ -62,7 +62,11 @@ void CL64_Ogre_Init::InitOgre(void)
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
 
-	App->Say("Ogre Init Done");
+	Entity* ogreEntity = mSceneMgr->createEntity("Sinbad.mesh");
+	SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ogreNode->attachObject(ogreEntity);
+
+	//App->Say("Ogre Init Done");
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -199,7 +203,7 @@ bool CL64_Ogre_Init::createCamera(void)
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 90, 100);
+	camNode->setPosition(0, 90, 40);
 	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
 	//PlacementCam = mSceneMgr->createCamera("PlacementCam");
 	return 1;

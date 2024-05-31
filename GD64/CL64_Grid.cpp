@@ -52,7 +52,7 @@ void CL64_Grid::Grid_Update(bool Create)
 	}
 
 	GridManual->clear();
-	GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
+	GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST, "App_Resource_Group");
 
 	if (ShowGridFlag == 1)
 	{
