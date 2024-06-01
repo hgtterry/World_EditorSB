@@ -76,6 +76,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
 
     App->SetMainWinCentre();
+
+    App->CL_SplitterViews->Init_Views();
+    App->CL_SplitterViews->Create_Left_Window();
+    App->CL_SplitterViews->Create_Right_Window();
+    App->CL_SplitterViews->Create_Bottom_Left_Window();
+
+    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_width);
+
     App->CL_Ogre->InitOgre();
     //App->CL_Ogre->mRoot->startRendering();
     MSG msg;

@@ -27,5 +27,37 @@ class CL64_SplitterViews
 public:
 	CL64_SplitterViews(void);
 	~CL64_SplitterViews(void);
+
+	void Init_Views();
+
+	void Create_Left_Window();
+	void Create_Right_Window();
+	void Create_Bottom_Left_Window();
+
+	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+
+	HWND Left_Window_Hwnd;
+	HWND Right_Window_Hwnd;
+
+	HWND Bottom_Left_Hwnd;
+	HWND Bottom_Right_Hwnd;
+
+	int nleftWnd_width;
+	int nleftWnd_Depth;
+
+	int LEFT_WINDOW_WIDTH;
+
+	int LEFT_WINDOW_DEPTH;
+	int TOP_POS_BOTLEFT;
+
+	int RIGHT_MINIMUM_SPACE;
+	int LEFT_MINIMUM_SPACE;
+
+private:
+
+	static LRESULT CALLBACK Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 
