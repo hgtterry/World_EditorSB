@@ -37,6 +37,7 @@ CL64_App::CL64_App(void)
 
 	GD_Directory_FullPath[0] = 0;
 
+	OgreStarted = 0;
 	AppBackground = 0;
 
 	//Say("Created");

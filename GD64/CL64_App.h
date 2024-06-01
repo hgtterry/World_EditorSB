@@ -50,6 +50,8 @@ public:
 	HWND Fdlg;
 	HWND ViewGLhWnd;
 
+	bool OgreStarted;
+
 	char GD_Directory_FullPath[MAX_PATH];
 
 	HBRUSH AppBackground;

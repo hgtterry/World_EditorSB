@@ -36,6 +36,7 @@ public:
 
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 	bool Resize_Fldg(void);
+	bool Resize_OgreWin(void);
 
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;

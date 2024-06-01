@@ -38,6 +38,11 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+void StartOgre();
+void Close_App();
+
+int Block_Call = 0;
+
 CL64_App* App = NULL;
 
 // *************************************************************************
@@ -77,6 +82,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->SetMainWinCentre();
 
+
     App->CL_SplitterViews->Init_Views();
     App->CL_SplitterViews->Create_Left_Window();
     App->CL_SplitterViews->Create_Right_Window();
@@ -84,8 +90,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_width);
 
-    App->CL_Ogre->InitOgre();
+    //App->CL_Ogre->InitOgre();
     //App->CL_Ogre->mRoot->startRendering();
+
+    SetTimer(App->MainHwnd, 1, 1, NULL);
+
     MSG msg;
 
     // Main message loop:
@@ -135,7 +144,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
        0, 0, 1200, 770, nullptr, nullptr, App->hInst, nullptr);
 
-   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd,(DLGPROC)App->CL_SplitterViews->ViewerMain_Proc);
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, (DLGPROC)App->CL_SplitterViews->ViewerMain_Proc);
 
    int cx = GetSystemMetrics(SM_CXSCREEN);
    int cy = GetSystemMetrics(SM_CYSCREEN);
@@ -191,10 +200,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_SIZE:
     {
-        App->Flash_Window();
+        //App->Flash_Window();
         App->CL_SplitterViews->Init_Views();
         App->CL_SplitterViews->Resize_Fldg();
-        //App->Resize_OgreWin();
+        App->CL_SplitterViews->Resize_OgreWin();
 
         return 0;
     }
@@ -204,10 +213,41 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
        // App->Flash_Window();
         App->CL_SplitterViews->Init_Views();
         App->CL_SplitterViews->Resize_Fldg();
-       // App->Resize_OgreWin();
+        App->CL_SplitterViews->Resize_OgreWin();
         return 0;
     }
         //break;
+    case WM_CLOSE:
+    {
+
+        if (App->CL_Ogre->OgreListener->StopOgre == 0)
+        {
+            App->CL_Ogre->OgreListener->StopOgre = 1;
+        }
+
+        PostQuitMessage(0);
+        break;
+    }
+
+    case WM_TIMER:
+        if (wParam == 1)
+        {
+            if (App->OgreStarted == 0)
+            {
+                if (Block_Call == 0)
+                {
+                    Block_Call = 1;
+                    StartOgre();
+                }
+            }
+
+            /*if (App->RenderBackGround == 1 && App->OgreStarted == 1)
+            {
+                Ogre::Root::getSingletonPtr()->renderOneFrame();
+            }*/
+
+            break;
+        }
 
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -216,6 +256,59 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
+}
+
+// *************************************************************************
+// *						StartOgre Terry Bernie			  	 		   *
+// *************************************************************************
+void StartOgre()
+{
+    App->CL_Ogre->InitOgre();
+
+    Ogre::Root::getSingletonPtr()->renderOneFrame();
+    //EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+    App->OgreStarted = 1;
+
+    KillTimer(App->MainHwnd, 1);
+
+   // if (App->Is_WorldEditor == 1)
+    {
+        /*char Path[MAX_PATH];
+        strcpy(Path, App->EquityDirecory_FullPath);
+        strcat(Path, "\\Data\\Temp.Wepf");*/
+
+        //strcpy(App->CL_Loader->Path_FileName, Path);
+        //strcpy(App->CL_Loader->FileName, "Temp.Wepf");
+
+        //App->Say_Win(App->CL_Loader->Path_FileName);
+
+       // App->CL_Loader->Read_Project_File(App->CL_Loader->Path_FileName);
+        //App->CL_Loader->Load_File_Wepf();
+    }
+
+
+    //App->CL_Ogre->mRoot->startRendering();
+    //App->CL_Ogre->Ogre_Render_Loop();
+
+
+    //Close_App();
+   // SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+    //PostQuitMessage(0);
+}
+
+// *************************************************************************
+// *						Close_App Terry Bernie			  	 		   *
+// *************************************************************************
+void Close_App()
+{
+    if (App->CL_Ogre->mRoot)
+    {
+        delete App->CL_Ogre->mRoot;
+        App->CL_Ogre->mRoot = NULL;
+    }
+
+   // ImGui::DestroyContext();
 }
 
 // *************************************************************************

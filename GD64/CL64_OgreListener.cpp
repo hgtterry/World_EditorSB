@@ -26,6 +26,7 @@ distribution.
 
 CL64_OgreListener::CL64_OgreListener(void)
 {
+	StopOgre = 0;
 }
 
 CL64_OgreListener::~CL64_OgreListener(void)
@@ -55,10 +56,10 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
 {
 
-	//if (StopOgre == 1)
-	//{
-		//return false;
-	//}
+	if (StopOgre == 1)
+	{
+		return false;
+	}
 
 	return true;
 }

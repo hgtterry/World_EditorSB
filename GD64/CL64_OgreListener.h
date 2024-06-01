@@ -37,5 +37,7 @@ public:
 	bool frameStarted(const FrameEvent& evt);
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
+
+	bool StopOgre;
 };
 

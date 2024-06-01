@@ -85,7 +85,7 @@ bool CL64_Ogre_Init::OgreCreateRoot(void)
 	//if (App->Debug_App == 1)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
-		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
 	}
 	/*else
 	{

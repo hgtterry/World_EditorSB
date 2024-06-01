@@ -206,7 +206,7 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 		App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
 		//RedrawWindow(App->Fdlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		//InvalidateRect(hDlg, &rect, true);
-//		App->Resize_OgreWin();
+		App->CL_SplitterViews->Resize_OgreWin();
 		return 1;
 	}
 
@@ -573,7 +573,7 @@ bool CL64_SplitterViews::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 }
 
 // *************************************************************************
-// *						Resize_OgreWin Inflanite					   *
+// *				Resize_Fldg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_SplitterViews::Resize_Fldg(void)
 {
@@ -595,6 +595,30 @@ bool CL64_SplitterViews::Resize_Fldg(void)
 	////-----------------Ogre Window
 	SetWindowPos(App->Fdlg, NULL, 0, 80, rcl.right, NewHeight + 70, SWP_NOZORDER);
 	//SetWindowPos(App->CL_TopTabs->Top_Bar, NULL, 0, 0, rcl.right, 80, SWP_NOZORDER);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Resize_OgreWin:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_SplitterViews::Resize_OgreWin(void)
+{
+	if (App->OgreStarted == 1)
+	{
+		RECT rect;
+		GetClientRect(App->ViewGLhWnd, &rect);
+
+		if (App->CL_Ogre->mCamera != 0)
+		{
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			//App->CL_Ogre->mCamera->yaw(Radian(0));
+			Root::getSingletonPtr()->renderOneFrame();
+		}
+
+		//App->CL_Grid->Reset_View();
+	}
 
 	return 1;
 }
