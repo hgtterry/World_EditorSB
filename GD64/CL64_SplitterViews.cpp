@@ -21,36 +21,15 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-#include "CL64_Ogre_Init.h"
-#include "CL64_Grid.h"
+#include "pch.h"
+#include "CL64_App.h"
 #include "CL64_SplitterViews.h"
 
-class CL64_App
+CL64_SplitterViews::CL64_SplitterViews(void)
 {
+	//App->Say("CL64_SplitterViews Created");
+}
 
-public:
-	CL64_App(void);
-	~CL64_App(void);
-
-	CL64_Ogre_Init*		CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
-
-	void InitApp(void);
-
-	void Say(const char* Message);
-	bool SetMainWinCentre(void) const;
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HWND Fdlg;
-	HWND ViewGLhWnd;
-
-	char GD_Directory_FullPath[MAX_PATH];
-
-};
-
-extern CL64_App* App;
-
+CL64_SplitterViews::~CL64_SplitterViews(void)
+{
+}

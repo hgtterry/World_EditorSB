@@ -26,14 +26,14 @@ distribution.
 
 CL64_App::CL64_App(void)
 {
-	CL_Ogre = nullptr;
-	CL_Grid = nullptr;
+	CL_Ogre =			nullptr;
+	CL_Grid =			nullptr;
+	CL_SplitterViews =	nullptr;
 
-
-	hInst = nullptr;
-	MainHwnd = nullptr;
-	Fdlg = nullptr;
-	ViewGLhWnd = nullptr;
+	hInst =			nullptr;
+	MainHwnd =		nullptr;
+	Fdlg =			nullptr;
+	ViewGLhWnd =	nullptr;
 
 	GD_Directory_FullPath[0] = 0;
 	//Say("Created");
@@ -49,8 +49,10 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
-	CL_Ogre = new CL64_Ogre_Init();
-	CL_Grid = new CL64_Grid();
+	CL_Ogre =			new CL64_Ogre_Init();
+	CL_Grid =			new CL64_Grid();
+	CL_SplitterViews =	new CL64_SplitterViews();
+	
 }
 
 // *************************************************************************

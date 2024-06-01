@@ -22,35 +22,10 @@ distribution.
 */
 
 #pragma once
-
-#include "CL64_Ogre_Init.h"
-#include "CL64_Grid.h"
-#include "CL64_SplitterViews.h"
-
-class CL64_App
+class CL64_SplitterViews
 {
-
 public:
-	CL64_App(void);
-	~CL64_App(void);
-
-	CL64_Ogre_Init*		CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
-
-	void InitApp(void);
-
-	void Say(const char* Message);
-	bool SetMainWinCentre(void) const;
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HWND Fdlg;
-	HWND ViewGLhWnd;
-
-	char GD_Directory_FullPath[MAX_PATH];
-
+	CL64_SplitterViews(void);
+	~CL64_SplitterViews(void);
 };
-
-extern CL64_App* App;
 
