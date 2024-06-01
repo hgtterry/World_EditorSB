@@ -63,3 +63,22 @@ void CL64_App::Say(const char* Message)
 	MessageBox(NULL, Message, Message, MB_OK);
 	//App->Cl_Dialogs->Message(text);
 }
+
+// *************************************************************************
+// *			SetMainWinCentre:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_App::SetMainWinCentre(void) const
+{
+	int ClientWidth_X = GetSystemMetrics(SM_CXSCREEN);
+	int ClientHeight_Y = GetSystemMetrics(SM_CYSCREEN);
+
+	RECT Control;
+	GetClientRect(MainHwnd, &Control);
+
+	int AllX = (ClientWidth_X / 2) - (Control.right / 2) - 10;
+	int AllY = (ClientHeight_Y / 2) - (Control.bottom / 2) - 30;
+
+	SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0, SWP_NOSIZE);
+
+	return 1;
+}

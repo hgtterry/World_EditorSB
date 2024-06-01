@@ -75,6 +75,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
 
+    App->SetMainWinCentre();
     App->CL_Ogre->InitOgre();
     //App->CL_Ogre->mRoot->startRendering();
     MSG msg;
@@ -124,7 +125,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    App->hInst = hInstance; // Store instance handle in our global variable
 
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-       0, 0, 1200, 800, nullptr, nullptr, App->hInst, nullptr);
+       0, 0, 1200, 770, nullptr, nullptr, App->hInst, nullptr);
 
    App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, nullptr);// (DLGPROC)ViewerMain_Proc);
 

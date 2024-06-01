@@ -39,6 +39,7 @@ public:
 	void InitApp(void);
 
 	void Say(const char* Message);
+	bool SetMainWinCentre(void) const;
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
