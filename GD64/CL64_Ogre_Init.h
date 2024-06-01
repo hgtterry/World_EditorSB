@@ -42,6 +42,8 @@ public:
 	bool Initialise_Resources(void);
 	bool createFrameListener(void);
 
+	bool Ogre_Render_Loop(void);
+
 	bool ReverseBackSlash(char* buf);
 
 	HWND RenderHwnd;
@@ -50,6 +52,7 @@ public:
 	Ogre::RenderWindow* mWindow;
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::Camera* mCamera;
+	Ogre::SceneNode* camNode;
 
 	Ogre::String mResourcePath;
 	Ogre::String App_Resource_Group;		// App Resource Group

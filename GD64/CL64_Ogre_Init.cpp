@@ -29,10 +29,11 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 {
 	RenderHwnd = nullptr;
 
-	mRoot = nullptr;
-	mWindow = nullptr;
+	mRoot =		nullptr;
+	mWindow =	nullptr;
 	mSceneMgr = nullptr;
-	mCamera = nullptr;
+	mCamera =	nullptr;
+	camNode =	nullptr;
 
 	OgreListener = nullptr;
 
@@ -194,13 +195,14 @@ bool CL64_Ogre_Init::createCamera(void)
 	// and tell it to render into the main window
 	//getRenderWindow()->addViewport(cam);
 
-	Ogre::SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	mCamera = mSceneMgr->createCamera("MainCamera");
 	//mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	//mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
+	mCamera->setAutoAspectRatio(true);
 
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 90, 40);
@@ -276,7 +278,7 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 // *************************************************************************
 bool CL64_Ogre_Init::createFrameListener(void)
 {
-	//// Physics Frame Listener
+	// Physics Frame Listener
 	OgreListener = new CL64_OgreListener();
 	mRoot->addFrameListener(OgreListener);
 
@@ -286,7 +288,7 @@ bool CL64_Ogre_Init::createFrameListener(void)
 
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
-		App->Say("OpenGL Rendering Subsystem");
+		//App->Say("OpenGL Rendering Subsystem");
 		//BulletListener = new GD_Bt_Render();
 
 		//mSceneMgr->addRenderQueueListener(BulletListener);
@@ -296,6 +298,50 @@ bool CL64_Ogre_Init::createFrameListener(void)
 		//App->SBC_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
 
 	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool CL64_Ogre_Init::Ogre_Render_Loop(void)
+{
+	//mRoot->clearEventTimes();
+
+	//while (true)
+	//{
+	//	Ogre::WindowEventUtilities::messagePump();
+
+	//	if (mWindow->isClosed()) return false;
+
+	//	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	//	//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
+	//	//{
+	//	//	if (Block_RenderingQueued == 0)
+	//	//	{
+
+	//	//		// mRoot->renderOneFrame()
+	//	//		if (!mRoot->_fireFrameStarted())
+	//	//		{
+	//	//			return false;
+	//	//		}
+
+	//	//		if (!mRoot->_updateAllRenderTargets())
+	//	//		{
+	//	//			return false;
+	//	//		}
+
+	//	//		if (!mRoot->_fireFrameEnded())
+	//	//		{
+	//	//			return false;
+	//	//		}
+
+	//	//		FPStimer.reset();
+
+	//	//	}
+	//	//}
+	//}
 
 	return 1;
 }

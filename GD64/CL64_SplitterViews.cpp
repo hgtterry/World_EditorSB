@@ -515,7 +515,7 @@ LRESULT CALLBACK CL64_SplitterViews::Bottom_Left_Proc(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
-// *			Resize_Windowns:- Terry and Hazel Flanigan 2024			   *
+// *			Resize_Windows:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_SplitterViews::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 {
@@ -613,7 +613,7 @@ bool CL64_SplitterViews::Resize_OgreWin(void)
 		{
 			App->CL_Ogre->mWindow->windowMovedOrResized();
 			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-			//App->CL_Ogre->mCamera->yaw(Radian(0));
+			App->CL_Ogre->camNode->yaw(Radian(0));
 			Root::getSingletonPtr()->renderOneFrame();
 		}
 
