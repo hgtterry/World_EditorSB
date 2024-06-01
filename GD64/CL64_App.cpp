@@ -36,6 +36,9 @@ CL64_App::CL64_App(void)
 	ViewGLhWnd =	nullptr;
 
 	GD_Directory_FullPath[0] = 0;
+
+	AppBackground = 0;
+
 	//Say("Created");
 }
 
@@ -53,6 +56,7 @@ void CL64_App::InitApp(void)
 	CL_Grid =			new CL64_Grid();
 	CL_SplitterViews =	new CL64_SplitterViews();
 	
+	SetBrushes_Fonts();
 }
 
 // *************************************************************************
@@ -83,4 +87,52 @@ bool CL64_App::SetMainWinCentre(void) const
 	SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0, SWP_NOSIZE);
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Flash_Window:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Flash_Window()
+{
+	FlashWindow(App->MainHwnd, true);
+}
+
+// *************************************************************************
+// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_App::SetBrushes_Fonts(void)
+{
+	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	//DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
+	//AppTest = CreateSolidBrush(RGB(218, 240, 255));
+
+	//BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+
+	////BannerBrush = CreateSolidBrush(RGB(200, 200, 0));
+
+	//Brush_White = CreateSolidBrush(RGB(255, 255, 255));
+
+	//Brush_Panel = CreateSolidBrush(RGB(218, 240, 255));
+
+	//Brush_Red = CreateSolidBrush(RGB(252, 85, 63));
+	//Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
+	//Brush_Blue = CreateSolidBrush(RGB(0, 180, 255));
+
+	//Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
+	//Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
+	//Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+	//Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
+	//Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
+
+	//Brush_Button = CreateSolidBrush(RGB(65, 147, 245));
+	//Brush_Button_Hover = CreateSolidBrush(RGB(153, 204, 255));
+
+	//Font_CB12 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	//Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	//Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+
+	//Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+	//Font_CB15_Bold = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+
+	//Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 }

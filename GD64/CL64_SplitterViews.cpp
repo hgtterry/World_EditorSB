@@ -51,11 +51,287 @@ CL64_SplitterViews::CL64_SplitterViews(void)
 	RIGHT_MINIMUM_SPACE = 1000;
 	LEFT_MINIMUM_SPACE = 15;
 
+	Do_Width = 0;
+	Do_Depth = 0;
+	Do_All = 0;
+
 	//App->Say("CL64_SplitterViews Created");
 }
 
 CL64_SplitterViews::~CL64_SplitterViews(void)
 {
+}
+
+// *************************************************************************
+// *			ViewerMain_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	static HCURSOR	hcSizeEW = NULL;
+	static HCURSOR	hcSizeNS = NULL;
+	static HCURSOR	hcBoth = NULL;
+
+	static  BOOL        xSizing;
+	static  BOOL        ySizing;
+
+	static UINT			nwnd_resizing = 0;
+
+	RECT rect;
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
+		hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
+		hcBoth = LoadCursor(NULL, IDC_SIZEALL);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	//case WM_PAINT:
+	//{
+	//	PAINTSTRUCT ps;
+	//	HDC hdc = BeginPaint(hDlg, &ps);
+
+	//	// All painting occurs here, between BeginPaint and EndPaint.
+	//	FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+	//	EndPaint(hDlg, &ps);
+	//}
+
+	case WM_SIZE:
+	{
+		App->CL_SplitterViews->Init_Views();
+		App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
+
+		GetClientRect(hDlg, &rect);
+		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//InvalidateRect(hDlg, &rect, TRUE);
+		return 0;
+	}
+
+	case WM_LBUTTONDOWN:
+	{
+		int                 xPos;
+		int                 yPos;
+
+		// Varible used to get the mouse cursor x and y co-ordinates
+		xPos = (int)LOWORD(lParam);
+		yPos = (int)HIWORD(lParam);
+
+		// Checks whether the mouse is over the splitter window
+		xSizing = (xPos > App->CL_SplitterViews->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_SplitterViews->nleftWnd_width + SPLITTER_BAR_WIDTH);
+		ySizing = (yPos > App->CL_SplitterViews->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_SplitterViews->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
+
+		if (xSizing && ySizing == 0)
+		{
+			// Api to capture mouse input
+			SetCapture(hDlg);
+			if (xSizing)
+			{
+				SetCursor(hcSizeEW);
+			}
+		}
+
+		if (ySizing && xSizing == 0)
+		{
+			// Api to capture mouse input
+			SetCapture(hDlg);
+			if (ySizing)
+			{
+				SetCursor(hcSizeNS);
+			}
+		}
+
+		if (xSizing && ySizing)
+		{
+			SetCapture(hDlg);
+			if (ySizing)
+			{
+				SetCursor(hcBoth);;
+			}
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		if (xSizing)
+		{
+			RECT    focusrect;
+			HDC     hdc;
+
+			ReleaseCapture();
+
+			hdc = GetDC(hDlg);
+			GetClientRect(hDlg, &rect);
+
+			if (xSizing)
+			{
+				SetRect(&focusrect, App->CL_SplitterViews->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+					App->CL_SplitterViews->nleftWnd_width + WIDTH_ADJUST,
+					rect.bottom - 80);
+
+				DrawFocusRect(hdc, &focusrect);
+
+				xSizing = FALSE;
+			}
+
+			ReleaseDC(hDlg, hdc);
+		}
+
+		if (ySizing)
+		{
+			HDC     hdc;
+
+			ReleaseCapture();
+
+			hdc = GetDC(hDlg);
+			GetClientRect(hDlg, &rect);
+
+			if (ySizing)
+			{
+				ySizing = FALSE;
+			}
+
+			ReleaseDC(hDlg, hdc);
+		}
+
+		App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
+		//RedrawWindow(App->Fdlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//InvalidateRect(hDlg, &rect, true);
+//		App->Resize_OgreWin();
+		return 1;
+	}
+
+	case WM_MOUSEMOVE:
+	{
+
+		int   xPos;
+		int   yPos;
+
+		// Get the x and y co-ordinates of the mouse
+		xPos = (int)LOWORD(lParam);
+		yPos = (int)HIWORD(lParam);
+
+		if (xPos < App->CL_SplitterViews->LEFT_MINIMUM_SPACE || xPos > App->CL_SplitterViews->RIGHT_MINIMUM_SPACE)
+		{
+			return 0;
+		}
+
+		// Checks if the left button is pressed during dragging the splitter
+		if (wParam == MK_LBUTTON)
+		{
+
+			if (xSizing && App->CL_SplitterViews->Do_Width == 1)
+			{
+				RECT    focusrect;
+				HDC     hdc;
+
+				hdc = GetDC(hDlg);
+				GetClientRect(hDlg, &rect);
+
+				if (xSizing && App->CL_SplitterViews->Do_Width == 1)
+				{
+					SetRect(&focusrect, App->CL_SplitterViews->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+						App->CL_SplitterViews->nleftWnd_width + WIDTH_ADJUST,
+						rect.bottom - 6);
+
+					DrawFocusRect(hdc, &focusrect);
+
+					App->CL_SplitterViews->nleftWnd_width = xPos;
+
+					SetRect(&focusrect, App->CL_SplitterViews->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+						App->CL_SplitterViews->nleftWnd_width + WIDTH_ADJUST,
+						rect.bottom - 6);
+
+					DrawFocusRect(hdc, &focusrect);
+				}
+
+				ReleaseDC(hDlg, hdc);
+			}
+
+			if (ySizing && App->CL_SplitterViews->Do_Depth == 1)
+			{
+				RECT    focusrect;
+				HDC     hdc;
+
+				hdc = GetDC(hDlg);
+				GetClientRect(hDlg, &rect);
+
+				if (ySizing && App->CL_SplitterViews->Do_Depth == 1)
+				{
+					SetRect(&focusrect, 0, App->CL_SplitterViews->nleftWnd_Depth, rect.right, App->CL_SplitterViews->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+
+					DrawFocusRect(hdc, &focusrect);
+
+					App->CL_SplitterViews->nleftWnd_Depth = yPos;
+
+					SetRect(&focusrect, 0, App->CL_SplitterViews->nleftWnd_Depth, rect.right, App->CL_SplitterViews->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+
+					DrawFocusRect(hdc, &focusrect);
+				}
+
+				ReleaseDC(hDlg, hdc);
+			}
+
+		}
+
+		if ((xPos > App->CL_SplitterViews->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_SplitterViews->nleftWnd_width + SPLITTER_BAR_WIDTH))
+		{
+			if (App->CL_SplitterViews->Do_All == 0)
+			{
+				SetCursor(hcSizeEW);
+			}
+
+			App->CL_SplitterViews->Do_Width = 1;
+		}
+		else
+		{
+			App->CL_SplitterViews->Do_Width = 0;
+		}
+
+		if ((yPos > App->CL_SplitterViews->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_SplitterViews->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
+		{
+			if (App->CL_SplitterViews->Do_All == 0)
+			{
+				SetCursor(hcSizeNS);
+			}
+
+			App->CL_SplitterViews->Do_Depth = 1;
+		}
+		else
+		{
+			App->CL_SplitterViews->Do_Depth = 0;
+		}
+
+		if (App->CL_SplitterViews->Do_Width == 1 && App->CL_SplitterViews->Do_Depth == 1)
+		{
+			SetCursor(hcBoth);
+			App->CL_SplitterViews->Do_All = 1;
+		}
+		else
+		{
+			App->CL_SplitterViews->Do_All = 0;
+		}
+
+
+		return 1;
+	}
+
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -292,6 +568,33 @@ bool CL64_SplitterViews::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		FALSE);
 
 	RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Resize_OgreWin Inflanite					   *
+// *************************************************************************
+bool CL64_SplitterViews::Resize_Fldg(void)
+{
+	RECT rcl;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->MainHwnd, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	////-----------------Ogre Window
+	SetWindowPos(App->Fdlg, NULL, 0, 80, rcl.right, NewHeight + 70, SWP_NOZORDER);
+	//SetWindowPos(App->CL_TopTabs->Top_Bar, NULL, 0, 0, rcl.right, 80, SWP_NOZORDER);
 
 	return 1;
 }

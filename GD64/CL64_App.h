@@ -42,6 +42,8 @@ public:
 
 	void Say(const char* Message);
 	bool SetMainWinCentre(void) const;
+	void Flash_Window();
+	void SetBrushes_Fonts(void);
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
@@ -49,6 +51,8 @@ public:
 	HWND ViewGLhWnd;
 
 	char GD_Directory_FullPath[MAX_PATH];
+
+	HBRUSH AppBackground;
 
 };
 

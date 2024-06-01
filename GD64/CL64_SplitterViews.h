@@ -35,6 +35,7 @@ public:
 	void Create_Bottom_Left_Window();
 
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+	bool Resize_Fldg(void);
 
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
@@ -53,11 +54,17 @@ public:
 	int RIGHT_MINIMUM_SPACE;
 	int LEFT_MINIMUM_SPACE;
 
+	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 private:
 
 	static LRESULT CALLBACK Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Do_Width;
+	bool Do_Depth;
+	bool Do_All;
 
 };
 

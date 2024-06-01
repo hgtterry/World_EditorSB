@@ -135,7 +135,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
        0, 0, 1200, 770, nullptr, nullptr, App->hInst, nullptr);
 
-   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, nullptr);// (DLGPROC)ViewerMain_Proc);
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd,(DLGPROC)App->CL_SplitterViews->ViewerMain_Proc);
 
    int cx = GetSystemMetrics(SM_CXSCREEN);
    int cy = GetSystemMetrics(SM_CYSCREEN);
@@ -180,14 +180,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-            EndPaint(hWnd, &ps);
-        }
-        break;
+	//case WM_PAINT:
+	//{
+	//	//App->Flash_Window();
+	//	//PAINTSTRUCT ps;
+	//	//HDC hdc = BeginPaint(hWnd, &ps);
+	//	//// TODO: Add any drawing code that uses hdc here...
+	//	//EndPaint(hWnd, &ps);
+	//}
+
+    case WM_SIZE:
+    {
+        App->Flash_Window();
+        App->CL_SplitterViews->Init_Views();
+        App->CL_SplitterViews->Resize_Fldg();
+        //App->Resize_OgreWin();
+
+        return 0;
+    }
+
+    case WM_WINDOWPOSCHANGED:
+    {
+       // App->Flash_Window();
+        App->CL_SplitterViews->Init_Views();
+        App->CL_SplitterViews->Resize_Fldg();
+       // App->Resize_OgreWin();
+        return 0;
+    }
+        //break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
