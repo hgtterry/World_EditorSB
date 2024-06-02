@@ -181,9 +181,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
+            
             case IDM_EXIT:
-                DestroyWindow(hWnd);
+
+                if (App->CL_Ogre->OgreListener->StopOgre == 0)
+                {
+                    App->CL_Ogre->OgreListener->StopOgre = 1;
+                }
+
+                PostQuitMessage(0);
                 break;
+
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -291,7 +299,7 @@ void StartOgre()
     //App->CL_Ogre->mRoot->startRendering();
     App->CL_Ogre->Ogre_Render_Loop();
 
-
+    Debug
     Close_App();
     SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
     PostQuitMessage(0);

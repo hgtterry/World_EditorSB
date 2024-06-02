@@ -29,7 +29,7 @@
 //#include "OgreTerrain.h"
 //#include "OgreTerrainGroup.h"
 //#include "OgreTerrainMaterialGeneratorA.h"
-//#include "OgreTextAreaOverlayElement.h"
+#include "OgreTextAreaOverlayElement.h"
 //#include "OgreBillboardParticleRenderer.h"
 //#include "OgreStringConverter.h"
 //#include "OgreDefaultHardwareBufferManager.h"
@@ -37,3 +37,4 @@
 //#include "OgreVertexIndexData.h"
 //#include "OgreResourceGroupManager.h"
 
+#define Debug App->Debug_Text();

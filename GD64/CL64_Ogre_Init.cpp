@@ -25,6 +25,8 @@ distribution.
 #include "CL64_App.h"
 #include "CL64_Ogre_Init.h"
 
+
+
 CL64_Ogre_Init::CL64_Ogre_Init(void)
 {
 	RenderHwnd = nullptr;
@@ -70,10 +72,25 @@ void CL64_Ogre_Init::InitOgre(void)
 	//App->Say("Ogre Init Done");
 
 	
+	/*Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();*/
+
+	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
+
+	//OgreBites::addInputListener(mTrayMgr);
+
+	Ogre::String poo = "poo";
+
+	mTrayMgr->showAll();
+	mTrayMgr->createLabel(OgreBites::TrayLocation::TL_CENTER, poo, poo);
+
+	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	poo = "hh";
+
+	OgreBites::Button* b = mTrayMgr->createButton(OgreBites::TrayLocation::TL_TOPLEFT, "MyButton", "Click Me!");
+	
 }
 
 // *************************************************************************
@@ -115,7 +132,9 @@ bool CL64_Ogre_Init::SetUpResources(void)
 
 	////-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Sinbad.zip", "Zip", App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/SdkTrays.zip", "Zip", App_Resource_Group);
 
+	
 	////-------------------------------- File System
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", App_Resource_Group);
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/New_Particles", "FileSystem", App_Resource_Group);
@@ -321,14 +340,11 @@ bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		//Ogre::Root::getSingletonPtr()->renderOneFrame();
-		
 		//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
 		//{
 		//	if (Block_RenderingQueued == 0)
 		//	{
 
-		//mRoot->renderOneFrame();
 		if (!mRoot->_fireFrameStarted())
 		{
 			return false;

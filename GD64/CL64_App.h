@@ -43,6 +43,8 @@ public:
 	void Say(const char* Message);
 	bool SetMainWinCentre(void) const;
 	void Flash_Window();
+	void Debug_Text();
+
 	void SetBrushes_Fonts(void);
 
 	HINSTANCE hInst;

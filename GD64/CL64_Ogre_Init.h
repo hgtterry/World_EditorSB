@@ -25,6 +25,9 @@ distribution.
 
 #include "CL64_OgreListener.h"
 #include "OgreOverlaySystem.h"
+#include "OgreImGuiOverlay.h"
+#include "OgreAdvancedRenderControls.h"
+#include "OgreTrays.h"
 
 class CL64_Ogre_Init
 {
@@ -57,6 +60,8 @@ public:
 
 	Ogre::String mResourcePath;
 	Ogre::String App_Resource_Group;		// App Resource Group
+
+	OgreBites::TrayManager* mTrayMgr;
 
 	CL64_OgreListener* OgreListener;
 

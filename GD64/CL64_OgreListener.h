@@ -38,6 +38,10 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	void UpDateStats(void);
+
+	Ogre::Overlay* mDebugOverlay;
+
 	bool StopOgre;
 };
 
