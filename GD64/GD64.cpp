@@ -289,12 +289,12 @@ void StartOgre()
 
 
     //App->CL_Ogre->mRoot->startRendering();
-    //App->CL_Ogre->Ogre_Render_Loop();
+    App->CL_Ogre->Ogre_Render_Loop();
 
 
-    //Close_App();
-   // SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
-    //PostQuitMessage(0);
+    Close_App();
+    SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+    PostQuitMessage(0);
 }
 
 // *************************************************************************

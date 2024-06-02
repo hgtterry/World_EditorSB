@@ -22,6 +22,7 @@ distribution.
 */
 
 #include "pch.h"
+#include "CL64_App.h"
 #include "CL64_OgreListener.h"
 
 CL64_OgreListener::CL64_OgreListener(void)
@@ -47,6 +48,7 @@ bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	//App->Flash_Window();
 	return 1;
 }
 

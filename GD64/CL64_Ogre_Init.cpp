@@ -69,6 +69,7 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	//App->Say("Ogre Init Done");
 
+	
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -162,8 +163,8 @@ bool CL64_Ogre_Init::chooseSceneManager(void)
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
 	//ImGui::ImguiManager::getSingleton().init(scnMgr);
 
-	//mOverlaySystem = new Ogre::OverlaySystem();
-	//mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 	//mSceneMgr->setDisplaySceneNodes(true);
@@ -320,29 +321,30 @@ bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 		
 		//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
 		//{
 		//	if (Block_RenderingQueued == 0)
 		//	{
 
-		//		// mRoot->renderOneFrame()
-		//		if (!mRoot->_fireFrameStarted())
-		//		{
-		//			return false;
-		//		}
+		//mRoot->renderOneFrame();
+		if (!mRoot->_fireFrameStarted())
+		{
+			return false;
+		}
 
-		//		if (!mRoot->_updateAllRenderTargets())
-		//		{
-		//			return false;
-		//		}
+		if (!mRoot->_updateAllRenderTargets())
+		{
+			return false;
+		}
 
-		//		if (!mRoot->_fireFrameEnded())
-		//		{
-		//			return false;
-		//		}
+		if (!mRoot->_fireFrameEnded())
+		{
+			return false;
+		}
 
+		/*App->Flash_Window();*/
 		//		FPStimer.reset();
 
 		//	}
