@@ -84,11 +84,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
     App->CL_SplitterViews->Init_Views();
-    App->CL_SplitterViews->Create_Left_Window();
-    App->CL_SplitterViews->Create_Right_Window();
+    App->CL_SplitterViews->Create_Top_Left_Win();
+    App->CL_SplitterViews->Create_Top_Right_Win();
     App->CL_SplitterViews->Create_Bottom_Left_Window();
 
-    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_width);
+    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
 
     //App->CL_Ogre->InitOgre();
     //App->CL_Ogre->mRoot->startRendering();

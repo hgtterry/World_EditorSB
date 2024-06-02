@@ -94,16 +94,6 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 		return (LONG)App->AppBackground;
 	}
 
-	//case WM_PAINT:
-	//{
-	//	PAINTSTRUCT ps;
-	//	HDC hdc = BeginPaint(hDlg, &ps);
-
-	//	// All painting occurs here, between BeginPaint and EndPaint.
-	//	FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
-	//	EndPaint(hDlg, &ps);
-	//}
-
 	case WM_SIZE:
 	{
 		App->CL_SplitterViews->Init_Views();
@@ -111,7 +101,6 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 
 		GetClientRect(hDlg, &rect);
 		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//InvalidateRect(hDlg, &rect, TRUE);
 		return 0;
 	}
 
@@ -164,6 +153,7 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 	{
 		if (xSizing)
 		{
+
 			RECT    focusrect;
 			HDC     hdc;
 
@@ -188,6 +178,7 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 
 		if (ySizing)
 		{
+			
 			HDC     hdc;
 
 			ReleaseCapture();
@@ -202,11 +193,10 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 
 			ReleaseDC(hDlg, hdc);
 		}
-
+		
 		App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
-		//RedrawWindow(App->Fdlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//InvalidateRect(hDlg, &rect, true);
 		App->CL_SplitterViews->Resize_OgreWin();
+
 		return 1;
 	}
 
@@ -354,17 +344,17 @@ void CL64_SplitterViews::Init_Views()
 }
 
 // *************************************************************************
-// *	  	Create_Left_Window:- Terry and Hazel Flanigan 2024			   *
+// *	  	Create_Top_Left_Win:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_SplitterViews::Create_Left_Window()
+void CL64_SplitterViews::Create_Top_Left_Win()
 {
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_TOPVIEW, App->Fdlg, (DLGPROC)Top_Left_Window_Proc);
+	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_TOPVIEW, App->Fdlg, (DLGPROC)Top_Left_Win_Proc);
 }
 
 // *************************************************************************
-// *			Left_Window_Proc:- Terry and Hazel Flanigan 2024 		   *
+// *			Top_Left_Win_Proc:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_SplitterViews::Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_SplitterViews::Top_Left_Win_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -419,13 +409,13 @@ LRESULT CALLBACK CL64_SplitterViews::Top_Left_Window_Proc(HWND hDlg, UINT messag
 }
 
 // *************************************************************************
-// *	  	Create_Right_Window:- Terry and Hazel Flanigan 2024			   *
+// *	  	Create_Top_Right_Win:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_SplitterViews::Create_Right_Window()
+void CL64_SplitterViews::Create_Top_Right_Win()
 {
 	RECT rect;
 
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_SIDEVIEW, App->Fdlg, (DLGPROC)Top_Right_Window_Proc);
+	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_SIDEVIEW, App->Fdlg, (DLGPROC)Top_Right_Win_Proc);
 
 	GetClientRect(Right_Window_Hwnd, &rect);
 
@@ -438,9 +428,9 @@ void CL64_SplitterViews::Create_Right_Window()
 }
 
 // *************************************************************************
-// *			Right_Window_Proc:- Terry and Hazel Flanigan 2024 		   *
+// *			Top_Right_Win_Proc:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_SplitterViews::Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_SplitterViews::Top_Right_Win_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -534,16 +524,6 @@ bool CL64_SplitterViews::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		rect.left + (NewWidth - WIDTH_ADJUST),
 		NewDepth_Depth,
 		FALSE);
-
-	//Temp = GetDlgItem(App->CL_SplitterViews->Left_Window_Hwnd, IDC_STBANNERTL);
-	//MoveWindow(Temp,
-	//	0,
-	//	0,
-	//	rect.left + (NewWidth - WIDTH_ADJUST),
-	//	15,
-	//	FALSE);
-
-
 
 	MoveWindow(App->CL_SplitterViews->Right_Window_Hwnd,
 		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,

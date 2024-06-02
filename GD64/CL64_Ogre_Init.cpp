@@ -307,41 +307,47 @@ bool CL64_Ogre_Init::createFrameListener(void)
 // *************************************************************************
 bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 {
-	//mRoot->clearEventTimes();
+	mRoot->clearEventTimes();
+	
+	while (true)
+	{
+		MSG  msg;
+		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 
-	//while (true)
-	//{
-	//	Ogre::WindowEventUtilities::messagePump();
+		if (mWindow->isClosed()) return false;
 
-	//	if (mWindow->isClosed()) return false;
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		
+		//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
+		//{
+		//	if (Block_RenderingQueued == 0)
+		//	{
 
-	//	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	//	//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
-	//	//{
-	//	//	if (Block_RenderingQueued == 0)
-	//	//	{
+		//		// mRoot->renderOneFrame()
+		//		if (!mRoot->_fireFrameStarted())
+		//		{
+		//			return false;
+		//		}
 
-	//	//		// mRoot->renderOneFrame()
-	//	//		if (!mRoot->_fireFrameStarted())
-	//	//		{
-	//	//			return false;
-	//	//		}
+		//		if (!mRoot->_updateAllRenderTargets())
+		//		{
+		//			return false;
+		//		}
 
-	//	//		if (!mRoot->_updateAllRenderTargets())
-	//	//		{
-	//	//			return false;
-	//	//		}
+		//		if (!mRoot->_fireFrameEnded())
+		//		{
+		//			return false;
+		//		}
 
-	//	//		if (!mRoot->_fireFrameEnded())
-	//	//		{
-	//	//			return false;
-	//	//		}
+		//		FPStimer.reset();
 
-	//	//		FPStimer.reset();
-
-	//	//	}
-	//	//}
-	//}
+		//	}
+		//}
+	}
 
 	return 1;
 }

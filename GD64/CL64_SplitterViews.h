@@ -30,8 +30,8 @@ public:
 
 	void Init_Views();
 
-	void Create_Left_Window();
-	void Create_Right_Window();
+	void Create_Top_Left_Win();
+	void Create_Top_Right_Win();
 	void Create_Bottom_Left_Window();
 
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
@@ -59,8 +59,8 @@ public:
 
 private:
 
-	static LRESULT CALLBACK Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Right_Win_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Left_Win_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Do_Width;
