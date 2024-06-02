@@ -24,6 +24,7 @@ distribution.
 #pragma once
 
 #include "Ogre.h"
+#include "CL64_App.h"
 //#include "OgreRenderWindow.h"
 
 using namespace Ogre;
@@ -40,7 +41,7 @@ public:
 
 	void UpDateStats(void);
 
-	Ogre::Overlay* mDebugOverlay;
+	//Ogre::Overlay* mDebugOverlay;
 
 	bool StopOgre;
 };

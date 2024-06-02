@@ -25,21 +25,10 @@ distribution.
 #include "CL64_App.h"
 #include "CL64_OgreListener.h"
 
-#include "Overlay/OgreOverlay.h"
-#include "Overlay/OgreOverlaySystem.h"
-#include "Overlay/OgreOverlayManager.h"
-#include "Overlay/OgreBorderPanelOverlayElement.h"
-#include "Overlay/OgreTextAreaOverlayElement.h"
-#include "Overlay/OgreFontManager.h"
+
 
 CL64_OgreListener::CL64_OgreListener(void)
 {
-	/*mDebugOverlay = OverlayManager::getSingleton().create("POO");
-
-	Ogre::OverlayContainer* panel = static_cast<Ogre::OverlayContainer*>(OverlayManager.createOverlayElement("Panel", "PanelName"));
-
-	mDebugOverlay->add2D("POO");*/
-
 	StopOgre = 0;
 }
 

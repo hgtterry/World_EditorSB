@@ -71,26 +71,14 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	//App->Say("Ogre Init Done");
 
-	
-	/*Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();*/
-
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
 	//OgreBites::addInputListener(mTrayMgr);
 
-	Ogre::String poo = "poo";
-
 	mTrayMgr->showAll();
-	mTrayMgr->createLabel(OgreBites::TrayLocation::TL_CENTER, poo, poo);
+	mTrayMgr->showFrameStats(OgreBites::TL_TOP);
+	mTrayMgr->hideCursor();
 
-	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	poo = "hh";
-
-	OgreBites::Button* b = mTrayMgr->createButton(OgreBites::TrayLocation::TL_TOPLEFT, "MyButton", "Click Me!");
-	
 }
 
 // *************************************************************************
