@@ -41,7 +41,12 @@ public:
 
 	void Camera_Mode_Model(float DeltaTime);
 	bool Capture_LeftMouse_Model(void);
+	bool Capture_RightMouse_Model(void);
 
+	void MoveCamera(void);
+
+	Ogre::Camera* mCam;
+	Ogre::SceneNode* mCamNode;
 
 	POINT		Mouse_point;
 	//Ogre::Overlay* mDebugOverlay;
@@ -53,6 +58,8 @@ public:
 	float		mMoveScale;
 	float		mMoveSensitivity; 
 	float		mMoveSensitivityMouse;
+
+	int			Wheel;
 
 	int			Pl_MouseX;
 	int			Pl_MouseY;

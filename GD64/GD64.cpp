@@ -268,14 +268,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // *************************************************************************
-// *			Ogre3D_Proc:- Terry and Hazel Flanigan 2023				   *
+// *			Ogre3D_Proc:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 
-	case WM_INITDIALOG: // Bernie as the dialog is created
+	case WM_INITDIALOG:
 	{
 		//App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)PleaseWait_Proc);
 		return TRUE;
@@ -296,11 +296,11 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			if (zDelta > 0)
 			{
-				//App->CL_Ogre->OgreListener->Wheel = -1;
+				App->CL_Ogre->OgreListener->Wheel = -1;
 			}
 			else if (zDelta < 0)
 			{
-				//App->CL_Ogre->OgreListener->Wheel = 1;
+				App->CL_Ogre->OgreListener->Wheel = 1;
 			}
 			return 1;
 		}
@@ -348,7 +348,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			{
 				if (App->OgreStarted == 1)
 				{
-
+					POINT p;
+					GetCursorPos(&p);
+					App->CursorPosX = p.x;
+					App->CursorPosY = p.y;
+					App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
+					App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
 					SetCapture(App->ViewGLhWnd);// Bernie
 					SetCursorPos(App->CursorPosX, App->CursorPosY);
 					App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
@@ -357,6 +362,24 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				}
 			}
 		}
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		//App->CL_Ogre->m_imgui.mouseReleased();
+
+		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+		{
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
+		}
+
 		return 1;
 	}
 
@@ -403,23 +426,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		return 1;
 	}
 
-	case WM_RBUTTONUP:
-	{
-		//App->CL_Ogre->m_imgui.mouseReleased();
-
-		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
-		{
-			if (App->OgreStarted == 1)
-			{
-				ReleaseCapture();
-				App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
-				SetCursor(App->CUR);
-				return 1;
-			}
-		}
-
-		return 1;
-	}
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
@@ -435,6 +441,13 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					{
 						//if (!ImGui::GetIO().WantCaptureMouse)
 						{
+							POINT p;
+							GetCursorPos(&p);
+							App->CursorPosX = p.x;
+							App->CursorPosY = p.y;
+							App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
+							App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
 							SetCapture(App->ViewGLhWnd);// Bernie
 							SetCursorPos(App->CursorPosX, App->CursorPosY);
 							App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;

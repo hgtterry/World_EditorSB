@@ -66,6 +66,9 @@ public:
 	CL64_OgreListener* OgreListener;
 
 	Ogre::OverlaySystem* mOverlaySystem;
+	
+	Entity* OgreEntity;
+	SceneNode* OgreNode;
 
 	char Return_Chr[MAX_PATH];
 };

@@ -29,12 +29,14 @@ distribution.
 
 CL64_OgreListener::CL64_OgreListener(void)
 {
+	mCam = App->CL_Ogre->mCamera;
+	mCamNode = App->CL_Ogre->camNode;
+
 	mRotX = 0;;
 	mRotY = 0;
-	mTranslateVector.x = 0;
-	mTranslateVector.y = 0;
-	mTranslateVector.z = 0;
 
+	mTranslateVector = Ogre::Vector3::ZERO;
+	
 	mMoveScale = 0;
 	mMoveSensitivity = 50;
 	mMoveSensitivityMouse = 50;
@@ -47,8 +49,9 @@ CL64_OgreListener::CL64_OgreListener(void)
 	Pl_DeltaMouse = 0;
 	Pl_MouseX = 0;
 	Pl_MouseY = 0;
-	//Mouse_point = std::nullptr_t;
 
+	//Mouse_point = std::nullptr_t;
+	Wheel = 0;
 	StopOgre = 0;
 }
 
@@ -73,8 +76,7 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	App->CL_Ogre->mTrayMgr->frameRendered(evt);
 
 	Camera_Mode_Model(evt.timeSinceLastFrame);
-	//UpDateStats();
-	//App->Flash_Window();
+
 	return 1;
 }
 
@@ -117,14 +119,25 @@ void CL64_OgreListener::Camera_Mode_Model(float DeltaTime)
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-		//Capture_RightMouse_Model();
+		Capture_RightMouse_Model();
 	}
 
-	//MoveCamera();
+	MoveCamera();
 }
 
 // *************************************************************************
-// *					Capture_LeftMouse_Model							   *
+// *				moveCamera   Terry Bernie							   *
+// *************************************************************************
+void CL64_OgreListener::MoveCamera(void)
+{
+	mCamNode->yaw(mRotX);
+	mCamNode->pitch(mRotY);
+	mCamNode->translate(mTranslateVector); // Position Relative
+	Wheel = 0;
+
+}
+// *************************************************************************
+// *		Capture_LeftMouse_Model:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 {
@@ -145,6 +158,8 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 			//App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->CL_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+
+			App->CL_Ogre->OgreNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -159,6 +174,7 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 			//App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->CL_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CL_Ogre->OgreNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -175,6 +191,7 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 			//App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->CL_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CL_Ogre->OgreNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
@@ -189,8 +206,88 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 			//App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->CL_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->CL_Ogre->OgreNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Capture_RightMouse_Model Terry					   *
+// *************************************************************************
+bool CL64_OgreListener::Capture_RightMouse_Model(void)
+{
+	GetCursorPos(&Mouse_point);
+
+	Pl_MouseX = (int(Mouse_point.x));
+	Pl_MouseY = (int(Mouse_point.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
+	//// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCamNode->getPosition();
+
+			OldPos.y -= Rate;
+			mCamNode->setPosition(OldPos);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCamNode->getPosition();
+
+			OldPos.y += Rate;
+			mCamNode->setPosition(OldPos);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+
 	}
 
 	return 1;

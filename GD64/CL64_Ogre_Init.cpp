@@ -39,6 +39,9 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	OgreListener = nullptr;
 
+	OgreEntity = nullptr;;
+	OgreNode = nullptr;;
+
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
 }
@@ -65,9 +68,9 @@ void CL64_Ogre_Init::InitOgre(void)
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
 
-	Entity* ogreEntity = mSceneMgr->createEntity("Sinbad.mesh");
-	SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ogreNode->attachObject(ogreEntity);
+	OgreEntity = mSceneMgr->createEntity("Sinbad.mesh");
+	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	OgreNode->attachObject(OgreEntity);
 
 	//App->Say("Ogre Init Done");
 
