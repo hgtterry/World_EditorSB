@@ -29,6 +29,26 @@ distribution.
 
 CL64_OgreListener::CL64_OgreListener(void)
 {
+	mRotX = 0;;
+	mRotY = 0;
+	mTranslateVector.x = 0;
+	mTranslateVector.y = 0;
+	mTranslateVector.z = 0;
+
+	mMoveScale = 0;
+	mMoveSensitivity = 50;
+	mMoveSensitivityMouse = 50;
+
+	Pl_LeftMouseDown = 0;
+	Pl_RightMouseDown = 0;
+
+	Pl_Cent500X = App->CursorPosX;
+	Pl_Cent500Y = App->CursorPosY;
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
+	//Mouse_point = std::nullptr_t;
+
 	StopOgre = 0;
 }
 
@@ -51,6 +71,8 @@ bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
 bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
 	App->CL_Ogre->mTrayMgr->frameRendered(evt);
+
+	Camera_Mode_Model(evt.timeSinceLastFrame);
 	//UpDateStats();
 	//App->Flash_Window();
 	return 1;
@@ -69,45 +91,107 @@ bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
 
 	return true;
 }
-//#include "OgreOverlayContainer.h"
-//#include "OgreOverlaySystem.h"
+
 // *************************************************************************
-// *					UpDateStats   Terry Bernie						   *
+// *		Camera_Mode_Model:- Terry and Hazel Flanigan 2023  			   *
 // *************************************************************************
-void CL64_OgreListener::UpDateStats(void)
+void CL64_OgreListener::Camera_Mode_Model(float DeltaTime)
 {
-	//mDebugOverlay->show();
-	static String currFps = "Current FPS: ";
-	static String avgFps = "Average FPS: ";
-	
-	// update stats when necessary
-	try {
-		
-		OverlayElement* guiCurr = Ogre::OverlayManager::getSingleton().getOverlayElement("Core/CurrFps2");
-		//	OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
-		//	OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
+	//App->CL_Ogre->m_imgui.render();
 
-		const RenderTarget::FrameStats& stats = App->CL_Ogre->mWindow->getStatistics();
-		//guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
-		guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
-		//guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
-		//	+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
-		//guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
-		//	+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
+	mRotX = 0;
+	mRotY = 0;
 
-		/*OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
-		guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
+	mTranslateVector = Ogre::Vector3::ZERO;
 
-		OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
-		guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));*/
+	mMoveScale = mMoveSensitivity * DeltaTime;
 
-		//OverlayElement* guiDistance = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
-		//guiBatches->setCaption(distance + Pl_Entity_Name);
+	//App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
 
-		/*OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
-		guiDbg->setCaption(mDebugText);*/
-
-		//guiCurr->setVisible(true);
+	// Left Mouse
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+		Capture_LeftMouse_Model();
 	}
-	catch (...) { /* ignore */ }
+
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+		//Capture_RightMouse_Model();
+	}
+
+	//MoveCamera();
+}
+
+// *************************************************************************
+// *					Capture_LeftMouse_Model							   *
+// *************************************************************************
+bool CL64_OgreListener::Capture_LeftMouse_Model(void)
+{
+	GetCursorPos(&Mouse_point);
+
+	Pl_MouseX = (int(Mouse_point.x));
+	Pl_MouseY = (int(Mouse_point.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
+	// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
+	return 1;
 }

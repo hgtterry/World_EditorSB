@@ -40,6 +40,7 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 void StartOgre();
 void Close_App();
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 int Block_Call = 0;
 
@@ -150,7 +151,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    int cy = GetSystemMetrics(SM_CYSCREEN);
    MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
 
-   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, nullptr);// (DLGPROC)Ogre3D_Proc);
+   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, (DLGPROC)Ogre3D_Proc);
 
    App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
 
@@ -264,6 +265,216 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
+}
+
+// *************************************************************************
+// *			Ogre3D_Proc:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		//App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)PleaseWait_Proc);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		if (App->OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+	case WM_MOUSEWHEEL:
+	{
+		//if (App->FullScreen == 1)
+		{
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+			if (zDelta > 0)
+			{
+				//App->CL_Ogre->OgreListener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				//App->CL_Ogre->OgreListener->Wheel = 1;
+			}
+			return 1;
+		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		POINT p;
+
+		//App->CL_Ogre->m_imgui.mouseMoved();
+
+
+		if (GetCursorPos(&p) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		{
+			if (ScreenToClient(App->ViewGLhWnd, &p))
+			{
+				RECT rc;
+				GetClientRect(App->ViewGLhWnd, &rc);
+				int width = rc.right - rc.left;
+				int height = rc.bottom - rc.top;
+
+				float tx = ((float)width / 2) - (float)p.x;
+			}
+		}
+
+		SetFocus(App->ViewGLhWnd);
+
+		break;
+	}
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		//App->CL_Ogre->m_imgui.mousePressed();
+
+
+		//if (ImGui::GetIO().WantCaptureMouse)
+		//{
+			//App->Cl_FileView_V2->RightMouseDown = 1;
+		//}
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		{
+
+			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+			{
+				if (App->OgreStarted == 1)
+				{
+
+					SetCapture(App->ViewGLhWnd);// Bernie
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
+					App->CUR = SetCursor(NULL);
+					return 1;
+				}
+			}
+		}
+		return 1;
+	}
+
+	case WM_KEYUP:
+	{
+		//ImGuiIO& io = ImGui::GetIO();
+
+		//io.KeysDown[VK_BACK] = false;
+		//io.KeysDown[VK_LEFT] = false;
+		//io.KeysDown[VK_RIGHT] = false;
+		return 1;
+	}
+
+	case WM_CHAR:
+	{
+		//if (ImGui::GetIO().WantCaptureKeyboard)
+		{
+			//ImGuiIO& io = ImGui::GetIO();
+			//io.AddInputCharacter((unsigned short)wParam);
+		}
+		return 1;
+	}
+
+	case WM_KEYDOWN:
+	{
+		/*ImGuiIO& io = ImGui::GetIO();
+		bool Done = 0;
+
+		if (wParam == VK_BACK)
+		{
+			io.KeysDown[VK_BACK] = true;
+		}
+
+		if (wParam == VK_RIGHT)
+		{
+			io.KeysDown[VK_RIGHT] = true;
+		}
+
+		if (wParam == VK_LEFT)
+		{
+			io.KeysDown[VK_LEFT] = true;
+		}*/
+
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		//App->CL_Ogre->m_imgui.mouseReleased();
+
+		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+		{
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
+		}
+
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		//App->CL_Ogre->m_imgui.mousePressed();
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		{
+
+			{
+				if (App->OgreStarted == 1)
+				{
+					if (App->Block_Mouse_Buttons == 0)
+					{
+						//if (!ImGui::GetIO().WantCaptureMouse)
+						{
+							SetCapture(App->ViewGLhWnd);// Bernie
+							SetCursorPos(App->CursorPosX, App->CursorPosY);
+							App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+							App->CUR = SetCursor(NULL);
+						}
+						//else
+						//{
+							//App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						//}
+					}
+
+					return 1;
+				}
+			}
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		//App->CL_Ogre->m_imgui.mouseReleased();
+
+		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+		{
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
+		}
+
+		return 1;
+	}
+
+	}
+
+	return FALSE;
 }
 
 // *************************************************************************

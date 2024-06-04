@@ -52,12 +52,17 @@ public:
 	HWND Fdlg;
 	HWND ViewGLhWnd;
 
+	int CursorPosX;
+	int CursorPosY;
+
 	bool OgreStarted;
+	bool Block_Mouse_Buttons;
 
 	char GD_Directory_FullPath[MAX_PATH];
 
+	HCURSOR CUR;
 	HBRUSH AppBackground;
-
+	HBRUSH BlackBrush;
 };
 
 extern CL64_App* App;

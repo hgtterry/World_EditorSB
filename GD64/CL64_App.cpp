@@ -37,9 +37,16 @@ CL64_App::CL64_App(void)
 
 	GD_Directory_FullPath[0] = 0;
 
+	CUR = 0;
+
+	CursorPosX = 500;
+	CursorPosY = 500;
+
 	OgreStarted = 0;
 	AppBackground = 0;
+	BlackBrush = 0;
 
+	Block_Mouse_Buttons = 0;
 	//Say("Created");
 }
 
@@ -115,7 +122,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	//DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
 	//AppTest = CreateSolidBrush(RGB(218, 240, 255));
 
-	//BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 
 	////BannerBrush = CreateSolidBrush(RGB(200, 200, 0));
 

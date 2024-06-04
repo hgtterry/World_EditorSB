@@ -39,9 +39,31 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
-	void UpDateStats(void);
+	void Camera_Mode_Model(float DeltaTime);
+	bool Capture_LeftMouse_Model(void);
 
+
+	POINT		Mouse_point;
 	//Ogre::Overlay* mDebugOverlay;
+
+	Radian		mRotX;
+	Radian		mRotY;
+	Vector3		mTranslateVector;
+
+	float		mMoveScale;
+	float		mMoveSensitivity; 
+	float		mMoveSensitivityMouse;
+
+	int			Pl_MouseX;
+	int			Pl_MouseY;
+	
+	long		Pl_Cent500X;
+	long		Pl_Cent500Y;
+
+	float		Pl_DeltaMouse;
+
+	bool		Pl_LeftMouseDown;
+	bool		Pl_RightMouseDown;
 
 	bool StopOgre;
 };
