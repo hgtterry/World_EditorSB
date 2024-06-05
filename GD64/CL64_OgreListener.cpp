@@ -131,7 +131,7 @@ void CL64_OgreListener::MoveCamera(void)
 {
 	mCamNode->yaw(mRotX);
 	mCamNode->pitch(mRotY);
-	mCamNode->translate(mTranslateVector); // Position Relative
+	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
 	Wheel = 0;
 
 }

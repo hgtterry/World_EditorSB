@@ -67,7 +67,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	// Forward
 	if (App->CL_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
 	{
-		App->CL_Ogre->OgreListener->mTranslateVector.z = -App->CL_Ogre->OgreListener->mMoveScale * 30;
+		App->CL_Ogre->OgreListener->mTranslateVector.z = -App->CL_Ogre->OgreListener->mMoveScale * 25;
 	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
@@ -77,7 +77,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	// Back
 	if (App->CL_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
 	{
-		App->CL_Ogre->OgreListener->mTranslateVector.z = App->CL_Ogre->OgreListener->mMoveScale * 30;
+		App->CL_Ogre->OgreListener->mTranslateVector.z = App->CL_Ogre->OgreListener->mMoveScale * 25;
 	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
