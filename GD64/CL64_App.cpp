@@ -30,6 +30,7 @@ CL64_App::CL64_App(void)
 	CL_Grid =			nullptr;
 	CL_SplitterViews =	nullptr;
 	CL_Keyboard =		nullptr;
+	CL_Camera =			nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -67,7 +68,8 @@ void CL64_App::InitApp(void)
 	CL_Grid =			new CL64_Grid();
 	CL_SplitterViews =	new CL64_SplitterViews();
 	CL_Keyboard =		new CL64_Keyboard();
-
+	CL_Camera =			new CL64_Camera();
+	
 	SetBrushes_Fonts();
 }
 

@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_OgreListener.h" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_OgreListener.cpp" />

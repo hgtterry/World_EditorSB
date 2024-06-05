@@ -21,55 +21,32 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-#include "CL64_Ogre_Init.h"
-#include "CL64_Grid.h"
-#include "CL64_SplitterViews.h"
-#include "CL64_Keyboard.h"
+#include "pch.h"
+#include "CL64_App.h"
 #include "CL64_Camera.h"
 
-class CL64_App
+CL64_Camera::CL64_Camera(void)
 {
+}
 
-public:
-	CL64_App(void);
-	~CL64_App(void);
+CL64_Camera::~CL64_Camera(void)
+{
+}
 
-	CL64_Ogre_Init*		CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
-	CL64_Keyboard*		CL_Keyboard;
-	CL64_Camera*		CL_Camera;
+// *************************************************************************
+// *			Reset_View:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Camera::Reset_View(void)
+{
+	App->CL_Grid->GridNode->setPosition(0, 0, 0);
+	App->CL_Grid->GridNode->resetOrientation();
 
-	void InitApp(void);
+	//App->CL_Grid->HairNode->setPosition(0, 0, 0);
+	//App->CL_Grid->HairNode->resetOrientation();
 
-	void Say(const char* Message);
-	bool SetMainWinCentre(void) const;
-	void Flash_Window();
-	void Debug_Text();
+	//App->CL_Ogre->RenderListener->RX = 0;
+	//App->CL_Ogre->RenderListener->RZ = 0;
 
-	void SetBrushes_Fonts(void);
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HWND Fdlg;
-	HWND ViewGLhWnd;
-
-	int CursorPosX;
-	int CursorPosY;
-
-	bool OgreStarted;
-	bool Block_Mouse_Buttons;
-
-	char GD_Directory_FullPath[MAX_PATH];
-
-	bool Debug_App;
-
-	HCURSOR CUR;
-	HBRUSH AppBackground;
-	HBRUSH BlackBrush;
-};
-
-extern CL64_App* App;
-
+	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 30, 0), Ogre::Node::TS_WORLD);
+}

@@ -22,54 +22,14 @@ distribution.
 */
 
 #pragma once
-
-#include "CL64_Ogre_Init.h"
-#include "CL64_Grid.h"
-#include "CL64_SplitterViews.h"
-#include "CL64_Keyboard.h"
-#include "CL64_Camera.h"
-
-class CL64_App
+class CL64_Camera
 {
-
 public:
-	CL64_App(void);
-	~CL64_App(void);
 
-	CL64_Ogre_Init*		CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
-	CL64_Keyboard*		CL_Keyboard;
-	CL64_Camera*		CL_Camera;
+	CL64_Camera(void);
+	~CL64_Camera(void);
 
-	void InitApp(void);
+	void Reset_View(void);
 
-	void Say(const char* Message);
-	bool SetMainWinCentre(void) const;
-	void Flash_Window();
-	void Debug_Text();
-
-	void SetBrushes_Fonts(void);
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HWND Fdlg;
-	HWND ViewGLhWnd;
-
-	int CursorPosX;
-	int CursorPosY;
-
-	bool OgreStarted;
-	bool Block_Mouse_Buttons;
-
-	char GD_Directory_FullPath[MAX_PATH];
-
-	bool Debug_App;
-
-	HCURSOR CUR;
-	HBRUSH AppBackground;
-	HBRUSH BlackBrush;
 };
-
-extern CL64_App* App;
 

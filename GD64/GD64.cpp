@@ -175,8 +175,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_COMMAND:
         {
+
+		if (LOWORD(wParam) == ID_VIEW_RESET)
+		{
+			App->CL_Camera->Reset_View();
+				return TRUE;
+		}
+		
             int wmId = LOWORD(wParam);
-            // Parse the menu selections:
             switch (wmId)
             {
             case IDM_ABOUT:
@@ -504,26 +510,8 @@ void StartOgre()
 
     KillTimer(App->MainHwnd, 1);
 
-   // if (App->Is_WorldEditor == 1)
-    {
-        /*char Path[MAX_PATH];
-        strcpy(Path, App->EquityDirecory_FullPath);
-        strcat(Path, "\\Data\\Temp.Wepf");*/
-
-        //strcpy(App->CL_Loader->Path_FileName, Path);
-        //strcpy(App->CL_Loader->FileName, "Temp.Wepf");
-
-        //App->Say_Win(App->CL_Loader->Path_FileName);
-
-       // App->CL_Loader->Read_Project_File(App->CL_Loader->Path_FileName);
-        //App->CL_Loader->Load_File_Wepf();
-    }
-
-
-    //App->CL_Ogre->mRoot->startRendering();
     App->CL_Ogre->Ogre_Render_Loop();
 
-    Debug
     Close_App();
     SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
     PostQuitMessage(0);
