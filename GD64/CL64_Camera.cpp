@@ -41,6 +41,7 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Grid->GridNode->setPosition(0, 0, 0);
 	App->CL_Grid->GridNode->resetOrientation();
 
+	App->CL_Ogre->OgreNode->resetOrientation();
 	//App->CL_Grid->HairNode->setPosition(0, 0, 0);
 	//App->CL_Grid->HairNode->resetOrientation();
 

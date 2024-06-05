@@ -68,7 +68,7 @@ void CL64_Ogre_Init::InitOgre(void)
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
 
-	OgreEntity = mSceneMgr->createEntity("Sinbad.mesh");
+	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(OgreEntity);
 
@@ -124,6 +124,7 @@ bool CL64_Ogre_Init::SetUpResources(void)
 	////-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Sinbad.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/SdkTrays.zip", "Zip", App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Cube.zip", "Zip", App_Resource_Group);
 
 	
 	////-------------------------------- File System
