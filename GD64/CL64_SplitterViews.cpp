@@ -55,7 +55,7 @@ CL64_SplitterViews::CL64_SplitterViews(void)
 	Do_Depth = 0;
 	Do_All = 0;
 
-	//App->Say("CL64_SplitterViews Created");
+	Max_Window = 0;
 }
 
 CL64_SplitterViews::~CL64_SplitterViews(void)
@@ -96,11 +96,14 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 
 	case WM_SIZE:
 	{
-		App->CL_SplitterViews->Init_Views();
-		App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
+		if (App->CL_SplitterViews->Max_Window == 0)
+		{
+			App->CL_SplitterViews->Init_Views();
+			App->CL_SplitterViews->Resize_Windows(hDlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
 
-		GetClientRect(hDlg, &rect);
-		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			GetClientRect(hDlg, &rect);
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
 		return 0;
 	}
 
@@ -613,6 +616,8 @@ void CL64_SplitterViews::Max_3D_win(void)
 		RECT rect;
 		GetClientRect(App->Fdlg, &rect);
 		MoveWindow(App->ViewGLhWnd, 2, 2, rect.right-2, rect.bottom-2, TRUE);
-		
+		App->CL_SplitterViews->Resize_OgreWin();
+
+		Max_Window = 1;
 	}
 }

@@ -57,6 +57,8 @@ public:
 	int RIGHT_MINIMUM_SPACE;
 	int LEFT_MINIMUM_SPACE;
 
+	bool Max_Window;
+
 	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:

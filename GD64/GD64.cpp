@@ -211,6 +211,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
 	//case WM_PAINT:
 	//{
 	//	//App->Flash_Window();
@@ -222,8 +223,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_SIZE:
     {
-        //App->Flash_Window();
-        App->CL_SplitterViews->Init_Views();
+		if (App->CL_SplitterViews->Max_Window == 0)
+		{
+			App->CL_SplitterViews->Init_Views();
+		}
+       
+
         App->CL_SplitterViews->Resize_Fldg();
         App->CL_SplitterViews->Resize_OgreWin();
 
@@ -300,11 +305,15 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 			return (LONG)App->BlackBrush;
 		}
+
+		return false;
 	}
 	case WM_MOUSEWHEEL:
 	{
 		//if (App->FullScreen == 1)
+		if (App->CL_Ogre->OgreListener->Pl_LeftMouseDown == 0)
 		{
+
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
 			if (zDelta > 0)
@@ -316,6 +325,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				App->CL_Ogre->OgreListener->Wheel = 1;
 			}
 			return 1;
+
 		}
 	}
 
