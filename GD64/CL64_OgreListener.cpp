@@ -107,7 +107,7 @@ void CL64_OgreListener::Camera_Mode_Model(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity * DeltaTime;
 
-	//App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
+	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
 
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)

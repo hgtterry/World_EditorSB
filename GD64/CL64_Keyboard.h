@@ -28,5 +28,7 @@ public:
 
 	CL64_Keyboard(void);
 	~CL64_Keyboard(void);
+
+	void Keyboard_Mode_Model(float deltaTime);
 };
 
