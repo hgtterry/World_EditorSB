@@ -92,15 +92,15 @@ bool CL64_Ogre_Init::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	//if (App->Debug_App == 1)
+	if (App->Debug_App == 1)
 	{
-		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
 	}
-	/*else
+	else
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
-	}*/
+	}
 
 	return 1;
 }
@@ -196,28 +196,17 @@ bool CL64_Ogre_Init::chooseSceneManager(void)
 // *************************************************************************
 bool CL64_Ogre_Init::createCamera(void)
 {
-	// create the camera
-	//Camera* cam = scnMgr->createCamera("myCam");
-	//cam->setNearClipDistance(5); // specific to this sample
-	//cam->setAutoAspectRatio(true);
-	//camNode->attachObject(cam);
-	//camNode->setPosition(0, 0, 140);
-
-	// and tell it to render into the main window
-	//getRenderWindow()->addViewport(cam);
-
 	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	mCamera = mSceneMgr->createCamera("MainCamera");
-	//mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-	//mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 	mCamera->setAutoAspectRatio(true);
 
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 90, 40);
+	camNode->setPosition(0, 90, 100);
 	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
+
 	//PlacementCam = mSceneMgr->createCamera("PlacementCam");
 	return 1;
 }
@@ -289,25 +278,13 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 // *************************************************************************
 bool CL64_Ogre_Init::createFrameListener(void)
 {
-	// Physics Frame Listener
-	OgreListener = new CL64_OgreListener();
-	mRoot->addFrameListener(OgreListener);
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 
-	//BulletListener = NULL;
-
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
-		//App->Say("OpenGL Rendering Subsystem");
-		//BulletListener = new GD_Bt_Render();
-
-		//mSceneMgr->addRenderQueueListener(BulletListener);
-
-		//BulletListener->setDebugMode(BulletListener->getDebugMode()
-			//| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		//App->SBC_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
-
+		OgreListener = new CL64_OgreListener();
+		mRoot->addFrameListener(OgreListener);
 	}
 
 	return 1;

@@ -29,6 +29,7 @@ CL64_App::CL64_App(void)
 	CL_Ogre =			nullptr;
 	CL_Grid =			nullptr;
 	CL_SplitterViews =	nullptr;
+	CL_Keyboard =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -45,6 +46,8 @@ CL64_App::CL64_App(void)
 	OgreStarted = 0;
 	AppBackground = 0;
 	BlackBrush = 0;
+
+	Debug_App = 1;
 
 	Block_Mouse_Buttons = 0;
 	//Say("Created");
@@ -63,7 +66,8 @@ void CL64_App::InitApp(void)
 	CL_Ogre =			new CL64_Ogre_Init();
 	CL_Grid =			new CL64_Grid();
 	CL_SplitterViews =	new CL64_SplitterViews();
-	
+	CL_Keyboard =		new CL64_Keyboard();
+
 	SetBrushes_Fonts();
 }
 

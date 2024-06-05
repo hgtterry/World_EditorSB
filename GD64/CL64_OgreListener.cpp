@@ -50,7 +50,6 @@ CL64_OgreListener::CL64_OgreListener(void)
 	Pl_MouseX = 0;
 	Pl_MouseY = 0;
 
-	//Mouse_point = std::nullptr_t;
 	Wheel = 0;
 	StopOgre = 0;
 }
