@@ -181,6 +181,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->CL_Camera->Reset_View();
 				return TRUE;
 		}
+
+		if (LOWORD(wParam) == ID_VIEW_MAX3DVIEW)
+		{
+			App->CL_SplitterViews->Max_3D_win();
+			return TRUE;
+		}
+		
 		
             int wmId = LOWORD(wParam);
             switch (wmId)

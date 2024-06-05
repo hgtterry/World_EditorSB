@@ -38,6 +38,8 @@ public:
 	bool Resize_Fldg(void);
 	bool Resize_OgreWin(void);
 
+	void Max_3D_win(void);
+
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
 

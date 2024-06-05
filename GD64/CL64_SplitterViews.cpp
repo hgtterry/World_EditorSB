@@ -602,3 +602,17 @@ bool CL64_SplitterViews::Resize_OgreWin(void)
 
 	return 1;
 }
+
+// *************************************************************************
+// *				Max_3D_win:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_SplitterViews::Max_3D_win(void)
+{
+	if (App->OgreStarted == 1)
+	{
+		RECT rect;
+		GetClientRect(App->Fdlg, &rect);
+		MoveWindow(App->ViewGLhWnd, 2, 2, rect.right-2, rect.bottom-2, TRUE);
+		
+	}
+}
