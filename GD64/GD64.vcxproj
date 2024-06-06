@@ -161,6 +161,7 @@
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_OgreListener.h" />
     <ClInclude Include="CL64_Ogre_Init.h" />
+    <ClInclude Include="CL64_Preferences.h" />
     <ClInclude Include="CL64_SplitterViews.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_OgreListener.cpp" />
     <ClCompile Include="CL64_Ogre_Init.cpp" />
+    <ClCompile Include="CL64_Preferences.cpp" />
     <ClCompile Include="CL64_SplitterViews.cpp" />
     <ClCompile Include="GD64.cpp" />
     <ClCompile Include="pch.cpp">

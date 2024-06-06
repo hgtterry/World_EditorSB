@@ -22,14 +22,14 @@ distribution.
 */
 
 #pragma once
-class CL64_Ini_File
+class CL64_Preferences
 {
 public:
 
-	CL64_Ini_File(void);
-	~CL64_Ini_File(void);
-
+	CL64_Preferences(void);
+	~CL64_Preferences(void);
 
 	void Clean_Up(void);
+
 };
 

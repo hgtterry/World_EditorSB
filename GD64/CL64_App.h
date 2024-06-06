@@ -29,6 +29,7 @@ distribution.
 #include "CL64_Keyboard.h"
 #include "CL64_Camera.h"
 #include "CL64_Ini_File.h"
+#include "CL64_Preferences.h"
 
 class CL64_App
 {
@@ -43,6 +44,7 @@ public:
 	CL64_Keyboard*		CL_Keyboard;
 	CL64_Camera*		CL_Camera;
 	CL64_Ini_File*		CL_Ini_File;
+	CL64_Preferences*	CL_Preferences;
 
 	void InitApp(void);
 

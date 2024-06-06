@@ -539,6 +539,23 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
+	if (App->CL_Ini_File)
+	{
+		App->CL_Ini_File->Clean_Up();
+
+		delete App->CL_Ini_File;
+		App->CL_Ini_File = nullptr;
+	}
+
+	if (App->CL_Preferences)
+	{
+		App->CL_Preferences->Clean_Up();
+
+		delete App->CL_Preferences;
+		App->CL_Preferences = nullptr;
+	}
+
+	// And Finaly
     if (App->CL_Ogre->mRoot)
     {
         delete App->CL_Ogre->mRoot;

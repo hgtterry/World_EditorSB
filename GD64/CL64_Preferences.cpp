@@ -21,15 +21,22 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class CL64_Ini_File
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Preferences.h"
+
+CL64_Preferences::CL64_Preferences(void)
 {
-public:
+}
 
-	CL64_Ini_File(void);
-	~CL64_Ini_File(void);
+CL64_Preferences::~CL64_Preferences(void)
+{
+}
 
-
-	void Clean_Up(void);
-};
-
+// *************************************************************************
+// *	  		Clean_Up:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Preferences::Clean_Up(void)
+{
+	MessageBox(NULL, "Deleted", "Deleted", MB_OK);
+}

@@ -31,4 +31,13 @@ CL64_Ini_File::CL64_Ini_File(void)
 
 CL64_Ini_File::~CL64_Ini_File(void)
 {
+	
+}
+
+// *************************************************************************
+// *	  		Clean_Up:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Ini_File::Clean_Up(void)
+{
+	//MessageBox(NULL, "Deleted", "Deleted", MB_OK);
 }
