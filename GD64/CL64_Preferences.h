@@ -36,6 +36,7 @@ public:
 	bool Write_Preferences();
 
 	bool Start_FullScreen;
+	bool Start_Full_3DWin;
 
 private:
 

@@ -19,6 +19,9 @@
 #define ID_VIEW_FRONTVIEW               133
 #define IDD_PREFERENCES                 134
 #define IDC_CK_SU_FULLSCREEN            1000
+#define IDC_ST_STARTUP                  1001
+#define IDC_CK_SU_FULLSCREEN2           1002
+#define IDC_CK_SU_FULL3DVIEW            1002
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -32,7 +35,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        135
 #define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

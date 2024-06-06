@@ -29,6 +29,8 @@ distribution.
 CL64_Preferences::CL64_Preferences(void)
 {
 	Start_FullScreen = 0;
+	Start_Full_3DWin = 0;
+
 	WriteData = nullptr;
 }
 
@@ -64,9 +66,13 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_ST_STARTUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CK_SU_FULL3DVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
+		// Start in Full Screen App
 		if (App->CL_Preferences->Start_FullScreen == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULLSCREEN);
@@ -78,9 +84,17 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
 
-
-		//HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULLSCREEN);
-		//SendMessage(temp, BM_SETCHECK, 1, 0);
+		// Start in Full 3D Screen
+		if (App->CL_Preferences->Start_Full_3DWin == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
 
 
 		return TRUE;
@@ -96,13 +110,21 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_CK_NEWEQUITY) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
+		
+		if (GetDlgItem(hDlg, IDC_ST_STARTUP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 
 		return FALSE;
@@ -135,6 +157,25 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			else
 			{
 				App->CL_Preferences->Start_FullScreen = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_SU_FULL3DVIEW)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Preferences->Start_Full_3DWin = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_Preferences->Start_Full_3DWin = 0;
 				return 1;
 			}
 
@@ -176,16 +217,8 @@ void CL64_Preferences::Read_Preferences()
 	App->CL_Ini_File->SetPathName(Preferences_Path);
 
 	Start_FullScreen = App->CL_Ini_File->GetInt("Startup", "Full_Screen", 0, 10);
+	Start_Full_3DWin = App->CL_Ini_File->GetInt("Startup", "Full_3DWin", 0, 10);
 
-	if (Start_FullScreen == 1)
-	{
-		Start_FullScreen = 1;
-	}
-	else
-	{
-		Start_FullScreen = 0;
-	}
-	
 }
 
 // *************************************************************************
@@ -214,6 +247,7 @@ bool CL64_Preferences::Write_Preferences()
 
 	fprintf(WriteData, "%s\n", "[Startup]");
 	fprintf(WriteData, "%s%i\n", "Full_Screen=", Start_FullScreen);
+	fprintf(WriteData, "%s%i\n", "Full_3DWin=", Start_Full_3DWin);
 
 	fclose(WriteData);
 

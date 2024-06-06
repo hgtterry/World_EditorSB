@@ -92,8 +92,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
 
-    //App->CL_Ogre->InitOgre();
-    //App->CL_Ogre->mRoot->startRendering();
+	
 
     SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -550,6 +549,11 @@ void StartOgre()
     App->OgreStarted = 1;
 
     KillTimer(App->MainHwnd, 1);
+
+	if (App->CL_Preferences->Start_Full_3DWin == 1)
+	{
+		App->CL_SplitterViews->Max_3D_win();
+	}
 
     App->CL_Ogre->Ogre_Render_Loop();
 
