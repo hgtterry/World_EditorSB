@@ -49,6 +49,10 @@ public:
 	void InitApp(void);
 
 	void Say(const char* Message);
+	void Say_Int(int Value);
+	void Say_Float(float Value);
+
+
 	bool SetMainWinCentre(void) const;
 	void Flash_Window();
 	void Debug_Text();

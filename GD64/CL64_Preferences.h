@@ -31,5 +31,7 @@ public:
 
 	void Clean_Up(void);
 
+	void Read_Preferences();
+
 };
 

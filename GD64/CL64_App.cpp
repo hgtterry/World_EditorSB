@@ -89,6 +89,26 @@ void CL64_App::Say(const char* Message)
 }
 
 // *************************************************************************
+// *				Say_Int:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Int(int Value)
+{
+	char buf[255];
+	_itoa(Value, buf, 10);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
+// *			Say_Float:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Float(float Value)
+{
+	char buf[255];
+	sprintf(buf, "%f", Value);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
 // *			SetMainWinCentre:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_App::SetMainWinCentre(void) const

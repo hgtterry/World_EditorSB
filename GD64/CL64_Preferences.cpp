@@ -38,5 +38,32 @@ CL64_Preferences::~CL64_Preferences(void)
 // *************************************************************************
 void CL64_Preferences::Clean_Up(void)
 {
-	MessageBox(NULL, "Deleted", "Deleted", MB_OK);
+	//MessageBox(NULL, "Deleted", "Deleted", MB_OK);
+}
+
+// *************************************************************************
+// *			Read_Preferences:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+void CL64_Preferences::Read_Preferences()
+{
+	char Preferences_Path[MAX_PATH];
+
+	strcpy(Preferences_Path, App->GD_Directory_FullPath);
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Data");
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Preferences.ini");
+
+	App->CL_Ini_File->SetPathName(Preferences_Path);
+
+	int test = 0;
+	char buff[MAX_PATH];
+
+	test = App->CL_Ini_File->GetInt("Start_Up", "Start_FullScreen", 0, 10);
+
+	App->CL_Ini_File->GetString("Version", "Current_Version", buff, MAX_PATH);
+
+
+	App->Say_Int(test);
+	App->Say(buff);
 }

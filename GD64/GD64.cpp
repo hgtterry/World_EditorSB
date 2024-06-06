@@ -176,6 +176,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
 
+		if (LOWORD(wParam) == ID_DEBUG_TESTPREFERANCE)
+		{
+			App->CL_Preferences->Read_Preferences();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_VIEW_RESET)
 		{
 			App->CL_Camera->Reset_View();
