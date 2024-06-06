@@ -25,7 +25,6 @@ distribution.
 
 #include "Ogre.h"
 #include "CL64_App.h"
-//#include "OgreRenderWindow.h"
 
 using namespace Ogre;
 
@@ -38,12 +37,12 @@ public:
 	bool frameStarted(const FrameEvent& evt);
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
+	void MoveCamera(void);
 
+	// Model Mode
 	void Camera_Mode_Model(float DeltaTime);
 	bool Capture_LeftMouse_Model(void);
 	bool Capture_RightMouse_Model(void);
-
-	void MoveCamera(void);
 
 	Ogre::Camera* mCam;
 	Ogre::SceneNode* mCamNode;

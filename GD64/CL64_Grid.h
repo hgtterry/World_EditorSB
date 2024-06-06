@@ -7,9 +7,13 @@ public:
 	~CL64_Grid(void);
 
 	void Grid_Update(bool Create);
+	void Hair_Update(bool Create);
 
-	ManualObject* GridManual;
-	SceneNode* GridNode;
+	Ogre::ManualObject* GridManual;
+	Ogre::SceneNode* GridNode;
+
+	Ogre::ManualObject* HairManual;
+	Ogre::SceneNode* HairNode;
 
 	int XAxis_min;
 	int	XAxis_max;
@@ -28,6 +32,11 @@ public:
 
 	Ogre::ColourValue ColourMain;
 	Ogre::ColourValue ColourDivision;
+
+	int HairExtend;
+	Ogre::ColourValue ColourHairZ;
+	Ogre::ColourValue ColourHairX;
+	Ogre::ColourValue ColourHairY;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

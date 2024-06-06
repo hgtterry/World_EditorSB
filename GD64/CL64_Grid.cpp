@@ -7,9 +7,17 @@ CL64_Grid::CL64_Grid(void)
 	GridManual = NULL;
 	GridNode = NULL;
 
+	HairManual = NULL;
+	HairNode = NULL;
+
 	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
 
+	HairExtend = 8;
+	ColourHairZ = ColourValue(1, 0, 0, 1);
+	ColourHairX = ColourValue(0, 0, 1, 1);
+	ColourHairY = ColourValue(0, 1, 0, 1);
+	
 	YAxis_min = -8;
 	YAxis_max = 8;
 
@@ -30,11 +38,11 @@ CL64_Grid::CL64_Grid(void)
 	ShowGridFlag = 1;
 	ShowDivisions = 1;
 
-	//App->Say("CL64_Grid Created");
 }
 
 CL64_Grid::~CL64_Grid(void)
 {
+	//App->Say("CL64_Grid Deleted");
 }
 
 // *************************************************************************
@@ -107,4 +115,47 @@ void CL64_Grid::Grid_Update(bool Create)
 	GridNode->setPosition(0, 0, 0);
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *	  		Hair_Update:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Grid::Hair_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		HairManual = App->CL_Ogre->mSceneMgr->createManualObject("HairManual");
+		HairManual->setRenderQueueGroup(5);
+	}
+
+	HairManual->clear();
+	HairManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST, "App_Resource_Group");
+
+	// X Axis
+	HairManual->position(Ogre::Vector3(YAxis_min - HairExtend, 0, 0));
+	HairManual->colour(ColourHairX);
+	HairManual->position(Ogre::Vector3(YAxis_max + HairExtend, 0, 0));
+	HairManual->colour(ColourHairX);
+	// Y Axis
+	HairManual->position(Ogre::Vector3(0, YAxis_min - HairExtend, 0));
+	HairManual->colour(ColourHairY);
+	HairManual->position(Ogre::Vector3(0, YAxis_max + HairExtend, 0));
+	HairManual->colour(ColourHairY);
+	// Z Axis
+	HairManual->position(Ogre::Vector3(0, 0, ZAxis_min - HairExtend));
+	HairManual->colour(ColourHairZ);
+	HairManual->position(Ogre::Vector3(0, 0, ZAxis_max + HairExtend));
+	HairManual->colour(ColourHairZ);
+
+	HairManual->end();
+
+	if (Create == 1)
+	{
+		HairNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		HairNode->attachObject(HairManual);
+	}
+
+	HairNode->setPosition(0, 0, 0);
+	HairNode->setVisible(true);
+	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }

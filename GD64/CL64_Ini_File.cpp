@@ -21,57 +21,14 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-#include "CL64_Ogre_Init.h"
-#include "CL64_Grid.h"
-#include "CL64_SplitterViews.h"
-#include "CL64_Keyboard.h"
-#include "CL64_Camera.h"
+#include "pch.h"
+#include "CL64_App.h"
 #include "CL64_Ini_File.h"
 
-class CL64_App
+CL64_Ini_File::CL64_Ini_File(void)
 {
+}
 
-public:
-	CL64_App(void);
-	~CL64_App(void);
-
-	CL64_Ogre_Init*		CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
-	CL64_Keyboard*		CL_Keyboard;
-	CL64_Camera*		CL_Camera;
-	CL64_Ini_File*		CL_Ini_File;
-
-	void InitApp(void);
-
-	void Say(const char* Message);
-	bool SetMainWinCentre(void) const;
-	void Flash_Window();
-	void Debug_Text();
-
-	void SetBrushes_Fonts(void);
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HWND Fdlg;
-	HWND ViewGLhWnd;
-
-	int CursorPosX;
-	int CursorPosY;
-
-	bool OgreStarted;
-	bool Block_Mouse_Buttons;
-
-	char GD_Directory_FullPath[MAX_PATH];
-
-	bool Debug_App;
-
-	HCURSOR CUR;
-	HBRUSH AppBackground;
-	HBRUSH BlackBrush;
-};
-
-extern CL64_App* App;
-
+CL64_Ini_File::~CL64_Ini_File(void)
+{
+}

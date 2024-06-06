@@ -67,6 +67,8 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
+	App->CL_Grid->Hair_Update(1);
+
 
 	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -282,13 +284,18 @@ bool CL64_Ogre_Init::createFrameListener(void)
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 
-	if ("OpenGL Rendering Subsystem" == RenderSystemName)
+	if (RenderSystemName == "OpenGL Rendering Subsystem")
 	{
 		OgreListener = new CL64_OgreListener();
 		mRoot->addFrameListener(OgreListener);
 	}
+	else
+	{
+		App->Say("OpenGL Rendering Subsystem not allocated ");
+		return FALSE;
+	}
 
-	return 1;
+	return TRUE;
 }
 
 // *************************************************************************
