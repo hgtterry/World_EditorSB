@@ -74,6 +74,8 @@ public:
 
 	bool Debug_App;
 
+	HFONT Font_CB15;
+
 	HCURSOR CUR;
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;

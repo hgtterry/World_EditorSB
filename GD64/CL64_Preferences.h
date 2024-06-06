@@ -31,7 +31,16 @@ public:
 
 	void Clean_Up(void);
 
+	void Start_Preferences_Dlg();
 	void Read_Preferences();
+	bool Write_Preferences();
 
+	bool Start_FullScreen;
+
+private:
+
+	static LRESULT CALLBACK Preferences_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	FILE* WriteData;
 };
 

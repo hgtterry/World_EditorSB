@@ -58,10 +58,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App = new CL64_App();
 
-    _getcwd(App->GD_Directory_FullPath, MAX_PATH);
+	char* a_cwd = _getcwd(App->GD_Directory_FullPath, MAX_PATH);
 
     App->InitApp();
 
+	App->CL_Preferences->Read_Preferences();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -160,7 +161,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   ShowWindow(App->MainHwnd, nCmdShow);
+   if (App->CL_Preferences->Start_FullScreen == 1)
+   {
+	   ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
+   }
+   else
+   {
+	   ShowWindow(App->MainHwnd, nCmdShow);
+   }
+  
    UpdateWindow(App->MainHwnd);
 
    return TRUE;
@@ -176,12 +185,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
 
+		// Debug
 		if (LOWORD(wParam) == ID_DEBUG_TESTPREFERANCE)
 		{
 			App->CL_Preferences->Read_Preferences();
 			return TRUE;
 		}
 
+		// -------------------------------------------------------
+
+		if (LOWORD(wParam) == ID_OPTIONS_PREFERENCES)
+		{
+			App->CL_Preferences->Start_Preferences_Dlg();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_VIEW_RESET)
 		{
 			App->CL_Camera->Reset_View();

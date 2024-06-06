@@ -48,6 +48,8 @@ CL64_App::CL64_App(void)
 
 	OgreStarted = 0;
 	AppBackground = 0;
+
+	Font_CB15 = 0;
 	BlackBrush = 0;
 
 	Debug_App = 1;
@@ -174,7 +176,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	//Brush_Button_Hover = CreateSolidBrush(RGB(153, 204, 255));
 
 	//Font_CB12 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-	//Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	//Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 
 	//Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
