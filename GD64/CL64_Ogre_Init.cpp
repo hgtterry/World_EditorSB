@@ -85,7 +85,9 @@ void CL64_Ogre_Init::InitOgre(void)
 	mTrayMgr->hideCursor();
 
 	//Sample::mContext->
-
+	/*Ogre::ImGuiOverlay* initialiseImGui();
+	ImGui::CreateContext();*/
+	//ImGui::ShowDemoWindow();
 	//auto imguiOverlay = mContext->initialiseImGui();
 	
 	//mSceneMgr->createEntity("Bike.obj");
