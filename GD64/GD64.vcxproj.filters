@@ -45,6 +45,21 @@
     <ClInclude Include="CL64_SplitterViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Ini_File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Preferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_OGL_Listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -66,6 +81,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_SplitterViews.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Ini_File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Preferences.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_OGL_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

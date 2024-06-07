@@ -294,6 +294,9 @@ bool CL64_Ogre_Init::createFrameListener(void)
 	{
 		OgreListener = new CL64_OgreListener();
 		mRoot->addFrameListener(OgreListener);
+
+		RenderListener = new CL64_OGL_Listener();
+		mSceneMgr->addRenderQueueListener(RenderListener);
 	}
 	else
 	{

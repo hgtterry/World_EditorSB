@@ -37,4 +37,7 @@
 //#include "OgreVertexIndexData.h"
 //#include "OgreResourceGroupManager.h"
 
+#include <gl/gl.h>
+#include <gl/glu.h>
+
 #define Debug App->Debug_Text();

@@ -24,6 +24,7 @@ distribution.
 #pragma once
 
 #include "CL64_OgreListener.h"
+#include "CL64_OGL_Listener.h"
 #include "OgreOverlaySystem.h"
 #include "OgreImGuiOverlay.h"
 #include "OgreAdvancedRenderControls.h"
@@ -70,7 +71,8 @@ public:
 
 	OgreBites::TrayManager* mTrayMgr;
 
-	CL64_OgreListener* OgreListener;
+	CL64_OgreListener*	OgreListener;
+	CL64_OGL_Listener*	RenderListener;
 
 	Ogre::OverlaySystem* mOverlaySystem;
 	

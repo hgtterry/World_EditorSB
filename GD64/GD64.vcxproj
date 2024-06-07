@@ -149,7 +149,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)GD64.exe</OutputFile>
-      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Users\Terry\Desktop\World_EditorSB\Common_64\Ogre3D\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -159,6 +159,7 @@
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
+    <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_OgreListener.h" />
     <ClInclude Include="CL64_Ogre_Init.h" />
     <ClInclude Include="CL64_Preferences.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
+    <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_OgreListener.cpp" />
     <ClCompile Include="CL64_Ogre_Init.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
