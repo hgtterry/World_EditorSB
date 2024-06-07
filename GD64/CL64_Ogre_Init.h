@@ -29,7 +29,14 @@ distribution.
 #include "OgreAdvancedRenderControls.h"
 #include "OgreTrays.h"
 
-class CL64_Ogre_Init
+#include "SdkSample.h"
+#include "OgreImGuiOverlay.h"
+#include <OgreImGuiInputListener.h>
+
+using namespace Ogre;
+using namespace OgreBites;
+
+class CL64_Ogre_Init : public SdkSample, public RenderTargetListener
 {
 public:
 

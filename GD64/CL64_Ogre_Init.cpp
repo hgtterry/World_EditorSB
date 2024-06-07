@@ -84,6 +84,12 @@ void CL64_Ogre_Init::InitOgre(void)
 	mTrayMgr->showFrameStats(OgreBites::TL_TOP);
 	mTrayMgr->hideCursor();
 
+	//Sample::mContext->
+
+	//auto imguiOverlay = mContext->initialiseImGui();
+	
+	//mSceneMgr->createEntity("Bike.obj");
+	//OgreBites::ApplicationContextBase().
 }
 
 // *************************************************************************
