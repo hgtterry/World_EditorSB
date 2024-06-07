@@ -22,37 +22,10 @@ distribution.
 */
 
 #pragma once
-
-#include "cimport.h"
-//#include "Importer.hpp"
-//#include "Exporter.hpp"
-#include "PostProcess.h"
-#include "Scene.h"
-#include "DefaultLogger.hpp"
-#include "LogStream.hpp"
-#include "matrix4x4.h"
-
-
-class CL64_Assimp
+class CL64_Model
 {
 public:
-
-	CL64_Assimp(void);
-	~CL64_Assimp(void);
-
-	bool LoadFile(const char* pFile);
-
-
-	void logInfo(std::string logString);
-	void logDebug(const char* logString);
-
-	void GetBasicInfo(const aiScene* pScene);
-	void Create_MeshGroups(const aiScene* pScene);
-	void Get_Group_VertCount(const aiScene* pScene);
-	void StoreMeshData(const aiScene* pScene);
-
-
-	long int SelectedPreset;	// Switchs 
-	int mTotalVertices;			// Total Vertice Count of Model
+	CL64_Model();
+	~CL64_Model();
 };
 

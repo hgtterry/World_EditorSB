@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,38 +21,35 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-#include "cimport.h"
-//#include "Importer.hpp"
-//#include "Exporter.hpp"
-#include "PostProcess.h"
-#include "Scene.h"
-#include "DefaultLogger.hpp"
-#include "LogStream.hpp"
-#include "matrix4x4.h"
+#include "pch.h"
+#include "Base_Group.h"
 
 
-class CL64_Assimp
+Base_Group::Base_Group()
 {
-public:
+	GroupName[0] = 0;
+	MaterialName[0] = 0;
+	Text_FileName[0] = 0;
 
-	CL64_Assimp(void);
-	~CL64_Assimp(void);
+	Texture_FolderPath[0] = 0;
+	Texture_PathFileName[0] = 0;
 
-	bool LoadFile(const char* pFile);
+	Bitmap_Loaded = 0;
+
+	GroupVertCount = 0;
+
+	IndicesCount = 0; // Ogre
+	BoneAssignMentCount = 0; // Ogre
+
+	MaterialIndex = 0;
+	Soil_TextureIndex = 0;
+
+	Base_Bitmap = NULL;
+	//RF_Bitmap = NULL;
+	ListView_Item = NULL;
+}
 
 
-	void logInfo(std::string logString);
-	void logDebug(const char* logString);
-
-	void GetBasicInfo(const aiScene* pScene);
-	void Create_MeshGroups(const aiScene* pScene);
-	void Get_Group_VertCount(const aiScene* pScene);
-	void StoreMeshData(const aiScene* pScene);
-
-
-	long int SelectedPreset;	// Switchs 
-	int mTotalVertices;			// Total Vertice Count of Model
-};
-
+Base_Group::~Base_Group()
+{
+}

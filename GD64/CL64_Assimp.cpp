@@ -128,7 +128,6 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 // *************************************************************************
 void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 {
-
 	//int Count = 0;
 
 	//char GroupName[255];
@@ -209,7 +208,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	int VC = 0;
 	int mTotalVertices = 0;
 	int mTotalFaces = 0;
-
+	
 	/*int mGroupCount = App->CL_Model->Get_Groupt_Count();
 
 	while (Count < mGroupCount)
