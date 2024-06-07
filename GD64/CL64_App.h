@@ -30,6 +30,7 @@ distribution.
 #include "CL64_Camera.h"
 #include "CL64_Ini_File.h"
 #include "CL64_Preferences.h"
+#include "CL64_Assimp.h"
 
 class CL64_App
 {
@@ -45,6 +46,7 @@ public:
 	CL64_Camera*		CL_Camera;
 	CL64_Ini_File*		CL_Ini_File;
 	CL64_Preferences*	CL_Preferences;
+	CL64_Assimp*		CL_Assimp;
 
 	void InitApp(void);
 

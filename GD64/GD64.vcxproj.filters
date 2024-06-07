@@ -60,6 +60,9 @@
     <ClInclude Include="CL64_OGL_Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Assimp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_OGL_Listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Assimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
