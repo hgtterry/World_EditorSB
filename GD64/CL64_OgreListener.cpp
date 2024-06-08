@@ -74,6 +74,9 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
 	App->CL_Ogre->mTrayMgr->frameRendered(evt);
 
+	Ogre::ImGuiOverlay::NewFrame();
+	ImGui::ShowDemoWindow();
+
 	Camera_Mode_Model(evt.timeSinceLastFrame);
 
 	return 1;

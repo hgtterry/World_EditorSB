@@ -56,7 +56,7 @@ public:
 	bool createFrameListener(void);
 	// --------------------------------------
 
-
+	void Init_ImGui(void);
 	void Hide_Test_Cube(void);
 
 	bool Ogre_Render_Loop(void);
