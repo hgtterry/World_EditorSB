@@ -35,6 +35,7 @@ CL64_App::CL64_App(void)
 	CL_Preferences =	nullptr;
 	CL_Assimp =			nullptr;
 	CL_Model =			nullptr;
+	CL_Importers =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -79,6 +80,7 @@ void CL64_App::InitApp(void)
 	CL_Preferences =	new CL64_Preferences();
 	CL_Assimp =			new CL64_Assimp();
 	CL_Model =			new CL64_Model();
+	CL_Importers =		new CL64_Importers();
 
 	SetBrushes_Fonts();
 }

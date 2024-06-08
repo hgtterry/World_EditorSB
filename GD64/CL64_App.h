@@ -32,6 +32,7 @@ distribution.
 #include "CL64_Preferences.h"
 #include "CL64_Assimp.h"
 #include "CL64_Model.h"
+#include "CL64_Importers.h"
 
 class CL64_App
 {
@@ -49,6 +50,7 @@ public:
 	CL64_Preferences*	CL_Preferences;
 	CL64_Assimp*		CL_Assimp;
 	CL64_Model*			CL_Model;
+	CL64_Importers*		CL_Importers;
 
 	void InitApp(void);
 
