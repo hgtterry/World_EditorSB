@@ -22,10 +22,23 @@ distribution.
 */
 
 #pragma once
+
+#include "Base_Group.h"
+
 class CL64_Model
 {
 public:
 	CL64_Model();
 	~CL64_Model();
+
+	void Create_Mesh_Group(int Index);
+
+	Base_Group* Group[100];
+
+	char Texture_FolderPath[MAX_PATH];
+
+	int GroupCount;
+	int TextureCount;
+	int MotionCount;
 };
 

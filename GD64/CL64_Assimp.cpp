@@ -96,7 +96,7 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 	bool test = pScene->HasMeshes();
 	if (test == 1)
 	{
-		//App->CL_Model->Set_Groupt_Count(pScene->mNumMeshes);
+		App->CL_Model->GroupCount = pScene->mNumMeshes;
 	}
 
 	test = pScene->HasMaterials();
@@ -108,18 +108,18 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 
 		if (Mat > 0)
 		{
-			//App->CL_Model->Set_Texture_Count(pScene->mNumMaterials);
+			App->CL_Model->TextureCount = pScene->mNumMaterials;
 		}
 		else
 		{
-			//App->CL_Model->Set_Texture_Count(-1);
+			App->CL_Model->TextureCount  = -1;
 		}
 	}
 
 	test = pScene->HasAnimations();
 	if (test == 1)
 	{
-		//App->CL_Model->Set_Motion_Count(pScene->mNumAnimations);
+		App->CL_Model->MotionCount = pScene->mNumAnimations;
 	}
 }
 
@@ -128,70 +128,70 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 // *************************************************************************
 void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 {
-	//int Count = 0;
+	int Count = 0;
 
-	//char GroupName[255];
-	//char MaterialName[255];
-	//char GroupNum[255];
+	char GroupName[255];
+	char MaterialName[255];
+	char GroupNum[255];
 
-	//int mGroupCount = App->CL_Model->Get_Groupt_Count();
+	int mGroupCount = App->CL_Model->GroupCount;
 
-	//while (Count < mGroupCount)
-	//{
-	//	aiMesh* mesh = pScene->mMeshes[Count];
+	while (Count < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[Count];
 
-	//	App->CL_Model->Create_Mesh_Group(Count);
+		App->CL_Model->Create_Mesh_Group(Count);
 
-	//	_itoa(Count, GroupNum, 10);
-	//	strcpy(GroupName, "Group_");
-	//	strcat(GroupName, GroupNum);
-	//	strcpy(App->CL_Model->Group[Count]->GroupName, GroupName);
+		_itoa(Count, GroupNum, 10);
+		strcpy(GroupName, "Group_");
+		strcat(GroupName, GroupNum);
+		strcpy(App->CL_Model->Group[Count]->GroupName, GroupName);
 
-	//	strcpy(MaterialName, "Material_");
-	//	strcat(MaterialName, GroupNum);
-	//	strcpy(App->CL_Model->Group[Count]->MaterialName, MaterialName);
+		strcpy(MaterialName, "Material_");
+		strcat(MaterialName, GroupNum);
+		strcpy(App->CL_Model->Group[Count]->MaterialName, MaterialName);
 
-	//	////---------------
+		////---------------
 
-	//	App->CL_Model->Group[Count]->GroupVertCount = 0;
-	//	App->CL_Model->Group[Count]->MaterialIndex = -1;
+		App->CL_Model->Group[Count]->GroupVertCount = 0;
+		App->CL_Model->Group[Count]->MaterialIndex = -1;
 
-	//	App->CL_Model->Group[Count]->MaterialIndex = Count;
+		App->CL_Model->Group[Count]->MaterialIndex = Count;
 
-	//	strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
+		strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
 
-	//	//App->CL_Vm_Model->S_MeshGroup[Count]->HasBones = mesh->HasBones();
-	//	//App->CL_Vm_Model->S_MeshGroup[Count]->BoneCount = mesh->mNumBones;
+		//App->CL_Vm_Model->S_MeshGroup[Count]->HasBones = mesh->HasBones();
+		//App->CL_Vm_Model->S_MeshGroup[Count]->BoneCount = mesh->mNumBones;
 
 	//	/*if (App->S_MeshGroup[Count]->HasBones == 1)
 	//	{
 	//	mHasBones = 1;
 	//	}*/
 
-	//	// Get Texture Path/Name
-	//	strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, App->CL_Model->Texture_FolderPath); // Back Slash remains
+		// Get Texture Path/Name
+		strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, App->CL_Model->Texture_FolderPath); // Back Slash remains
 
-	//	aiString texPath;
-	//	aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
+		aiString texPath;
+		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
 
-	//	strcpy(App->CL_Model->Group[Count]->MaterialName, mtl->GetName().C_Str());
+		strcpy(App->CL_Model->Group[Count]->MaterialName, mtl->GetName().C_Str());
 
-	//	if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
-	//	{
-	//		strcpy(App->CL_Model->Group[Count]->Text_FileName, texPath.C_Str());
-	//		strcpy(App->CL_Model->Group[Count]->Equity_Text_FileName, texPath.C_Str());
-	//	}
-	//	else
-	//	{
-	//		strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
-	//		App->CL_Model->Group[Count]->MaterialIndex = -1;
-	//	}
+		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
+		{
+			strcpy(App->CL_Model->Group[Count]->Text_FileName, texPath.C_Str());
+			strcpy(App->CL_Model->Group[Count]->Equity_Text_FileName, texPath.C_Str());
+		}
+		else
+		{
+			strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
+			App->CL_Model->Group[Count]->MaterialIndex = -1;
+		}
 
-	//	// FileView
+		// FileView
 	//	App->CL_Model->Group[Count]->ListView_Item = App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
 	//App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
 

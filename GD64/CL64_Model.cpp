@@ -27,8 +27,28 @@ distribution.
 
 CL64_Model::CL64_Model()
 {
+	GroupCount = 0;
+	TextureCount = 0;
+	MotionCount = 0;
+
+	strcpy(Texture_FolderPath, "No Model Loaded");
 }
 
 CL64_Model::~CL64_Model()
 {
+}
+
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Model::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	App->CL_Model->Group[Index] = new Base_Group();
+
 }
