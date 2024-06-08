@@ -38,7 +38,7 @@ CL64_File_IO::~CL64_File_IO()
 // *************************************************************************
 // *						OpenFile Terry Bernie						   *
 // *************************************************************************
-bool CL64_File_IO::Open_File_Model(char* Extension, char* Title, char* StartDirectory)
+bool CL64_File_IO::Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory)
 {
 
 	Model_FileName[0] = 0;

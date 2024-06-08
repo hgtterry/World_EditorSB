@@ -28,7 +28,7 @@ public:
 	CL64_File_IO();
 	~CL64_File_IO();
 
-	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	std::string Get_Model_Path_File_Name();
 
 	char Model_FileName[MAX_PATH];

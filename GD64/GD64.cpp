@@ -184,15 +184,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
 
-		// Debug
+		// Debug -------------------------------------------------------
 		if (LOWORD(wParam) == ID_DEBUG_TESTPREFERANCE)
 		{
 			App->CL_Preferences->Read_Preferences();
 			return TRUE;
 		}
 
-		// -------------------------------------------------------
-
+		// Import -------------------------------------------------------
+		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
+		{
+			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CL_Importers->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_OPTIONS_PREFERENCES)
 		{
 			App->CL_Preferences->Start_Preferences_Dlg();

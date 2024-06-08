@@ -28,6 +28,6 @@ public:
 	CL64_Importers();
 	~CL64_Importers();
 
-	bool Assimp_Loader(char* Extension, char* Extension2);
+	bool Assimp_Loader(const char* Extension, const char* Extension2);
 };
 
