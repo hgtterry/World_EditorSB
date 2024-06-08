@@ -36,6 +36,7 @@ CL64_App::CL64_App(void)
 	CL_Assimp =			nullptr;
 	CL_Model =			nullptr;
 	CL_Importers =		nullptr;
+	CL_File_IO =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -81,7 +82,9 @@ void CL64_App::InitApp(void)
 	CL_Assimp =			new CL64_Assimp();
 	CL_Model =			new CL64_Model();
 	CL_Importers =		new CL64_Importers();
+	CL_File_IO =		new CL64_File_IO();
 
+	
 	SetBrushes_Fonts();
 }
 

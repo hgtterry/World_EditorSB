@@ -27,5 +27,7 @@ class CL64_Importers
 public:
 	CL64_Importers();
 	~CL64_Importers();
+
+	bool Assimp_Loader(char* Extension, char* Extension2);
 };
 

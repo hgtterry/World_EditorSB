@@ -22,36 +22,18 @@ distribution.
 */
 
 #pragma once
-
-#include "Base_Group.h"
-
-class CL64_Model
+class CL64_File_IO
 {
 public:
-	CL64_Model();
-	~CL64_Model();
+	CL64_File_IO();
+	~CL64_File_IO();
 
-	void Reset_Class(void);
+	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+	std::string Get_Model_Path_File_Name();
 
-	void Create_Mesh_Group(int Index);
-	void Clear_Model_And_Reset(void);
-	void Set_Paths(void);
+	char Model_FileName[MAX_PATH];
+	char Model_Path_FileName[MAX_PATH];
 
-	Base_Group* Group[100];
-
-	char FileName[MAX_PATH];
-	char Path_FileName[MAX_PATH];
-	char Model_FolderPath[MAX_PATH];
-	char Texture_FolderPath[MAX_PATH];
-	char JustName[MAX_PATH];
-
-	int GroupCount;
-	int TextureCount;
-	int MotionCount;
-	int VerticeCount;
-	int FaceCount;
-	int Model_Type;
-
-	bool Model_Loaded;
+	OPENFILENAME ofn;
 };
 

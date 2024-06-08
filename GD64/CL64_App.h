@@ -33,6 +33,7 @@ distribution.
 #include "CL64_Assimp.h"
 #include "CL64_Model.h"
 #include "CL64_Importers.h"
+#include "CL64_File_IO.h"
 
 class CL64_App
 {
@@ -51,6 +52,7 @@ public:
 	CL64_Assimp*		CL_Assimp;
 	CL64_Model*			CL_Model;
 	CL64_Importers*		CL_Importers;
+	CL64_File_IO*		CL_File_IO;
 
 	void InitApp(void);
 

@@ -158,6 +158,7 @@
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Assimp.h" />
     <ClInclude Include="CL64_Camera.h" />
+    <ClInclude Include="CL64_File_IO.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Importers.h" />
     <ClInclude Include="CL64_Ini_File.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Assimp.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
+    <ClCompile Include="CL64_File_IO.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Importers.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
