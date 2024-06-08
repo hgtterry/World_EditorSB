@@ -155,6 +155,7 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	glColor3f(0.8f, 0.8f, 0.8f);
+	Translate();
 
 	// ---------------------- Mesh
 	if (App->CL_Model->Model_Loaded)// && ShowFaces == 1)
@@ -177,8 +178,6 @@ void CL64_OGL_Listener::Render_Loop()
 	{
 		RenderCrossHair();
 	}
-
-	Translate();
 
 	if (depthTestEnabled)
 	{

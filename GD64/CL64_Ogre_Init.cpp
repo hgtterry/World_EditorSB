@@ -47,6 +47,7 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
+	flag_Hide_Test_Cube = 0;
 }
 
 CL64_Ogre_Init::~CL64_Ogre_Init(void)
@@ -177,6 +178,10 @@ bool CL64_Ogre_Init::Configure(void)
 
 	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
 
+	//auto params = rs->getFixedFunctionParams(TVC_NONE, FOG_NONE);
+	//params->setConstant(8, Matrix4()); // the "magic" 8 is defined in getFixedFunctionParams
+	//rs->applyFixedFunctionParams(params, GPV_GLOBAL);
+	// 
 	//App->Cl_Panels->Width = mWindow->getWidth();
 	//App->Cl_Panels->Height = mWindow->getHeight();
 
@@ -292,7 +297,7 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 }
 
 // *************************************************************************
-// *				createFrameListener (Terry Bernie)					   *
+// *		createFrameListener:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Ogre_Init::createFrameListener(void)
 {
@@ -317,7 +322,23 @@ bool CL64_Ogre_Init::createFrameListener(void)
 }
 
 // *************************************************************************
-// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2023			   *
+// *			Hide_Test_Cube:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Ogre_Init::Hide_Test_Cube(void)
+{
+	if (flag_Hide_Test_Cube == 1)
+	{
+		OgreNode->setVisible(false);
+	}
+	else
+	{
+		OgreNode->setVisible(true);
+	}
+
+}
+
+// *************************************************************************
+// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 {

@@ -31,7 +31,10 @@ public:
 	CL64_OGL_Listener(void);
 	~CL64_OGL_Listener(void);
 
-protected:
+	float RX;
+	float RZ;
+
+private:
 
 	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
 		bool& skipThisInvocation);
@@ -48,9 +51,6 @@ protected:
 	bool Assimp_Face_Parts(int Count);
 
 	void RenderCrossHair(void);
-
-	float RX;
-	float RZ;
 
 	float Hair_1PosX;
 	float Hair_1PosY;

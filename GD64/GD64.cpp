@@ -191,6 +191,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_DEBUG_HIDEOGRETESTCUBE)
+		{
+			if (App->CL_Ogre->flag_Hide_Test_Cube == 1)
+			{
+				App->CL_Ogre->flag_Hide_Test_Cube = 0;
+			}
+			else
+			{
+				App->CL_Ogre->flag_Hide_Test_Cube = 1;
+			}
+
+			App->CL_Ogre->Hide_Test_Cube();
+
+			return TRUE;
+		}
+		
 		// Import -------------------------------------------------------
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
 		{

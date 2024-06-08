@@ -44,6 +44,7 @@ public:
 	CL64_Ogre_Init(void);
 	~CL64_Ogre_Init(void);
 
+	// Setup --------------------------------
 	void InitOgre(void);
 	bool OgreCreateRoot(void);
 	bool SetUpResources(void);
@@ -53,6 +54,10 @@ public:
 	bool createViewports(void);
 	bool Initialise_Resources(void);
 	bool createFrameListener(void);
+	// --------------------------------------
+
+
+	void Hide_Test_Cube(void);
 
 	bool Ogre_Render_Loop(void);
 
@@ -83,5 +88,7 @@ public:
 	Ogre::SceneNode* OgreNode;
 
 	char Return_Chr[MAX_PATH];
+
+	bool flag_Hide_Test_Cube;
 };
 

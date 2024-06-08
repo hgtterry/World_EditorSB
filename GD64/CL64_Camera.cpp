@@ -45,8 +45,9 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Grid->HairNode->resetOrientation();
 
 	App->CL_Ogre->OgreNode->resetOrientation();
-	//App->CL_Ogre->RenderListener->RX = 0;
-	//App->CL_Ogre->RenderListener->RZ = 0;
+
+	App->CL_Ogre->RenderListener->RX = 0;
+	App->CL_Ogre->RenderListener->RZ = 0;
 
 	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 90, 100));
 	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 30, 0), Ogre::Node::TS_WORLD);
