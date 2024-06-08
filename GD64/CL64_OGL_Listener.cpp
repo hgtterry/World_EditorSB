@@ -38,6 +38,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Hair_1RotY = 0;
 	Hair_1RotZ = 0;
 
+	ShowFaces = 1;
 	Light_Activated = 0;
 }
 
@@ -87,11 +88,15 @@ void CL64_OGL_Listener::PreRender()
 	glPushMatrix();
 	glLoadIdentity(); //Texture addressing should start out as direct.
 
-	//Ogre::RenderSystem* renderSystem = App->CL_Ogre->manObj->_getManager()->getDestinationRenderSystem();
-	//Ogre::Node* parentNode = App->CL_Ogre->manObj->getParentNode();
-	//renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
-	//renderSystem->_setViewMatrix(App->CL_Ogre->mCamera->getViewMatrix());
-	//renderSystem->_setProjectionMatrix(App->CL_Ogre->mCamera->getProjectionMatrixRS());
+	Ogre::RenderSystem* renderSystem = App->CL_Ogre->manObj->_getManager()->getDestinationRenderSystem();
+	Ogre::Node* parentNode = App->CL_Ogre->manObj->getParentNode();
+
+#pragma warning(disable : 4996) // Nightmare why
+
+	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
+	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
+	renderSystem->_setViewMatrix(App->CL_Ogre->mCamera->getViewMatrix());
+	renderSystem->_setProjectionMatrix(App->CL_Ogre->mCamera->getProjectionMatrixWithRSDepth());
 
 	static Ogre::Pass* clearPass = NULL;
 	if (!clearPass)
@@ -128,8 +133,7 @@ void CL64_OGL_Listener::PostRender()
 // *************************************************************************
 void CL64_OGL_Listener::Render_Loop()
 {
-	App->Flash_Window();
-
+	
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
@@ -151,6 +155,22 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	glColor3f(0.8f, 0.8f, 0.8f);
+
+	// ---------------------- Mesh
+	if (App->CL_Model->Model_Loaded)// && ShowFaces == 1)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		/*if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			RF_Render_Faces();
+		}*/
+
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			Assimp_Render_Faces();
+		}
+	}
 
 	// ---------------------- Crosshair
 	//if (Show_Crosshair == 1)
@@ -180,6 +200,62 @@ void CL64_OGL_Listener::Translate(void)
 
 	glRotatef(RZ, 0.0, 1.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 1.0);
+}
+
+// *************************************************************************
+// *		Assimp_Render_Faces:- Terry and Hazel Flanigan 2024	   		   *
+// *************************************************************************
+bool CL64_OGL_Listener::Assimp_Render_Faces(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CL_Model->GroupCount;
+
+	while (Count < GroupCount)
+	{
+		Assimp_Face_Parts(Count);
+		Count++;
+	}
+
+	return 1;
+}
+// *************************************************************************
+// *		Assimp_Face_Parts:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_OGL_Listener::Assimp_Face_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	{
+		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		FaceCount++;
+		//-----------------------------------------------
+
+		glEnd();
+	}
+
+	return 1;
 }
 
 // **************************************************************************

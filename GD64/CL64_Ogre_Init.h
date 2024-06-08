@@ -76,8 +76,11 @@ public:
 
 	Ogre::OverlaySystem* mOverlaySystem;
 	
-	Entity* OgreEntity;
-	SceneNode* OgreNode;
+	Ogre::ManualObject* manObj;
+	Ogre::SceneNode* ModelNode;
+
+	Ogre::Entity* OgreEntity;
+	Ogre::SceneNode* OgreNode;
 
 	char Return_Chr[MAX_PATH];
 };

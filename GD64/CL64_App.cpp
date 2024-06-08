@@ -95,7 +95,7 @@ void CL64_App::Say(const char* Message)
 {
 	char text[1024];
 	strcpy(text, Message);
-	MessageBox(NULL, Message, Message, MB_OK);
+	MessageBox(MainHwnd, Message, Message, MB_OK);
 	//App->Cl_Dialogs->Message(text);
 }
 

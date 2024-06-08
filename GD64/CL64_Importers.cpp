@@ -66,5 +66,9 @@ bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2
 
 	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
 
+	App->CL_Model->Model_Loaded = 1;
+
+	App->Say("Imported");
+
 	return 1;
 }

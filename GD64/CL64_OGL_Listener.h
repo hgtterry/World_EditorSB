@@ -44,6 +44,9 @@ protected:
 	void Render_Loop();
 	void Translate(void);
 
+	bool Assimp_Render_Faces(void);
+	bool Assimp_Face_Parts(int Count);
+
 	void RenderCrossHair(void);
 
 	float RX;
@@ -57,6 +60,7 @@ protected:
 	float Hair_1RotY;
 	float Hair_1RotZ;
 
+	bool ShowFaces;
 	bool Light_Activated;
 };
 

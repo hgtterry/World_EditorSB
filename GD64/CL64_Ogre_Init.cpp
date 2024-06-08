@@ -39,8 +39,11 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	OgreListener = nullptr;
 
-	OgreEntity = nullptr;;
-	OgreNode = nullptr;;
+	manObj = nullptr;
+	ModelNode = nullptr;
+
+	OgreEntity = nullptr;
+	OgreNode = nullptr;
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
@@ -64,6 +67,10 @@ void CL64_Ogre_Init::InitOgre(void)
 	Initialise_Resources();
 
 	createFrameListener();
+
+	manObj = mSceneMgr->createManualObject("sampleArea");
+	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);
 
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
@@ -212,7 +219,7 @@ bool CL64_Ogre_Init::createCamera(void)
 	mCamera = mSceneMgr->createCamera("MainCamera");
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
-	mCamera->setAutoAspectRatio(true);
+	//mCamera->setAutoAspectRatio(true);
 
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 90, 100);

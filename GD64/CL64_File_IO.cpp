@@ -36,7 +36,7 @@ CL64_File_IO::~CL64_File_IO()
 }
 
 // *************************************************************************
-// *						OpenFile Terry Bernie						   *
+// *			Open_File_Model:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_File_IO::Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory)
 {
@@ -72,7 +72,7 @@ bool CL64_File_IO::Open_File_Model(const char* Extension, const char* Title, con
 }
 
 // *************************************************************************
-// *				Get_Model_Path_File_Name Terry Flanigan				   *
+// *	Get_Model_Path_File_Name:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 std::string CL64_File_IO::Get_Model_Path_File_Name()
 {
