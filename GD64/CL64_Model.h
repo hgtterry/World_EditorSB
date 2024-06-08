@@ -40,5 +40,7 @@ public:
 	int GroupCount;
 	int TextureCount;
 	int MotionCount;
+	int VerticeCount;
+	int FaceCount;
 };
 

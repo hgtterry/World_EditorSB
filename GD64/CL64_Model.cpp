@@ -30,6 +30,8 @@ CL64_Model::CL64_Model()
 	GroupCount = 0;
 	TextureCount = 0;
 	MotionCount = 0;
+	VerticeCount = 0;
+	FaceCount = 0;
 
 	strcpy(Texture_FolderPath, "No Model Loaded");
 }

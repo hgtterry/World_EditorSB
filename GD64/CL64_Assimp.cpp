@@ -209,7 +209,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	int mTotalVertices = 0;
 	int mTotalFaces = 0;
 	
-	/*int mGroupCount = App->CL_Model->Get_Groupt_Count();
+	int mGroupCount = App->CL_Model->GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -246,7 +246,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	}
 
 	App->CL_Model->VerticeCount = mTotalVertices;
-	App->CL_Model->FaceCount = mTotalFaces;*/
+	App->CL_Model->FaceCount = mTotalFaces;
 
 }
 
@@ -263,67 +263,68 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 	unsigned int i = 0;
 	int VC = 0;
 
-	//int mGroupCount = App->CL_Model->Get_Groupt_Count();
+	int mGroupCount = App->CL_Model->GroupCount;
 
-	//while (GroupCount < mGroupCount)
-	//{
-	//	aiMesh* mesh = pScene->mMeshes[GroupCount];
+	while (GroupCount < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[GroupCount];
 
-	//	VC = 0;
-	//	t = 0;
+		VC = 0;
+		t = 0;
 
-	//	App->CL_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
-	//	App->CL_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
-	//	App->CL_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
+		App->CL_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
+		App->CL_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
+		App->CL_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
 
-	//	while (t < mesh->mNumFaces)
-	//	{
-	//		aiFace* face = &mesh->mFaces[t];
+		while (t < mesh->mNumFaces)
+		{
+			aiFace* face = &mesh->mFaces[t];
 
-	//		i = 0;
-	//		while (i < face->mNumIndices) // Triangulated Each face has 3 Indices
-	//		{
-	//			int vertexIndex = face->mIndices[i];
+			i = 0;
+			while (i < face->mNumIndices) // Triangulated Each face has 3 Indices
+			{
+				int vertexIndex = face->mIndices[i];
 
-	//			App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
-	//			App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
-	//			App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
 
 
-	//			if (mesh->HasNormals())
-	//			{
-	//				App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
-	//				App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
-	//				App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
-	//			}
+				if (mesh->HasNormals())
+				{
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
+				}
 
-	//			//		App->CL_Model_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
+				//		App->CL_Model_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
 
-	//			if (mesh->HasTextureCoords(0))
-	//			{
-	//				App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
-	//				App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
-	//			}
+				if (mesh->HasTextureCoords(0))
+				{
+					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
+					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
+				}
 
-	//			VC++;
-	//			i++;
-	//			FaceNum++;
-	//		}
+				VC++;
+				i++;
+				FaceNum++;
+			}
 
-	//		App->CL_Model->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
-	//		App->CL_Model->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
-	//		App->CL_Model->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
+			App->CL_Model->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
+			App->CL_Model->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
+			App->CL_Model->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
 
-	//		App->CL_Model->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
+			App->CL_Model->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
 
-	//		FaceIndexNum++;
+			FaceIndexNum++;
 
-	//		t++;
-	//	}
+			t++;
+		}
 
-	//	App->CL_Model->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
+		App->CL_Model->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
 
-	//	mTotalVertices = mTotalVertices + mesh->mNumVertices;
-	//	GroupCount++;
-	//}
+		mTotalVertices = mTotalVertices + mesh->mNumVertices;
+		GroupCount++;
+	}
+
 }
