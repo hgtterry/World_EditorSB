@@ -392,6 +392,14 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	{
 		POINT p;
 
+		ImGuiIO& io = ImGui::GetIO();
+
+		POINT pos;
+
+		GetCursorPos(&pos);
+		ScreenToClient(App->ViewGLhWnd, &pos);
+		io.MousePos.x = static_cast<float>(pos.x);
+		io.MousePos.y = static_cast<float>(pos.y);
 		//App->CL_Ogre->m_imgui.mouseMoved();
 
 
@@ -415,6 +423,8 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
 		//App->CL_Ogre->m_imgui.mousePressed();
 
 
@@ -423,7 +433,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			//App->Cl_FileView_V2->RightMouseDown = 1;
 		//}
 
-		//if (!ImGui::GetIO().WantCaptureMouse)
+		if (!ImGui::GetIO().WantCaptureMouse)
 		{
 
 			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
@@ -449,17 +459,16 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_RBUTTONUP:
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
 		//App->CL_Ogre->m_imgui.mouseReleased();
 
-		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+		if (App->OgreStarted == 1)
 		{
-			if (App->OgreStarted == 1)
-			{
-				ReleaseCapture();
-				App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
-				SetCursor(App->CUR);
-				return 1;
-			}
+			ReleaseCapture();
+			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
 		}
 
 		return 1;
@@ -511,9 +520,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
+		
 		//App->CL_Ogre->m_imgui.mousePressed();
 
-		//if (!ImGui::GetIO().WantCaptureMouse)
+		if (!ImGui::GetIO().WantCaptureMouse)
 		{
 
 			{
@@ -551,19 +563,17 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_LBUTTONUP:
 	{
-		//App->CL_Ogre->m_imgui.mouseReleased();
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
 
-		//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+		if (App->OgreStarted == 1)
 		{
-			if (App->OgreStarted == 1)
-			{
-				ReleaseCapture();
-				App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-				SetCursor(App->CUR);
-				return 1;
-			}
+			ReleaseCapture();
+			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
 		}
-
+		
 		return 1;
 	}
 

@@ -43,9 +43,9 @@ void CL64_ImGui::Init_ImGui(void)
 {
 	bool mOwnsImGuiOverlay = !Ogre::OverlayManager::getSingleton().getByName("ImGuiOverlay");
 
-	OgreBites::ApplicationContextBase* poo = new OgreBites::ApplicationContextBase();
+	OgreBites::ApplicationContextBase* Base = new OgreBites::ApplicationContextBase();
 
-	Ogre::ImGuiOverlay* imguiOverlay = poo->initialiseImGui();
+	Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
 
 	if (imguiOverlay)
 	{
@@ -62,6 +62,7 @@ void CL64_ImGui::Init_ImGui(void)
 				Ogre::ImGuiOverlay::NewFrame();
 			}
 
+			//Base->addInputListener(Base->getImGuiInputListener());
 			//mWindow->addListener(this);
 			//App->Say("Ok");
 
@@ -74,7 +75,7 @@ void CL64_ImGui::Init_ImGui(void)
 }
 
 // *************************************************************************
-// *	  				ImGui_Set_Colours Terry Bernie					   *
+// *	  	ImGui_Set_Colours:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_ImGui::ImGui_Set_Colours(void)
 {
@@ -137,7 +138,7 @@ void CL64_ImGui::ImGui_Set_Colours(void)
 }
 
 // *************************************************************************
-// *						Load_Font  Terry Bernie						   *
+// *			Load_Font:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_ImGui::Load_Font(void)
 {
@@ -157,9 +158,9 @@ void CL64_ImGui::Load_Font(void)
 	//io.IniFilename = NULL;
 }
 
-// *************************************************************************
-// *					Render_FPS  Terry Flanigan				   *
-// *************************************************************************
+// **************************************************************************
+// *			Render_FPS:- Terry and Hazel Flanigan 2024					*
+// **************************************************************************
 void CL64_ImGui::ImGui_Render_Loop(void)
 {
 	if (Show_FPS == 1)
@@ -174,7 +175,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 }
 
 // *************************************************************************
-// *						ImGui_FPS  Terry Bernie						   *
+// *				ImGui_FPS:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_ImGui::ImGui_FPS(void)
 {

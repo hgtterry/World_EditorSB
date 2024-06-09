@@ -73,11 +73,12 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
+	
 	CL_Ogre =			new CL64_Ogre_Init();
 	CL_Grid =			new CL64_Grid();
 	CL_SplitterViews =	new CL64_SplitterViews();
 	CL_Keyboard =		new CL64_Keyboard();
-	CL_Camera =			new CL64_Camera();
+	CL_Camera =			new	CL64_Camera();
 	CL_Ini_File =		new CL64_Ini_File();
 	CL_Preferences =	new CL64_Preferences();
 	CL_Assimp =			new CL64_Assimp();

@@ -89,7 +89,7 @@ void CL64_Ogre_Init::InitOgre(void)
 	mTrayMgr->hideCursor();
 
 	App->CL_ImGui->Init_ImGui();
-
+	
 }
 
 // *************************************************************************
