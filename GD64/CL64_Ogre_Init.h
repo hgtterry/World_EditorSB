@@ -57,6 +57,8 @@ public:
 	// --------------------------------------
 
 	void Init_ImGui(void);
+	void Load_Font(void);
+
 	void Hide_Test_Cube(void);
 
 	bool Ogre_Render_Loop(void);
@@ -90,5 +92,10 @@ public:
 	char Return_Chr[MAX_PATH];
 
 	bool flag_Hide_Test_Cube;
+
+	/*ImFont* font0;
+	ImFont* font1;
+	ImFont* font2;
+	ImFont* fontDroid;*/
 };
 

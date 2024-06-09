@@ -105,7 +105,8 @@ void CL64_Ogre_Init::Init_ImGui(void)
 
 	if (imguiOverlay)
 	{
-		imguiOverlay->addFont("SdkTrays/Caption", App->CL_Ogre->App_Resource_Group);
+		Load_Font();
+		//imguiOverlay->addFont("SdkTrays/Caption", App->CL_Ogre->App_Resource_Group);
 		imguiOverlay->setZOrder(300);
 		imguiOverlay->show();
 
@@ -168,13 +169,37 @@ void CL64_Ogre_Init::Init_ImGui(void)
 
 			//mWindow->addListener(this);
 			Ogre::ImGuiOverlay::NewFrame();
-			//App->Say("Ok");
+
+			//ImGui::PushFont(font1);
+			App->Say("Ok");
 		}
 		else
 		{
 			App->Say("Not Ok");
 		}
 	}
+}
+
+// *************************************************************************
+// *						Load_Font  Terry Bernie						   *
+// *************************************************************************
+void CL64_Ogre_Init::Load_Font(void)
+{
+
+	ImFont* font0;
+	ImFont* font1;
+	ImFont* font2;
+	ImFont* fontDroid;
+
+	ImGuiIO& io = ImGui::GetIO();
+	font1 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 20);
+	font2 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 48);
+	font0 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 18);
+	fontDroid = io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 12);
+	
+	//font2 = io.Fonts->AddFontDefault().;
+
+	//io.IniFilename = NULL;
 }
 
 // *************************************************************************
