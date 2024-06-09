@@ -171,7 +171,7 @@ void CL64_Ogre_Init::Init_ImGui(void)
 			Ogre::ImGuiOverlay::NewFrame();
 
 			//ImGui::PushFont(font1);
-			App->Say("Ok");
+			//App->Say("Ok");
 		}
 		else
 		{
