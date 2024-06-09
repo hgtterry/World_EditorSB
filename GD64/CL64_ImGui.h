@@ -29,5 +29,17 @@ public:
 	CL64_ImGui(void);
 	~CL64_ImGui(void);
 
+	// Setup -----------------------------------
+	void Init_ImGui(void);
+	void ImGui_Set_Colours(void);
+	void Load_Font(void);
+	// -----------------------------------------
+
+	void ImGui_Render_Loop(void);
+	void ImGui_FPS(void);
+
+	bool StartPos;
+	bool Show_FPS;
+	bool Show_ImGui_Demo;
 };
 

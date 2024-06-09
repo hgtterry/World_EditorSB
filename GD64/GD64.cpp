@@ -207,6 +207,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == ID_IMGUI_IMGUIDEMO)
+		{
+			if (App->CL_ImGui->Show_ImGui_Demo == 1)
+			{
+				App->CL_ImGui->Show_ImGui_Demo = 0;
+			}
+			else
+			{
+				App->CL_ImGui->Show_ImGui_Demo = 1;
+			}
+
+			return TRUE;
+		}
+		
 		// Import -------------------------------------------------------
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
 		{

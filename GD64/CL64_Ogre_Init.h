@@ -56,8 +56,6 @@ public:
 	bool createFrameListener(void);
 	// --------------------------------------
 
-	void Init_ImGui(void);
-	void Load_Font(void);
 
 	void Hide_Test_Cube(void);
 
