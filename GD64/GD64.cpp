@@ -369,10 +369,11 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	}
 	case WM_MOUSEWHEEL:
 	{
+		/*ImGuiIO& io = ImGui::GetIO();
+		io.*/
 		//if (App->FullScreen == 1)
 		if (App->CL_Ogre->OgreListener->Pl_LeftMouseDown == 0)
 		{
-
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
 			if (zDelta > 0)
@@ -420,110 +421,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 		break;
 	}
-	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[0] = true;
-		//App->CL_Ogre->m_imgui.mousePressed();
-
-
-		//if (ImGui::GetIO().WantCaptureMouse)
-		//{
-			//App->Cl_FileView_V2->RightMouseDown = 1;
-		//}
-
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-
-			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
-			{
-				if (App->OgreStarted == 1)
-				{
-					POINT p;
-					GetCursorPos(&p);
-					App->CursorPosX = p.x;
-					App->CursorPosY = p.y;
-					App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
-					App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
-					SetCapture(App->ViewGLhWnd);// Bernie
-					SetCursorPos(App->CursorPosX, App->CursorPosY);
-					App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
-					App->CUR = SetCursor(NULL);
-					return 1;
-				}
-			}
-		}
-		return 1;
-	}
-
-	case WM_RBUTTONUP:
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[0] = false;
-		//App->CL_Ogre->m_imgui.mouseReleased();
-
-		if (App->OgreStarted == 1)
-		{
-			ReleaseCapture();
-			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-
-	case WM_KEYUP:
-	{
-		//ImGuiIO& io = ImGui::GetIO();
-
-		//io.KeysDown[VK_BACK] = false;
-		//io.KeysDown[VK_LEFT] = false;
-		//io.KeysDown[VK_RIGHT] = false;
-		return 1;
-	}
-
-	case WM_CHAR:
-	{
-		//if (ImGui::GetIO().WantCaptureKeyboard)
-		{
-			//ImGuiIO& io = ImGui::GetIO();
-			//io.AddInputCharacter((unsigned short)wParam);
-		}
-		return 1;
-	}
-
-	case WM_KEYDOWN:
-	{
-		/*ImGuiIO& io = ImGui::GetIO();
-		bool Done = 0;
-
-		if (wParam == VK_BACK)
-		{
-			io.KeysDown[VK_BACK] = true;
-		}
-
-		if (wParam == VK_RIGHT)
-		{
-			io.KeysDown[VK_RIGHT] = true;
-		}
-
-		if (wParam == VK_LEFT)
-		{
-			io.KeysDown[VK_LEFT] = true;
-		}*/
-
-		return 1;
-	}
 
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = true;
-		
-		//App->CL_Ogre->m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
@@ -573,7 +476,109 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			SetCursor(App->CUR);
 			return 1;
 		}
+
+		return 1;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
 		
+		//if (ImGui::GetIO().WantCaptureMouse)
+		//{
+			//App->Cl_FileView_V2->RightMouseDown = 1;
+		//}
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+
+			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+			{
+				if (App->OgreStarted == 1)
+				{
+					POINT p;
+					GetCursorPos(&p);
+					App->CursorPosX = p.x;
+					App->CursorPosY = p.y;
+					App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
+					App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
+					SetCapture(App->ViewGLhWnd);// Bernie
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
+					App->CUR = SetCursor(NULL);
+					return 1;
+				}
+			}
+		}
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
+		//App->CL_Ogre->m_imgui.mouseReleased();
+
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	case WM_KEYUP:
+	{
+		
+		ImGuiIO& io = ImGui::GetIO();
+		//io.wWantCaptureKeyboard();
+
+		//io.AddKeyEvent(ImGuiKey(ImGuiKey_None), false);
+		/*io.KeysDown[VK_BACK] = false;
+		io.KeysDown[VK_LEFT] = false;
+		io.KeysDown[VK_RIGHT] = false;*/
+		return 1;
+	}
+
+	case WM_CHAR:
+	{
+		if (ImGui::GetIO().WantCaptureKeyboard)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.AddInputCharacter((unsigned short)wParam);
+		}
+		return 1;
+	}
+
+	case WM_KEYDOWN:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		
+		if (wParam == VK_BACK)
+		{
+			//io.AddKeyEvent(ImGuiKey(ImGuiKey_LeftArrow),true);
+			//io.AddKeyEvent(ImGuiKey(ImGuiKey_None), false);
+			//io.AddInputCharacter((unsigned short)ImGuiKey_Delete);
+			//io.KeysDown[VK_BACK] = true;
+		}
+
+		if (wParam == VK_RIGHT)
+		{
+			//io.AddKeyEvent(ImGuiKey(ImGuiKey_RightArrow), true);
+			//io.KeysDown[VK_RIGHT] = true;
+		}
+
+		if (wParam == VK_LEFT)
+		{
+			//io.AddKeyEvent(ImGuiKey(ImGuiKey_LeftArrow), true);
+			//io.KeysDown[VK_LEFT] = true;
+		}
+
 		return 1;
 	}
 
