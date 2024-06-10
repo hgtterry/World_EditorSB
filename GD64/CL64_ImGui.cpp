@@ -233,11 +233,15 @@ void CL64_ImGui::Camera_Data_GUI(void)
 		ImGui::Spacing();
 		ImGui::Text("Camera Data");
 		ImGui::Text("  ");
+		ImGui::Text("Rotation");
 		ImGui::Text("Yaw:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getYaw().valueDegrees());
 		ImGui::Text("Pitch:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getPitch().valueDegrees());
 		ImGui::Text("Roll:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getRoll().valueDegrees());
-		
-
+		ImGui::Text("  ");
+		ImGui::Text("Position");
+		ImGui::Text("X:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().x);
+		ImGui::Text("Y:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().y);
+		ImGui::Text("Z:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().z);
 		ImGui::Separator();
 
 		if (ImGui::Button("Close"))

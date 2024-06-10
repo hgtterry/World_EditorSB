@@ -76,7 +76,7 @@ bool CL64_Assimp::LoadFile(const char* pFile)
 
 		StoreMeshData(scene);
 
-		//LoadTextures();
+		LoadTextures();
 
 		//App->CL_Model->Set_BondingBox_Model(1); // Create
 
@@ -326,5 +326,12 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		GroupCount++;
 	}
+}
 
+// *************************************************************************
+// *			LoadTextures:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+void CL64_Assimp::LoadTextures()
+{
+	App->CLSB_Textures->Load_Textures_Assimp();
 }

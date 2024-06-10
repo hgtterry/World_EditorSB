@@ -38,6 +38,7 @@ CL64_App::CL64_App(void)
 	CL_Importers =		nullptr;
 	CL_File_IO =		nullptr;
 	CL_ImGui =			nullptr;
+	CL_Textures =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -86,7 +87,8 @@ void CL64_App::InitApp(void)
 	CL_Importers =		new CL64_Importers();
 	CL_File_IO =		new CL64_File_IO();
 	CL_ImGui =			new CL64_ImGui();
-	
+	CL_Textures =		new CL64_Textures();
+
 	SetBrushes_Fonts();
 }
 

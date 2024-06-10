@@ -247,6 +247,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if (LOWORD(wParam) == ID_MODE_MODEL)
 		{
 			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Model;
+			//App->CL_Ogre->camNode->resetOrientation();
 			return TRUE;
 		}
 

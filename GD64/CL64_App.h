@@ -35,6 +35,7 @@ distribution.
 #include "CL64_Importers.h"
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
+#include "CL64_Textures.h"
 
 class CL64_App
 {
@@ -55,6 +56,7 @@ public:
 	CL64_Importers*		CL_Importers;
 	CL64_File_IO*		CL_File_IO;
 	CL64_ImGui*			CL_ImGui;
+	CL64_Textures*		CL_Textures;
 
 	void InitApp(void);
 
