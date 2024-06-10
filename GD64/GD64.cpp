@@ -229,6 +229,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		// Camera -------------------------------------------------------
+		if (LOWORD(wParam) == ID_MODE_MODEL)
+		{
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Model;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_MODE_FREE)
+		{
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+			return TRUE;
+		}
+		
+		// PREFERENCES --------------------------------------------------
 		if (LOWORD(wParam) == ID_OPTIONS_PREFERENCES)
 		{
 			App->CL_Preferences->Start_Preferences_Dlg();

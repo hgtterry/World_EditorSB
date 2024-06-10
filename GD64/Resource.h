@@ -30,6 +30,9 @@
 #define ID_DEBUG_HIDEOGRETESTCUBE       32777
 #define ID_DEBUG_IMGUI                  32778
 #define ID_IMGUI_IMGUIDEMO              32779
+#define ID_CAMERA_MODE                  32780
+#define ID_MODE_MODEL                   32781
+#define ID_MODE_FREE                    32782
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -38,7 +41,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        135
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

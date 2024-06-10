@@ -30,5 +30,9 @@ public:
 	~CL64_Keyboard(void);
 
 	void Keyboard_Mode_Model(float deltaTime);
+	void Keyboard_Mode_Free(float deltaTime);
+
+	Ogre::Real Rate;
+	Ogre::Vector3 OldPos;
 };
 

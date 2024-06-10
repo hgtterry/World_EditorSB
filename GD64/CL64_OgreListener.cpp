@@ -79,9 +79,19 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	Ogre::ImGuiOverlay::NewFrame();
 	App->CL_ImGui->ImGui_Render_Loop();
 
+	if (CameraMode == Enums::Cam_Mode_None)
+	{
+		return 1;
+	}
+
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
 		Mode_Camera_Model(evt.timeSinceLastFrame);
+	}
+
+	if (CameraMode == Enums::Cam_Mode_Free)
+	{
+		Mode_Camera_Free(evt.timeSinceLastFrame);
 	}
 
 	return 1;
@@ -102,7 +112,21 @@ bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *		Mode_Camera_Model:- Terry and Hazel Flanigan 2023  			   *
+// *			moveCamera:- Terry and Hazel Flanigan 2023 				   *
+// *************************************************************************
+void CL64_OgreListener::MoveCamera(void)
+{
+	//mCamNode->resetOrientation();// roll(Ogre::Radian(0));
+	mCamNode->roll(Ogre::Radian(0));
+	mCamNode->yaw(mRotX);
+	mCamNode->pitch(mRotY);
+	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
+	Wheel = 0;
+
+}
+
+// *************************************************************************
+// *		Mode_Camera_Model:- Terry and Hazel Flanigan 2024  			   *
 // *************************************************************************
 void CL64_OgreListener::Mode_Camera_Model(float DeltaTime)
 {
@@ -132,17 +156,6 @@ void CL64_OgreListener::Mode_Camera_Model(float DeltaTime)
 	MoveCamera();
 }
 
-// *************************************************************************
-// *				moveCamera   Terry Bernie							   *
-// *************************************************************************
-void CL64_OgreListener::MoveCamera(void)
-{
-	mCamNode->yaw(mRotX);
-	mCamNode->pitch(mRotY);
-	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
-	Wheel = 0;
-
-}
 // *************************************************************************
 // *		Capture_LeftMouse_Model:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
@@ -222,7 +235,7 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 }
 
 // *************************************************************************
-// *					Capture_RightMouse_Model Terry					   *
+// *	Capture_RightMouse_Model:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
 bool CL64_OgreListener::Capture_RightMouse_Model(void)
 {
@@ -301,7 +314,7 @@ bool CL64_OgreListener::Capture_RightMouse_Model(void)
 }
 
 // *************************************************************************
-// *		Camera_Mode_Free:- Terry and Hazel Flanigan 2023   			   *
+// *		Mode_Camera_Free:- Terry and Hazel Flanigan 2023   			   *
 // *************************************************************************
 void CL64_OgreListener::Mode_Camera_Free(float DeltaTime)
 {
@@ -311,7 +324,7 @@ void CL64_OgreListener::Mode_Camera_Free(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity * DeltaTime;
 
-	//App->CLSB_Keyboard->Keyboard_Mode_Free(DeltaTime);
+	App->CL_Keyboard->Keyboard_Mode_Free(DeltaTime);
 
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
@@ -329,7 +342,7 @@ void CL64_OgreListener::Mode_Camera_Free(float DeltaTime)
 }
 
 // *************************************************************************
-// *				Capture_Left_Mouse_Free   Terry Bernie				   *
+// *		Capture_Left_Mouse_Free:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_OgreListener::Capture_Left_Mouse_Free(void)
 {
@@ -384,7 +397,7 @@ bool CL64_OgreListener::Capture_Left_Mouse_Free(void)
 }
 
 // *************************************************************************
-// *				Capture_Right_Mouse_Free   Terry Bernie				   *
+// *		Capture_Right_Mouse_Free:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 bool CL64_OgreListener::Capture_Right_Mouse_Free(void)
 {
