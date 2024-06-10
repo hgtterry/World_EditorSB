@@ -47,6 +47,9 @@ private:
 	void Render_Loop();
 	void Translate(void);
 
+	bool Assimp_Render_Textures(void);
+	bool Assimp_Textured_Parts(int Count);
+
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
 

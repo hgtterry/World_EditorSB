@@ -28,5 +28,15 @@ public:
 
 	CL64_Textures(void);
 	~CL64_Textures(void);
+
+	void Load_Textures_Assimp();
+
+	bool Create_DummyTexture(char* Folder);
+	bool Load_OpenGL_Textures(int TextureID);
+	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+
+	char TextureFileName[MAX_PATH];
+
+	UINT  g_Texture[400];
 };
 

@@ -333,5 +333,5 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 // *************************************************************************
 void CL64_Assimp::LoadTextures()
 {
-	App->CLSB_Textures->Load_Textures_Assimp();
+	App->CL_Textures->Load_Textures_Assimp();
 }

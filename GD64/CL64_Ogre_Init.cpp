@@ -81,6 +81,7 @@ void CL64_Ogre_Init::InitOgre(void)
 	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(OgreEntity);
+	OgreNode->scale(55, 55, 55);
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
@@ -89,6 +90,8 @@ void CL64_Ogre_Init::InitOgre(void)
 	mTrayMgr->hideCursor();
 
 	App->CL_ImGui->Init_ImGui();
+
+	//Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 	
 }
 
