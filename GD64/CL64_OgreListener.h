@@ -40,9 +40,14 @@ public:
 	void MoveCamera(void);
 
 	// Model Mode
-	void Camera_Mode_Model(float DeltaTime);
+	void Mode_Camera_Model(float DeltaTime);
 	bool Capture_LeftMouse_Model(void);
 	bool Capture_RightMouse_Model(void);
+
+	// Free Mode
+	void Mode_Camera_Free(float DeltaTime);
+	bool Capture_Left_Mouse_Free(void);
+	bool Capture_Right_Mouse_Free(void);
 
 	Ogre::Camera* mCam;
 	Ogre::SceneNode* mCamNode;
@@ -58,18 +63,20 @@ public:
 	float		mMoveSensitivity; 
 	float		mMoveSensitivityMouse;
 
-	int			Wheel;
+	int CameraMode;
 
-	int			Pl_MouseX;
-	int			Pl_MouseY;
+	int	Wheel;
+
+	int	Pl_MouseX;
+	int	Pl_MouseY;
 	
-	long		Pl_Cent500X;
-	long		Pl_Cent500Y;
+	long Pl_Cent500X;
+	long Pl_Cent500Y;
 
-	float		Pl_DeltaMouse;
+	float Pl_DeltaMouse;
 
-	bool		Pl_LeftMouseDown;
-	bool		Pl_RightMouseDown;
+	bool Pl_LeftMouseDown;
+	bool Pl_RightMouseDown;
 
 	bool StopOgre;
 };
