@@ -286,8 +286,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_SplitterViews->Init_Views();
 		}
-       
-
+    
         App->CL_SplitterViews->Resize_Fldg();
         App->CL_SplitterViews->Resize_OgreWin();
 
@@ -537,11 +536,8 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		
 		ImGuiIO& io = ImGui::GetIO();
 		//io.wWantCaptureKeyboard();
-
 		//io.AddKeyEvent(ImGuiKey(ImGuiKey_None), false);
-		/*io.KeysDown[VK_BACK] = false;
-		io.KeysDown[VK_LEFT] = false;
-		io.KeysDown[VK_RIGHT] = false;*/
+		
 		return 1;
 	}
 
@@ -563,8 +559,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 			//io.AddKeyEvent(ImGuiKey(ImGuiKey_LeftArrow),true);
 			//io.AddKeyEvent(ImGuiKey(ImGuiKey_None), false);
-			//io.AddInputCharacter((unsigned short)ImGuiKey_Delete);
-			//io.KeysDown[VK_BACK] = true;
 		}
 
 		if (wParam == VK_RIGHT)

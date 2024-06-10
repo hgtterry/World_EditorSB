@@ -104,6 +104,12 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 			GetClientRect(hDlg, &rect);
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
+		else
+		{
+			App->CL_SplitterViews->Max_3D_win();
+			//App->CL_SplitterViews->Resize_Fldg();
+			//App->CL_SplitterViews->Resize_OgreWin();
+		}
 		return 0;
 	}
 
