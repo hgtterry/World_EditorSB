@@ -27,9 +27,13 @@ distribution.
 
 CL64_ImGui::CL64_ImGui(void)
 {
+	Camera_Data_PosX = 10;
+	Camera_Data_Posy = 10;
+
 	StartPos = 0;
 	Show_FPS = 1;
 	Show_ImGui_Demo = 0;
+	Show_Camera_Data_F = 0;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -172,6 +176,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		ImGui::ShowDemoWindow();
 	}
+
+	if (Show_Camera_Data_F == 1)
+	{
+		Camera_Data_GUI();
+	}
+	
 }
 
 // *************************************************************************
@@ -201,6 +211,40 @@ void CL64_ImGui::ImGui_FPS(void)
 		//ImVec2 Size = ImGui::GetWindowSize();
 		//PosX = 10;// ((float)App->CL_Ogre->Ogre_Listener->View_Width / 2) - (Size.x / 2);
 		//PosY = 10;
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Camera_Data_GUI:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui::Camera_Data_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Camera_Data_PosX, Camera_Data_Posy));
+
+	if (!ImGui::Begin("Camera Data", &Show_Camera_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Camera Data");
+		ImGui::Text("  ");
+		ImGui::Text("Yaw:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("Pitch:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Roll:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getRoll().valueDegrees());
+		
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Camera_Data_F = 0;
+			//Close_BB_Data();
+		}
 
 		ImGui::End();
 	}

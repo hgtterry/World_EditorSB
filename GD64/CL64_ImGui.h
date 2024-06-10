@@ -37,9 +37,14 @@ public:
 
 	void ImGui_Render_Loop(void);
 	void ImGui_FPS(void);
+	void Camera_Data_GUI(void);
 
 	bool StartPos;
 	bool Show_FPS;
 	bool Show_ImGui_Demo;
+	bool Show_Camera_Data_F;
+
+	float Camera_Data_PosX;
+	float Camera_Data_Posy;
 };
 

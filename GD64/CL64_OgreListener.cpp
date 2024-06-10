@@ -117,8 +117,8 @@ bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
 void CL64_OgreListener::MoveCamera(void)
 {
 	//mCamNode->resetOrientation();// roll(Ogre::Radian(0));
-	mCamNode->roll(Ogre::Radian(0));
-	mCamNode->yaw(mRotX);
+	//mCamNode->setFixedYawAxis(true);// roll(Ogre::Radian(0));
+	mCamNode->yaw(mRotX, Ogre::Node::TS_PARENT);
 	mCamNode->pitch(mRotY);
 	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
 	Wheel = 0;

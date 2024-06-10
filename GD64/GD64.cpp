@@ -185,6 +185,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
 
 		// Debug -------------------------------------------------------
+
+		if (LOWORD(wParam) == ID_DEBUG_CAMERADATA)
+		{
+			if (App->CL_ImGui->Show_Camera_Data_F == 1)
+			{
+				App->CL_ImGui->Show_Camera_Data_F = 0;
+			}
+			else
+			{
+				App->CL_ImGui->Show_Camera_Data_F = 1;
+			}
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_DEBUG_TESTPREFERANCE)
 		{
 			App->CL_Preferences->Read_Preferences();
