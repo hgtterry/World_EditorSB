@@ -47,7 +47,7 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
-	flag_Hide_Test_Cube = 0;
+	flag_Hide_Test_Cube = 1;
 }
 
 CL64_Ogre_Init::~CL64_Ogre_Init(void)
@@ -80,6 +80,7 @@ void CL64_Ogre_Init::InitOgre(void)
 	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(OgreEntity);
+	Show_Test_Cube();
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
@@ -314,17 +315,17 @@ bool CL64_Ogre_Init::createFrameListener(void)
 }
 
 // *************************************************************************
-// *			Hide_Test_Cube:- Terry and Hazel Flanigan 2024			   *
+// *			Show_Test_Cube:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre_Init::Hide_Test_Cube(void)
+void CL64_Ogre_Init::Show_Test_Cube(void)
 {
 	if (flag_Hide_Test_Cube == 1)
 	{
-		OgreNode->setVisible(false);
+		OgreNode->setVisible(true);
 	}
 	else
 	{
-		OgreNode->setVisible(true);
+		OgreNode->setVisible(false);
 	}
 
 }

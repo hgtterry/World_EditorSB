@@ -90,7 +90,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 }
 
 // *************************************************************************
-// *						Start_Tabs_Headers Terry					   *
+// *		Start_Tabs_Headers:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_TopDlg::Start_Tabs_Headers(void)
 {
@@ -98,7 +98,7 @@ void CL64_TopDlg::Start_Tabs_Headers(void)
 }
 
 // *************************************************************************
-// *							Tabs_Headers_Proc_Proc					   *
+// *		Tabs_Headers_Proc:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -185,7 +185,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 }
 
 // *************************************************************************
-// *						Start_Debug_TB Terry Flanigan				   *
+// *			Start_Debug_TB:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_TopDlg::Start_Debug_TB(void)
 {
@@ -193,7 +193,7 @@ void CL64_TopDlg::Start_Debug_TB(void)
 }
 
 // *************************************************************************
-// *								Files_TB_Proc						   *
+// *			Debug_TB_Proc:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -275,7 +275,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_Ogre->flag_Hide_Test_Cube = 1;
 			}
 
-			App->CL_Ogre->Hide_Test_Cube();
+			App->CL_Ogre->Show_Test_Cube();
 			return 1;
 		}
 

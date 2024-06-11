@@ -57,7 +57,7 @@ public:
 	// --------------------------------------
 
 
-	void Hide_Test_Cube(void);
+	void Show_Test_Cube(void);
 
 	bool Ogre_Render_Loop(void);
 

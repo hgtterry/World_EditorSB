@@ -220,7 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Ogre->flag_Hide_Test_Cube = 1;
 			}
 
-			App->CL_Ogre->Hide_Test_Cube();
+			App->CL_Ogre->Show_Test_Cube();
 
 			return TRUE;
 		}
