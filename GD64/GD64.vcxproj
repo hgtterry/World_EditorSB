@@ -168,6 +168,7 @@
     <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_OgreListener.h" />
     <ClInclude Include="CL64_Ogre_Init.h" />
+    <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Preferences.h" />
     <ClInclude Include="CL64_SplitterViews.h" />
     <ClInclude Include="CL64_Textures.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_OgreListener.cpp" />
     <ClCompile Include="CL64_Ogre_Init.cpp" />
+    <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
     <ClCompile Include="CL64_SplitterViews.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />

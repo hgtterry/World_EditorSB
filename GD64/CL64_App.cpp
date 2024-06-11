@@ -40,6 +40,7 @@ CL64_App::CL64_App(void)
 	CL_ImGui =			nullptr;
 	CL_Textures =		nullptr;
 	CL_TopDlg =			nullptr;
+	CL_Panels =			nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -90,6 +91,7 @@ void CL64_App::InitApp(void)
 	CL_ImGui =			new CL64_ImGui();
 	CL_Textures =		new CL64_Textures();
 	CL_TopDlg =			new CL64_TopDlg();
+	CL_Panels =			new CL64_Panels();
 
 	SetBrushes_Fonts();
 }

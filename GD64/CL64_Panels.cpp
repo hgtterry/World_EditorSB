@@ -21,20 +21,14 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class CL64_TopDlg
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Panels.h"
+
+CL64_Panels::CL64_Panels(void)
 {
-public:
+}
 
-	CL64_TopDlg(void);
-	~CL64_TopDlg(void);
-
-	void Start_TopBar();
-
-	HWND TabsHwnd;
-private:
-
-	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-};
-
+CL64_Panels::~CL64_Panels(void)
+{
+}

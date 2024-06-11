@@ -37,6 +37,7 @@ distribution.
 #include "CL64_ImGui.h"
 #include "CL64_Textures.h"
 #include "CL64_TopDlg.h"
+#include "CL64_Panels.h"
 
 class CL64_App
 {
@@ -59,6 +60,7 @@ public:
 	CL64_ImGui*			CL_ImGui;
 	CL64_Textures*		CL_Textures;
 	CL64_TopDlg*		CL_TopDlg;
+	CL64_Panels*		CL_Panels;
 
 	void InitApp(void);
 

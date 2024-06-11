@@ -23,12 +23,62 @@ distribution.
 
 #include "pch.h"
 #include "CL64_App.h"
+#include "resource.h"
 #include "CL64_TopDlg.h"
 
 CL64_TopDlg::CL64_TopDlg(void)
 {
+	TabsHwnd = nullptr;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
 {
 }
+
+// **************************************************************************
+// *	  		 Start_TopBar:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_TopDlg::Start_TopBar()
+{
+	TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->MainHwnd, (DLGPROC)TopBar_Proc);
+	//Init_Bmps_Globals();
+}
+
+// *************************************************************************
+// *			TopBar_Proc:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->CL_TopDlg->TabsHwnd = hDlg;
+
+		/*App->CL_TopBar->Start_Tabs_Headers();
+		App->CL_TopBar->Start_Files_TB();
+		App->CL_TopBar->Start_Group_TB();
+		App->CL_TopBar->Start_Model_TB();
+		App->CL_TopBar->Start_Camera_TB();
+		App->CL_TopBar->Start_Amimation_TB();*/
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_COMMAND:
+
+		break;
+	}
+	return FALSE;
+}
+

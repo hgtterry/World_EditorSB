@@ -84,6 +84,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->SetMainWinCentre();
 
+	App->CL_TopDlg->Start_TopBar();
 
     App->CL_SplitterViews->Init_Views();
     App->CL_SplitterViews->Create_Top_Left_Win();

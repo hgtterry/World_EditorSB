@@ -22,19 +22,11 @@ distribution.
 */
 
 #pragma once
-class CL64_TopDlg
+class CL64_Panels
 {
 public:
 
-	CL64_TopDlg(void);
-	~CL64_TopDlg(void);
-
-	void Start_TopBar();
-
-	HWND TabsHwnd;
-private:
-
-	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	CL64_Panels(void);
+	~CL64_Panels(void);
 };
 
