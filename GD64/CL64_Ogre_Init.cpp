@@ -77,11 +77,9 @@ void CL64_Ogre_Init::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-
 	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(OgreEntity);
-	OgreNode->scale(55, 55, 55);
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
@@ -91,8 +89,6 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	App->CL_ImGui->Init_ImGui();
 
-	//Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-	
 }
 
 // *************************************************************************
@@ -107,6 +103,7 @@ bool CL64_Ogre_Init::OgreCreateRoot(void)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
 	}
 	else
 	{
@@ -193,6 +190,7 @@ bool CL64_Ogre_Init::chooseSceneManager(void)
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+
 	//mSceneMgr->setDisplaySceneNodes(true);
 
 	// add a bright light above the scene
@@ -217,6 +215,7 @@ bool CL64_Ogre_Init::createCamera(void)
 	mCamera = mSceneMgr->createCamera("MainCamera");
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
+
 	//mCamera->setAutoAspectRatio(true);
 
 	camNode->attachObject(mCamera);
