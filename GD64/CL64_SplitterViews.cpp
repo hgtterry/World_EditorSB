@@ -110,6 +110,8 @@ LRESULT CALLBACK CL64_SplitterViews::ViewerMain_Proc(HWND hDlg, UINT message, WP
 			//App->CL_SplitterViews->Resize_Fldg();
 			//App->CL_SplitterViews->Resize_OgreWin();
 		}
+
+		App->CL_Panels->Resize_TopDlg();
 		return 0;
 	}
 

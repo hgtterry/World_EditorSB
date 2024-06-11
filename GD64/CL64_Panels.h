@@ -28,5 +28,8 @@ public:
 
 	CL64_Panels(void);
 	~CL64_Panels(void);
+
+	bool Resize_TopDlg(void);
+
 };
 
