@@ -186,9 +186,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
+
 		switch (wmId)
 		{
-			// Debug -------------------------------------------------------
+		// Debug -------------------------------------------------------
 		case ID_DEBUG_CAMERADATA:
 		{
 			if (App->CL_ImGui->Show_Camera_Data_F == 1)
@@ -314,7 +315,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->CL_SplitterViews->Init_Views();
 		}
 
-		App->CL_SplitterViews->Resize_Fldg();
+		App->CL_Panels->Resize_Fldg();
 		App->CL_SplitterViews->Resize_OgreWin();
 
 		return 0;
@@ -323,7 +324,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_WINDOWPOSCHANGED:
 	{
 		App->CL_SplitterViews->Init_Views();
-		App->CL_SplitterViews->Resize_Fldg();
+		App->CL_Panels->Resize_Fldg();
 		App->CL_SplitterViews->Resize_OgreWin();
 		return 0;
 	}

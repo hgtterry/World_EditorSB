@@ -35,7 +35,6 @@ public:
 	void Create_Bottom_Left_Window();
 
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
-	bool Resize_Fldg(void);
 	bool Resize_OgreWin(void);
 
 	void Max_3D_win(void);

@@ -30,11 +30,28 @@ public:
 	~CL64_TopDlg(void);
 
 	void Start_TopBar();
+	void Start_Tabs_Headers(void);
+
+	// Tab Options
+	void Start_Debug_TB(void);
+
+	bool Toggle_Tabs_Debug_Flag;
 
 	HWND TabsHwnd;
+	HWND Tabs_TB_hWnd;
+
+	// Tab Options
+	HWND Debug_TB_hWnd;
+
+
 private:
 
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	// Tab Options
+	static LRESULT CALLBACK Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 
 };
 

@@ -75,6 +75,11 @@ public:
 
 	void SetBrushes_Fonts(void);
 
+	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
+	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
+
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND Fdlg;
@@ -95,6 +100,11 @@ public:
 	HCURSOR CUR;
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
+	
+	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Hover;
+	HBRUSH Brush_But_Pressed;
+	HBRUSH Brush_Green;
 };
 
 extern CL64_App* App;

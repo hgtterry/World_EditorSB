@@ -564,33 +564,6 @@ bool CL64_SplitterViews::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 }
 
 // *************************************************************************
-// *				Resize_Fldg:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-bool CL64_SplitterViews::Resize_Fldg(void)
-{
-	RECT rcl;
-
-	int WidthClient = 0;
-	int HeightClient;
-	int NewWidth = 0;
-	int NewHeight = 0;
-
-	GetClientRect(App->MainHwnd, &rcl);
-
-	WidthClient = rcl.right - rcl.left - 1010;
-	NewWidth = 417 + WidthClient + 200;
-
-	HeightClient = rcl.bottom - rcl.top;
-	NewHeight = HeightClient - 150;
-
-	////-----------------Ogre Window
-	SetWindowPos(App->Fdlg, NULL, 0, 80, rcl.right, NewHeight + 70, SWP_NOZORDER);
-	//SetWindowPos(App->CL_TopTabs->Top_Bar, NULL, 0, 0, rcl.right, 80, SWP_NOZORDER);
-
-	return 1;
-}
-
-// *************************************************************************
 // *			Resize_OgreWin:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_SplitterViews::Resize_OgreWin(void)

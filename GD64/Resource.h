@@ -18,11 +18,17 @@
 #define ID_VIEW_SIDEVIEW                132
 #define ID_VIEW_FRONTVIEW               133
 #define IDD_PREFERENCES                 134
-#define IDD_DIALOG1                     135
 #define IDD_TOPBAR                      135
+#define IDD_TB_TAB                      136
+#define IDD_TB_DEBUG                    137
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
+#define IDC_BT_TDH_DEBUG                1002
+#define IDC_BT_TD_DEBUG_RESETVIEW       1003
+#define IDC_BT_TD_DEBUG_IMGUIDEMO       1004
+#define IDC_BUTTON3                     1005
+#define IDC_BT_TD_DEBUG_TESTCUBE        1005
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -43,9 +49,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32784
-#define _APS_NEXT_CONTROL_VALUE         1002
+#define _APS_NEXT_CONTROL_VALUE         1006
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -59,6 +59,11 @@ CL64_App::CL64_App(void)
 
 	Font_CB15 = 0;
 	BlackBrush = 0;
+	Brush_But_Normal = 0;
+	Brush_But_Normal = 0;
+	Brush_But_Hover = 0;
+	Brush_But_Pressed = 0;
+	Brush_Green = 0;
 
 	Debug_App = 1;
 
@@ -172,7 +177,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	//AppTest = CreateSolidBrush(RGB(218, 240, 255));
 
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
-
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	////BannerBrush = CreateSolidBrush(RGB(200, 200, 0));
 
 	//Brush_White = CreateSolidBrush(RGB(255, 255, 255));
@@ -180,12 +185,12 @@ void CL64_App::SetBrushes_Fonts(void)
 	//Brush_Panel = CreateSolidBrush(RGB(218, 240, 255));
 
 	//Brush_Red = CreateSolidBrush(RGB(252, 85, 63));
-	//Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
+	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 	//Brush_Blue = CreateSolidBrush(RGB(0, 180, 255));
 
-	//Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
-	//Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
-	//Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
+	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
+	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 	//Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	//Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
@@ -200,4 +205,230 @@ void CL64_App::SetBrushes_Fonts(void)
 	//Font_CB15_Bold = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 
 	//Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+}
+
+// *************************************************************************
+// *		Custom_Button_Toggle_Tabs Terry Bernie   			 	 	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = hotbrush = CreateSolidBrush(RGB(0, 255, 0));
+			}
+			else
+			{
+				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
+				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = CreateSolidBrush(RGB(154, 255, 154));
+		}
+		else
+		{
+			defaultbrush = Brush_But_Normal; // Unselected 
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *					Custom_Button_Normal Terry Bernie   		  	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
+{
+
+	if (item->uItemState & CDIS_SELECTED) // Push Down
+	{
+		//Create pen for button border
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		//Select our brush into hDC
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		//Clean up
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+	else
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *					Custom_Button Terry Bernie   			 	 	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateGradientBrush(RGB(0, 240, 0), RGB(0, 240, 0), item);
+			}
+			else
+			{
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Green;
+		}
+		else
+		{
+			defaultbrush = Brush_But_Normal;
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *						CreateGradientBrush					 	 	   *
+// *************************************************************************
+HBRUSH CL64_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
+{
+	HBRUSH Brush = NULL;
+	HDC hdcmem = CreateCompatibleDC(item->hdc);
+	HBITMAP hbitmap = CreateCompatibleBitmap(item->hdc, item->rc.right - item->rc.left, item->rc.bottom - item->rc.top);
+	SelectObject(hdcmem, hbitmap);
+
+	int r1 = GetRValue(top), r2 = GetRValue(bottom), g1 = GetGValue(top), g2 = GetGValue(bottom), b1 = GetBValue(top), b2 = GetBValue(bottom);
+	for (int i = 0; i < item->rc.bottom - item->rc.top; i++)
+	{
+		RECT temp;
+		int r, g, b;
+		r = int(r1 + double(i * (r2 - r1) / item->rc.bottom - item->rc.top));
+		g = int(g1 + double(i * (g2 - g1) / item->rc.bottom - item->rc.top));
+		b = int(b1 + double(i * (b2 - b1) / item->rc.bottom - item->rc.top));
+		Brush = CreateSolidBrush(RGB(r, g, b));
+		temp.left = 0;
+		temp.top = i;
+		temp.right = item->rc.right - item->rc.left;
+		temp.bottom = i + 1;
+		FillRect(hdcmem, &temp, Brush);
+		DeleteObject(Brush);
+	}
+	HBRUSH pattern = CreatePatternBrush(hbitmap);
+
+	DeleteDC(hdcmem);
+	DeleteObject(Brush);
+	DeleteObject(hbitmap);
+
+	return pattern;
 }

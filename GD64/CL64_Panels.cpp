@@ -34,15 +34,40 @@ CL64_Panels::~CL64_Panels(void)
 }
 
 // *************************************************************************
+// *				Resize_Fldg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Panels::Resize_Fldg(void)
+{
+	RECT rcl;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->MainHwnd, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	////-----------------Ogre Window
+	SetWindowPos(App->Fdlg, NULL, 2, 80, rcl.right-4, NewHeight + 65, SWP_NOZORDER);
+
+}
+
+// *************************************************************************
 // *			Resize_TopDlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Panels::Resize_TopDlg(void)
+void CL64_Panels::Resize_TopDlg(void)
 {
 	RECT rcl;
 
 	GetClientRect(App->MainHwnd, &rcl);
 
 	SetWindowPos(App->CL_TopDlg->TabsHwnd, NULL, 2,2, rcl.right-4, 76, SWP_NOZORDER);
-	
-	return 1;
+
 }
+
