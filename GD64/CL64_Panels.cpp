@@ -42,19 +42,6 @@ bool CL64_Panels::Resize_TopDlg(void)
 
 	GetClientRect(App->MainHwnd, &rcl);
 
-	int WidthClient = 0;
-	int HeightClient;
-	int NewWidth = 0;
-	int NewHeight = 0;
-
-	GetClientRect(App->MainHwnd, &rcl);
-
-	WidthClient = rcl.right - rcl.left - 1010;
-	NewWidth = 417 + WidthClient + 200;
-
-	HeightClient = rcl.bottom - rcl.top;
-	NewHeight = HeightClient - 450;
-
 	SetWindowPos(App->CL_TopDlg->TabsHwnd, NULL, 2,2, rcl.right-4, 76, SWP_NOZORDER);
 	
 	return 1;

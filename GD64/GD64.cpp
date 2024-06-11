@@ -92,7 +92,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_SplitterViews->Create_Bottom_Left_Window();
 
     App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
-
+	App->CL_Panels->Resize_TopDlg();
 	
 
     SetTimer(App->MainHwnd, 1, 1, NULL);
@@ -182,12 +182,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
-        {
 
-		// Debug -------------------------------------------------------
-
-		if (LOWORD(wParam) == ID_DEBUG_CAMERADATA)
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		switch (wmId)
+		{
+			// Debug -------------------------------------------------------
+		case ID_DEBUG_CAMERADATA:
 		{
 			if (App->CL_ImGui->Show_Camera_Data_F == 1)
 			{
@@ -199,14 +201,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 			return TRUE;
 		}
-		
-		if (LOWORD(wParam) == ID_DEBUG_TESTPREFERANCE)
+
+		case ID_DEBUG_TESTPREFERANCE:
 		{
 			App->CL_Preferences->Read_Preferences();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == ID_DEBUG_HIDEOGRETESTCUBE)
+		case ID_DEBUG_HIDEOGRETESTCUBE:
 		{
 			if (App->CL_Ogre->flag_Hide_Test_Cube == 1)
 			{
@@ -221,8 +223,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return TRUE;
 		}
-		
-		if (LOWORD(wParam) == ID_IMGUI_IMGUIDEMO)
+
+		case ID_IMGUI_IMGUIDEMO:
 		{
 			if (App->CL_ImGui->Show_ImGui_Demo == 1)
 			{
@@ -235,142 +237,136 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return TRUE;
 		}
-		
+
 		// Import -------------------------------------------------------
-		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
+		case ID_IMPORT_WAVEFRONTOBJ:
 		{
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			App->CL_Importers->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 			return TRUE;
 		}
-		
+
 		// Camera -------------------------------------------------------
-		if (LOWORD(wParam) == ID_MODE_MODEL)
+		case ID_MODE_MODEL:
 		{
 			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Model;
 			//App->CL_Ogre->camNode->resetOrientation();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == ID_MODE_FREE)
+		case ID_MODE_FREE:
 		{
 			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
 			return TRUE;
 		}
-		
+
 		// PREFERENCES --------------------------------------------------
-		if (LOWORD(wParam) == ID_OPTIONS_PREFERENCES)
+		case ID_OPTIONS_PREFERENCES:
 		{
 			App->CL_Preferences->Start_Preferences_Dlg();
 			return TRUE;
 		}
-		
-		if (LOWORD(wParam) == ID_VIEW_RESET)
+
+		case ID_VIEW_RESET:
 		{
 			App->CL_Camera->Reset_View();
-				return TRUE;
+			return TRUE;
 		}
 
-		if (LOWORD(wParam) == ID_VIEW_MAX3DVIEW)
+		case ID_VIEW_MAX3DVIEW:
 		{
 			App->CL_SplitterViews->Max_3D_win();
 			return TRUE;
 		}
-		
-		
-            int wmId = LOWORD(wParam);
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            
-            case IDM_EXIT:
 
-                if (App->CL_Ogre->OgreListener->StopOgre == 0)
-                {
-                    App->CL_Ogre->OgreListener->StopOgre = 1;
-                }
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
 
-                PostQuitMessage(0);
-                break;
+		case IDM_EXIT:
 
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
+			if (App->CL_Ogre->OgreListener->StopOgre == 0)
+			{
+				App->CL_Ogre->OgreListener->StopOgre = 1;
+			}
 
-	//case WM_PAINT:
-	//{
-	//	//App->Flash_Window();
-	//	//PAINTSTRUCT ps;
-	//	//HDC hdc = BeginPaint(hWnd, &ps);
-	//	//// TODO: Add any drawing code that uses hdc here...
-	//	//EndPaint(hWnd, &ps);
-	//}
+			PostQuitMessage(0);
+			break;
 
-    case WM_SIZE:
-    {
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+	}
+	break;
+
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		// TODO: Add any drawing code that uses hdc here...
+		EndPaint(hWnd, &ps);
+	}
+
+	case WM_SIZE:
+	{
 		if (App->CL_SplitterViews->Max_Window == 0)
 		{
 			App->CL_SplitterViews->Init_Views();
 		}
-    
-        App->CL_SplitterViews->Resize_Fldg();
-        App->CL_SplitterViews->Resize_OgreWin();
 
-        return 0;
-    }
+		App->CL_SplitterViews->Resize_Fldg();
+		App->CL_SplitterViews->Resize_OgreWin();
 
-    case WM_WINDOWPOSCHANGED:
-    {
-       // App->Flash_Window();
-        App->CL_SplitterViews->Init_Views();
-        App->CL_SplitterViews->Resize_Fldg();
-        App->CL_SplitterViews->Resize_OgreWin();
-        return 0;
-    }
-        //break;
-    case WM_CLOSE:
-    {
+		return 0;
+	}
 
-        if (App->CL_Ogre->OgreListener->StopOgre == 0)
-        {
-            App->CL_Ogre->OgreListener->StopOgre = 1;
-        }
+	case WM_WINDOWPOSCHANGED:
+	{
+		App->CL_SplitterViews->Init_Views();
+		App->CL_SplitterViews->Resize_Fldg();
+		App->CL_SplitterViews->Resize_OgreWin();
+		return 0;
+	}
+	//break;
+	case WM_CLOSE:
+	{
 
-        PostQuitMessage(0);
-        break;
-    }
+		if (App->CL_Ogre->OgreListener->StopOgre == 0)
+		{
+			App->CL_Ogre->OgreListener->StopOgre = 1;
+		}
 
-    case WM_TIMER:
-        if (wParam == 1)
-        {
-            if (App->OgreStarted == 0)
-            {
-                if (Block_Call == 0)
-                {
-                    Block_Call = 1;
-                    StartOgre();
-                }
-            }
+		PostQuitMessage(0);
+		break;
+	}
 
-            /*if (App->RenderBackGround == 1 && App->OgreStarted == 1)
-            {
-                Ogre::Root::getSingletonPtr()->renderOneFrame();
-            }*/
+	case WM_TIMER:
+		if (wParam == 1)
+		{
+			if (App->OgreStarted == 0)
+			{
+				if (Block_Call == 0)
+				{
+					Block_Call = 1;
+					StartOgre();
+				}
+			}
 
-            break;
-        }
+			/*if (App->RenderBackGround == 1 && App->OgreStarted == 1)
+			{
+				Ogre::Root::getSingletonPtr()->renderOneFrame();
+			}*/
 
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
+			break;
+		}
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return 0;
 }
 
 // *************************************************************************
