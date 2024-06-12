@@ -34,7 +34,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	// Tab Options
 	Debug_TB_hWnd = nullptr;
 
-	Toggle_Tabs_Debug_Flag = 0;
+	Toggle_Tabs_Debug_Flag = 1;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
