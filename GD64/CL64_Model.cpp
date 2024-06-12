@@ -193,6 +193,4 @@ void CL64_Model::Set_Paths(void)
 		int Len = strlen(JustName);
 		JustName[Len - 4] = 0;
 	}
-
-	//App->CL_Recent_Files->RecentFileHistory_Update();
 }
