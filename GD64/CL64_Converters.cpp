@@ -53,9 +53,9 @@ CL64_Converters::~CL64_Converters(void)
 void CL64_Converters::Set_Paths(void)
 {
 	/*char Num[100];
-	itoa(NameIndex, Num, 10);
+	itoa(NameIndex, Num, 10);*/
 
-	strcpy(mWorld_Mesh_JustName, "World");
+	/*strcpy(mWorld_Mesh_JustName, "World");
 	strcat(mWorld_Mesh_JustName, Num);
 
 	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
@@ -71,6 +71,17 @@ void CL64_Converters::Set_Paths(void)
 	strcat(mWorld_File_PathAndFile, ".mesh");
 
 	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);*/
+
+	strcpy(mWorld_File_Path, App->CL_Model->Model_FolderPath);
+
+	strcpy(mWorld_File_PathAndFile, App->CL_Model->Model_FolderPath);
+	strcat(mWorld_File_PathAndFile, App->CL_Model->JustName);
+	strcat(mWorld_File_PathAndFile, ".mesh");
+
+	strcpy(mWorld_Mesh_JustName, App->CL_Model->JustName);
+	strcpy(mExport_Just_Name, App->CL_Model->JustName);
+	
+	//App->Say(mWorld_File_PathAndFile);
 
 	/*NameIndex++;*/
 
@@ -120,6 +131,8 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		strcpy(MatName, mWorld_Mesh_JustName);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
+
+		App->Say(MatName);
 
 		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
@@ -186,63 +199,67 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
 	delete(ms);
 
-	char OutputFolder[MAX_PATH];
+	/*char OutputFolder[MAX_PATH];
 	strcpy(OutputFolder, mWorld_File_Path);
-	strcat(OutputFolder, "\\");
+	strcat(OutputFolder, "\\");*/
 
 	//DecompileTextures_TXL(OutputFolder);
 
 	char Material_PathAndFile[MAX_PATH];
 	strcpy(Material_PathAndFile, mWorld_File_Path);
-	strcat(Material_PathAndFile, "\\");
+	//strcat(Material_PathAndFile, "\\");
 	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
 	strcat(Material_PathAndFile, ".material");
 
+	//App->Say(Material_PathAndFile);
+
 	CreateMaterialFile(Material_PathAndFile);
 
-	char Name[MAX_PATH];
-	strcpy(Name, mWorld_Mesh_JustName);
-	strcat(Name, ".mesh");
+	//char Name[MAX_PATH];
+	//strcpy(Name, mWorld_Mesh_JustName);
+	//strcat(Name, ".mesh");
 
-	if (World_Ent)
-	{
-		World_Node->detachAllObjects();
+	//if (World_Ent)
+	//{
+	//	World_Node->detachAllObjects();
 
-		App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
+	//	App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
+	//	App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
 
-		World_Node = NULL;
-		World_Ent = NULL;
+	//	World_Node = NULL;
+	//	World_Ent = NULL;
 
-		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
-		//ptr->unload();
+	//	//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
+	//	//ptr->unload();
 
-		//Ogre::MeshManager::getSingleton().remove(Name);
+	//	//Ogre::MeshManager::getSingleton().remove(Name);
 
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
+	//	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
 
-	}
-	else
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
-	}
+	//}
+	//else
+	//{
+	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+	//}
 
-	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
-	World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
+	//World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	World_Node->attachObject(World_Ent);
+	//World_Node->attachObject(World_Ent);
 
-	World_Node->setPosition(0, 0, 0);
-	World_Node->setVisible(true);
-	World_Node->setScale(1, 1, 1);
+	//World_Node->setPosition(0, 0, 0);
+	//World_Node->setVisible(true);
+	//World_Node->setScale(1, 1, 1);
 
-	remove(mWorld_File_PathAndFile);
-	remove(Material_PathAndFile);
+	//remove(mWorld_File_PathAndFile);
+	//remove(Material_PathAndFile);
+
+	App->Say("Converted");
 }
 
 // *************************************************************************

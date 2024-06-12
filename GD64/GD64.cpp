@@ -254,7 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
-		// Import -------------------------------------------------------
+		// File -------------------------------------------------------
 		case ID_IMPORT_WAVEFRONTOBJ:
 		{
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
@@ -262,6 +262,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_FILE_CONVERTTOOGRE3D:
+		{
+			App->CL_Converters->Convert_ToOgre3D(1);
+			return TRUE;
+		}
+		
 		// Camera -------------------------------------------------------
 		case ID_MODE_MODEL:
 		{
