@@ -132,9 +132,10 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		App->Say(MatName);
+		CreateMaterial(MatName);
+		//App->Say(MatName);
 
-		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, App->CL_Ogre->App_Resource_Group);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -177,7 +178,6 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		}
 
 		World_Manual->end();
-
 		Count++;
 	}
 
@@ -192,7 +192,7 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
-
+	
 	App->CL_Ogre->mSceneMgr->destroyManualObject(World_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
@@ -263,6 +263,19 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 }
 
 // *************************************************************************
+// *			CreateMaterial:- Terry and Hazel Flanigan 2024  	   	   *
+// *************************************************************************
+void CL64_Converters::CreateMaterial(char* MatName)
+{
+
+	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
+
+	auto status = omatMgr->createOrRetrieve(MatName, App->CL_Ogre->App_Resource_Group);
+	auto omat = static_pointer_cast<Material>(status.first);
+
+}
+
+// *************************************************************************
 // *		CreateMaterialFile:- Terry and Hazel Flanigan 2024		   	   *
 // *************************************************************************
 void CL64_Converters::CreateMaterialFile(char* MatFileName)
@@ -329,3 +342,4 @@ void CL64_Converters::Get_Data(int Index, int FaceIndex)
 	ny = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].y;
 	nz = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].z;
 }
+
