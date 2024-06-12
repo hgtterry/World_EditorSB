@@ -48,12 +48,44 @@ CL64_Converters::~CL64_Converters(void)
 }
 
 // *************************************************************************
+// *			Set_Paths:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Converters::Set_Paths(void)
+{
+	/*char Num[100];
+	itoa(NameIndex, Num, 10);
+
+	strcpy(mWorld_Mesh_JustName, "World");
+	strcat(mWorld_Mesh_JustName, Num);
+
+	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "Data");
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "World_Test");
+
+	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
+
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, mWorld_Mesh_JustName);
+	strcat(mWorld_File_PathAndFile, ".mesh");
+
+	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);*/
+
+	/*NameIndex++;*/
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+}
+
+// *************************************************************************
 // *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Converters::Convert_ToOgre3D(bool Create)
 {
 
-	//Set_World_Paths();
+	Set_Paths();
 
 	App->CL_Model->Ogre_Face_Count = 0;
 

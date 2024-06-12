@@ -29,6 +29,7 @@ public:
 	CL64_Converters(void);
 	~CL64_Converters(void);
 
+	void Set_Paths(void);
 	void CreateMaterialFile(char* MatFileName);
 	void Convert_ToOgre3D(bool Create);
 	void Get_Data(int Index, int FaceIndex);
