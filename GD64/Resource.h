@@ -27,8 +27,9 @@
 #define IDC_BT_TDH_DEBUG                1002
 #define IDC_BT_TD_DEBUG_RESETVIEW       1003
 #define IDC_BT_TD_DEBUG_IMGUIDEMO       1004
-#define IDC_BUTTON3                     1005
 #define IDC_BT_TD_DEBUG_TESTCUBE        1005
+#define IDC_BUTTON4                     1006
+#define IDC_BT_TD_DEBUG_IMGUIFPS        1006
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -51,7 +52,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32784
-#define _APS_NEXT_CONTROL_VALUE         1006
+#define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

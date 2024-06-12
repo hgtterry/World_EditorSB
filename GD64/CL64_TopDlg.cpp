@@ -205,14 +205,15 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
-	/*case WM_CTLCOLORDLG:
+	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->Brush_Tabs;
-	}*/
+	}
 
 	case WM_NOTIFY:
 	{
@@ -236,6 +237,13 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Hide_Test_Cube);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIFPS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_FPS);
 			return CDRF_DODEFAULT;
 		}
 
@@ -279,6 +287,20 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIFPS)
+		{
+			if (App->CL_ImGui->Show_FPS == 1)
+			{
+				App->CL_ImGui->Show_FPS = 0;
+			}
+			else
+			{
+				App->CL_ImGui->Show_FPS = 1;
+			}
+			return 1;
+		}
+
+		
 		return FALSE;
 	}
 

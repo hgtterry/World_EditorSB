@@ -105,6 +105,8 @@ public:
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_Green;
+	HBRUSH Brush_Tabs;
+	HBRUSH Brush_Tabs_UnSelected;
 };
 
 extern CL64_App* App;

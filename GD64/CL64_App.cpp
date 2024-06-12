@@ -64,6 +64,8 @@ CL64_App::CL64_App(void)
 	Brush_But_Hover = 0;
 	Brush_But_Pressed = 0;
 	Brush_Green = 0;
+	Brush_Tabs = 0;
+	Brush_Tabs_UnSelected = 0;
 
 	Debug_App = 1;
 
@@ -191,8 +193,8 @@ void CL64_App::SetBrushes_Fonts(void)
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
-	//Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
-	//Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
+	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
 	//Brush_Button = CreateSolidBrush(RGB(65, 147, 245));
 	//Brush_Button_Hover = CreateSolidBrush(RGB(153, 204, 255));
@@ -223,20 +225,20 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = hotbrush = CreateSolidBrush(RGB(0, 255, 0));
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);
 			}
 			else
 			{
 				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
-				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -249,19 +251,19 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 		if (Toggle == 1)
 		{
-			defaultbrush = CreateSolidBrush(RGB(154, 255, 154));
+			defaultbrush = App->Brush_Tabs; // Selected
 		}
 		else
 		{
-			defaultbrush = Brush_But_Normal; // Unselected 
+			defaultbrush = Brush_Tabs_UnSelected; // Unselected 
 		}
 
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
 
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);
