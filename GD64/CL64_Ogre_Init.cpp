@@ -47,6 +47,8 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
+	World_Resource_Group = "World_Resource_Group";
+
 	flag_Hide_Test_Cube = 1;
 }
 

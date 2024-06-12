@@ -45,12 +45,17 @@ public:
 	char Texture_FolderPath[MAX_PATH];
 	char JustName[MAX_PATH];
 
+	// Internal
 	int GroupCount;
 	int TextureCount;
 	int MotionCount;
 	int VerticeCount;
 	int FaceCount;
 	int Model_Type;
+
+	// Ogre
+	int Ogre_Face_Count;
+
 
 	bool Model_Loaded;
 };

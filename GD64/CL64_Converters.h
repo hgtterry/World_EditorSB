@@ -28,5 +28,32 @@ public:
 
 	CL64_Converters(void);
 	~CL64_Converters(void);
+
+	void CreateMaterialFile(char* MatFileName);
+	void Convert_ToOgre3D(bool Create);
+	void Get_Data(int Index, int FaceIndex);
+
+	Ogre::ManualObject* Export_Manual;
+	Ogre::ManualObject* World_Manual;
+
+	Ogre::SceneNode*	World_Node;
+	Ogre::Entity*		World_Ent;
+
+	char mWorld_Mesh_JustName[MAX_PATH];
+	char mWorld_File_PathAndFile[MAX_PATH];
+	char mWorld_File_Path[MAX_PATH];
+	char mExport_Just_Name[MAX_PATH];
+
+	float nx;
+	float ny;
+	float nz;
+
+	float u;
+	float v;
+
+	float x;
+	float y;
+	float z;
+
 };
 

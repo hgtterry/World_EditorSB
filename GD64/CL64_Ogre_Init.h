@@ -72,7 +72,9 @@ public:
 	Ogre::SceneNode* camNode;
 
 	Ogre::String mResourcePath;
+
 	Ogre::String App_Resource_Group;		// App Resource Group
+	Ogre::String World_Resource_Group;
 
 	OgreBites::TrayManager* mTrayMgr;
 
@@ -91,9 +93,5 @@ public:
 
 	bool flag_Hide_Test_Cube;
 
-	/*ImFont* font0;
-	ImFont* font1;
-	ImFont* font2;
-	ImFont* fontDroid;*/
 };
 

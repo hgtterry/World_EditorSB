@@ -27,12 +27,16 @@ distribution.
 
 CL64_Model::CL64_Model()
 {
+	// Internal
 	GroupCount = 0;
 	TextureCount = 0;
 	MotionCount = 0;
 	VerticeCount = 0;
 	FaceCount = 0;
 	Model_Loaded = 0;
+
+	// Ogre
+	Ogre_Face_Count = 0;
 
 	Model_Type = Enums::LoadedFile_None;
 
