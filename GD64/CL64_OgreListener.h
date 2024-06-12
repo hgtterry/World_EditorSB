@@ -38,6 +38,7 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 	void MoveCamera(void);
+	void Get_View_Height_Width(void);
 
 	// Model Mode
 	void Mode_Camera_Model(float DeltaTime);
@@ -62,6 +63,9 @@ public:
 	float		mMoveScale;
 	float		mMoveSensitivity; 
 	float		mMoveSensitivityMouse;
+
+	int	View_Height; // Ogre window Height
+	int	View_Width;	 // Ogre window WIdth
 
 	int CameraMode;
 

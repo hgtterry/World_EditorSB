@@ -368,7 +368,6 @@ bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 			return false;
 		}
 
-		/*App->Flash_Window();*/
 		//		FPStimer.reset();
 
 		//	}
@@ -377,3 +376,4 @@ bool CL64_Ogre_Init::Ogre_Render_Loop(void)
 
 	return 1;
 }
+

@@ -34,6 +34,9 @@ CL64_ImGui::CL64_ImGui(void)
 	Show_FPS = 1;
 	Show_ImGui_Demo = 0;
 	Show_Camera_Data_F = 0;
+
+	PosX = 500;
+	PosY = 500;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -189,7 +192,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 // *************************************************************************
 void CL64_ImGui::ImGui_FPS(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10));
+	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
 
 	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
@@ -208,9 +211,9 @@ void CL64_ImGui::ImGui_FPS(void)
 		ImGui::Spacing();
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 
-		//ImVec2 Size = ImGui::GetWindowSize();
-		//PosX = 10;// ((float)App->CL_Ogre->Ogre_Listener->View_Width / 2) - (Size.x / 2);
-		//PosY = 10;
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosY = 10;
 
 		ImGui::End();
 	}

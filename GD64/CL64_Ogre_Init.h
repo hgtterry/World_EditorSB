@@ -62,7 +62,7 @@ public:
 	bool Ogre_Render_Loop(void);
 
 	bool ReverseBackSlash(char* buf);
-
+	
 	HWND RenderHwnd;
 
 	Ogre::Root* mRoot;

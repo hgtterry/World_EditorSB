@@ -52,6 +52,9 @@ CL64_OgreListener::CL64_OgreListener(void)
 	Pl_MouseX = 0;
 	Pl_MouseY = 0;
 
+	View_Height = 0;
+	View_Width = 0;
+
 	Wheel = 0;
 	StopOgre = 0;
 }
@@ -65,7 +68,7 @@ CL64_OgreListener::~CL64_OgreListener(void)
 // *************************************************************************
 bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
 {
-	//Update_Game_Logic(evt.timeSinceLastFrame);
+	Get_View_Height_Width();
 	return true;
 }
 
@@ -123,6 +126,17 @@ void CL64_OgreListener::MoveCamera(void)
 	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
 	Wheel = 0;
 
+}
+
+// *************************************************************************
+// *		Get_View_Height_Width:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_OgreListener::Get_View_Height_Width(void)
+{
+	Ogre::Viewport* vp = App->CL_Ogre->mWindow->getViewport(0);
+
+	View_Width = vp->getActualWidth();
+	View_Height = vp->getActualHeight();
 }
 
 // *************************************************************************
