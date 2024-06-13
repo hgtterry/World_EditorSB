@@ -33,9 +33,13 @@ CL64_TopDlg::CL64_TopDlg(void)
 
 	// Tab Options
 	Debug_TB_hWnd = nullptr;
+	Camera_TB_hWnd = nullptr;
 
 	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Debug_Flag = 1;
+
+	Toggle_Cam_ModelMode_Flag = 1;
+	Toggle_Cam_FreeMode_Flag = 0;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
@@ -64,6 +68,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		App->CL_TopDlg->Start_Tabs_Headers();
 		App->CL_TopDlg->Start_Debug_TB();
+		App->CL_TopDlg->Start_Camera_TB();
+
+		App->CL_TopDlg->Hide_Tabs();
+
+		// Default Tab
+		App->CL_TopDlg->Toggle_Tabs_Debug_Flag = 1;
+		ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
 
 		return TRUE;
 	}
@@ -186,7 +197,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		if (LOWORD(wParam) == IDC_BT_TDH_DEBUG)
 		{
-			//App->CL_TopBar->Hide_Tabs();
+			App->CL_TopDlg->Hide_Tabs();
 			ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
 			App->CL_TopDlg->Toggle_Tabs_Debug_Flag = 1;
 
@@ -198,7 +209,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_TBH_CAMERA)
 		{
 			App->CL_TopDlg->Hide_Tabs();
-			//ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
+			ShowWindow(App->CL_TopDlg->Camera_TB_hWnd, SW_SHOW);
 			App->CL_TopDlg->Toggle_Tabs_Camera_Flag = 1;
 
 			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -218,16 +229,11 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 void CL64_TopDlg::Hide_Tabs(void)
 {
 	ShowWindow(Debug_TB_hWnd, SW_HIDE);
-	//ShowWindow(Model_TB_hWnd, SW_HIDE);
-	/*ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(Animation_TB_hWnd, SW_HIDE);
-	ShowWindow(Files_TB_hWnd, SW_HIDE);*/
-
+	ShowWindow(Camera_TB_hWnd, SW_HIDE);
+	
 	Toggle_Tabs_Debug_Flag = 0;
-	//Toggle_Tabs_Model_Flag = 0;
-	//Toggle_Tabs_Camera_Flag = 0;
-	//Toggle_Tabs_Animation_Flag = 0;
-	//Toggle_Tabs_File_Flag = 0;
+	Toggle_Tabs_Camera_Flag = 0;
+	
 }
 
 // *************************************************************************
@@ -346,6 +352,91 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return 1;
 		}
 
+		
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Camera_TB:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_TopDlg::Start_Camera_TB(void)
+{
+	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_CAMERA, Tabs_TB_hWnd, (DLGPROC)Camera_TB_Proc);
+}
+
+// *************************************************************************
+// *			Camera_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_MODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_CAMERA_MODEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Cam_ModelMode_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CAMERA_FREE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Cam_FreeMode_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_CAMERA_MODEL)
+		{
+			App->CL_Camera->Reset_View();
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Model;
+
+			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 1;
+			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 0;
+
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
+		{
+			App->CL_Camera->Reset_View();
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+
+			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 1;
+			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 0;
+			
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return 1;
+		}
 		
 		return FALSE;
 	}

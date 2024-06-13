@@ -35,6 +35,7 @@ public:
 
 	// Tab Options
 	void Start_Debug_TB(void);
+	void Start_Camera_TB(void);
 
 	bool Toggle_Tabs_Debug_Flag;
 	bool Toggle_Tabs_Camera_Flag;
@@ -46,7 +47,7 @@ public:
 
 	// Tab Options
 	HWND Debug_TB_hWnd;
-
+	HWND Camera_TB_hWnd;
 
 private:
 
@@ -55,7 +56,9 @@ private:
 
 	// Tab Options
 	static LRESULT CALLBACK Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-
+	bool Toggle_Cam_ModelMode_Flag;
+	bool Toggle_Cam_FreeMode_Flag;
 };
 

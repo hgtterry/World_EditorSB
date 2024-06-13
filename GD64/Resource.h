@@ -22,6 +22,7 @@
 #define IDD_TB_TAB                      136
 #define IDD_TB_DEBUG                    137
 #define IDB_GRIDON                      138
+#define IDD_TB_CAMERA                   138
 #define IDB_GRIDOFF                     139
 #define IDB_HAIRON                      140
 #define IDB_HAIROFF                     141
@@ -35,10 +36,11 @@
 #define IDC_BT_TD_DEBUG_IMGUIFPS        1006
 #define IDC_BUTTON1                     1007
 #define IDC_BUTTON2                     1008
-#define IDC_BT_TB_CAMERA                1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BUTTON3                     1009
+#define IDC_BT_CAMERA_MODEL             1009
 #define IDC_BUTTON4                     1010
+#define IDC_BT_CAMERA_FREE              1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_TBSHOWGRID                  1012
 #define ID_VIEW_RESET                   32771
@@ -65,7 +67,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1009
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

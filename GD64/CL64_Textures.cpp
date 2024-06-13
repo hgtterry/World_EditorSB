@@ -120,7 +120,7 @@ void CL64_Textures::Load_Textures_Assimp()
 // *************************************************************************
 bool CL64_Textures::Create_DummyTexture(char* Folder)
 {
-	HBITMAP hbmpTemp;
+	//HBITMAP hbmpTemp;
 	//hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
 
 	char OutFile[MAX_PATH];
