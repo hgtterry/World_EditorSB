@@ -356,3 +356,53 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	return FALSE;
 }
 
+// *************************************************************************
+// *						Init_Bmps_Globals Terry Bernie				   *
+// *************************************************************************
+void CL64_TopDlg::Init_Bmps_Globals(void)
+{
+
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+
+	/*Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);*/
+
+	
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	/*Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = (LPSTR) "Show Model Information";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);*/
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR) "Toggle Main Cross Hair";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = (LPSTR) "Toggle Main Grid";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+}
+

@@ -75,6 +75,7 @@ public:
 	void Flash_Window();
 	void Debug_Text();
 
+	void LoadProgramResource(void);
 	void SetBrushes_Fonts(void);
 
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
@@ -100,9 +101,16 @@ public:
 	HFONT Font_CB15;
 
 	HCURSOR CUR;
+	
+	HANDLE Hnd_HairOn_Bmp;
+	HANDLE Hnd_HairOff_Bmp;
+	HANDLE Hnd_GridOn_Bmp;
+	HANDLE Hnd_GridOff_Bmp;
+	HANDLE Hnd_ModelInfo_Bmp;
+	HANDLE Hnd_ModelInfoOn_Bmp;
+
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
-	
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_But_Pressed;

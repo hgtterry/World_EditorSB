@@ -214,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="GD64.ico" />
+    <Image Include="res\MenuBar\CrossHairOff.bmp" />
+    <Image Include="res\MenuBar\CrossHairOn.bmp" />
+    <Image Include="res\MenuBar\GridOff.bmp" />
+    <Image Include="res\MenuBar\GridOn.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

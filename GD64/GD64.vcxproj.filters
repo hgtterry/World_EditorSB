@@ -171,5 +171,17 @@
     <Image Include="GD64.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\GridOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\GridOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\CrossHairOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\CrossHairOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -37,6 +37,8 @@ public:
 
 	bool Toggle_Tabs_Debug_Flag;
 
+	void Init_Bmps_Globals(void);
+
 	HWND TabsHwnd;
 	HWND Tabs_TB_hWnd;
 

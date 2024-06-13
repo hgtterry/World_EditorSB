@@ -22,6 +22,7 @@ distribution.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 
 CL64_App::CL64_App(void)
@@ -59,6 +60,14 @@ CL64_App::CL64_App(void)
 	AppBackground = 0;
 
 	Font_CB15 = 0;
+
+	Hnd_HairOn_Bmp = NULL;
+	Hnd_HairOff_Bmp = NULL;
+	Hnd_ModelInfo_Bmp = NULL;
+	Hnd_ModelInfoOn_Bmp = NULL;
+	Hnd_GridOn_Bmp = NULL;
+	Hnd_GridOff_Bmp = NULL;
+
 	BlackBrush = 0;
 	Brush_But_Normal = 0;
 	Brush_But_Normal = 0;
@@ -71,12 +80,11 @@ CL64_App::CL64_App(void)
 	Debug_App = 1;
 
 	Block_Mouse_Buttons = 0;
-	//Say("Created");
 }
 
 CL64_App::~CL64_App(void)
 {
-	Say("Destroyed");
+	//Say("Destroyed");
 }
 
 // *************************************************************************
@@ -169,6 +177,22 @@ void CL64_App::Flash_Window()
 void CL64_App::Debug_Text()
 {
 	MessageBox(App->MainHwnd, "Here", "Debug", MB_OK);
+}
+
+// *************************************************************************
+// *		LoadProgramResource:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void CL64_App::LoadProgramResource(void)
+{
+	
+	Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
+	Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
+
+	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
+	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
+
+	/*Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
+	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);*/
 }
 
 // *************************************************************************

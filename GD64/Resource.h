@@ -21,6 +21,11 @@
 #define IDD_TOPBAR                      135
 #define IDD_TB_TAB                      136
 #define IDD_TB_DEBUG                    137
+#define IDB_GRIDON                      138
+#define IDB_GRIDOFF                     139
+#define IDB_HAIRON                      140
+#define IDB_BITMAP2                     141
+#define IDB_HAIROFF                     141
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -33,7 +38,6 @@
 #define IDC_BUTTON2                     1008
 #define IDC_BUTTON3                     1009
 #define IDC_BUTTON4                     1010
-#define IDC_BUTTON5                     1011
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_TBSHOWGRID                  1012
 #define ID_VIEW_RESET                   32771
@@ -58,7 +62,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           110
