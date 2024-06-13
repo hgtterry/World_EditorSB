@@ -132,9 +132,8 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		CreateMaterial(MatName);
-		//App->Say(MatName);
-
+		CreateMaterial_Resource(MatName);
+		
 		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, App->CL_Ogre->App_Resource_Group);
 
 		FaceCount = 0;
@@ -263,15 +262,15 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 }
 
 // *************************************************************************
-// *			CreateMaterial:- Terry and Hazel Flanigan 2024  	   	   *
+// *		CreateMaterial_Resource:- Terry and Hazel Flanigan 2024    	   *
 // *************************************************************************
-void CL64_Converters::CreateMaterial(char* MatName)
+void CL64_Converters::CreateMaterial_Resource(char* MatName)
 {
 
 	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
 
 	auto status = omatMgr->createOrRetrieve(MatName, App->CL_Ogre->App_Resource_Group);
-	auto omat = static_pointer_cast<Material>(status.first);
+	//auto omat = static_pointer_cast<Material>(status.first);
 
 }
 

@@ -141,7 +141,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Terry\Desktop\World_EditorSB\Common_64\Ogre3D\include\OGRE\RTShaderSystem;C:\Users\Terry\Desktop\World_EditorSB\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;C:\Users\Terry\Desktop\World_EditorSB\Common_64\Ogre3D\include\OGRE\Overlay;C:\Users\Terry\Desktop\World_EditorSB\Common_64\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +150,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)GD64.exe</OutputFile>
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\Terry\Desktop\World_EditorSB\Common_64\Ogre3D\libs;C:\Users\Terry\Desktop\World_EditorSB\Common_64\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

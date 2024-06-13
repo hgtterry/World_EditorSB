@@ -34,7 +34,7 @@ public:
 	void Convert_ToOgre3D(bool Create);
 	void Get_Data(int Index, int FaceIndex);
 
-	void CreateMaterial(char* MatName);
+	void CreateMaterial_Resource(char* MatName);
 
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
