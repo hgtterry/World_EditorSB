@@ -34,7 +34,8 @@
 #define IDC_BUTTON3                     1009
 #define IDC_BUTTON4                     1010
 #define IDC_BUTTON5                     1011
-#define IDC_BUTTON6                     1012
+#define IDC_TBSHOWHAIR                  1011
+#define IDC_TBSHOWGRID                  1012
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773

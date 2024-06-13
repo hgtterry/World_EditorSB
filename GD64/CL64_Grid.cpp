@@ -37,6 +37,7 @@ CL64_Grid::CL64_Grid(void)
 
 	ShowGridFlag = 1;
 	ShowDivisions = 1;
+	ShowHair = 1;
 
 }
 
@@ -118,6 +119,14 @@ void CL64_Grid::Grid_Update(bool Create)
 }
 
 // *************************************************************************
+// *	  		Grid_SetVisiable:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Grid::Grid_SetVisible(bool Option)
+{
+	GridNode->setVisible(Option);
+}
+
+// *************************************************************************
 // *	  		Hair_Update:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Grid::Hair_Update(bool Create)
@@ -158,4 +167,12 @@ void CL64_Grid::Hair_Update(bool Create)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->setVisible(true);
 	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *	  		Hair_SetVisiable:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Grid::Hair_SetVisible(bool Option)
+{
+	HairNode->setVisible(Option);
 }

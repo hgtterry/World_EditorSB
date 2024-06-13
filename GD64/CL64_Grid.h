@@ -7,7 +7,10 @@ public:
 	~CL64_Grid(void);
 
 	void Grid_Update(bool Create);
+	void Grid_SetVisible(bool Option);
+
 	void Hair_Update(bool Create);
+	void Hair_SetVisible(bool Option);
 
 	Ogre::ManualObject* GridManual;
 	Ogre::SceneNode* GridNode;
@@ -40,6 +43,6 @@ public:
 
 	bool ShowGridFlag;
 	bool ShowDivisions;
-
+	bool ShowHair;
 };
 

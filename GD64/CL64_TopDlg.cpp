@@ -84,6 +84,54 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_TBSHOWGRID)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+
+			if (App->CL_Grid->ShowGridFlag == 1)
+			{
+				App->CL_Grid->Grid_SetVisible(0);
+				App->CL_Grid->ShowGridFlag = 0;
+
+				//App->CL_TopBar->Toggle_Grid_Flag = 0;
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+			}
+			else
+			{
+				App->CL_Grid->Grid_SetVisible(1);
+				App->CL_Grid->ShowGridFlag = 1;
+
+				//App->CL_TopBar->Toggle_Grid_Flag = 1;
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Hair
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+
+			if (App->CL_Grid->ShowHair == 1)
+			{
+				App->CL_Grid->ShowHair = 0;
+				App->CL_Grid->Hair_SetVisible(0);
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+			}
+			else
+			{
+				App->CL_Grid->ShowHair = 1;
+				App->CL_Grid->Hair_SetVisible(1);
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+			return TRUE;
+		}
+
 		break;
 	}
 	return FALSE;
