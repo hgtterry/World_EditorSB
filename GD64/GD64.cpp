@@ -80,7 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
+	App->LoadProgramResource();
 
     App->SetMainWinCentre();
 
@@ -96,6 +96,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 
     SetTimer(App->MainHwnd, 1, 1, NULL);
+
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
 
     MSG msg;
 

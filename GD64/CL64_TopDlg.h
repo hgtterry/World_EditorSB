@@ -31,11 +31,13 @@ public:
 
 	void Start_TopBar();
 	void Start_Tabs_Headers(void);
+	void Hide_Tabs(void);
 
 	// Tab Options
 	void Start_Debug_TB(void);
 
 	bool Toggle_Tabs_Debug_Flag;
+	bool Toggle_Tabs_Camera_Flag;
 
 	void Init_Bmps_Globals(void);
 

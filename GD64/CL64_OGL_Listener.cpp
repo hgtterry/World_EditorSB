@@ -179,7 +179,7 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Crosshair
 	//if (Show_Crosshair == 1)
 	{
-		RenderCrossHair();
+		//RenderCrossHair();
 	}
 
 	if (depthTestEnabled)

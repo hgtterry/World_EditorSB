@@ -172,7 +172,7 @@ void CL64_App::Flash_Window()
 }
 
 // *************************************************************************
-// *						Debug_Text Terry Flanigan					   *
+// *			Debug_Text:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_App::Debug_Text()
 {
@@ -180,7 +180,7 @@ void CL64_App::Debug_Text()
 }
 
 // *************************************************************************
-// *		LoadProgramResource:- Terry and Hazel Flanigan 2023		  	   *
+// *		LoadProgramResource:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
 void CL64_App::LoadProgramResource(void)
 {
@@ -236,7 +236,7 @@ void CL64_App::SetBrushes_Fonts(void)
 }
 
 // *************************************************************************
-// *		Custom_Button_Toggle_Tabs Terry Bernie   			 	 	   *
+// *	Custom_Button_Toggle_Tabs:- Terry and Hazel Flanigan 2024  	  	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 {
@@ -302,7 +302,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 }
 
 // *************************************************************************
-// *					Custom_Button_Normal Terry Bernie   		  	   *
+// *		Custom_Button_Normal:- Terry and Hazel Flanigan 2024  	  	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 {
@@ -362,7 +362,7 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 }
 
 // *************************************************************************
-// *					Custom_Button Terry Bernie   			 	 	   *
+// *		Custom_Button_Toggle:- Terry and Hazel Flanigan 2024   	 	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 {
