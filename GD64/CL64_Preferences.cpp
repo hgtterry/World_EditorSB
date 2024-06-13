@@ -43,7 +43,7 @@ CL64_Preferences::~CL64_Preferences(void)
 // *************************************************************************
 void CL64_Preferences::Clean_Up(void)
 {
-	//MessageBox(NULL, "Deleted", "Deleted", MB_OK);
+	
 }
 
 // *************************************************************************
@@ -201,6 +201,7 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 
 	return FALSE;
 }
+
 // *************************************************************************
 // *			Read_Preferences:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************

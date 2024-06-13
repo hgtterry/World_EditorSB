@@ -137,11 +137,6 @@ bool CL64_Ogre_Init::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/SdkTrays.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Cube.zip", "Zip", App_Resource_Group);
 
-	
-	////-------------------------------- File System
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", App_Resource_Group);
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/New_Particles", "FileSystem", App_Resource_Group);
-
 	return 1;
 }
 
@@ -156,9 +151,6 @@ bool CL64_Ogre_Init::Configure(void)
 		return false; //No RenderSystem found
 	}
 
-	//	rs->setConfigOption("Full Screen", "No");
-	//	rs->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
-
 	mRoot->setRenderSystem(rs);
 
 	mWindow = mRoot->initialise(false);
@@ -171,12 +163,8 @@ bool CL64_Ogre_Init::Configure(void)
 
 	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
 
-	//auto params = rs->getFixedFunctionParams(TVC_NONE, FOG_NONE);
-	//params->setConstant(8, Matrix4()); // the "magic" 8 is defined in getFixedFunctionParams
-	//rs->applyFixedFunctionParams(params, GPV_GLOBAL);
-	// 
-	//App->Cl_Panels->Width = mWindow->getWidth();
-	//App->Cl_Panels->Height = mWindow->getHeight();
+	//App->CL_Panels->Width = mWindow->getWidth();
+	//App->CL_Panels->Height = mWindow->getHeight();
 
 	return true;
 }
@@ -187,23 +175,11 @@ bool CL64_Ogre_Init::Configure(void)
 bool CL64_Ogre_Init::chooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
-	//ImGui::ImguiManager::getSingleton().init(scnMgr);
-
+	
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
-
-	//mSceneMgr->setDisplaySceneNodes(true);
-
-	// add a bright light above the scene
-	/*Light* light = mSceneMgr->createLight();
-	light->setType(Light::LT_SPOTLIGHT);
-	light->setPosition(0, 0, 0);
-	light->setSpecularColour(ColourValue::White);
-
-	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	PartNode->attachObject(light);*/
 
 	return 1;
 }
@@ -219,13 +195,10 @@ bool CL64_Ogre_Init::createCamera(void)
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 
-	//mCamera->setAutoAspectRatio(true);
-
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 90, 100);
 	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
 
-	//PlacementCam = mSceneMgr->createCamera("PlacementCam");
 	return 1;
 }
 

@@ -96,10 +96,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	//------------------------------------------------ Escape 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
-		//if (App->CL_Ogre->FullScreenMode_Flag == 1)
-		{
-			//App->CL_Ogre->ExitFullScreen();
-		}
+		
 	}
 }
 
@@ -118,7 +115,6 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		if (App->CL_Ogre->OgreListener->CameraMode == Enums::Cam_Mode_Free)
 		{
 			App->CL_Ogre->OgreListener->mTranslateVector.z = -App->CL_Ogre->OgreListener->mMoveScale;
-			//App->CLSB_Camera_WE->Move_Camera_Forward(App->CLSB_Ogre->OgreListener->mMoveScale);
 		}
 	}
 
@@ -187,28 +183,6 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	//------------------------------------------------ Escape 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
-		/*if (Block_Keyboard == 0)
-		{
-			Block_Keyboard = 1;
-			if (App->BR_True3D_Mode_Active == 1)
-			{
-				App->CLSB_BR_Render->Go_BR_3D_Mode();
-			}
-			else
-			{
-				if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
-				{
-					App->CLSB_Ogre_Setup->ExitFullScreen();
-				}
-			}
-		}*/
-
-		//Block_Keyboard = 0;
+		
 	}
-
-	if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
-	{
-
-	}
-
 }

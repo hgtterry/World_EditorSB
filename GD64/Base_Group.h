@@ -42,9 +42,9 @@ public:
 
 	char GroupName[255];
 	char MaterialName[255];
-	char Text_FileName[255];			// Just Texture File Name ie Texture.bmp
+	char Text_FileName[255]; // Just Texture File Name ie Texture.bmp
 
-	char Equity_Text_FileName[255];			// Just Texture File Name ie Texture.bmp
+	char Equity_Text_FileName[255];	// Just Texture File Name ie Texture.bmp
 
 	char Texture_FolderPath[MAX_PATH];
 	char Texture_PathFileName[MAX_PATH];
@@ -61,21 +61,19 @@ public:
 	
 	bool Bitmap_Loaded;
 
-	std::vector<vertex_type> vertex_Data;		// XYZ
-	std::vector<polygon_type> Face_Data;		// ABC
-	std::vector<normal_type> Normal_Data;		// XYZ
-	std::vector<mapcoord_type> MapCord_Data;	// UV
+	std::vector<vertex_type> vertex_Data;			// XYZ
+	std::vector<polygon_type> Face_Data;			// ABC
+	std::vector<normal_type> Normal_Data;			// XYZ
+	std::vector<mapcoord_type> MapCord_Data;		// UV
 	std::vector<int_type> FaceIndex_Data;
 
-	std::vector<int_type> BoneIndex_Data; // Ogre
-	std::vector<int_type> BA_BoneIndex_Data; // Ogre
-	std::vector<int_type> BA_BoneVertexIndex_Data; // Ogre
-	std::vector<float_type> BA_Weight_Data; // Ogre
-	int BoneAssignMentCount; // Ogre
+	std::vector<int_type> BoneIndex_Data;			// Ogre
+	std::vector<int_type> BA_BoneIndex_Data;		// Ogre
+	std::vector<int_type> BA_BoneVertexIndex_Data;	// Ogre
+	std::vector<float_type> BA_Weight_Data;			// Ogre
+	int BoneAssignMentCount;						// Ogre
 
 	HBITMAP Base_Bitmap;
-	//geBitmap* RF_Bitmap;
-
 	HTREEITEM ListView_Item;
 };
 

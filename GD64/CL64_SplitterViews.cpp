@@ -372,8 +372,6 @@ LRESULT CALLBACK CL64_SplitterViews::Top_Left_Win_Proc(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_STBANNERTL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		//App->CL_CView->OnViewType(ID_VIEW_TOPVIEW);
 
 		return TRUE;
@@ -381,13 +379,6 @@ LRESULT CALLBACK CL64_SplitterViews::Top_Left_Win_Proc(HWND hDlg, UINT message, 
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_STTEST) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, RGB(0, 255, 0));
-			return (UINT)App->Brush_White;
-		}*/
 		return FALSE;
 	}
 
@@ -405,12 +396,6 @@ LRESULT CALLBACK CL64_SplitterViews::Top_Left_Win_Proc(HWND hDlg, UINT message, 
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_BT_TEST)
-		{
-			Debug
-				return TRUE;
-		}*/
-
 		return FALSE;
 	}
 

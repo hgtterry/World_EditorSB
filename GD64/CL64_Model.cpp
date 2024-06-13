@@ -92,25 +92,13 @@ void CL64_Model::Reset_Class(void)
 		Count++;
 	}
 
-	//--------------------- Clear Bounding box data
-	/*if (S_BoundingBox[0] != nullptr)
-	{
-		delete S_BoundingBox[0];
-		S_BoundingBox[0] = nullptr;
-	}*/
-
-	/*FileName[0] = 0;
-	Path_FileName[0] = 0;
-	Model_FolderPath[0] = 0;*/
 	Texture_FolderPath[0] = 0;
-	/*JustName[0] = 0;*/
 	GroupCount = 0;
 	TextureCount = 0;
 	VerticeCount = 0;
 	FaceCount = 0;
 	MotionCount = 0;
 
-	/*ItsAnOgreModel = 0;*/
 }
 
 // *************************************************************************
@@ -180,12 +168,7 @@ void CL64_Model::Set_Paths(void)
 	}
 	else if (_stricmp(FileName + strlen(FileName) - 5, ".Wepf") == 0)
 	{
-		/*char JustFileName[MAX_PATH];
-		GetFileTitleA(App->CL_Equity_SB->Pref_WE_Path_FileName, JustFileName, MAX_PATH);
-
-		strcpy(JustName, JustFileName);
-		int Len = strlen(JustFileName);
-		JustName[Len - 5] = 0;*/
+		
 	}
 	else
 	{

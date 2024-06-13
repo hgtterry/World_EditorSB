@@ -52,26 +52,6 @@ CL64_Converters::~CL64_Converters(void)
 // *************************************************************************
 void CL64_Converters::Set_Paths(void)
 {
-	/*char Num[100];
-	itoa(NameIndex, Num, 10);*/
-
-	/*strcpy(mWorld_Mesh_JustName, "World");
-	strcat(mWorld_Mesh_JustName, Num);
-
-	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, "Data");
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, "World_Test");
-
-	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
-
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, mWorld_Mesh_JustName);
-	strcat(mWorld_File_PathAndFile, ".mesh");
-
-	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);*/
-
 	strcpy(mWorld_File_Path, App->CL_Model->Model_FolderPath);
 
 	strcpy(mWorld_File_PathAndFile, App->CL_Model->Model_FolderPath);
@@ -81,10 +61,6 @@ void CL64_Converters::Set_Paths(void)
 	strcpy(mWorld_Mesh_JustName, App->CL_Model->JustName);
 	strcpy(mExport_Just_Name, App->CL_Model->JustName);
 	
-	//App->Say(mWorld_File_PathAndFile);
-
-	/*NameIndex++;*/
-
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
@@ -270,7 +246,6 @@ void CL64_Converters::CreateMaterial_Resource(char* MatName)
 	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
 
 	auto status = omatMgr->createOrRetrieve(MatName, App->CL_Ogre->App_Resource_Group);
-	//auto omat = static_pointer_cast<Material>(status.first);
 
 }
 

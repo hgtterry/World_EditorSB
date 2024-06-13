@@ -218,32 +218,6 @@ bool CL64_OGL_Listener::Assimp_Render_Textures(void)
 
 	int GroupCount = App->CL_Model->GroupCount;
 
-	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
-	//{
-	//	Assimp_Textured_Parts(Selected_Group);
-	//	glDisable(GL_TEXTURE_2D);
-	//	return 1;
-	//}
-
-	//Count = 0;
-	//if (Show_HideGroup == 1) // Hide Selected SubMesh
-	//{
-	//	while (Count < GroupCount)
-	//	{
-	//		if (Selected_Group == Count)
-	//		{
-	//		}
-	//		else
-	//		{
-	//			Assimp_Textured_Parts(Count);
-	//		}
-	//		Count++;
-	//	}
-
-	//	glDisable(GL_TEXTURE_2D);
-	//	return 1;
-	//}
-
 	Count = 0;
 	while (Count < GroupCount)
 	{
@@ -270,7 +244,6 @@ bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 
-		//glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Model->Group[Count]->MaterialIndex]);
 		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Model->Group[Count]->MaterialIndex]);
 
 	}
@@ -376,7 +349,6 @@ void CL64_OGL_Listener::RenderCrossHair(void)
 	glDisable(GL_TEXTURE_2D);
 	//glDisable(GL_DEPTH_TEST);
 
-	//float Length = App->CL_Model->S_BoundingBox[0]->radius * 2;
 	float Length = 40;
 	glLineWidth(3);
 

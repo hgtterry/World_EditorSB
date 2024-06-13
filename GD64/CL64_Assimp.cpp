@@ -160,14 +160,6 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
 
-		//App->CL_Vm_Model->S_MeshGroup[Count]->HasBones = mesh->HasBones();
-		//App->CL_Vm_Model->S_MeshGroup[Count]->BoneCount = mesh->mNumBones;
-
-	//	/*if (App->S_MeshGroup[Count]->HasBones == 1)
-	//	{
-	//	mHasBones = 1;
-	//	}*/
-
 		// Get Texture Path/Name
 		strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, App->CL_Model->Texture_FolderPath); // Back Slash remains
 
@@ -187,13 +179,8 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 			App->CL_Model->Group[Count]->MaterialIndex = -1;
 		}
 
-		// FileView
-	//	App->CL_Model->Group[Count]->ListView_Item = App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
-
 		Count++;
 	}
-
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
 
 }
 

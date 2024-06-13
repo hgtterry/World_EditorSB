@@ -43,7 +43,7 @@ CL64_Grid::CL64_Grid(void)
 
 CL64_Grid::~CL64_Grid(void)
 {
-	//App->Say("CL64_Grid Deleted");
+	
 }
 
 // *************************************************************************
@@ -57,7 +57,7 @@ void CL64_Grid::Grid_Update(bool Create)
 	if (Create == 1)
 	{
 		GridManual = App->CL_Ogre->mSceneMgr->createManualObject("BoxManual");
-		GridManual->setRenderQueueGroup(1);
+		//GridManual->setRenderQueueGroup(1);
 	}
 
 	GridManual->clear();
@@ -134,7 +134,7 @@ void CL64_Grid::Hair_Update(bool Create)
 	if (Create == 1)
 	{
 		HairManual = App->CL_Ogre->mSceneMgr->createManualObject("HairManual");
-		HairManual->setRenderQueueGroup(5);
+		//HairManual->setRenderQueueGroup(5);
 	}
 
 	HairManual->clear();

@@ -99,16 +99,12 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				App->CL_Grid->Grid_SetVisible(0);
 				App->CL_Grid->ShowGridFlag = 0;
 
-				//App->CL_TopBar->Toggle_Grid_Flag = 0;
-
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 			}
 			else
 			{
 				App->CL_Grid->Grid_SetVisible(1);
 				App->CL_Grid->ShowGridFlag = 1;
-
-				//App->CL_TopBar->Toggle_Grid_Flag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
@@ -271,28 +267,28 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESETVIEW && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIDEMO && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIDEMO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_ImGui_Demo);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Hide_Test_Cube);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIFPS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIFPS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_FPS);
@@ -457,13 +453,9 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
-	/*Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	//Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);*/
-
-	
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
