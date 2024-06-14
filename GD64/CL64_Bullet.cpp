@@ -27,6 +27,14 @@ distribution.
 
 CL64_Bullet::CL64_Bullet(void)
 {
+	collisionConfiguration = NULL;
+	dispatcher = NULL;
+	overlappingPairCache = NULL;
+	solver = NULL;
+	dynamicsWorld = NULL;
+
+	GD_Physics_On = 1;
+	Physics_Dlg_Active = 0;
 }
 
 CL64_Bullet::~CL64_Bullet(void)

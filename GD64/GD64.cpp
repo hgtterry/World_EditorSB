@@ -93,7 +93,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
 	App->CL_Panels->Resize_TopDlg();
-	
+	App->CL_Bullet->Init_Bullet();
 
     SetTimer(App->MainHwnd, 1, 1, NULL);
 

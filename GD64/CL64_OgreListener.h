@@ -74,6 +74,8 @@ public:
 	int	Pl_MouseX;
 	int	Pl_MouseY;
 	
+	int Bullet_Step;
+
 	long Pl_Cent500X;
 	long Pl_Cent500Y;
 
