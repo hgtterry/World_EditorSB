@@ -141,7 +141,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Assimp\Include;C:\Users\Terry\Desktop\World_EditorSB\Common_64\Bullet\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Assimp\Include;..\Common_64\Bullet\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
