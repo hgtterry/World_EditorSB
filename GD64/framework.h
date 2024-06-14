@@ -13,6 +13,7 @@
 
 // Windows Header Files
 #include <windows.h>
+#include "btBulletDynamicsCommon.h"
 
 #include <stdlib.h>
 #include <malloc.h>

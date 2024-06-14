@@ -25,7 +25,7 @@ distribution.
 #include "CL64_App.h"
 #include "CL64_Ogre_Init.h"
 
-
+#include "SdkSample.h"
 
 CL64_Ogre_Init::CL64_Ogre_Init(void)
 {

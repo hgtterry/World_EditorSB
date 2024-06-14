@@ -29,7 +29,6 @@ distribution.
 #include "OgreImGuiOverlay.h"
 #include "OgreAdvancedRenderControls.h"
 #include "OgreTrays.h"
-
 #include "SdkSample.h"
 #include "OgreImGuiOverlay.h"
 #include <OgreImGuiInputListener.h>

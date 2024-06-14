@@ -43,6 +43,7 @@ CL64_App::CL64_App(void)
 	CL_TopDlg =			nullptr;
 	CL_Panels =			nullptr;
 	CL_Converters =		nullptr;
+	CL_Bullet =			nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -109,6 +110,7 @@ void CL64_App::InitApp(void)
 	CL_TopDlg =			new CL64_TopDlg();
 	CL_Panels =			new CL64_Panels();
 	CL_Converters =		new CL64_Converters();
+	CL_Bullet =			new CL64_Bullet();
 
 	SetBrushes_Fonts();
 }

@@ -39,6 +39,7 @@ distribution.
 #include "CL64_TopDlg.h"
 #include "CL64_Panels.h"
 #include "CL64_Converters.h"
+#include "CL64_Bullet.h"
 
 class CL64_App
 {
@@ -63,6 +64,7 @@ public:
 	CL64_TopDlg*		CL_TopDlg;
 	CL64_Panels*		CL_Panels;
 	CL64_Converters*	CL_Converters;
+	CL64_Bullet*		CL_Bullet;
 
 	void InitApp(void);
 
