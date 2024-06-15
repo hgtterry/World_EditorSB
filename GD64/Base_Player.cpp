@@ -69,6 +69,9 @@ Base_Player::Base_Player()
 	IsMOving_Right = 0;
 	IsMOving_Left = 0;
 
+	Selected_Entity_Index = 0;
+	Selected_Object_Name[0] = 0;
+
 	mJump = 0;
 	mJumpSpeed = 4.5;
 

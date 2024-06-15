@@ -43,7 +43,7 @@ void CL64_Player::Initialize()
 
 	int Index = Player_Count;
 
-	//Base_Player* pBase = App->SBC_Scene->B_Player[Index];
+	//Base_Player* pBase = App->CL_Scene->B_Player[Index];
 
 	//// ------------------- Ogre
 	//if (pBase->Player_Ent && pBase->Player_Node)
