@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Base_Group.h" />
+    <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Assimp.h" />
     <ClInclude Include="CL64_Bullet.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Player.h" />
     <ClInclude Include="CL64_Preferences.h" />
+    <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_SplitterViews.h" />
     <ClInclude Include="CL64_Textures.h" />
     <ClInclude Include="CL64_TopDlg.h" />
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base_Group.cpp" />
+    <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Assimp.cpp" />
     <ClCompile Include="CL64_Bullet.cpp" />
@@ -203,6 +206,7 @@
     <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Player.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
+    <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_SplitterViews.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_TopDlg.cpp" />

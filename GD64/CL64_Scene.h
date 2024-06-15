@@ -22,42 +22,11 @@ distribution.
 */
 
 #pragma once
-
-#include "Base_Player.h"
-#include "Base_Group.h"
-
-class CL64_Model
+class CL64_Scene
 {
 public:
-	CL64_Model();
-	~CL64_Model();
 
-	void Reset_Class(void);
-
-	void Create_Mesh_Group(int Index);
-	void Clear_Model_And_Reset(void);
-	void Set_Paths(void);
-
-	Base_Group* Group[100];
-
-	char FileName[MAX_PATH];
-	char Path_FileName[MAX_PATH];
-	char Model_FolderPath[MAX_PATH];
-	char Texture_FolderPath[MAX_PATH];
-	char JustName[MAX_PATH];
-
-	// Internal
-	int GroupCount;
-	int TextureCount;
-	int MotionCount;
-	int VerticeCount;
-	int FaceCount;
-	int Model_Type;
-
-	// Ogre
-	int Ogre_Face_Count;
-
-
-	bool Model_Loaded;
+	CL64_Scene(void);
+	~CL64_Scene(void);
 };
 
