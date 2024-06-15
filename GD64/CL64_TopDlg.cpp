@@ -40,6 +40,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 
 	Toggle_Cam_ModelMode_Flag = 1;
 	Toggle_Cam_FreeMode_Flag = 0;
+
+	Toggle_PhysicaDebug_Node_Flag = 1;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
@@ -254,6 +256,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -295,12 +298,33 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
+			{
+				App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
+				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(false);
+			}
+			else
+			{
+				App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 1;
+				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(true);
+			}
+			return 1;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
 			App->CL_Camera->Reset_View();
