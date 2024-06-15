@@ -32,6 +32,10 @@ public:
 	void Create_Player_Object(void);
 	void Initialize();
 
+	Ogre::Vector3 Current_Position;
+	btVector3 Physics_Position;
+	btQuaternion Physics_Rotation;
+
 	int Player_Count;
 
 };

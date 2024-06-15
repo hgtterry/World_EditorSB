@@ -43,11 +43,11 @@ void CL64_Player::Create_Player_Object(void)
 
 	App->CL_Scene->B_Player[Index] = new Base_Player();
 
-	//Initialize();
+	Initialize();
 
-	//App->CL_Scene->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
-
-	//Player_Count++;
+	App->CL_Scene->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	
+	Player_Count++;
 
 }
 
@@ -61,9 +61,9 @@ void CL64_Player::Initialize()
 	int Index = Player_Count;
 
 	Base_Player* pBase = App->CL_Scene->B_Player[Index];
-
+	
 	// ------------------- Ogre
-	if (pBase->Player_Ent && pBase->Player_Node)
+	/*if (pBase->Player_Ent && pBase->Player_Node)
 	{
 		App->CL_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
 		App->CL_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
@@ -71,25 +71,28 @@ void CL64_Player::Initialize()
 		pBase->Player_Ent = nullptr;
 		pBase->Player_Node = nullptr;
 		pBase->CameraPitch = nullptr;
-	}
-
+	}*/
+	
 	/*pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 	pBase->Player_Node->setVisible(false);*/
 
-	Pos.x = pBase->StartPos.x;
-	Pos.y = pBase->StartPos.y;
-	Pos.z = pBase->StartPos.z;
+	Pos.x = 0; //pBase->StartPos.x;
+	Pos.y = 0; //pBase->StartPos.y;
+	Pos.z = 0;// pBase->StartPos.z;
 
-	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 
+	
+	//pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
+	
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
+	
 	btVector3 inertia = btVector3(0, 0, 0);
 	btQuaternion rot = btQuaternion(0, 0, 0, 1);
 	btDefaultMotionState* state = new btDefaultMotionState(btTransform(rot, pos));
-
+	
 	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
 	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
 	//pBase->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
@@ -102,7 +105,7 @@ void CL64_Player::Initialize()
 
 
 	int f = pBase->Phys_Body->getCollisionFlags();
-	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
 	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);

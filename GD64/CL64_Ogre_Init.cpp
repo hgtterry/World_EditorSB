@@ -281,6 +281,15 @@ bool CL64_Ogre_Init::createFrameListener(void)
 
 		RenderListener = new CL64_OGL_Listener();
 		mSceneMgr->addRenderQueueListener(RenderListener);
+
+		BulletListener = new CL64_DebugBulletWorld();
+
+		mSceneMgr->addRenderQueueListener(BulletListener);
+
+		BulletListener->setDebugMode(BulletListener->getDebugMode()
+			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
+		App->CL_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
+
 	}
 	else
 	{

@@ -29,9 +29,11 @@ distribution.
 
 CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 {
-	Render_Debug_Flag = 0;
+	Render_Debug_Flag = 1;
+	m_debugMode = (DebugDrawModes)DBG_DrawWireframe;
 
-	ColourMain = Ogre::ColourValue(1, 1, 1, 1);
+	ColourMain = Ogre::ColourValue(0, 1, 0, 1);
+	mLines = nullptr;
 
 	btDebug_Manual = App->CL_Ogre->mSceneMgr->createManualObject("btManual");
 	btDebug_Manual->setRenderQueueGroup(Ogre::RENDER_QUEUE_MAX);
@@ -48,7 +50,6 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 
 	btDebug_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
-
 
 	vertex_From.resize(100000);
 	vertex_To.resize(100000);
@@ -119,14 +120,14 @@ int CL64_DebugBulletWorld::getDebugMode() const {
 }
 
 // *************************************************************************
-// *					renderQueueStarted Terry Bernie					   *
+// *		renderQueueStarted:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_DebugBulletWorld::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, bool& skipThisInvocation)
 {
 	Render_Debug();
 }
 // *************************************************************************
-// *					renderQueueEnded Terry Bernie					   *
+// *			renderQueueEnded:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_DebugBulletWorld::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
 {
@@ -138,7 +139,7 @@ void CL64_DebugBulletWorld::renderQueueEnded(Ogre::uint8 queueGroupId, const Str
 }
 
 // *************************************************************************
-// *				PreRender   Terry Bernie							   *
+// *				PreRender:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_DebugBulletWorld::PreRender()
 {
@@ -146,7 +147,7 @@ void CL64_DebugBulletWorld::PreRender()
 }
 
 // *************************************************************************
-// *				PostRender   Terry Bernie							   *
+// *				PostRender:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_DebugBulletWorld::PostRender()
 {
@@ -154,7 +155,7 @@ void CL64_DebugBulletWorld::PostRender()
 }
 
 // *************************************************************************
-// *					Render_Debug_Bullet   Terry Bernie				   *
+// *		Render_Debug_Bullet:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_DebugBulletWorld::Render_Debug_Bullet()
 {
@@ -162,16 +163,14 @@ void CL64_DebugBulletWorld::Render_Debug_Bullet()
 }
 
 // *************************************************************************
-// *						Render_Debug Terry Bernie	   				   *
+// *				Render_Debug:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
 bool CL64_DebugBulletWorld::Render_Debug(void)
 {
 	if (Render_Debug_Flag == 1)
 	{
-
 		if (V_Count > 0)
 		{
-
 			btDebug_Manual->beginUpdate(0);
 
 			int Count = 0;
@@ -192,6 +191,7 @@ bool CL64_DebugBulletWorld::Render_Debug(void)
 	}
 	else
 	{
+		App->Flash_Window();
 		Clear_Debug_Render();
 	}
 
@@ -200,7 +200,7 @@ bool CL64_DebugBulletWorld::Render_Debug(void)
 }
 
 // *************************************************************************
-// *					Clear_Debug_Render   Terry Bernie				   *
+// *			Clear_Debug_Render:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_DebugBulletWorld::Clear_Debug_Render()
 {

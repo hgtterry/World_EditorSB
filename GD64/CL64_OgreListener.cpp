@@ -101,6 +101,8 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Mode_Camera_Free(evt.timeSinceLastFrame);
 	}
 
+	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
+
 	return 1;
 }
 
