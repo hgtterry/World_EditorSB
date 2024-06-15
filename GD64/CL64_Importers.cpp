@@ -44,12 +44,12 @@ bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2
 		return 0;
 	}
 
-	App->CL_Model->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Model_And_Reset();
 
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
 
-	App->CL_Model->Set_Paths();
+	App->CL_Scene->Set_Paths();
 
 	bool Test = App->CL_Assimp->LoadFile(Model_Path_And_File);
 	if (Test == 0)
@@ -58,7 +58,7 @@ bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2
 		return 0;
 	}
 
-	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+	App->CL_Scene->Model_Type = Enums::LoadedFile_Assimp;
 
 	//Set_Equity();
 
@@ -66,7 +66,7 @@ bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2
 
 	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
 
-	App->CL_Model->Model_Loaded = 1;
+	App->CL_Scene->Model_Loaded = 1;
 
 	App->Say("Imported");
 

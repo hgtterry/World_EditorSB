@@ -282,15 +282,15 @@ void CL64_ImGui::Model_Data_GUI(void)
 		ImGui::Spacing();
 		ImGui::Text("Model Info");
 		ImGui::Text("  ");
-		ImGui::Text("Model Name:- %s", App->CL_Model->JustName);
-		ImGui::Text("Model File Name:- %s", App->CL_Model->FileName);
-		ImGui::Text("Model Path:- %s", App->CL_Model->Path_FileName);
-		ImGui::Text("Texture Path:- %s", App->CL_Model->Texture_FolderPath);
+		ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
+		ImGui::Text("Model File Name:- %s", App->CL_Scene->FileName);
+		ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
+		ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
 		ImGui::Text("  ");
-		ImGui::Text("Vertices:- %i", App->CL_Model->VerticeCount);
-		ImGui::Text("Faces:- %i", App->CL_Model->FaceCount);
-		ImGui::Text("Groups:- %i", App->CL_Model->GroupCount);
-		ImGui::Text("Motions:- %i", App->CL_Model->MotionCount);
+		ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
+		ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+		ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
+		ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
 		
 		//ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);
 

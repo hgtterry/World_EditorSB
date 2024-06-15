@@ -46,39 +46,39 @@ void CL64_Textures::Load_Textures_Assimp()
 	int Count = 0;
 	bool DummyCreated = 0;
 
-	int mGroupCount = App->CL_Model->GroupCount;
+	int mGroupCount = App->CL_Scene->GroupCount;
 
 	while (Count < mGroupCount)
 	{
 		char JustFileName[MAX_PATH];
-		GetFileTitleA(App->CL_Model->Group[Count]->Text_FileName, JustFileName, MAX_PATH);
-		strcpy(App->CL_Model->Group[Count]->Text_FileName, JustFileName);
+		GetFileTitleA(App->CL_Scene->Group[Count]->Text_FileName, JustFileName, MAX_PATH);
+		strcpy(App->CL_Scene->Group[Count]->Text_FileName, JustFileName);
 
 		int Test = strcmp(JustFileName, "No_Texture");
 		if (Test != 0) // not a match
 		{
 
 			char ImageFullPath[MAX_PATH];
-			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
-			strcat(ImageFullPath, App->CL_Model->Group[Count]->Text_FileName);
+			strcpy(ImageFullPath, App->CL_Scene->Texture_FolderPath);
+			strcat(ImageFullPath, App->CL_Scene->Group[Count]->Text_FileName);
 
-			strcpy(App->CL_Model->Group[v]->Texture_PathFileName, ImageFullPath);
+			strcpy(App->CL_Scene->Group[v]->Texture_PathFileName, ImageFullPath);
 
 			strcpy(TextureFileName, ImageFullPath);
 
 			//Windows_Preview_FullPath(v, ImageFullPath);
 
-			bool test = Load_OpenGL_Textures(App->CL_Model->Group[Count]->MaterialIndex);
+			bool test = Load_OpenGL_Textures(App->CL_Scene->Group[Count]->MaterialIndex);
 			if (test == 0)
 			{
 				//App->Error_ToFile("Loading Dummy Texture Instead");
-				App->CL_Textures->Create_DummyTexture(App->CL_Model->Texture_FolderPath);
+				App->CL_Textures->Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
 
 				char buf[MAX_PATH];
-				strcpy(buf, App->CL_Model->Texture_FolderPath);
+				strcpy(buf, App->CL_Scene->Texture_FolderPath);
 				strcat(buf, "TTemp.bmp");
 				UINT* Texture_List = g_Texture;
-				Soil_Load_Texture(Texture_List, buf, App->CL_Model->Group[Count]->MaterialIndex);
+				Soil_Load_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
 
 				//App->CL_Loader->LoadError = 1;
 				DummyCreated = 1;
@@ -89,13 +89,13 @@ void CL64_Textures::Load_Textures_Assimp()
 		{
 			//App->Error_ToFile("No Texture in File");
 			//App->Error_ToFile("Loading Dummy Texture Instead");
-			App->CL_Textures->Create_DummyTexture(App->CL_Model->Texture_FolderPath);
+			App->CL_Textures->Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
 
 			char buf[MAX_PATH];
-			strcpy(buf, App->CL_Model->Texture_FolderPath);
+			strcpy(buf, App->CL_Scene->Texture_FolderPath);
 			strcat(buf, "TTemp.bmp");
 			UINT* Texture_List = g_Texture;
-			Soil_Load_Texture(Texture_List, buf, App->CL_Model->Group[Count]->MaterialIndex);
+			Soil_Load_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
 
 			//App->CL_Loader->LoadError = 1;
 			DummyCreated = 1;
@@ -109,7 +109,7 @@ void CL64_Textures::Load_Textures_Assimp()
 	if (DummyCreated == 1)
 	{
 		char buf[MAX_PATH];
-		strcpy(buf, App->CL_Model->Texture_FolderPath);
+		strcpy(buf, App->CL_Scene->Texture_FolderPath);
 		strcat(buf, "TTemp.bmp");
 		remove(buf);
 	}
@@ -143,7 +143,7 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	int AddDummy = 0;
 
 	char buf[1024];
-	strcpy(buf, App->CL_Model->Texture_FolderPath);
+	strcpy(buf, App->CL_Scene->Texture_FolderPath);
 	strcat(buf, "Etemp.bmp");
 
 	UINT* Texture_List = g_Texture;

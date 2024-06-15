@@ -158,19 +158,19 @@ void CL64_OGL_Listener::Render_Loop()
 	Translate();
 
 	//---------------------- Textured
-	//if (App->CL_Model->Model_Loaded == 1 && ShowTextured == 1)
+	//if (App->CL_Scene->Model_Loaded == 1 && ShowTextured == 1)
 	{
 		glEnable(GL_DEPTH_TEST);
 		glShadeModel(GL_SMOOTH);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		/*if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		/*if (App->CL_Scene->Model_Type == Enums::LoadedFile_Actor)
 		{
 			RenderByTexture();
 		}*/
 
-		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Textures();
 		}
@@ -216,7 +216,7 @@ bool CL64_OGL_Listener::Assimp_Render_Textures(void)
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CL_Model->GroupCount;
+	int GroupCount = App->CL_Scene->GroupCount;
 
 	Count = 0;
 	while (Count < GroupCount)
@@ -239,12 +239,12 @@ bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
 	int B = 0;
 	int C = 0;
 
-	if (App->CL_Model->Group[Count]->MaterialIndex > -1)
+	if (App->CL_Scene->Group[Count]->MaterialIndex > -1)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Model->Group[Count]->MaterialIndex]);
+		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Scene->Group[Count]->MaterialIndex]);
 
 	}
 	else
@@ -252,28 +252,28 @@ bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
 		glDisable(GL_TEXTURE_2D);
 	}
 
-	while (VertCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	while (VertCount < App->CL_Scene->Group[Count]->GroupFaceCount)
 	{
-		A = App->CL_Model->Group[Count]->Face_Data[VertCount].a;
-		B = App->CL_Model->Group[Count]->Face_Data[VertCount].b;
-		C = App->CL_Model->Group[Count]->Face_Data[VertCount].c;
+		A = App->CL_Scene->Group[Count]->Face_Data[VertCount].a;
+		B = App->CL_Scene->Group[Count]->Face_Data[VertCount].b;
+		C = App->CL_Scene->Group[Count]->Face_Data[VertCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[A].u, App->CL_Model->Group[Count]->MapCord_Data[A].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[A].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[A].u, App->CL_Scene->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[B].u, App->CL_Model->Group[Count]->MapCord_Data[B].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[B].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[B].u, App->CL_Scene->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[C].u, App->CL_Model->Group[Count]->MapCord_Data[C].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[C].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[C].u, App->CL_Scene->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
 		VertCount++;
 		//-----------------------------------------------
 
@@ -293,7 +293,7 @@ bool CL64_OGL_Listener::Assimp_Render_Faces(void)
 
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CL_Model->GroupCount;
+	int GroupCount = App->CL_Scene->GroupCount;
 
 	while (Count < GroupCount)
 	{
@@ -316,22 +316,22 @@ bool CL64_OGL_Listener::Assimp_Face_Parts(int Count)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
 	{
-		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+		A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
 		FaceCount++;
 		//-----------------------------------------------
 

@@ -31,7 +31,6 @@ distribution.
 #include "CL64_Ini_File.h"
 #include "CL64_Preferences.h"
 #include "CL64_Assimp.h"
-#include "CL64_Model.h"
 #include "CL64_Scene.h"
 #include "CL64_Importers.h"
 #include "CL64_File_IO.h"
@@ -58,7 +57,6 @@ public:
 	CL64_Ini_File*		CL_Ini_File;
 	CL64_Preferences*	CL_Preferences;
 	CL64_Assimp*		CL_Assimp;
-	CL64_Model*			CL_Model;
 	CL64_Scene*			CL_Scene;
 	CL64_Importers*		CL_Importers;
 	CL64_File_IO*		CL_File_IO;

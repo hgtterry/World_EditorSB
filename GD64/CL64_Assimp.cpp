@@ -78,7 +78,7 @@ bool CL64_Assimp::LoadFile(const char* pFile)
 
 		LoadTextures();
 
-		//App->CL_Model->Set_BondingBox_Model(1); // Create
+		//App->CL_Scene->Set_BondingBox_Model(1); // Create
 
 	}
 
@@ -96,7 +96,7 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 	bool test = pScene->HasMeshes();
 	if (test == 1)
 	{
-		App->CL_Model->GroupCount = pScene->mNumMeshes;
+		App->CL_Scene->GroupCount = pScene->mNumMeshes;
 	}
 
 	test = pScene->HasMaterials();
@@ -108,18 +108,18 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 
 		if (Mat > 0)
 		{
-			App->CL_Model->TextureCount = pScene->mNumMaterials;
+			App->CL_Scene->TextureCount = pScene->mNumMaterials;
 		}
 		else
 		{
-			App->CL_Model->TextureCount  = -1;
+			App->CL_Scene->TextureCount  = -1;
 		}
 	}
 
 	test = pScene->HasAnimations();
 	if (test == 1)
 	{
-		App->CL_Model->MotionCount = pScene->mNumAnimations;
+		App->CL_Scene->MotionCount = pScene->mNumAnimations;
 	}
 }
 
@@ -134,49 +134,49 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char MaterialName[255];
 	char GroupNum[255];
 
-	int mGroupCount = App->CL_Model->GroupCount;
+	int mGroupCount = App->CL_Scene->GroupCount;
 
 	while (Count < mGroupCount)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];
 
-		App->CL_Model->Create_Mesh_Group(Count);
+		App->CL_Scene->Create_Mesh_Group(Count);
 
 		_itoa(Count, GroupNum, 10);
 		strcpy(GroupName, "Group_");
 		strcat(GroupName, GroupNum);
-		strcpy(App->CL_Model->Group[Count]->GroupName, GroupName);
+		strcpy(App->CL_Scene->Group[Count]->GroupName, GroupName);
 
 		strcpy(MaterialName, "Material_");
 		strcat(MaterialName, GroupNum);
-		strcpy(App->CL_Model->Group[Count]->MaterialName, MaterialName);
+		strcpy(App->CL_Scene->Group[Count]->MaterialName, MaterialName);
 
 		////---------------
 
-		App->CL_Model->Group[Count]->GroupVertCount = 0;
-		App->CL_Model->Group[Count]->MaterialIndex = -1;
+		App->CL_Scene->Group[Count]->GroupVertCount = 0;
+		App->CL_Scene->Group[Count]->MaterialIndex = -1;
 
-		App->CL_Model->Group[Count]->MaterialIndex = Count;
+		App->CL_Scene->Group[Count]->MaterialIndex = Count;
 
-		strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
+		strcpy(App->CL_Scene->Group[Count]->Text_FileName, "No_Texture");
 
 		// Get Texture Path/Name
-		strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, App->CL_Model->Texture_FolderPath); // Back Slash remains
+		strcpy(App->CL_Scene->Group[Count]->Texture_FolderPath, App->CL_Scene->Texture_FolderPath); // Back Slash remains
 
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
 
-		strcpy(App->CL_Model->Group[Count]->MaterialName, mtl->GetName().C_Str());
+		strcpy(App->CL_Scene->Group[Count]->MaterialName, mtl->GetName().C_Str());
 
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
 		{
-			strcpy(App->CL_Model->Group[Count]->Text_FileName, texPath.C_Str());
-			strcpy(App->CL_Model->Group[Count]->Equity_Text_FileName, texPath.C_Str());
+			strcpy(App->CL_Scene->Group[Count]->Text_FileName, texPath.C_Str());
+			strcpy(App->CL_Scene->Group[Count]->Equity_Text_FileName, texPath.C_Str());
 		}
 		else
 		{
-			strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
-			App->CL_Model->Group[Count]->MaterialIndex = -1;
+			strcpy(App->CL_Scene->Group[Count]->Text_FileName, "No_Texture");
+			App->CL_Scene->Group[Count]->MaterialIndex = -1;
 		}
 
 		Count++;
@@ -196,7 +196,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	int mTotalVertices = 0;
 	int mTotalFaces = 0;
 	
-	int mGroupCount = App->CL_Model->GroupCount;
+	int mGroupCount = App->CL_Scene->GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -207,7 +207,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 
 		mTotalFaces = mTotalFaces + mesh->mNumFaces;
 
-		App->CL_Model->Group[Count]->GroupFaceCount = mesh->mNumFaces;
+		App->CL_Scene->Group[Count]->GroupFaceCount = mesh->mNumFaces;
 
 		while (t < mesh->mNumFaces)
 		{
@@ -223,17 +223,17 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 			t++;
 		}
 
-		App->CL_Model->Group[Count]->vertex_Data.resize(VC);
-		App->CL_Model->Group[Count]->Normal_Data.resize(VC);
-		App->CL_Model->Group[Count]->MapCord_Data.resize(VC);
-		App->CL_Model->Group[Count]->Face_Data.resize(VC);
+		App->CL_Scene->Group[Count]->vertex_Data.resize(VC);
+		App->CL_Scene->Group[Count]->Normal_Data.resize(VC);
+		App->CL_Scene->Group[Count]->MapCord_Data.resize(VC);
+		App->CL_Scene->Group[Count]->Face_Data.resize(VC);
 
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		Count++;
 	}
 
-	App->CL_Model->VerticeCount = mTotalVertices;
-	App->CL_Model->FaceCount = mTotalFaces;
+	App->CL_Scene->VerticeCount = mTotalVertices;
+	App->CL_Scene->FaceCount = mTotalFaces;
 
 }
 
@@ -250,7 +250,7 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 	unsigned int i = 0;
 	int VC = 0;
 
-	int mGroupCount = App->CL_Model->GroupCount;
+	int mGroupCount = App->CL_Scene->GroupCount;
 
 	while (GroupCount < mGroupCount)
 	{
@@ -259,9 +259,9 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 		VC = 0;
 		t = 0;
 
-		App->CL_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
-		App->CL_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
-		App->CL_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
+		App->CL_Scene->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
+		App->CL_Scene->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
+		App->CL_Scene->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
 
 		while (t < mesh->mNumFaces)
 		{
@@ -272,24 +272,24 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 			{
 				int vertexIndex = face->mIndices[i];
 
-				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
-				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
-				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
+				App->CL_Scene->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
+				App->CL_Scene->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
+				App->CL_Scene->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
 
 
 				if (mesh->HasNormals())
 				{
-					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
-					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
-					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
+					App->CL_Scene->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
+					App->CL_Scene->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
+					App->CL_Scene->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
 				}
 
-				//		App->CL_Model_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
+				//		App->CL_Scene_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
 
 				if (mesh->HasTextureCoords(0))
 				{
-					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
-					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
+					App->CL_Scene->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
+					App->CL_Scene->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
 				}
 
 				VC++;
@@ -297,18 +297,18 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 				FaceNum++;
 			}
 
-			App->CL_Model->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
-			App->CL_Model->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
-			App->CL_Model->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
+			App->CL_Scene->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
+			App->CL_Scene->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
+			App->CL_Scene->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
 
-			App->CL_Model->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
+			App->CL_Scene->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
 
 			FaceIndexNum++;
 
 			t++;
 		}
 
-		App->CL_Model->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
+		App->CL_Scene->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
 
 		mTotalVertices = mTotalVertices + mesh->mNumVertices;
 		GroupCount++;

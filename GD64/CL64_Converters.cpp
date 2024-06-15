@@ -52,14 +52,14 @@ CL64_Converters::~CL64_Converters(void)
 // *************************************************************************
 void CL64_Converters::Set_Paths(void)
 {
-	strcpy(mWorld_File_Path, App->CL_Model->Model_FolderPath);
+	strcpy(mWorld_File_Path, App->CL_Scene->Model_FolderPath);
 
-	strcpy(mWorld_File_PathAndFile, App->CL_Model->Model_FolderPath);
-	strcat(mWorld_File_PathAndFile, App->CL_Model->JustName);
+	strcpy(mWorld_File_PathAndFile, App->CL_Scene->Model_FolderPath);
+	strcat(mWorld_File_PathAndFile, App->CL_Scene->JustName);
 	strcat(mWorld_File_PathAndFile, ".mesh");
 
-	strcpy(mWorld_Mesh_JustName, App->CL_Model->JustName);
-	strcpy(mExport_Just_Name, App->CL_Model->JustName);
+	strcpy(mWorld_Mesh_JustName, App->CL_Scene->JustName);
+	strcpy(mExport_Just_Name, App->CL_Scene->JustName);
 	
 	x, y, z = 0;
 	nx, ny, nz = 0;
@@ -74,7 +74,7 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	Set_Paths();
 
-	App->CL_Model->Ogre_Face_Count = 0;
+	App->CL_Scene->Ogre_Face_Count = 0;
 
 	if (Create == 1)
 	{
@@ -89,13 +89,13 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 	World_Manual->setDynamic(false);
 	World_Manual->setCastShadows(false);
 
-	World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
-	World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+	World_Manual->estimateVertexCount(App->CL_Scene->VerticeCount);
+	World_Manual->estimateIndexCount(App->CL_Scene->FaceCount);
 
 	char MaterialNumber[255];
 	char MatName[255];
 
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Scene->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
@@ -115,13 +115,13 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		FaceCount = 0;
 		FaceIndex = 0;
 
-		TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
+		TotalFaces = TotalFaces + App->CL_Scene->Group[Count]->GroupFaceCount;
 
-		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
 		{
-			A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-			B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-			C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+			A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
 
 			// --------------------------------------------------
 
@@ -156,7 +156,7 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		Count++;
 	}
 
-	App->CL_Model->Ogre_Face_Count = TotalFaces;
+	App->CL_Scene->Ogre_Face_Count = TotalFaces;
 
 	if (World_Manual->getNumSections() == 0)
 	{
@@ -262,7 +262,7 @@ void CL64_Converters::CreateMaterialFile(char* MatFileName)
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Model->GroupCount;
+	int numMaterials = App->CL_Scene->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
 
@@ -275,7 +275,7 @@ void CL64_Converters::CreateMaterialFile(char* MatFileName)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		strcpy(File, App->CL_Model->Group[i]->Text_FileName);
+		strcpy(File, App->CL_Scene->Group[i]->Text_FileName);
 
 		OMatName = MatName;
 		OFile = File;
@@ -305,15 +305,15 @@ void CL64_Converters::CreateMaterialFile(char* MatFileName)
 // *************************************************************************
 void CL64_Converters::Get_Data(int Index, int FaceIndex)
 {
-	x = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].x;
-	y = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].y;
-	z = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].z;
+	x = App->CL_Scene->Group[Index]->vertex_Data[FaceIndex].x;
+	y = App->CL_Scene->Group[Index]->vertex_Data[FaceIndex].y;
+	z = App->CL_Scene->Group[Index]->vertex_Data[FaceIndex].z;
 
-	u = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].u;
-	v = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].v;
+	u = App->CL_Scene->Group[Index]->MapCord_Data[FaceIndex].u;
+	v = App->CL_Scene->Group[Index]->MapCord_Data[FaceIndex].v;
 
-	nx = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].x;
-	ny = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].y;
-	nz = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].z;
+	nx = App->CL_Scene->Group[Index]->Normal_Data[FaceIndex].x;
+	ny = App->CL_Scene->Group[Index]->Normal_Data[FaceIndex].y;
+	nz = App->CL_Scene->Group[Index]->Normal_Data[FaceIndex].z;
 }
 

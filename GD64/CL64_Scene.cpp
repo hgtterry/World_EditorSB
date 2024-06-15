@@ -112,7 +112,7 @@ void CL64_Scene::Create_Mesh_Group(int Index)
 		Group[Index] = nullptr;
 	}
 
-	App->CL_Model->Group[Index] = new Base_Group();
+	App->CL_Scene->Group[Index] = new Base_Group();
 }
 
 // *************************************************************************
