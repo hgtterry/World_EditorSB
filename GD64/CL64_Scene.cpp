@@ -52,6 +52,8 @@ CL64_Scene::CL64_Scene(void)
 		Group[Count] = nullptr;
 		Count++;
 	}
+
+	B_Player.reserve(20);
 }
 
 CL64_Scene::~CL64_Scene(void)

@@ -42,7 +42,7 @@ CL64_Bullet::~CL64_Bullet(void)
 }
 
 // *************************************************************************
-// *						Init_Bullet Terry Bernie   			 	 	   *
+// *			Init_Bullet:- Terry and Hazel Flanigan 2024   	 	 	   *
 // *************************************************************************
 bool CL64_Bullet::Init_Bullet()
 {
@@ -58,8 +58,6 @@ bool CL64_Bullet::Init_Bullet()
 	solver = new btSequentialImpulseConstraintSolver;
 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-
-	//dynamicsWorld->getDebugDrawer()->setDebugMode( btIDebugDraw::DBG_DrawWireframe);
 
 	dynamicsWorld->setGravity(btVector3(0, -30, 0));
 	dynamicsWorld->getDispatchInfo().m_allowedCcdPenetration = 0.00001f;

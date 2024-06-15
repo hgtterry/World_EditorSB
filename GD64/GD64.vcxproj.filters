@@ -99,6 +99,9 @@
     <ClInclude Include="CL64_Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_DebugBulletWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -174,6 +177,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_DebugBulletWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

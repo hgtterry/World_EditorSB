@@ -60,6 +60,13 @@ namespace Enums
 		Cam_Mode_Third = 3,
 		Cam_Mode_Model = 4
 	};
+
+	enum Usage
+	{
+		Usage_None = -1,
+		Usage_Player = 2
+		
+	};
 }
 
 #define Debug App->Debug_Text();

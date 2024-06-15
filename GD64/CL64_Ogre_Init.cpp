@@ -92,6 +92,8 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	App->CL_ImGui->Init_ImGui();
 
+	App->CL_Player->Create_Player_Object();
+
 }
 
 // *************************************************************************

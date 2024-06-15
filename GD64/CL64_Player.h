@@ -29,6 +29,7 @@ public:
 	CL64_Player(void);
 	~CL64_Player(void);
 
+	void Create_Player_Object(void);
 	void Initialize();
 
 	int Player_Count;
