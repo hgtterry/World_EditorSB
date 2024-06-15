@@ -40,6 +40,7 @@ distribution.
 #include "CL64_Panels.h"
 #include "CL64_Converters.h"
 #include "CL64_Bullet.h"
+#include "CL64_Player.h"
 
 class CL64_App
 {
@@ -65,6 +66,7 @@ public:
 	CL64_Panels*		CL_Panels;
 	CL64_Converters*	CL_Converters;
 	CL64_Bullet*		CL_Bullet;
+	CL64_Player*		CL_Player;
 
 	void InitApp(void);
 
