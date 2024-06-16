@@ -215,7 +215,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-
+		
 	}
 	}
 	return FALSE;

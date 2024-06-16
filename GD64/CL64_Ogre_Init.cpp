@@ -94,6 +94,8 @@ void CL64_Ogre_Init::InitOgre(void)
 
 	App->CL_Player->Create_Player_Object();
 
+	Ogre::Entity* Poo = mSceneMgr->createEntity("C:\\Users\\Terry\\Desktop\\Models\\Obj_Models\\crate.obj");
+	
 }
 
 // *************************************************************************
