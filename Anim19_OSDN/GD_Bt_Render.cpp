@@ -30,10 +30,8 @@ distribution.
 GD_Bt_Render::GD_Bt_Render(void)
 {
 	
-
 	Render_Debug_Flag = 0;
 	
-
 	ColourMain = ColourValue(1, 1, 1, 1);
 
 	btDebug_Manual = App->CL_Ogre->mSceneMgr->createManualObject("btManual");

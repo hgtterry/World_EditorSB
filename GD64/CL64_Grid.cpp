@@ -61,7 +61,8 @@ void CL64_Grid::Grid_Update(bool Create)
 	}
 
 	GridManual->clear();
-	GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST, "App_Resource_Group");
+	GridManual->begin("Template/White_Alpha", Ogre::RenderOperation::OT_LINE_LIST, App->CL_Ogre->App_Resource_Group);
+	//GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST, "App_Resource_Group");
 
 	if (ShowGridFlag == 1)
 	{
@@ -138,6 +139,8 @@ void CL64_Grid::Hair_Update(bool Create)
 	}
 
 	HairManual->clear();
+
+	
 	HairManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST, "App_Resource_Group");
 
 	// X Axis
