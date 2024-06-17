@@ -74,6 +74,8 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	Set_Paths();
 
+	CreateMaterialFile();
+
 	App->CL_Scene->Ogre_Face_Count = 0;
 
 	if (Create == 1)
@@ -174,22 +176,6 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
 	delete(ms);
 
-	/*char OutputFolder[MAX_PATH];
-	strcpy(OutputFolder, mWorld_File_Path);
-	strcat(OutputFolder, "\\");*/
-
-	//DecompileTextures_TXL(OutputFolder);
-
-	char Material_PathAndFile[MAX_PATH];
-	strcpy(Material_PathAndFile, mWorld_File_Path);
-	//strcat(Material_PathAndFile, "\\");
-	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
-	strcat(Material_PathAndFile, ".material");
-
-	//App->Say(Material_PathAndFile);
-
-	CreateMaterialFile(Material_PathAndFile);
-
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
@@ -204,11 +190,6 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 		World_Node = NULL;
 		World_Ent = NULL;
 
-		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
-		//ptr->unload();
-
-		//Ogre::MeshManager::getSingleton().remove(Name);
-
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 
@@ -220,6 +201,7 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 	else
 	{
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
 	}
 
 	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
@@ -227,7 +209,7 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	World_Node->attachObject(World_Ent);
 
-	World_Node->setPosition(0, 20, 0);
+	World_Node->setPosition(0, 0, 0);
 	World_Node->setVisible(true);
 	World_Node->setScale(1, 1, 1);
 
@@ -252,13 +234,18 @@ void CL64_Converters::CreateMaterial_Resource(char* MatName)
 // *************************************************************************
 // *		CreateMaterialFile:- Terry and Hazel Flanigan 2024		   	   *
 // *************************************************************************
-void CL64_Converters::CreateMaterialFile(char* MatFileName)
+void CL64_Converters::CreateMaterialFile()
 {
+	char Material_PathAndFile[MAX_PATH];
+	strcpy(Material_PathAndFile, mWorld_File_Path);
+	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
+	strcat(Material_PathAndFile, ".material");
+
 	char MatName[255];
 	char File[255];
 	char MaterialNumber[255];
 
-	Ogre::String OMatFileName = MatFileName;
+	Ogre::String OMatFileName = Material_PathAndFile;
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
