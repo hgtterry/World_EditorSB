@@ -32,14 +32,20 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Tabs_TB_hWnd =	nullptr;
 
 	// Tab Options
-	Debug_TB_hWnd = nullptr;
-	Camera_TB_hWnd = nullptr;
+	Debug_TB_hWnd =		nullptr;
+	Camera_TB_hWnd =	nullptr;
+	Demos_TB_hWnd =		nullptr;
+
 
 	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Debug_Flag = 1;
+	Toggle_Tabs_Demos_Flag = 0;
 
 	Toggle_Cam_ModelMode_Flag = 1;
 	Toggle_Cam_FreeMode_Flag = 0;
+
+	Toggle_Demos_Demo_1_Flag = 0;
+	Toggle_Demos_Demo_2_Flag = 0;
 
 	Toggle_PhysicaDebug_Node_Flag = 1;
 }
@@ -71,6 +77,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Start_Tabs_Headers();
 		App->CL_TopDlg->Start_Debug_TB();
 		App->CL_TopDlg->Start_Camera_TB();
+		App->CL_TopDlg->Start_Demos_TB();
 
 		App->CL_TopDlg->Hide_Tabs();
 
@@ -161,6 +168,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TDH_DEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -188,6 +196,14 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TD_DEMOSTAB)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->Toggle_Tabs_Demos_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -215,6 +231,16 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_TD_DEMOSTAB)
+		{
+			App->CL_TopDlg->Hide_Tabs();
+			ShowWindow(App->CL_TopDlg->Demos_TB_hWnd, SW_SHOW);
+			App->CL_TopDlg->Toggle_Tabs_Demos_Flag = 1;
+
+			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
 		
 	}
 	}
@@ -228,10 +254,11 @@ void CL64_TopDlg::Hide_Tabs(void)
 {
 	ShowWindow(Debug_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	
+	ShowWindow(Demos_TB_hWnd, SW_HIDE);
+
 	Toggle_Tabs_Debug_Flag = 0;
 	Toggle_Tabs_Camera_Flag = 0;
-	
+	Toggle_Tabs_Demos_Flag = 0;
 }
 
 // *************************************************************************
@@ -458,6 +485,82 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return 1;
 		}
 		
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Demos_TB:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_TopDlg::Start_Demos_TB(void)
+{
+	Demos_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DEMOS, Tabs_TB_hWnd, (DLGPROC)Demos_TB_Proc);
+}
+
+// *************************************************************************
+// *			Demos_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO1)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Demos_Demo_1_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO2)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Demos_Demo_2_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO1)
+		{
+			Debug
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
+		{
+			Debug
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
 		return FALSE;
 	}
 
