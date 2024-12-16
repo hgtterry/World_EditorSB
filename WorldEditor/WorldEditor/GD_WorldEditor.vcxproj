@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\irrKlang\Headers;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\irrKlang\Headers;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -195,7 +195,6 @@
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_File_WE.cpp" />
     <ClCompile Include="SB_Game_Editor.cpp" />
-    <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
     <ClCompile Include="SB_Ini.cpp">
@@ -312,7 +311,6 @@
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_File_WE.h" />
     <ClInclude Include="SB_Game_Editor.h" />
-    <ClInclude Include="SB_Genesis3D.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_ImGui.h" />
     <ClInclude Include="SB_Ini.h" />

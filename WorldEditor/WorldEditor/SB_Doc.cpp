@@ -101,8 +101,8 @@ SB_Doc::~SB_Doc(void)
 
     if (LeakPoints != NULL)
     {
-        geRam_Free(LeakPoints);
-        LeakPoints = NULL;
+        //geRam_Free(LeakPoints);
+        //LeakPoints = NULL;
     }
 
     if (pSelFaces != NULL)

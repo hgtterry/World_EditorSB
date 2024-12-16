@@ -263,7 +263,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		
 		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
 		{
-			App->CLSB_Loader->Load_ActorWorld();
 			return TRUE;
 		}
 

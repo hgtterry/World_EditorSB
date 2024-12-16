@@ -35,6 +35,7 @@ distribution.
 #include "bitmap.h"
 #include "bitmap._h"
 #include "bitmap.__h"
+#include "RAM.h"
 
 SB_Textures::SB_Textures()
 {

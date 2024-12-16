@@ -4787,7 +4787,7 @@ void CFusionDoc::OnFileImportActor()
     App->Say("Not Available Yet");
     return;
 
-    App->CLSB_Loader->Load_ActorWorld();
+   // App->CLSB_Loader->Load_ActorWorld();
 }
 
 void CFusionDoc::OnFileImport() 
