@@ -556,6 +556,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				POINT p;
 				GetCursorPos(&p);
+				//ScreenToClient(App->MainHwnd, &p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
 				App->CLSB_Ogre_Setup->OgreListener->Pl_Cent500X = p.x;

@@ -4777,9 +4777,9 @@ void CFusionDoc::OnFileOpen_2Boxes() // hgtterry Open 2 Boxes
     App->CLSB_File_WE->Open_Example_File();
 }
 
-void CFusionDoc::On_New_Project()
+void CFusionDoc::On_New_Project() // hgtterry Open 2 Boxes
 {
-   App->CLSB_Project_Create->Start_New_Project_V2();
+   //App->CLSB_Project_Create->Start_New_Project();
 }
 
 void CFusionDoc::OnFileImportActor()

@@ -29,9 +29,7 @@ public:
 	SB_Project_Create();
 	~SB_Project_Create();
 
-	void Start_New_Project_V2();
-	bool Load_Project_V2();
-
+	void Start_New_Project();
 	void Start_Save_Project_Dialog();
 	bool Create_New_Area();
 	void Create_Ogre_Model(bool Create);
@@ -68,6 +66,5 @@ protected:
 	float z;
 
 	bool Dialog_cancelled_F;
-	bool Project_Loaded_F;
 };
 

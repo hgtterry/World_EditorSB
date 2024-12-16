@@ -121,18 +121,6 @@ SB_App::SB_App()
 	BlackBrush =	NULL;
 	Brush_White =	NULL;
 	Brush_Green =	NULL;
-	Brush_Black =	NULL;
-	Brush_Text =	NULL;
-
-	Brush_But_Pressed =		NULL;
-	Brush_But_Normal =		NULL;
-	Brush_But_Hover =		NULL;
-
-	Brush_But_Pressed_DM =	NULL;
-	Brush_But_Normal_DM =	NULL;
-	Brush_But_Hover_DM =	NULL;
-
-
 	Brush_Tabs_UnSelected = NULL;
 	Brush_Tabs = NULL;
 
@@ -398,19 +386,12 @@ void SB_App::SetBrushes_Fonts(void)
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
-	Brush_Black = CreateSolidBrush(RGB(50, 50, 50));
-	Brush_Text = CreateSolidBrush(RGB(220, 220, 220));
-
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240,240,240));
 
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
-
-	Brush_But_Normal_DM = CreateSolidBrush(RGB(16, 100,200));
-	Brush_But_Hover_DM = CreateSolidBrush(RGB(66, 150, 250));
-	Brush_But_Pressed_DM = CreateSolidBrush(RGB(15, 135, 230));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
@@ -677,82 +658,6 @@ bool SB_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
 	DeleteObject(pen);
-
-	return CDRF_DODEFAULT;
-}
-
-// *************************************************************************
-// *					Custom_Button_DM_Normal Terry Bernie   		  	   *
-// *************************************************************************
-bool SB_App::Custom_Button_Normal_DM(LPNMCUSTOMDRAW item, char* Text)
-{
-
-	if (item->uItemState & CDIS_SELECTED) // Push Down
-	{
-		//Create pen for button border
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
-
-		//Select our brush into hDC
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed_DM);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-		//Clean up
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		SetTextColor(item->hdc, RGB(220, 220, 220));
-		DrawTextA(item->hdc, Text, -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-		SetBkMode(item->hdc, TRANSPARENT);
-
-		return CDRF_DODEFAULT;
-	}
-	else
-	{
-		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
-		{
-
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
-
-			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover_DM);
-
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-			SelectObject(item->hdc, old_pen);
-			SelectObject(item->hdc, old_brush);
-			DeleteObject(pen);
-
-			SetTextColor(item->hdc, RGB(220, 220, 220));
-			DrawTextA(item->hdc, Text, -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-			SetBkMode(item->hdc, TRANSPARENT);
-
-			return CDRF_DODEFAULT;
-		}
-
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
-
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal_DM);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		SetTextColor(item->hdc, RGB(220, 220, 220));
-		DrawTextA(item->hdc, Text, -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-		SetBkMode(item->hdc, TRANSPARENT);
-
-		return CDRF_DODEFAULT;
-	}
-
-	SetTextColor(item->hdc, RGB(220, 220, 220));
-	DrawTextA(item->hdc, Text, -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-	SetBkMode(item->hdc, TRANSPARENT);
 
 	return CDRF_DODEFAULT;
 }
