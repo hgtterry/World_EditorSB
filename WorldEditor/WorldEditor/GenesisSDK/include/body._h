@@ -4,6 +4,10 @@
 /*  Author: Mike Sandige	                                                            */
 /*  Description:  Exports private BODY data structures for "friends".					*/
 /*                                                                                      */
+/*  Edit History                                                                        */
+/*	 01/12/2004 Wendell Buckner                                                         */ 
+/*    DOT3 BUMPMAPPING                                                                  */
+/*                                                                                      */
 /*  The contents of this file are subject to the Genesis3D Public License               */
 /*  Version 1.01 (the "License"); you may not use this file except in                   */
 /*  compliance with the License. You may obtain a copy of the License at                */
@@ -15,8 +19,8 @@
 /*  under the License.                                                                  */
 /*                                                                                      */
 /*  The Original Code is Genesis3D, released March 25, 1999.                            */
-/*  Genesis3D Version 1.1 released November 15, 1999                                 */
-/*  Copyright (C) 1999 WildTangent, Inc. All Rights Reserved           */
+/*  Genesis3D Version 1.1 released November 15, 1999                                    */
+/*  Copyright (C) 1999 WildTangent, Inc. All Rights Reserved                            */
 /*                                                                                      */
 /****************************************************************************************/
 #ifndef GE_BODY__H
@@ -43,7 +47,16 @@ extern "C" {
 
 typedef Gint16 geBody_Index;
 
-/*typedef struct geBody_XSkinVertex
+/* 01/12/2004 Wendell Buckner
+    DOT3 BUMPMAPPING */
+typedef struct geBody_TangentSpace
+{
+ geVec3d T;
+ geVec3d B;
+ geVec3d N;
+} geBody_TangentSpace; 
+
+typedef struct geBody_XSkinVertex
 {
 	geVec3d			XPoint;
 	geFloat			XU,XV;
@@ -54,7 +67,7 @@ typedef Gint16 geBody_Index;
 typedef struct geBody_Normal
 {
 	geVec3d			Normal;
-	int8			LevelOfDetailMask;
+	Gint8			LevelOfDetailMask;
 	geBody_Index	BoneIndex;
 } geBody_Normal;
 
@@ -109,7 +122,12 @@ typedef struct geBody
 	geBody_TriangleList	  SkinFaces[GE_BODY_NUMBER_OF_LOD];
 	
 	geBody				 *IsValid;
-} geBody;*/
+
+/* 01/12/2004 Wendell Buckner
+    DOT3 BUMPMAPPING */
+	geBody_TangentSpace  *XSkinTangentSpace;
+	 
+} geBody;
 
 #if defined(DEBUG) || !defined(NDEBUG)
 geBoolean GENESISCC geBody_SanityCheck(const geBody *B);

@@ -45,6 +45,26 @@ extern "C" {
 #define GE_ACTOR_RENDER_ALWAYS			(1<<2)		// Render always, skipping all visibility tests
 #define GE_ACTOR_COLLIDE				(1<<3)		// Collide when calling geWorld_Collision
 
+//MRB BEGIN
+//geSprite
+//
+// Sprite flags (geSprite_AddSprite)
+//
+#define GE_SPRITE_RENDER_NORMAL			(1<<0)		// Render in normal views
+#define GE_SPRITE_RENDER_MIRRORS		(1<<1)		// Render in mirror views
+#define GE_SPRITE_RENDER_ALWAYS			(1<<2)		// Render always, skipping all visibility tests
+#define GE_SPRITE_COLLIDE						(1<<3)		// Collide when calling geWorld_Collision
+//MRB END
+
+typedef struct
+{
+	geBoolean		UseEnvironmentMapping;	//toggle for actor-level environ-map
+	geBoolean		Supercede;		//toggle for material-level
+	geFloat			PercentEnvironment;
+	geFloat			PercentMaterial;		//Used when Supercede == GE_FALSE
+	geFloat			PercentPuppet;
+} geEnvironmentOptions;
+
 //
 //	Model flags (geWorld_ModelSetFlags)
 //
@@ -53,9 +73,21 @@ extern "C" {
 #define GE_MODEL_RENDER_ALWAYS			(1<<2)		// Render always, skipping all visibility tests
 #define GE_MODEL_COLLIDE				(1<<3)		// Collide when calling geWorld_Collision
 
+//MRB BEGIN
 typedef struct
 {
-	float r, g, b, a;
+	geFloat				r, g, b;
+} geColor;
+
+typedef struct
+{
+	geFloat				u, v;
+} geUV;
+//MRB END
+
+typedef struct
+{
+	geFloat r, g, b, a;
 } GE_RGBA;
 
 typedef struct
@@ -72,22 +104,30 @@ typedef struct
 	geFloat MinY,MaxY;
 } geFloatRect;
 
+//MRB BEGIN
+typedef struct
+{
+	geFloat X;
+	geFloat Y;
+} geCoordinate;
+//MRB END
+
 // Lit vertex
 typedef struct
 {
 	// FIXME:  Convert 3d X,Y,Z to geVec3d
-	float X, Y, Z;									// 3d vertex
-	float u, v;										// Uv's
+	geFloat X, Y, Z;									// 3d vertex
+	geFloat u, v;										// Uv's
 	// FIXME:  Convert r,g,b,a to GE_RGBA
-	float r, g, b, a;								// color
+	geFloat r, g, b, a;								// color
 } GE_LVertex;
 
 // Transformed Lit vertex
 typedef struct
 {
-	float x, y, z;									// screen points
-	float u, v;										// Uv's
-	float r, g, b, a;								// color
+	geFloat x, y, z;									// screen points
+	geFloat u, v;										// Uv's
+	geFloat r, g, b, a;								// color
 } GE_TLVertex;
 
 typedef GE_Rect geRect;

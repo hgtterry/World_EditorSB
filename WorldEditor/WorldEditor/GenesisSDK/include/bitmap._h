@@ -25,7 +25,7 @@
 
 
 #include	"bitmap.h"
-#include	"dcommonx.h"
+#include	"dcommon.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,19 +47,19 @@ extern "C" {
 
 #define BITMAP_GENESIS_INTERNAL	GENESISCC
 
-geBoolean			GENESISCC geBitmap_AttachToDriver(geBitmap *Bmp, DRV_Driver * Driver, Guint32 DriverFlags);
+/*geBoolean			GENESISCC geBitmap_AttachToDriver(geBitmap *Bmp, DRV_Driver * Driver, Guint32 DriverFlags);
 	// use Driverflags == 0 to use the flags from _SetDriverFlags
 
 geBoolean			GENESISCC geBitmap_DetachDriver(geBitmap *Bmp, geBoolean DoUpdate);
 	// You MUST Detach the Driver while it is identical to the way it was when attached!
 
-geBitmap_Palette *	GENESISCC geBitmap_Palette_CreateFromDriver(DRV_Driver * Driver,gePixelFormat Format,int Size); /*<>*/
+geBitmap_Palette *	GENESISCC geBitmap_Palette_CreateFromDriver(DRV_Driver * Driver,gePixelFormat Format,int Size);
 
 geRDriver_THandle * GENESISCC geBitmap_GetTHandle(const geBitmap *Bmp);
 
 geBoolean			GENESISCC geBitmap_SetDriverFlags(geBitmap *Bmp,Guint32 flags);
 
-geBoolean			GENESISCC geBitmap_SetGammaCorrection_DontChange(geBitmap *Bmp,geFloat Gamma);
+geBoolean			GENESISCC geBitmap_SetGammaCorrection_DontChange(geBitmap *Bmp,geFloat Gamma)*/;
 
 #ifdef __cplusplus
 }

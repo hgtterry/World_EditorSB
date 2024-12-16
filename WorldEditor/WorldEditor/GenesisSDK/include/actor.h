@@ -4,6 +4,12 @@
 /*  Author: Mike Sandige	                                                            */
 /*  Description:  Actor interface		                                                */
 /*                                                                                      */
+/*  Edit History:                                                                       */  
+/*	02/21/2004 Wendell Buckner                                                          */
+/*   DOT3 BUMPMAPPING                                                                   */
+/*	01/13/2004 Wendell Buckner                                                          */
+/*   DOT3 BUMPMAPPING                                                                   */
+/*                                                                                      */
 /*  The contents of this file are subject to the Genesis3D Public License               */
 /*  Version 1.01 (the "License"); you may not use this file except in                   */
 /*  compliance with the License. You may obtain a copy of the License at                */
@@ -15,8 +21,8 @@
 /*  under the License.                                                                  */
 /*                                                                                      */
 /*  The Original Code is Genesis3D, released March 25, 1999.                            */
-/*  Genesis3D Version 1.1 released November 15, 1999                                 */
-/*  Copyright (C) 1999 WildTangent, Inc. All Rights Reserved           */
+/*  Genesis3D Version 1.1 released November 15, 1999                                    */
+/*  Copyright (C) 1999 WildTangent, Inc. All Rights Reserved                            */
 /*                                                                                      */
 /****************************************************************************************/
 /*   Actor
@@ -124,6 +130,15 @@ typedef struct geActor_Def geActor_Def;		// the deinition of an actor's geometry
 //---------------------------------------------------------------------------------
 //   Creation/Destruction functions
 //---------------------------------------------------------------------------------
+
+/*	01/13/2004 Wendell Buckner
+    DOT3 BUMPMAPPING */
+GENESISAPI geBoolean GENESISCC geActor_CreateTangentSpace(const geActor *A);
+
+/*	02/21/2004 Wendell Buckner
+    DOT3 BUMPMAPPING */
+GENESISAPI void GENESISCC geActor_DestroyTangentSpace(const geActor *A);
+
 	// Create an 'empty' Actor Definition.
 GENESISAPI geActor_Def *GENESISCC geActor_DefCreate(void);
 
@@ -152,7 +167,9 @@ GENESISAPI geBoolean GENESISCC geActor_SetBody( geActor_Def *ActorDefinition, ge
 GENESISAPI geBoolean GENESISCC geActor_AddMotion(geActor_Def *ActorDefinition, geMotion *M, int *Index);
 
 	// Destroy an Actor.  
-GENESISAPI void GENESISCC geActor_Destroy(geActor **pA);
+GENESISAPI geBoolean GENESISCC geActor_Destroy(geActor **pA);
+
+GENESISAPI geBoolean GENESISCC geActor_DestroyDirect(geActor **pA);
 
 GENESISAPI geBoolean GENESISCC geActor_DefIsValid(const geActor_Def *A);
 GENESISAPI geBoolean GENESISCC geActor_IsValid(const geActor *A);
@@ -291,7 +308,16 @@ geBoolean GENESISCC geActor_RenderPrep( geActor *A, geWorld *World);
 
 	// Draws the geActor.  (RenderPrep must be called first)
 geBoolean GENESISCC geActor_RenderThroughFrustum(const geActor *A, geEngine *Engine, geWorld *World, geCamera *Camera, Frustum_Info *FInfo);
-geBoolean GENESISCC geActor_Render(const geActor *A, geEngine *Engine, geWorld *World, geCamera *Camera);
+// changed QD Clipping
+geBoolean GENESISCC geActor_Render(const geActor *A, geEngine *Engine, geWorld *World, geCamera *Camera, Frustum_Info *FInfo);
+// end change
+
+// changed QD Shadows
+geBoolean GENESISCC geActor_RenderShadowVolume(const geActor *A, geEngine *Engine, geWorld *World, geCamera *Camera, GFX_Plane *FPlanes, 
+											   geVec3d *Light, geFloat Radius, int LightType, geVec3d* Dir, geFloat Arc, geBoolean ZPass);
+
+void GENESISCC geActor_BodyGeometryNeedsUpdate(geActor *A);
+// end change
 #endif
 
 // GENESIS_PUBLIC_APIS
@@ -319,6 +345,7 @@ GENESISAPI void GENESISCC geActor_BlendPose(geActor *A, const geMotion *Motion, 
 
 GENESISAPI geBoolean GENESISCC geActor_GetBoneAttachment(const geActor *A, const char *BoneName, geXForm3d *Transform);
 GENESISAPI geBoolean GENESISCC geActor_SetBoneAttachment(geActor *A, const char *BoneName, geXForm3d *Transform);
+GENESISAPI geBoolean GENESISCC geActor_SetBoneGlobalAttachment(geActor *A, const char *BoneName, geXForm3d *Transform, geXForm3d *OffsetTransform);
 
 // GENESIS_PRIVATE_APIS
 
@@ -328,6 +355,10 @@ GENESISAPI geBoolean GENESISCC geActor_Attach( geActor *Slave,  const char *Slav
 
 GENESISAPI void GENESISCC geActor_Detach(geActor *Slave);
 
+//Environmental mapping...
+GENESISAPI void GENESISCC geActor_SetEnvironOptions( geActor *A, geEnvironmentOptions *opts );
+
+GENESISAPI geEnvironmentOptions GENESISCC geActor_GetEnvironOptions( geActor *A );
 
 // GENESIS_PUBLIC_APIS
 GENESISAPI geBoolean GENESISCC geActor_SetLightingOptions(geActor *A,
@@ -364,11 +395,28 @@ GENESISAPI geBoolean GENESISCC geActor_GetLightingOptions(const geActor *A,
 
 GENESISAPI void GENESISCC geActor_SetScale(geActor *A, geFloat ScaleX,geFloat ScaleY,geFloat ScaleZ);
 
+// LWM_ACTOR_RENDERING:
+GENESISAPI geFloat GENESISCC geActor_GetAlpha(const geActor *A) ;
+// LWM_ACTOR_RENDERING:
+GENESISAPI void GENESISCC geActor_SetAlpha(geActor *A, geFloat Alpha) ;
+
+GENESISAPI geBoolean GENESISCC geActor_GetStaticLightingOptions(const geActor *Actor,	geBoolean *UseAmbientLightFromStaticLights,	geBoolean *TestRayCollision,	int *MaxStaticLightsToUse	);
+GENESISAPI geBoolean GENESISCC geActor_SetStaticLightingOptions(geActor    *A,
+   geBoolean AmbientLightFromStaticLights,
+   geBoolean TestRayCollision,
+   int MaxStaticLightsToUse
+   );
+
 GENESISAPI geBoolean GENESISCC geActor_SetShadow(geActor *A, 
 						geBoolean DoShadow, 
 						geFloat Radius,
 						const geBitmap *ShadowMap,
 						const char * BoneName);
+
+// changed QD Shadows
+GENESISAPI geBoolean GENESISCC geActor_SetStencilShadow(geActor *A, 
+						geBoolean DoStencilShadow);
+// end change
 
 //  Animation Cuing API:
 // high level Actor animation:  The principle is that motions can be applied to an actor
@@ -426,6 +474,26 @@ GENESISAPI geBoolean GENESISCC geActor_AnimationNudge(geActor *A, geXForm3d *Off
 GENESISAPI geBoolean GENESISCC geActor_GetAnimationEvent(geActor *A,						
 	const char **ppEventString);		// Return data, if return value is GE_TRUE
 
+	// returns number of actors that are currently created.
+GENESISAPI int GENESISCC geActor_GetCount(void);
+
+//	eaa3 07/21/2000 Mods for detailed collision detection
+
+GENESISAPI geBoolean GENESISCC geActor_GetBoneExtBoxByIndex(
+	const geActor *A, 
+	int BoneIndex,
+	geExtBox *ExtBox);
+
+GENESISAPI geBoolean GENESISCC geActor_GetBoneTransformByIndex(const geActor *A, int BoneIndex, geXForm3d *Transform);
+
+GENESISAPI int geActor_GetBoneCount(const geActor *A);
+
+//MRB BEGIN	
+// Unlike geActor_GetExtBox, this gets the bounding box in non-world coordinates.	
+// Whatever you put in with geActor_SetExtBox, you get out with this function.
+GENESISAPI void GENESISCC geActor_GetNonWorldExtBox(const geActor *A, geExtBox *ExtBox);
+GENESISAPI void GENESISCC geActor_GetPosition(const geActor *A, geVec3d *Pos);
+//MRB END
 
 // GENESIS_PRIVATE_APIS
 	// call setscale and setshadow after preparing the actor for rendering (renderprep)

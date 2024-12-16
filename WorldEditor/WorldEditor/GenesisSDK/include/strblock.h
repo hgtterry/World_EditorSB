@@ -42,8 +42,8 @@ void GENESISCC geStrBlock_Delete(geStrBlock **ppSB,int Nth);
 const char *GENESISCC geStrBlock_GetString(const geStrBlock *SB, int Index);
 
 // untested...
-geBoolean GENESISCC geStrBlock_SetString(geStrBlock **ppSB, int Index, const char *String);
-geBoolean GENESISCC geStrBlock_Insert(geStrBlock **ppSB,int InsertAfterIndex,const char *String);
+//geBoolean GENESISCC geStrBlock_SetString(geStrBlock **ppSB, int Index, const char *String);
+//geBoolean GENESISCC geStrBlock_Insert(geStrBlock **ppSB,int InsertAfterIndex,const char *String);
 
 geBoolean GENESISCC geStrBlock_FindString(const geStrBlock* pSB, const char* String, int* pIndex);
 

@@ -4,6 +4,10 @@
 /*  Author:                                                                             */
 /*  Description: 3D transform interface                                                 */
 /*                                                                                      */
+/*  Edit History:                                                                       */
+/*	01/08/2004 Wendell Buckner                                                          */
+/*    DOT3 BUMPMAPPING                                                                  */
+/*                                                                                      */
 /*  The contents of this file are subject to the Genesis3D Public License               */
 /*  Version 1.01 (the "License"); you may not use this file except in                   */
 /*  compliance with the License. You may obtain a copy of the License at                */
@@ -51,6 +55,12 @@ typedef struct
 
 #define GEXFORM3D_MINIMUM_SCALE (0.00001f)
 
+/*	01/08/2004 Wendell Buckner
+    DOT3 BUMPMAPPING */
+GENESISAPI void GENESISCC geXForm3d_RotateNoOrthogonal(
+	const geXForm3d *M,
+	const geVec3d *V, 
+	geVec3d *Result);
 
 GENESISAPI void GENESISCC geXForm3d_Copy(
 	const geXForm3d *Src, 
@@ -60,6 +70,11 @@ GENESISAPI void GENESISCC geXForm3d_Copy(
 GENESISAPI geBoolean GENESISCC geXForm3d_IsValid(const geXForm3d *M);
 	// returns GE_TRUE if M is 'valid'  
 	// 'valid' means that M is non NULL, and there are no NAN's in the matrix.
+
+//MRB BEGIN
+GENESISAPI geBoolean GENESISCC geXForm3d_IsIdentity(const geXForm3d *M);
+	// returns GE_TRUE if M is an identity matrix 
+//MRB END
 
 GENESISAPI geBoolean GENESISCC geXForm3d_IsOrthonormal(const geXForm3d *M);
 	// returns GE_TRUE if M is orthonormal 
@@ -199,7 +214,7 @@ GENESISAPI void GENESISCC geXForm3d_SetFromLeftUpIn(
 GENESISAPI void GENESISCC geXForm3d_Mirror(
 	const		geXForm3d *Source, 
 	const		geVec3d *PlaneNormal, 
-	float		PlaneDist, 
+	geFloat		PlaneDist, 
 	geXForm3d	*Dest);
 	// Mirrors a XForm3d about a plane
 
