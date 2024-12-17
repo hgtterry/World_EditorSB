@@ -80,13 +80,6 @@ void SB_Environment::V_Set_Environ_Defaults(int Index)
 
 	V_Object->S_Environ[0]->Environ_Enabled = 1;
 
-	//----------------------- Sound
-	strcpy(V_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
-	V_Object->S_Environ[0]->SndFile = NULL;
-	V_Object->S_Environ[0]->Play = 0;
-	V_Object->S_Environ[0]->Loop = 1;
-	V_Object->S_Environ[0]->SndVolume = 0.5;
-
 	//----------------------- Light
 	V_Object->S_Environ[0]->AmbientColour.x = 0.5;
 	V_Object->S_Environ[0]->AmbientColour.y = 0.5;
@@ -255,7 +248,7 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 
 	if (PlayMusic == 1)
 	{
-		char buff[1024];
+		/*char buff[1024];
 		strcpy(buff, App->WorldEditor_Directory);
 		strcat(buff, "\\Media\\Sounds\\");
 
@@ -266,12 +259,12 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile = App->CLSB_SoundMgr->SoundEngine->play2D(buff, App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->Loop, true, true);
 
 			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndVolume);
-			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
-		}
+			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);*/
+		//}
 	}
 	else
 	{
-		if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile == NULL)
+		/*if (App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile == NULL)
 		{
 		}
 		else
@@ -279,7 +272,7 @@ int SB_Environment::Set_Environment_By_Index(bool PlayMusic, int Index)
 			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
 			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile->drop();
 			App->CLSB_Game_Editor->V_Object[Index]->S_Environ[0]->SndFile = NULL;
-		}
+		}*/
 	}
 
 	return 1;
@@ -377,11 +370,6 @@ void SB_Environment::Environ_PropertyEditor()
 		PropertyEditor_Page = 0;
 	}
 
-	if (ImGui::Button("Sound   ", ImVec2(100, 0)))
-	{
-		PropertyEditor_Page = 1;
-	}
-
 	if (ImGui::Button("Fog   ", ImVec2(100, 0)))
 	{
 		PropertyEditor_Page = 2;
@@ -418,121 +406,6 @@ void SB_Environment::Environ_PropertyEditor()
 			Mark_As_Altered_Environ(Eviron_Index);
 		}
 
-	}
-
-	// ---------------------------------------------------------------- Sound
-	if (PropertyEditor_Page == 1)
-	{
-		ImGui::NextColumn();
-		ImGui::AlignTextToFramePadding();
-
-		ImGui::Selectable("Track:- ", &ClickOnTrack);
-		ImGui::SameLine();
-		ImGui::Text("%s", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
-
-		if (ClickOnTrack)
-		{
-			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
-
-			App->CLSB_SoundMgr->Accessed = 1;
-			strcpy(App->CLSB_SoundMgr->Access_File, App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
-
-			App->CLSB_Environment->Set_Environment_By_Index(0, Eviron_Index);
-			App->CLSB_SoundMgr->Dialog_SoundFile();
-
-			if (App->CLSB_SoundMgr->IsCancelled == 0)
-			{
-
-				strcpy(App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CLSB_SoundMgr->Access_File);
-				App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CLSB_SoundMgr->SndVolume;
-
-				App->CLSB_Environment->Set_Environment_By_Index(1, Eviron_Index);
-
-				App->CLSB_Environment->Mark_As_Altered_Environ(Eviron_Index);
-			}
-			else
-			{
-				App->CLSB_Environment->Set_Environment_By_Index(1, Eviron_Index);
-			}
-
-			ClickOnTrack = 0;
-		}
-
-		// ----------------- Volume
-		ImGui::Selectable("Volume:- ", &ClickOnVolume);
-		ImGui::SameLine();
-		ImGui::Text("%f", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->SndVolume);
-		if (ClickOnVolume)
-		{
-			Mark_As_Altered_Environ(Eviron_Index);
-			ClickOnVolume = 0;
-		}
-
-		// ----------------- Play
-		ImGui::Selectable("Play:- ", &ClickOnPlay);
-		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play);
-		if (ClickOnPlay)
-		{
-			strcpy(App->CLSB_Dialogs->btext, "Set Play Sound Track");
-
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play;
-
-			App->CLSB_Dialogs->Dialog_TrueFlase();
-
-			if (App->CLSB_Dialogs->Canceled == 0)
-			{
-				if (App->CLSB_Dialogs->TrueFlase == 1)
-				{
-					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play = 1;
-					App->CLSB_Environment->Set_Environment_By_Index(1, Eviron_Index);
-				}
-				else
-				{
-					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Play = 0;
-					App->CLSB_Environment->Set_Environment_By_Index(0, Eviron_Index);
-				}
-
-				Mark_As_Altered_Environ(Eviron_Index);
-			}
-
-			Mark_As_Altered_Environ(Eviron_Index);
-
-			ClickOnPlay = 0;
-		}
-
-		// ----------------- Loop
-		ImGui::Selectable("Loop:- ", &ClickOnLoop);
-		ImGui::SameLine();
-		ImGui::Text("%i", App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop);
-		if (ClickOnLoop)
-		{
-			strcpy(App->CLSB_Dialogs->btext, "Set Play Sound Loop");
-
-			App->CLSB_Dialogs->TrueFlase = App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop;
-
-			App->CLSB_Dialogs->Dialog_TrueFlase();
-
-			if (App->CLSB_Dialogs->Canceled == 0)
-			{
-				if (App->CLSB_Dialogs->TrueFlase == 1)
-				{
-					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop = 1;
-					Set_Environment_By_Index(0, Eviron_Index);
-					Set_Environment_By_Index(1, Eviron_Index);
-				}
-				else
-				{
-					App->CLSB_Game_Editor->V_Object[Eviron_Index]->S_Environ[0]->Loop = 0;
-					Set_Environment_By_Index(0, Eviron_Index);
-					Set_Environment_By_Index(1, Eviron_Index);
-				}
-
-				Mark_As_Altered_Environ(Eviron_Index);
-			}
-
-			ClickOnLoop = 0;
-		}
 	}
 
 	// ---------------------------------------------------------------- Fog

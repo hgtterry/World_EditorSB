@@ -37,13 +37,6 @@ public:
 	char Name[MAX_PATH];				
 	HTREEITEM FileViewItem;
 
-	//--------------- Sound
-	irrklang::ISound* SndFile;
-	Ogre::Real SndVolume;
-	char Sound_File[MAX_PATH];
-	bool Play;
-	bool Loop;
-
 	//--------------- Light
 	Ogre::Vector3 AmbientColour;
 	Ogre::Vector3 DiffuseColour;

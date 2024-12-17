@@ -30,13 +30,6 @@ typedef struct Environ_type
 
 	bool Environ_Enabled;
 
-	//--------------- Sound
-	irrklang::ISound* SndFile;
-	Ogre::Real SndVolume;
-	char Sound_File[MAX_PATH];
-	bool Play;
-	bool Loop;
-
 	//--------------- Light
 	Ogre::Vector3 AmbientColour;
 	Ogre::Vector3 Light_Position;

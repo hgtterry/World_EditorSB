@@ -591,15 +591,17 @@ LRESULT CALLBACK A_Dialogs::About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPara
 	case WM_INITDIALOG:
 		{
 			SendDlgItemMessage(hDlg, IDC_STHELP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+			SendDlgItemMessage(hDlg, IDC_ST_LIB_VERSION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			
 			char buf[2024];
 			strcpy(buf,"\r\nGenesis3D Equity_WE version 1.26 Alpha\r\n\r\nThis version of the World Editor is heavly modified version\r\n of RFpro and World Editor.\r\n\r\nFor additional information on Genesis3D, visit:\r\nhttps://www.realityfactory.info/cms/\r\n\r\nThanks");
 			SetDlgItemText(hDlg, IDC_STHELP,buf);
-
-			
+			SetDlgItemText(hDlg, IDC_ST_LIB_VERSION, geBitmap_Get_Version());
+		
 			return TRUE;
 
 		}
+
 	case WM_CTLCOLORSTATIC:
 		{
 			if (GetDlgItem(hDlg, IDC_STHELP) == (HWND)lParam)
@@ -608,6 +610,14 @@ LRESULT CALLBACK A_Dialogs::About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPara
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
 				SetBkMode((HDC)wParam, TRANSPARENT);
 				return (UINT)App->Brush_White;
+			}
+
+			if (GetDlgItem(hDlg, IDC_ST_LIB_VERSION) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
 			}
 
 			return FALSE;

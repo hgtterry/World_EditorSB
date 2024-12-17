@@ -46,13 +46,6 @@ void Base_Environment::Set_Environment_Defaults()
 	This_Object_UniqueID = 0;
 	strcpy(Name, "Not_Set");
 
-	//----------------------- Sound
-	strcpy(Sound_File, "The_Sun.ogg");
-	//SndFile = NULL;
-	Play = 0;
-	Loop = 1;
-	SndVolume = 0.5;
-
 	//----------------------- Light
 	AmbientColour.x = 1;
 	AmbientColour.y = 1;

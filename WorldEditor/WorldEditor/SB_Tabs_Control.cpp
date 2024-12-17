@@ -190,11 +190,36 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 
 			if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
 			{
-				App->CLSB_TabsControl->Hide_Dialogs();
-				App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
-				App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(1);
+				if (App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag == 1)
+				{
 
-				RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+					App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
+					RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+					ShowWindow(App->ListPanel, false);
+					ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
+					App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
+
+					App->CLSB_Game_Editor->Hide_Game_Editor_Dialog();
+					RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				}
+				else
+				{
+					/*if (App->BR_True3D_Mode_Active == 1)
+					{
+						App->CLSB_BR_Render->Exit_BR_3D_Mode();
+						App->BR_True3D_Mode_Active = 0;
+						App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 1;
+					}*/
+
+					App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 1;
+					App->CLSB_Game_Editor->Go_Game_Editor();
+				}
+				/*App->CLSB_TabsControl->Hide_Dialogs();
+				App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
+				App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(1);*/
+
+				//RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 			
