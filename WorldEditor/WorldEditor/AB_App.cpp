@@ -25,7 +25,6 @@ distribution.
 #include "AB_App.h"
 #include  <stdint.h>
 
-
 SB_App::SB_App()
 {
 	ABC_Export_RFW =			NULL;

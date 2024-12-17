@@ -48,8 +48,6 @@ public:
 	void Export_World_To_Object();
 	
 
-
-
 	void Export_World_Text(int ExpSelected);
 	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool BrushList_ExportToText(BrushList* BList, geBoolean SubBrush);

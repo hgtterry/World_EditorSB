@@ -97,6 +97,8 @@ GENESISAPI geBoolean	GENESISCC	geBitmap_WriteToFileName(const geBitmap * Bmp,con
 										// BaseFS is not really const if it is a virtual file;
 										//  it *is* const if it is a dos directory
 
+GENESISAPI char* GENESISCC	geBitmap_Get_Version();
+
 GENESISAPI geBoolean 	GENESISCC	geBitmap_Destroy(geBitmap **Bmp);
 	// returns whether Bmp was actually destroyed : not success/failure
 

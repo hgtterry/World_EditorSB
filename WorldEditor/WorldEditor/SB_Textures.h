@@ -62,7 +62,7 @@ public:
 
 	bool Jpg_To_png24(char* File);
 	bool Bmp_To_Jpg(char* File);
-
+	bool Get_Lib_Version();
 	bool Create_DummyTexture(char* Folder);
 
 

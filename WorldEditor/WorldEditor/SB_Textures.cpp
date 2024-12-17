@@ -598,6 +598,7 @@ bool SB_Textures::LoadDummyTexture(int Index)
 // *************************************************************************
 int SB_Textures::Genesis_WriteToBmp(geBitmap* bmp, char* filename)
 {
+
 	BITMAPFILEHEADER 	bmfh;
 	BITMAPINFOHEADER	bmih;
 	int width, height, bpp;
@@ -1342,5 +1343,14 @@ bool SB_Textures::LoadTextures_TXL(char* Name)
 	geVFile_Close(File);
 	geVFile_Close(VFS);
 
+	return 1;
+}
+
+// *************************************************************************
+// *			Get_Lib_Version:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+bool SB_Textures::Get_Lib_Version()
+{
+	App->Say(geBitmap_Get_Version());
 	return 1;
 }

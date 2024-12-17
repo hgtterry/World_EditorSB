@@ -1454,7 +1454,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [16-12-24] -19 ND"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.29.2 - [17-12-24] -19 ND"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"

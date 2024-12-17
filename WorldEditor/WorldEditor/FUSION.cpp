@@ -434,7 +434,8 @@ void CFusionApp::Open_Preferences() // hgtterry Start_Preferences_Dlg()
 
 void CFusionApp::Show_ImGui_Surface() // hgtterry Start_Preferences_Dlg()
 {
-	App->CLSB_ImGui->Start_ImGui_Surface();
+	App->CLSB_Textures->Get_Lib_Version();
+	//App->CLSB_ImGui->Start_ImGui_Surface();
 }
 
 void CFusionApp::Open_FaceProperties() // hgtterry void CFusionApp::Open_FaceProperties()
