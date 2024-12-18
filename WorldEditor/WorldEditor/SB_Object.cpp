@@ -99,12 +99,6 @@ void SB_Object::Object_Camera_Goto(int Object_Index)
 
 	int Index = Object_Index;
 
-	if (App->CLSB_Properties->Edit_Category == Enums::Edit_Area)
-	{
-		//Centre = App->CLSB_Scene->B_Area[Index]->Area_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-		//WS = App->CLSB_Scene->B_Area[Index]->Area_Node->convertLocalToWorldPosition(Centre);
-	}
-	else
 	{
 		CentreNode = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->getPosition();
 
@@ -167,18 +161,7 @@ Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 // **************************************************************************
 void SB_Object::Delete_Object()
 {
-	int MeshIndex = App->CLSB_Properties->Current_Selected_Object;
-	btRigidBody* body = App->CLSB_Game_Editor->V_Object[MeshIndex]->Phys_Body;
-
-	if (body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(body);
-	}
-
-	App->CLSB_Game_Editor->V_Object[MeshIndex]->Deleted = 1;
-	App->CLSB_Game_Editor->V_Object[MeshIndex]->Object_Node->setVisible(false);
-
-	App->CLSB_Scene_Data->Scene_Modified = 1;
+	
 }
 
 // *************************************************************************

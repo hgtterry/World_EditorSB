@@ -59,7 +59,7 @@ void SB_Panels::Centre_QC_Dialog()
 // *************************************************************************
 void SB_Panels::Move_FileView_Window(void)
 {
-	POINT p = { 0 };
+	/*POINT p = { 0 };
 
 	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
 
@@ -67,7 +67,7 @@ void SB_Panels::Move_FileView_Window(void)
 	int PosY = p.y;
 
 	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);*/
 
 }
 
@@ -99,8 +99,6 @@ void SB_Panels::Place_GlobalGroups(void)
 	int PosX = p.x;
 	int PosY = p.y;
 
-	SetWindowPos(App->CLSB_Properties->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
 // *************************************************************************

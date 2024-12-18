@@ -99,51 +99,7 @@ void SB_Dimensions::Dimesions_Select(void)
 // *************************************************************************
 void SB_Dimensions::Prepare_Dimensions(void)
 {
-	int Index = App->CLSB_Properties->Current_Selected_Object;
-
-	if (App->CLSB_Properties->Edit_Category == Enums::Edit_Area)
-	{
-		/*pBase_Mesh_Name = App->SBC_Scene->B_Area[Index]->Area_Name;
-
-		pBase_Shape = &App->SBC_Scene->B_Area[Index]->Shape;
-
-		pBase_Object_Ent = App->SBC_Scene->B_Area[Index]->Area_Ent;
-		pBase_Object_Node = App->SBC_Scene->B_Area[Index]->Area_Node;
-		pBase_Mesh_Pos = &App->SBC_Scene->B_Area[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->SBC_Scene->B_Area[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->SBC_Scene->B_Area[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->SBC_Scene->B_Area[Index]->Mesh_Quat;
-
-		pBase_Phys_Body = App->SBC_Scene->B_Area[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->SBC_Scene->B_Area[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->SBC_Scene->B_Area[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->SBC_Scene->B_Area[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->SBC_Scene->B_Area[Index]->Physics_Quat;*/
-
-		//App->Say("Area");
-	}
-	else
-	{
-		pBase_Mesh_Name = App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name;
-
-		pBase_Shape = &App->CLSB_Game_Editor->V_Object[Index]->Shape;
-		pBase_Physics_Type = &App->CLSB_Game_Editor->V_Object[Index]->Type;
-
-		pBase_Object_Ent = App->CLSB_Game_Editor->V_Object[Index]->Object_Ent;
-		pBase_Object_Node = App->CLSB_Game_Editor->V_Object[Index]->Object_Node;
-		pBase_Mesh_Pos = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->CLSB_Game_Editor->V_Object[Index]->Mesh_Quat;
-
-		pBase_Phys_Body = App->CLSB_Game_Editor->V_Object[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->CLSB_Game_Editor->V_Object[Index]->Physics_Quat;
-
-		//App->Say("Object");
-	}
+	
 }
 
 // *************************************************************************
@@ -443,32 +399,7 @@ void SB_Dimensions::ImGui_Position(void)
 // *************************************************************************
 void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 {
-	if (App->CLSB_Model->Model_Loaded == 1)
-	{
-		int Index = App->CLSB_Properties->Current_Selected_Object;
-
-		pBase_Object_Node->setPosition(Pos);
-
-		pBase_Mesh_Pos->x = Pos.x;
-		pBase_Mesh_Pos->y = Pos.y;
-		pBase_Mesh_Pos->z = Pos.z;
-
-
-
-		if (pBase_Phys_Body)
-		{
-
-			Ogre::Vector3 Centre = Get_BoundingBox_World_Centre();
-
-			pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-
-			UpDate_Physics_And_Visuals(Index);
-		}
-		else
-		{
-			//App->SBC_Markers->MarkerBB_Addjust(Index);
-		}
-	}
+	
 }
 
 // *************************************************************************
@@ -706,25 +637,7 @@ void SB_Dimensions::ImGui_Scale(void)
 // *************************************************************************
 void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 {
-	int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	pBase_Object_Node->setScale(Scale);
-
-	pBase_Mesh_Scale->x = Scale.x;
-	pBase_Mesh_Scale->y = Scale.y;
-	pBase_Mesh_Scale->z = Scale.z;
-
-	if (pBase_Phys_Body)
-	{
-		pBase_Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-		pBase_Physics_Scale->x = Scale.x;
-		pBase_Physics_Scale->y = Scale.y;
-		pBase_Physics_Scale->z = Scale.z;
-
-		UpDate_Physics_And_Visuals(Index);
-	}
-
-	//App->SBC_Markers->MarkerBB_Addjust(Index);
 }
 
 // *************************************************************************
@@ -887,31 +800,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 // *************************************************************************
 void SB_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 {
-	int Index = App->CLSB_Properties->Current_Selected_Object;
-
-	pBase_Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Delta), Rotation), Ogre::Node::TransformSpace::TS_LOCAL);
-
-	pBase_Mesh_Quat->w = pBase_Object_Node->getOrientation().w;
-	pBase_Mesh_Quat->x = pBase_Object_Node->getOrientation().x;
-	pBase_Mesh_Quat->y = pBase_Object_Node->getOrientation().y;
-	pBase_Mesh_Quat->z = pBase_Object_Node->getOrientation().z;
-
-	if (pBase_Phys_Body)
-	{
-		pBase_Physics_Rot->x += Model_Rotation_Delta;
-
-		pBase_Physics_Quat->w = pBase_Object_Node->getOrientation().w;
-		pBase_Physics_Quat->x = pBase_Object_Node->getOrientation().x;
-		pBase_Physics_Quat->y = pBase_Object_Node->getOrientation().y;
-		pBase_Physics_Quat->z = pBase_Object_Node->getOrientation().z;
-
-		pBase_Phys_Body->getWorldTransform().setRotation(btQuaternion(pBase_Physics_Quat->x,
-			pBase_Physics_Quat->y, pBase_Physics_Quat->z, pBase_Physics_Quat->w));
-
-		UpDate_Physics_And_Visuals(Index);
-	}
-
-	//App->SBC_Markers->MarkerBB_Addjust(Index);
+	
 }
 
 // *************************************************************************

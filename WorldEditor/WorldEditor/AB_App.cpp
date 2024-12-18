@@ -91,7 +91,6 @@ SB_App::SB_App()
 	CLSB_Bullet =				nullptr;
 	CLSB_Player =				nullptr;
 
-	CLSB_Properties =			nullptr;
 	CLSB_Object =				nullptr;
 	CLSB_Project =				nullptr;
 	CLSB_Objects_Create =		nullptr;
@@ -106,7 +105,6 @@ SB_App::SB_App()
 	CLSB_BaseFaces =			nullptr;
 	CLSB_Game_Editor =			nullptr;
 	CLSB_Meshviewer =			nullptr;
-	CLSB_Props_Dialogs =		nullptr;
 	CLSB_Build =				nullptr;
 	CLSB_Project_Create =		nullptr;
 
@@ -312,7 +310,6 @@ bool SB_App::InitApp(void)
 	CLSB_Bullet =					new SB_Bullet();
 	CLSB_Player =					new SB_Player();
 
-	CLSB_Properties =				new SB_Properties;
 	CLSB_Object =					new SB_Object();
 	CLSB_Project =					new SB_Project();
 	CLSB_Objects_Create =			new SB_Objects_Create();
@@ -324,7 +321,6 @@ bool SB_App::InitApp(void)
 	CLSB_BaseFaces =				new Base_Faces();
 	CLSB_Game_Editor =				new SB_Game_Editor();
 	CLSB_Meshviewer =				new SB_MeshViewer();
-	CLSB_Props_Dialogs =			new SB_Props_Dialogs();
 	CLSB_Build =					new SB_Build();
 	CLSB_Project_Create =			new SB_Project_Create();
 

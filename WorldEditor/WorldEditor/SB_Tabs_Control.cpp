@@ -196,8 +196,6 @@ LRESULT CALLBACK SB_Tabs_Control::Tabs_Control_Proc(HWND hDlg, UINT message, WPA
 					App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
 					RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-					ShowWindow(App->ListPanel, false);
-					ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 					App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
 
 					App->CLSB_Game_Editor->Hide_Game_Editor_Dialog();

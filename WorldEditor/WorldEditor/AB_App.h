@@ -93,7 +93,6 @@ distribution.
 #include "SB_Bullet.h"
 #include "SB_Player.h"
 
-#include "SB_Properties.h"
 #include "SB_Object.h"
 #include "SB_Project.h"
 #include "SB_Objects_Create.h"
@@ -109,7 +108,6 @@ distribution.
 
 #include "SB_Game_Editor.h"
 #include "SB_MeshViewer.h"
-#include "SB_Props_Dialogs.h"
 #include "SB_Build.h"
 #include "SB_Project_Create.h"
 
@@ -183,7 +181,6 @@ public:
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;
 
-	SB_Properties*				CLSB_Properties;
 	SB_Object*					CLSB_Object;
 	SB_Project*					CLSB_Project;
 	SB_Objects_Create*			CLSB_Objects_Create;
@@ -198,7 +195,6 @@ public:
 	Base_Faces*					CLSB_BaseFaces;
 	SB_Game_Editor*				CLSB_Game_Editor;
 	SB_MeshViewer*				CLSB_Meshviewer;
-	SB_Props_Dialogs*			CLSB_Props_Dialogs;
 	SB_Build*					CLSB_Build;
 	SB_Project_Create*			CLSB_Project_Create;
 

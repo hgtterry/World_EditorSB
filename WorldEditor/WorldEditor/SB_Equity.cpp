@@ -116,12 +116,8 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		Resize_3DView();
 
-		App->CLSB_Panels->Move_FileView_Window();
-		App->CLSB_Panels->MovePhysicsView();
-
-		App->CLSB_Properties->Start_GD_Properties();
-
-		App->CLSB_Props_Dialogs->Start_Props_Dialogs();
+		//App->CLSB_Panels->Move_FileView_Window();
+		//App->CLSB_Panels->MovePhysicsView();
 
 		Set_Mode_Equity();
 
@@ -444,9 +440,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 				App->m_pDoc->OnCloseDocument();
 			}
 
-			ShowWindow(App->ListPanel, false);
-			ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-			
 			if (App->CLSB_Equity->Equity_Render_Mode == Enums::EQ_Mode_Equity)
 			{
 				App->CLSB_Equity->Hide_Equity_Dialog();
@@ -737,9 +730,6 @@ void SB_Equity::Go_Equity()
 		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Model_Loaded = 1;
 
-		ShowWindow(App->ListPanel, false);
-		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-
 		ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, false);
 
 		HMENU TestMenu;
@@ -853,10 +843,6 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Render_Type = Enums::LoadedFile_Brushes;
 
-		ShowWindow(App->ListPanel, false);
-		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-
-		//App->CLSB_Equity->Show_Equity_Dialog(true);
 	}
 	else
 	{

@@ -114,16 +114,8 @@ bool SB_Project::Load_Project()
 	Options->Has_Objects = App->CLSB_Ini->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = App->CLSB_Ini->GetInt("Options", "Counters_Count", 0, 10);
 
-	//App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
-	//App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
-	//App->SBC_Scene->UniqueID_Area_Count = App->Cl_Ini->GetInt("Options", "Areas_ID_Count", 0, 10);
 
-	//App->SBC_Build->GameOptions->Show_FPS = App->Cl_Ini->GetInt("Config", "Show_FPS", 0, 10);
-	//App->SBC_Build->GameOptions->FullScreen = App->Cl_Ini->GetInt("Config", "Game_FullScreen", 1, 10);
-	//App->SBC_Build->GameOptions->Zipped_Assets_Flag = App->Cl_Ini->GetInt("Config", "Zipped_Assets", 1, 10);
-	//App->SBC_Build->GameOptions->Front_Dialog_Flag = App->Cl_Ini->GetInt("Config", "Use_Front_Dlg", 1, 10);
-
-	////-------------------------------------- Set Resource Path
+	//-------------------------------------- Set Resource Path
 
 	Load_Get_Resource_Path();
 
@@ -151,7 +143,7 @@ bool SB_Project::Load_Project()
 	//	App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
 
 		App->CLSB_Player->Create_Player_Object();
-		App->CLSB_Properties->Update_ListView_Player();
+
 	}
 	
 	//// ------------------------------------- Camera
@@ -170,40 +162,12 @@ bool SB_Project::Load_Project()
 		App->CLSB_Objects_Create->Add_Objects_From_File();
 	}
 
-	//// ------------------------------------- Counters
-	//if (Options->Has_Counters > 0)
-	//{
-	//	Load_Project_Counters();
-	//	App->SBC_Display->Add_Counters_From_File();
-	//}
-
-
-	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-	//App->SBC_FileView->Change_Level_Name();
-	//App->SBC_FileView->Change_Project_Name();
-	//App->SBC_FileView->Redraw_FileView();
-
-	//App->SBC_Scene->Scene_Modified = 0;
-
-	//int Test = App->SBC_Com_Environments->Get_First_Environ();
-	//if (Test == -1)
-	//{
-	//	App->SBC_Com_Environments->Add_New_Environ_Entity(1);
-	//	int mIndex = App->SBC_Com_Environments->Get_First_Environ();
-	//	App->SBC_Com_Environments->Set_First_Environment(mIndex);
-
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//}
-	//else
-	//{
-	//	App->SBC_Com_Environments->Set_First_Environment(Test);
-	//}
+	
 
 	App->CLSB_Game_Editor->Project_Loaded = 1;
 	//App->SBC_Project->Project_Loaded = 1;
 
-	//delete Options;
+	delete Options;
 
 	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	//App->SBC_FileIO->RecentFileHistory_Update();

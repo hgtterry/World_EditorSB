@@ -212,9 +212,6 @@ void SB_Game_Editor::Go_Game_Editor()
 
 		App->CLSB_Model->Render_Type = Enums::Render_Ogre;
 
-		ShowWindow(App->ListPanel, true);
-		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
-
 		SetWindowText(App->Equity_Dlg_hWnd, "Game Editor");
 
 		ShowWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, true);
