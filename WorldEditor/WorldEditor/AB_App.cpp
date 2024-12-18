@@ -101,7 +101,6 @@ SB_App::SB_App()
 	CLSB_BR_Render =			nullptr;
 	CLSB_BaseFaces =			nullptr;
 	CLSB_Game_Editor =			nullptr;
-	CLSB_Meshviewer =			nullptr;
 	CLSB_Project_Create =		nullptr;
 
 	AppBackground = NULL;
@@ -313,7 +312,6 @@ bool SB_App::InitApp(void)
 	CLSB_BR_Render =				new SB_BR_Render();
 	CLSB_BaseFaces =				new Base_Faces();
 	CLSB_Game_Editor =				new SB_Game_Editor();
-	CLSB_Meshviewer =				new SB_MeshViewer();
 	CLSB_Project_Create =			new SB_Project_Create();
 
 	InitCommonControls();

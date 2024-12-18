@@ -119,11 +119,6 @@ void SB_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 {
-	if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-	{
-		return 1;
-	}
-
 	Update_Game_Logic(evt.timeSinceLastFrame);
 	return true;
 }
@@ -150,11 +145,6 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 // *************************************************************************
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	if (App->CLSB_Meshviewer->Mesh_Render_Running == 1)
-	{
-		return 1;
-	}
-
 	OgreFrameTime = evt.timeSinceLastFrame;
 
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
