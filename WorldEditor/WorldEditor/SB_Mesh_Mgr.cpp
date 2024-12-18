@@ -335,18 +335,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BT_SHOWDATA)
 		{
-			if (App->CLSB_ImGui->Show_Face_Selection == 1)
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 0;
-				App->CLSB_Mesh_Mgr->Show_Data_Flag = 0;
-				App->CLSB_FileView->Show_FileView(1);
-			}
-			else
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 1;
-				App->CLSB_Mesh_Mgr->Show_Data_Flag = 1;
-				App->CLSB_FileView->Show_FileView(0);
-			}
+			
 			return TRUE;
 		}
 		
@@ -1731,7 +1720,6 @@ int SB_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
 // *************************************************************************
 bool SB_Mesh_Mgr::Update_World()
 {
-	App->CLSB_ImGui->Updating_F = 1;
 	App->CLSB_Ogre_Setup->RenderFrame();
 	App->CLSB_Ogre_Setup->RenderFrame();
 	App->CLSB_Ogre_Setup->RenderFrame();
@@ -1742,7 +1730,6 @@ bool SB_Mesh_Mgr::Update_World()
 	WE_Convert_All_Texture_Groups();
 	App->CLSB_Ogre3D->Convert_ToOgre3D(1);
 
-	App->CLSB_ImGui->Updating_F = 0;
 	return 1;
 }
 

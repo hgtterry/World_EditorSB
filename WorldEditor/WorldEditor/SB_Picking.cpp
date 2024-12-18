@@ -115,11 +115,8 @@ void SB_Picking::Mouse_Pick_Entity()
      rw = App->CLSB_Ogre_Setup->mWindow;
      camera = App->CLSB_Ogre_Setup->mCamera;
    
-
-    ImGuiIO& io = ImGui::GetIO();
-
-    Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
-    Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
+     Ogre::Real tx = 0;// io.MousePos.x / (Ogre::Real)rw->getWidth();
+     Ogre::Real ty = 0;// io.MousePos.y / (Ogre::Real)rw->getHeight();
 
     Pl_Entity_Name = "-----";
 

@@ -80,7 +80,6 @@ distribution.
 
 #include "SB_Textures.h"
 #include "SB_Dialogs.h"
-#include "SB_ImGui.h"
 #include "SB_Brushes.h"
 #include "SB_RecentFiles.h"
 #include "SB_TopTabs_Equity.h"
@@ -174,7 +173,6 @@ public:
 
 	SB_Textures*				CLSB_Textures;
 	SB_Dialogs*					CLSB_Dialogs;
-	SB_ImGui*					CLSB_ImGui;
 	SB_Brushes*					CLSB_Brushes;
 	SB_RecentFiles*				CLSB_RecentFiles;
 	SB_TopTabs_Equity*			CLSB_TopTabs_Equity;

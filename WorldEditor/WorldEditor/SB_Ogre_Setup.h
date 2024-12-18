@@ -28,8 +28,6 @@ distribution.
 #include <OgreParticleSystem.h>
 
 #include "SB_Render.h"
-#include "ImguiManager.h"
-
 #include "SB_Bt_Render.h"
 
 //#include <chrono>
@@ -96,8 +94,6 @@ public:
 
 	GD_Bt_Render*		BulletListener;
 
-	OgreImGui  m_imgui;
-	
 	//HWND Ogre_Window_hWnd;
 
 	Ogre::Timer FPStimer;

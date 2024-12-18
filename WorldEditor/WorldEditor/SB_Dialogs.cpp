@@ -1338,7 +1338,6 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CLSB_ImGui->Select_Face_F = 0;
 			App->CLSB_Dialogs->Select_Face_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -1346,7 +1345,6 @@ LRESULT CALLBACK SB_Dialogs::Select_Face_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CLSB_ImGui->Select_Face_F = 0;
 			App->CLSB_Dialogs->Select_Face_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

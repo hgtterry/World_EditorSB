@@ -76,10 +76,6 @@ void SB_Panels::Move_FileView_Window(void)
 // *************************************************************************
 void SB_Panels::MovePhysicsView(void)
 {
-	if (App->CLSB_ImGui->Show_Physics_Console == 1)
-	{
-		App->CLSB_ImGui->Physics_Console_StartPos = 0;
-	}
 
 }
 

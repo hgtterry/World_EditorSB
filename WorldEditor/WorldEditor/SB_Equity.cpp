@@ -234,30 +234,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_DEBUG_PROJECTINFO)
 		{
-			if (App->CLSB_ImGui->Show_Debug_Project == 1)
-			{
-				App->CLSB_ImGui->Show_Debug_Project = 0;
-			}
-			else
-			{
-				App->CLSB_ImGui->Show_Debug_Project = 1;
-			}
-
+			
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_DEBUG_SHOWPICKINGDATA)
 		{
-			if (App->CLSB_ImGui->Show_Face_Selection == 1)
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 0;
-				App->CLSB_FileView->Show_FileView(1);
-			}
-			else
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 1;
-				App->CLSB_FileView->Show_FileView(0);
-			}
+			
 			return TRUE;
 		}
 		
@@ -268,30 +251,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_DEBUG_SHOWCAMERAPOSITIONS)
 		{
-			if (App->CLSB_ImGui->Show_Camera_Pos_F == 1)
-			{
-				App->CLSB_ImGui->Close_Camera_Pos();
-			}
-			else
-			{
-				App->CLSB_ImGui->Start_Camera_Pos();
-			}
+			
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_DEBUG_BOUNDINGBOX)
 		{
-			if (App->CLSB_Model->Model_Loaded == 1)
-			{
-				if (App->CLSB_ImGui->Show_BB_Data_F == 1)
-				{
-					App->CLSB_ImGui->Close_BB_Data();
-				}
-				else
-				{
-					App->CLSB_ImGui->Start_BB_Data();
-				}
-			}
+			
 			return TRUE;
 		}
 
@@ -538,8 +504,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->CLSB_Ogre_Setup->m_imgui.mouseMoved();
-
 		SetFocus(App->ViewGLhWnd);
 		break;
 	}
@@ -547,9 +511,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
-
-		if (!ImGui::GetIO().WantCaptureMouse)
 		{
 			if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 			{
@@ -578,8 +539,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	}
 	case WM_RBUTTONUP:
 	{
-		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
-
+		
 		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
@@ -608,9 +568,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->CLSB_Ogre_Setup->m_imgui.mousePressed();
-
-		if (!ImGui::GetIO().WantCaptureMouse)
 		{
 			if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 			{
@@ -652,8 +609,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_LBUTTONUP:
 	{
-		App->CLSB_Ogre_Setup->m_imgui.mouseReleased();
-
 		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
@@ -725,8 +680,6 @@ void SB_Equity::Set_Mode_Equity()
 	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
 	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
 
-	App->CLSB_ImGui->Show_Physics_Console = 0;
-
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
 
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
@@ -749,14 +702,6 @@ void SB_Equity::Go_Equity()
 {
 	if (App->Equity_Dlg_hWnd)
 	{
-		if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
-		{
-			App->CLSB_ImGui->Stop_Render();
-			EndDialog(App->CLSB_ImGui->ImGui_Dlg_Surface_hWnd, 0);
-			App->CLSB_ImGui->ImGui_Surface_Active = 0;
-			Debug
-		}
-
 		if (App->CLSB_Mesh_Mgr->World_Node && App->CLSB_Mesh_Mgr->World_Ent)
 		{
 			App->CLSB_Mesh_Mgr->World_Node->setVisible(false);
@@ -775,8 +720,6 @@ void SB_Equity::Go_Equity()
 		App->CLSB_TopTabs_Equity->Hide_Tabs();
 		ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
 		App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
-
-		App->CLSB_ImGui->Show_Physics_Console = 0;
 
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
 
@@ -889,7 +832,6 @@ void SB_Equity::Do_Preview_Selected()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
-		App->CLSB_ImGui->Show_Physics_Console = 0;
 		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 
 		App->CLSB_Camera_EQ->Reset_View();

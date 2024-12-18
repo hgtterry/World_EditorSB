@@ -240,7 +240,7 @@ void SB_Render::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
-	if (App->CLSB_ImGui->ImGui_Surface_Active == 0)
+	//if (App->CLSB_ImGui->ImGui_Surface_Active == 0)
 	{
 		//---------------------- Textured
 		if (App->CLSB_Model->Model_Loaded == 1 && ShowTextured == 1)

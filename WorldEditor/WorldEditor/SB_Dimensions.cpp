@@ -151,125 +151,125 @@ void SB_Dimensions::Prepare_Dimensions(void)
 // *************************************************************************
 void SB_Dimensions::ImGui_Dimensions(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	ImGuiStyle* style = &ImGui::GetStyle();
+	//ImGuiStyle* style = &ImGui::GetStyle();
 
-	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		ImGui::Indent();
-		ImGui::Indent();
+	//if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	//{
+	//	ImGui::End();
+	//}
+	//else
+	//{
+	//	ImGui::Indent();
+	//	ImGui::Indent();
 
-		//--------------------------------------- Position
-		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+	//	//--------------------------------------- Position
+	//	style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
-		if (Show_Position == 1)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
+	//	if (Show_Position == 1)
+	//	{
+	//		style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	//	}
 
-		if (ImGui::Button("Position"))
-		{
-			Show_Dimensions = 0;
-			Show_Position = 1;
-			Show_Scale = 0;
-			Show_Rotation = 0;
-		}
+	//	if (ImGui::Button("Position"))
+	//	{
+	//		Show_Dimensions = 0;
+	//		Show_Position = 1;
+	//		Show_Scale = 0;
+	//		Show_Rotation = 0;
+	//	}
 
-		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+	//	style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
-		//--------------------------------------- Rotation
-		ImGui::SameLine(0.0f);
+	//	//--------------------------------------- Rotation
+	//	ImGui::SameLine(0.0f);
 
-		if (Show_Rotation == 1)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
+	//	if (Show_Rotation == 1)
+	//	{
+	//		style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	//	}
 
-		if (ImGui::Button("Rotation"))
-		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 0;
-			Show_Rotation = 1;
-		}
-		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+	//	if (ImGui::Button("Rotation"))
+	//	{
+	//		Show_Dimensions = 0;
+	//		Show_Position = 0;
+	//		Show_Scale = 0;
+	//		Show_Rotation = 1;
+	//	}
+	//	style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
-		//--------------------------------------- Scale
-		ImGui::SameLine(0.0f);
+	//	//--------------------------------------- Scale
+	//	ImGui::SameLine(0.0f);
 
-		if (Show_Scale == 1)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
+	//	if (Show_Scale == 1)
+	//	{
+	//		style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	//	}
 
-		if (ImGui::Button("Scale"))
-		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 1;
-			Show_Rotation = 0;
+	//	if (ImGui::Button("Scale"))
+	//	{
+	//		Show_Dimensions = 0;
+	//		Show_Position = 0;
+	//		Show_Scale = 1;
+	//		Show_Rotation = 0;
 
-		}
+	//	}
 
-		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	
-		ImGui::Unindent();
-		ImGui::Unindent();
+	//	style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//
+	//	ImGui::Unindent();
+	//	ImGui::Unindent();
 
-		if (Show_Position == 1)
-		{
-			/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Position_Area();
-			}
-			else*/
-			{
-				ImGui_Position();
-			}
-		}
+	//	if (Show_Position == 1)
+	//	{
+	//		/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	//		{
+	//			ImGui_Position_Area();
+	//		}
+	//		else*/
+	//		{
+	//			ImGui_Position();
+	//		}
+	//	}
 
-		if (Show_Scale == 1)
-		{
-			/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Scale_Area();
-			}
-			else*/
-			{
-				ImGui_Scale();
-			}
-		}
+	//	if (Show_Scale == 1)
+	//	{
+	//		/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	//		{
+	//			ImGui_Scale_Area();
+	//		}
+	//		else*/
+	//		{
+	//			ImGui_Scale();
+	//		}
+	//	}
 
-		if (Show_Rotation == 1)
-		{
-			/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Rotation_Area();
-			}
-			else*/
-			{
-				ImGui_Rotation();
-			}
-		}
-		
-		ImGui::Separator();
-		ImGui::Spacing();
+	//	if (Show_Rotation == 1)
+	//	{
+	//		/*if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	//		{
+	//			ImGui_Rotation_Area();
+	//		}
+	//		else*/
+	//		{
+	//			ImGui_Rotation();
+	//		}
+	//	}
+	//	
+	//	ImGui::Separator();
+	//	ImGui::Spacing();
 
-		if (ImGui::Button("Close"))
-		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 0;
-			Show_Rotation = 0;
-		}
+	//	if (ImGui::Button("Close"))
+	//	{
+	//		Show_Dimensions = 0;
+	//		Show_Position = 0;
+	//		Show_Scale = 0;
+	//		Show_Rotation = 0;
+	//	}
 
-		ImGui::End();
-	}
+	//	ImGui::End();
+	//}
 }
 
 // *************************************************************************
@@ -277,165 +277,165 @@ void SB_Dimensions::ImGui_Dimensions(void)
 // *************************************************************************
 void SB_Dimensions::ImGui_Position(void)
 {
-	int Index = App->CLSB_Properties->Current_Selected_Object;
+	//int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->V_Object[Index]->Mesh_Pos;
+	//Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->V_Object[Index]->Mesh_Pos;
 
-	ImGuiStyle* style = &ImGui::GetStyle();
+	//ImGuiStyle* style = &ImGui::GetStyle();
 
-	ImGui::Text("Position");
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Position");
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
-	ImGui::Spacing();
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
+	//ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
+	//ImGui::Spacing();
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	float vec4a[4] = { Pos.x, Pos.y, Pos.z, 0.44f };
-	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
-
-
-
-	// ----------------------------------------------------------------------------- Pos CheckBox X 
-	ImGui::Indent();
-	ImGui::Indent();
-
-	style->Colors[ImGuiCol_CheckMark] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
-
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-
-	ImGui::Checkbox("PX", &PosX_Selected);
-
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//float vec4a[4] = { Pos.x, Pos.y, Pos.z, 0.44f };
+	//ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
 
-	if (PosX_Selected == 1)
-	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Blue_Axis_Marker(Index);
 
-		PosY_Selected = 0;
-		PosZ_Selected = 0;
-	}
+	//// ----------------------------------------------------------------------------- Pos CheckBox X 
+	//ImGui::Indent();
+	//ImGui::Indent();
 
-	//------------------------------------------------------------------------------- Pos CheckBox Y
-	ImGui::SameLine();
-	ImGui::Text("        ");
-	ImGui::SameLine();
+	//style->Colors[ImGuiCol_CheckMark] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("PY", &PosY_Selected);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
-	if (PosY_Selected)
-	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Green_Axis_Marker(Index);
+	//ImGui::Checkbox("PX", &PosX_Selected);
 
-		PosX_Selected = 0;
-		PosZ_Selected = 0;
-	}
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	//------------------------------------------------------------------------------- Pos CheckBox Z
-	ImGui::SameLine();
-	ImGui::Text("         ");
-	ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.9f, 0.0f, 0.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(1.f, 0.f, 0.f, 1.00f);
-	ImGui::Checkbox("PZ", &PosZ_Selected);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	if (PosZ_Selected)
-	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Red_Axis_Marker(Index);
+	//if (PosX_Selected == 1)
+	//{
+	//	//App->SBC_Markers->Hide_Axis_Marker();
+	//	//App->SBC_Markers->Update_Blue_Axis_Marker(Index);
 
-		PosX_Selected = 0;
-		PosY_Selected = 0;
-	}
+	//	PosY_Selected = 0;
+	//	PosZ_Selected = 0;
+	//}
 
-	ImGui::Indent();
+	////------------------------------------------------------------------------------- Pos CheckBox Y
+	//ImGui::SameLine();
+	//ImGui::Text("        ");
+	//ImGui::SameLine();
 
-	ImGui::Spacing();
-	ImGui::Spacing();
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
+	//ImGui::Checkbox("PY", &PosY_Selected);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	// ----------------------------------------------------------------------------- Position Do Move 
-	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	ImGui::PushButtonRepeat(true);
-	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
-			if (PosX_Selected == 1)
-			{
-				Pos.x = Pos.x + Model_Pos_Delta;
-				Set_Position(Pos);
-			}
+	//if (PosY_Selected)
+	//{
+	//	//App->SBC_Markers->Hide_Axis_Marker();
+	//	//App->SBC_Markers->Update_Green_Axis_Marker(Index);
 
-			if (PosY_Selected == 1)
-			{
-				Pos.y = Pos.y + Model_Pos_Delta;
-				Set_Position(Pos);
-			}
+	//	PosX_Selected = 0;
+	//	PosZ_Selected = 0;
+	//}
 
-			if (PosZ_Selected == 1)
-			{
-				Pos.z = Pos.z + Model_Pos_Delta;
-				Set_Position(Pos);
-			}
-		}
-	}
+	////------------------------------------------------------------------------------- Pos CheckBox Z
+	//ImGui::SameLine();
+	//ImGui::Text("         ");
+	//ImGui::SameLine();
 
-	ImGui::SameLine();
-	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
-			if (PosX_Selected == 1)
-			{
-				Pos.x = Pos.x - Model_Pos_Delta;
-				Set_Position(Pos);
-			}
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.9f, 0.0f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(1.f, 0.f, 0.f, 1.00f);
+	//ImGui::Checkbox("PZ", &PosZ_Selected);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//if (PosZ_Selected)
+	//{
+	//	//App->SBC_Markers->Hide_Axis_Marker();
+	//	//App->SBC_Markers->Update_Red_Axis_Marker(Index);
 
-			if (PosY_Selected == 1)
-			{
-				Pos.y = Pos.y - Model_Pos_Delta;
-				Set_Position(Pos);
-			}
+	//	PosX_Selected = 0;
+	//	PosY_Selected = 0;
+	//}
 
-			if (PosZ_Selected == 1)
-			{
-				Pos.z = Pos.z - Model_Pos_Delta;
-				Set_Position(Pos);
-			}
-		}
-	}
-	ImGui::PopButtonRepeat();
+	//ImGui::Indent();
 
-	// ----------------------------------------------------------------------------- Position Combo Step
-	ImGui::SameLine();
-	ImGui::SetNextItemWidth(100);
-	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-	static int XitemPosXX = 3;
-	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));
-	if (ChangedPosX == 1)
-	{
-		Model_Pos_Delta = (float)atof(XitemsPosXX[XitemPosXX]);
-	}
+	//ImGui::Spacing();
+	//ImGui::Spacing();
 
-	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+	//// ----------------------------------------------------------------------------- Position Do Move 
+	//float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	//ImGui::PushButtonRepeat(true);
+	//if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
+	//		if (PosX_Selected == 1)
+	//		{
+	//			Pos.x = Pos.x + Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
 
-	ImGui::Spacing();
-	ImGui::Unindent();
-	ImGui::Unindent();
-	ImGui::Unindent();
+	//		if (PosY_Selected == 1)
+	//		{
+	//			Pos.y = Pos.y + Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
+
+	//		if (PosZ_Selected == 1)
+	//		{
+	//			Pos.z = Pos.z + Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
+	//	}
+	//}
+
+	//ImGui::SameLine();
+	//if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
+	//		if (PosX_Selected == 1)
+	//		{
+	//			Pos.x = Pos.x - Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
+
+	//		if (PosY_Selected == 1)
+	//		{
+	//			Pos.y = Pos.y - Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
+
+	//		if (PosZ_Selected == 1)
+	//		{
+	//			Pos.z = Pos.z - Model_Pos_Delta;
+	//			Set_Position(Pos);
+	//		}
+	//	}
+	//}
+	//ImGui::PopButtonRepeat();
+
+	//// ----------------------------------------------------------------------------- Position Combo Step
+	//ImGui::SameLine();
+	//ImGui::SetNextItemWidth(100);
+	//const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	//static int XitemPosXX = 3;
+	//bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));
+	//if (ChangedPosX == 1)
+	//{
+	//	Model_Pos_Delta = (float)atof(XitemsPosXX[XitemPosXX]);
+	//}
+
+	//style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+
+	//ImGui::Spacing();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
 }
 
 // *************************************************************************
@@ -477,228 +477,228 @@ void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 void SB_Dimensions::ImGui_Scale(void)
 {
 
-	int Index = App->CLSB_Properties->Current_Selected_Object;
+	//int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Scale = *pBase_Mesh_Scale;
+	//Ogre::Vector3 Scale = *pBase_Mesh_Scale;
 
-	ImGuiStyle* style = &ImGui::GetStyle();
+	//ImGuiStyle* style = &ImGui::GetStyle();
 
-	ImGui::Text("Scale");
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Scale");
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
-	ImGui::Spacing();
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
+	//ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
+	//ImGui::Spacing();
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	float vec4a[4] = { Scale.x, Scale.y, Scale.z, 0.44f };
-	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
+	//float vec4a[4] = { Scale.x, Scale.y, Scale.z, 0.44f };
+	//ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-	// ----------------------------------------------------------------------------- Scale Checkbox X
-	ImGui::Indent();
-	ImGui::Indent();
+	//// ----------------------------------------------------------------------------- Scale Checkbox X
+	//ImGui::Indent();
+	//ImGui::Indent();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
-	ImGui::Checkbox("SX", &ScaleX_Selected);
+	//ImGui::Checkbox("SX", &ScaleX_Selected);
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
-	if (ScaleX_Selected == 1)
-	{
-		if (Scale_Lock == 1)
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
-		}
-		else
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
-		}
+	//if (ScaleX_Selected == 1)
+	//{
+	//	if (Scale_Lock == 1)
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Red_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Green_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+	//	}
+	//	else
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+	//	}
 
-		ScaleY_Selected = 0;
-		ScaleZ_Selected = 0;
-	}
+	//	ScaleY_Selected = 0;
+	//	ScaleZ_Selected = 0;
+	//}
 
-	//------------------------------------------------------------------------------- Scale Checkbox Y
-	ImGui::SameLine();
-	ImGui::Text("        ");
-	ImGui::SameLine();
+	////------------------------------------------------------------------------------- Scale Checkbox Y
+	//ImGui::SameLine();
+	//ImGui::Text("        ");
+	//ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("SY", &ScaleY_Selected);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
+	//ImGui::Checkbox("SY", &ScaleY_Selected);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (ScaleY_Selected)
-	{
-		if (Scale_Lock == 1)
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
-		}
-		else
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);*/
-		}
+	//if (ScaleY_Selected)
+	//{
+	//	if (Scale_Lock == 1)
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Red_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Green_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+	//	}
+	//	else
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Green_Axis_Marker(Index);*/
+	//	}
 
-		ScaleX_Selected = 0;
-		ScaleZ_Selected = 0;
-	}
+	//	ScaleX_Selected = 0;
+	//	ScaleZ_Selected = 0;
+	//}
 
-	//------------------------------------------------------------------------------- Scale Checkbox Z
-	ImGui::SameLine();
-	ImGui::Text("         ");
-	ImGui::SameLine();
+	////------------------------------------------------------------------------------- Scale Checkbox Z
+	//ImGui::SameLine();
+	//ImGui::Text("         ");
+	//ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("SZ", &ScaleZ_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	//ImGui::Checkbox("SZ", &ScaleZ_Selected);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (ScaleZ_Selected)
-	{
-		if (Scale_Lock == 1)
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
-		}
-		else
-		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);*/
-		}
+	//if (ScaleZ_Selected)
+	//{
+	//	if (Scale_Lock == 1)
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Red_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Green_Axis_Marker(Index);
+	//		App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+	//	}
+	//	else
+	//	{
+	//		/*App->SBC_Markers->Hide_Axis_Marker();
+	//		App->SBC_Markers->Update_Red_Axis_Marker(Index);*/
+	//	}
 
-		ScaleX_Selected = 0;
-		ScaleY_Selected = 0;
-	}
+	//	ScaleX_Selected = 0;
+	//	ScaleY_Selected = 0;
+	//}
 
-	ImGui::Indent();
-	ImGui::Spacing();
-	ImGui::Spacing();
+	//ImGui::Indent();
+	//ImGui::Spacing();
+	//ImGui::Spacing();
 
-	// ----------------------------------------------------------------------------- Scale Do Scale
-	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	ImGui::PushButtonRepeat(true);
-	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
-			if (Scale_Lock == 1)
-			{
-				Scale.x = Scale.x + Model_Scale_Delta;
-				Scale.y = Scale.y + Model_Scale_Delta;
-				Scale.z = Scale.z + Model_Scale_Delta;
+	//// ----------------------------------------------------------------------------- Scale Do Scale
+	//float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	//ImGui::PushButtonRepeat(true);
+	//if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
+	//		if (Scale_Lock == 1)
+	//		{
+	//			Scale.x = Scale.x + Model_Scale_Delta;
+	//			Scale.y = Scale.y + Model_Scale_Delta;
+	//			Scale.z = Scale.z + Model_Scale_Delta;
 
-				Set_Scale(Scale);
-			}
-			else
-			{
-				if (ScaleX_Selected == 1)
-				{
-					Scale.x = Scale.x + Model_Scale_Delta;
+	//			Set_Scale(Scale);
+	//		}
+	//		else
+	//		{
+	//			if (ScaleX_Selected == 1)
+	//			{
+	//				Scale.x = Scale.x + Model_Scale_Delta;
 
-					Set_Scale(Scale);
+	//				Set_Scale(Scale);
 
-				}
+	//			}
 
-				if (ScaleY_Selected == 1)
-				{
-					Scale.y = Scale.y + Model_Scale_Delta;
+	//			if (ScaleY_Selected == 1)
+	//			{
+	//				Scale.y = Scale.y + Model_Scale_Delta;
 
-					Set_Scale(Scale);
+	//				Set_Scale(Scale);
 
-				}
+	//			}
 
-				if (ScaleZ_Selected == 1)
-				{
-					Scale.z = Scale.z + Model_Scale_Delta;
+	//			if (ScaleZ_Selected == 1)
+	//			{
+	//				Scale.z = Scale.z + Model_Scale_Delta;
 
-					Set_Scale(Scale);
-				}
-			}
-		}
-	}
+	//				Set_Scale(Scale);
+	//			}
+	//		}
+	//	}
+	//}
 
-	ImGui::SameLine();
-	if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
-			if (Scale_Lock == 1)
-			{
-				Scale.x = Scale.x - Model_Scale_Delta;
-				Scale.y = Scale.y - Model_Scale_Delta;
-				Scale.z = Scale.z - Model_Scale_Delta;
+	//ImGui::SameLine();
+	//if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
+	//		if (Scale_Lock == 1)
+	//		{
+	//			Scale.x = Scale.x - Model_Scale_Delta;
+	//			Scale.y = Scale.y - Model_Scale_Delta;
+	//			Scale.z = Scale.z - Model_Scale_Delta;
 
-				Set_Scale(Scale);
-			}
-			else
-			{
-				if (ScaleX_Selected == 1)
-				{
-					Scale.x = Scale.x - Model_Scale_Delta;
+	//			Set_Scale(Scale);
+	//		}
+	//		else
+	//		{
+	//			if (ScaleX_Selected == 1)
+	//			{
+	//				Scale.x = Scale.x - Model_Scale_Delta;
 
-					Set_Scale(Scale);
+	//				Set_Scale(Scale);
 
-				}
+	//			}
 
-				if (ScaleY_Selected == 1)
-				{
-					Scale.y = Scale.y - Model_Scale_Delta;
+	//			if (ScaleY_Selected == 1)
+	//			{
+	//				Scale.y = Scale.y - Model_Scale_Delta;
 
-					Set_Scale(Scale);
+	//				Set_Scale(Scale);
 
-				}
+	//			}
 
-				if (ScaleZ_Selected == 1)
-				{
-					Scale.z = Scale.z - Model_Scale_Delta;
+	//			if (ScaleZ_Selected == 1)
+	//			{
+	//				Scale.z = Scale.z - Model_Scale_Delta;
 
-					Set_Scale(Scale);
+	//				Set_Scale(Scale);
 
-				}
-			}
-		}
-	}
-	ImGui::PopButtonRepeat();
+	//			}
+	//		}
+	//	}
+	//}
+	//ImGui::PopButtonRepeat();
 
-	// ----------------------------------------------------------------------------- Scale Combo Step
-	ImGui::SameLine();
-	ImGui::SetNextItemWidth(100);
-	const char* XitemsScaleXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-	static int XitemScaleXX = 1;
-	bool ChangedScaleX = ImGui::Combo("Step Scale", &XitemScaleXX, XitemsScaleXX, IM_ARRAYSIZE(XitemsScaleXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	if (ChangedScaleX == 1)
-	{
-		Model_Scale_Delta = (float)atof(XitemsScaleXX[XitemScaleXX]);
-	}
+	//// ----------------------------------------------------------------------------- Scale Combo Step
+	//ImGui::SameLine();
+	//ImGui::SetNextItemWidth(100);
+	//const char* XitemsScaleXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	//static int XitemScaleXX = 1;
+	//bool ChangedScaleX = ImGui::Combo("Step Scale", &XitemScaleXX, XitemsScaleXX, IM_ARRAYSIZE(XitemsScaleXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//if (ChangedScaleX == 1)
+	//{
+	//	Model_Scale_Delta = (float)atof(XitemsScaleXX[XitemScaleXX]);
+	//}
 
 
 
-	ImGui::Checkbox("Lock Axis", &Scale_Lock);
-	{
+	//ImGui::Checkbox("Lock Axis", &Scale_Lock);
+	//{
 
-	}
+	//}
 
-	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
-	ImGui::Spacing();
-	ImGui::Unindent();
-	ImGui::Unindent();
-	ImGui::Unindent();
+	//ImGui::Spacing();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
 }
 
 // *************************************************************************
@@ -732,154 +732,154 @@ void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 // *************************************************************************
 void SB_Dimensions::ImGui_Rotation(void)
 {
-	int Index = App->CLSB_Properties->Current_Selected_Object;
+	//int Index = App->CLSB_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 mRotation = *pBase_Mesh_Rot;
+	//Ogre::Vector3 mRotation = *pBase_Mesh_Rot;
 
-	ImGuiStyle* style = &ImGui::GetStyle();
+	//ImGuiStyle* style = &ImGui::GetStyle();
 
-	ImGui::Text("Rotation");
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Rotation");
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
-	ImGui::Spacing();
-	ImGui::Separator();
-	ImGui::Spacing();
+	//ImGui::Text("Object ID = %i", App->CLSB_Properties->Current_Selected_Object);
+	//ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
+	//ImGui::Spacing();
+	//ImGui::Separator();
+	//ImGui::Spacing();
 
-	float vec4a[4] = { mRotation.x, mRotation.y, mRotation.z, 0.44f };
-	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
+	//float vec4a[4] = { mRotation.x, mRotation.y, mRotation.z, 0.44f };
+	//ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-	// ----------------------------------------------------------------------------- Rotation X
-	ImGui::Indent();
-	ImGui::Indent();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-	ImGui::Checkbox("RX", &RotationX_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//// ----------------------------------------------------------------------------- Rotation X
+	//ImGui::Indent();
+	//ImGui::Indent();
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+	//ImGui::Checkbox("RX", &RotationX_Selected);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
-	if (RotationX_Selected == 1)
-	{
-		RotationY_Selected = 0;
-		RotationZ_Selected = 0;
-	}
+	//if (RotationX_Selected == 1)
+	//{
+	//	RotationY_Selected = 0;
+	//	RotationZ_Selected = 0;
+	//}
 
-	//------------------------------------------------------------------------------- Rotation Y
-	ImGui::SameLine();
-	ImGui::Text("        ");
-	ImGui::SameLine();
+	////------------------------------------------------------------------------------- Rotation Y
+	//ImGui::SameLine();
+	//ImGui::Text("        ");
+	//ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("RY", &RotationY_Selected);
-	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
+	//ImGui::Checkbox("RY", &RotationY_Selected);
+	//style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (RotationY_Selected)
-	{
-		RotationX_Selected = 0;
-		RotationZ_Selected = 0;
-	}
+	//if (RotationY_Selected)
+	//{
+	//	RotationX_Selected = 0;
+	//	RotationZ_Selected = 0;
+	//}
 
-	//------------------------------------------------------------------------------- Rotation Z
-	ImGui::SameLine();
-	ImGui::Text("         ");
-	ImGui::SameLine();
+	////------------------------------------------------------------------------------- Rotation Z
+	//ImGui::SameLine();
+	//ImGui::Text("         ");
+	//ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("RZ", &RotationZ_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	if (RotationZ_Selected)
-	{
-		RotationX_Selected = 0;
-		RotationY_Selected = 0;
-	}
-	// ----------------------------------------------------------------------------- Rotation
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	//ImGui::Checkbox("RZ", &RotationZ_Selected);
+	//style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//if (RotationZ_Selected)
+	//{
+	//	RotationX_Selected = 0;
+	//	RotationY_Selected = 0;
+	//}
+	//// ----------------------------------------------------------------------------- Rotation
 
-	ImGui::Indent();
+	//ImGui::Indent();
 
-	ImGui::Spacing();
-	ImGui::Spacing();
+	//ImGui::Spacing();
+	//ImGui::Spacing();
 
-	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	ImGui::PushButtonRepeat(true);
-	if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
-			if (RotationX_Selected == 1)
-			{
-				pBase_Mesh_Rot->x += Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(1, 0, 0), Model_Rotation_Delta);
+	//float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	//ImGui::PushButtonRepeat(true);
+	//if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
+	//		if (RotationX_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->x += Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(1, 0, 0), Model_Rotation_Delta);
 
-			}
+	//		}
 
-			if (RotationY_Selected == 1)
-			{
-				pBase_Mesh_Rot->y += Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(0, 1, 0), Model_Rotation_Delta);
-			}
+	//		if (RotationY_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->y += Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(0, 1, 0), Model_Rotation_Delta);
+	//		}
 
-			if (RotationZ_Selected == 1)
-			{
-				pBase_Mesh_Rot->z += Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(0, 0, 1), Model_Rotation_Delta);
+	//		if (RotationZ_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->z += Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(0, 0, 1), Model_Rotation_Delta);
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
-	ImGui::SameLine();
-	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
-	{
-		if (App->CLSB_Game_Editor->Project_Loaded == 1)
-		{
+	//ImGui::SameLine();
+	//if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
+	//{
+	//	if (App->CLSB_Game_Editor->Project_Loaded == 1)
+	//	{
 
-			if (RotationX_Selected == 1)
-			{
-				pBase_Mesh_Rot->x -= Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(1, 0, 0), -Model_Rotation_Delta);
+	//		if (RotationX_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->x -= Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(1, 0, 0), -Model_Rotation_Delta);
 
-			}
+	//		}
 
-			if (RotationY_Selected == 1)
-			{
-				pBase_Mesh_Rot->y -= Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(0, 1, 0), -Model_Rotation_Delta);
+	//		if (RotationY_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->y -= Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(0, 1, 0), -Model_Rotation_Delta);
 
-			}
+	//		}
 
-			if (RotationZ_Selected == 1)
-			{
-				pBase_Mesh_Rot->z -= Model_Rotation_Delta;
-				Set_Rotation(Ogre::Vector3(0, 0, 1), -Model_Rotation_Delta);
+	//		if (RotationZ_Selected == 1)
+	//		{
+	//			pBase_Mesh_Rot->z -= Model_Rotation_Delta;
+	//			Set_Rotation(Ogre::Vector3(0, 0, 1), -Model_Rotation_Delta);
 
-			}
+	//		}
 
-		}
-	}
+	//	}
+	//}
 
-	ImGui::PopButtonRepeat();
+	//ImGui::PopButtonRepeat();
 
-	// ----------------------------------------------------------------------------- Rotation Combo Step
-	ImGui::SameLine();
-	ImGui::SetNextItemWidth(100);
-	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "45" };
-	static int XitemRotXX = 3;
-	bool ChangedRotX = ImGui::Combo("Step Rot", &XitemRotXX, XitemsRotXX, IM_ARRAYSIZE(XitemsRotXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	if (ChangedRotX == 1)
-	{
-		Model_Rotation_Delta = (float)atof(XitemsRotXX[XitemRotXX]);
-	}
+	//// ----------------------------------------------------------------------------- Rotation Combo Step
+	//ImGui::SameLine();
+	//ImGui::SetNextItemWidth(100);
+	//const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "45" };
+	//static int XitemRotXX = 3;
+	//bool ChangedRotX = ImGui::Combo("Step Rot", &XitemRotXX, XitemsRotXX, IM_ARRAYSIZE(XitemsRotXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//if (ChangedRotX == 1)
+	//{
+	//	Model_Rotation_Delta = (float)atof(XitemsRotXX[XitemRotXX]);
+	//}
 
-	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+	//style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
-	ImGui::Spacing();
-	ImGui::Unindent();
-	ImGui::Unindent();
-	ImGui::Unindent();
+	//ImGui::Spacing();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
+	//ImGui::Unindent();
 }
 
 // *************************************************************************

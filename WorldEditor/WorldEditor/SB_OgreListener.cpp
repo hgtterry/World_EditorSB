@@ -135,27 +135,11 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 {
 
 	App->CLSB_Ogre_Setup->Get_View_Height_Width();
-	App->CLSB_Ogre_Setup->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 	
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
 		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);
 		return true;
-	}
-
-	if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
-	{
-		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(NULL);
-		App->CLSB_ImGui->ImGui_WE_Editor_Loop();
-		return 1;
-	}
-
-	App->CLSB_ImGui->ImGui_Editor_Loop();
-	App->CLSB_ImGui->Render_FPS();
-
-	if (Show_DemoWindow == 1)
-	{
-		ImGui::ShowDemoWindow();
 	}
 
 	App->CLSB_Dimensions->Dimesions_Select();
@@ -239,19 +223,12 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	OgreFrameTime = evt.timeSinceLastFrame;
 
-	App->CLSB_Ogre_Setup->m_imgui.render();
-	
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
 		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(evt.timeSinceLastFrame);
 		return 1;
 	}
 
-	if (App->CLSB_ImGui->ImGui_Surface_Active == 1)
-	{
-		return 1;
-	}
-	
 	if (CameraMode == Enums::CamFirst)
 	{
 

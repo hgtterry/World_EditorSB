@@ -55,18 +55,12 @@ protected:
 	int Ambient_Int_Red;
 	int Ambient_Int_Green;
 	int Ambient_Int_Blue;
-	ImVec4 Ambient_Colour_Copy;
-	ImVec4 Ambient_Colour;
-
+	
 	// Fog Colour
 	int Fog_Colour_Int_Red;
 	int Fog_Colour_Int_Green;
 	int Fog_Colour_Int_Blue;
-	ImVec4 Fog_Colour_Copy;
-	ImVec4 Fog_Colour;
-
 	
-
 	bool Float_Exit;
 
 	bool Is_Teleport;

@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -66,15 +66,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiManager.cpp" />
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_tables.cpp" />
-    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="A_Brush.cpp" />
     <ClCompile Include="A_Camera.cpp" />
     <ClCompile Include="A_CreateArchDialog.cpp" />
@@ -196,7 +187,6 @@
     <ClCompile Include="SB_File_WE.cpp" />
     <ClCompile Include="SB_Game_Editor.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
-    <ClCompile Include="SB_ImGui.cpp" />
     <ClCompile Include="SB_Ini.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -311,7 +301,6 @@
     <ClInclude Include="SB_File_WE.h" />
     <ClInclude Include="SB_Game_Editor.h" />
     <ClInclude Include="SB_Grid.h" />
-    <ClInclude Include="SB_ImGui.h" />
     <ClInclude Include="SB_Ini.h" />
     <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Level.h" />

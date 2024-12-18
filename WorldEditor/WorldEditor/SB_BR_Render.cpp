@@ -107,8 +107,6 @@ void SB_BR_Render::Go_BR_3D_Mode(void)
 	App->CLSB_Ogre_Setup->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre_Setup->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre_Setup->mWindow->getHeight());
 
-	App->CLSB_ImGui->Show_Physics_Console = 0;
-
 	Root::getSingletonPtr()->renderOneFrame();
 
 }
@@ -150,7 +148,6 @@ void SB_BR_Render::Exit_BR_3D_Mode(void)
 		Root::getSingletonPtr()->renderOneFrame();
 
 		App->CLSB_Scene_Data->FullScreenMode_Flag = 0;
-		App->CLSB_ImGui->Show_Physics_Console = 1;
 		
 		App->Block_RB_Actions = 0;
 		App->CLSB_Equity->EquitySB_Dialog_Visible = 0;

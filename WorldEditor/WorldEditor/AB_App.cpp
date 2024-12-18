@@ -77,7 +77,6 @@ SB_App::SB_App()
 
 	CLSB_Textures =				nullptr;
 	CLSB_Dialogs =				nullptr;
-	CLSB_ImGui =				nullptr;
 	CLSB_Brushes =				nullptr;
 	CLSB_RecentFiles =			nullptr;
 	CLSB_TopTabs_Equity =		nullptr;
@@ -303,7 +302,6 @@ bool SB_App::InitApp(void)
 
 	CLSB_Textures =					new SB_Textures();
 	CLSB_Dialogs =					new SB_Dialogs();
-	CLSB_ImGui =					new SB_ImGui();
 	CLSB_Brushes =					new SB_Brushes();
 	CLSB_RecentFiles =				new SB_RecentFiles();
 	CLSB_TopTabs_Equity =			new SB_TopTabs_Equity();

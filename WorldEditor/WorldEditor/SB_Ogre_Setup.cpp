@@ -90,8 +90,6 @@ bool SB_Ogre_Setup::InitOgre(void)
 
 	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	m_imgui.Init(mSceneMgr, RenderHwnd);
-	
 	createFrameListener();
 	
 	App->CLSB_Grid->Reset_View();
@@ -518,7 +516,6 @@ bool SB_Ogre_Setup::ExitFullScreen()
 		Root::getSingletonPtr()->renderOneFrame();
 
 		App->CLSB_Scene_Data->FullScreenMode_Flag = 0;
-		App->CLSB_ImGui->Show_Physics_Console = 1;
 		//App->SBC_Scene->Editor_Mode();
 
 	}

@@ -726,8 +726,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 			{
 				/*App->CLSB_File_WE->New_File();
 				return TRUE;*/
-				App->CLSB_ImGui->Updating_F = 1;
-
+				
 				char Txlpath[MAX_PATH];
 				char path[MAX_PATH];
 
@@ -768,8 +767,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 					//	}
 					//}
 
-					App->CLSB_ImGui->Updating_F = 0;
-
+		
 					App->Say("Loaded", App->CLSB_File_WE->PathFileName_3dt);
 					App->CLSB_Panels->Set_Aplication_Dialogs_On();
 
