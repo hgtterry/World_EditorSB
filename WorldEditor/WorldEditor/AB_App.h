@@ -67,7 +67,6 @@ distribution.
 #include "SB_Equity.h"
 #include "SB_Keyboard.h"
 #include "SB_Camera.h"
-#include "SB_Assimp.h"
 #include "SB_Model.h"
 #include "SB_Loader.h"
 #include "SB_Ini.h"
@@ -160,7 +159,6 @@ public:
 	SB_Equity*					CLSB_Equity;
 	SB_Keyboard*				CLSB_Keyboard;
 	SB_Camera_EQ*				CLSB_Camera_EQ;
-	SB_Assimp*					CLSB_Assimp;
 	SB_Model*					CLSB_Model;
 	SB_Loader*					CLSB_Loader;
 	SB_Ini*						CLSB_Ini;

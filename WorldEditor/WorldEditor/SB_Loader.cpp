@@ -95,13 +95,6 @@ bool SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 
 	App->CLSB_Model->Set_Paths();
 
-	bool Test = App->CLSB_Assimp->LoadFile(App->CLSB_Loader->Path_FileName);
-	if (Test == 0)
-	{
-		App->Say("Failed To Load");
-		return 0;
-	}
-
 	return 1;
 }
 
@@ -125,8 +118,6 @@ bool SB_Loader::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CLSB_Ogre3D->Load_OgreModel();
 
-	App->CLSB_Assimp->Assimp_Model_Loaded = 1;
-	
 	return 1;
 }
 
@@ -823,7 +814,7 @@ typedef Gint16 geBody_Index;
 // *************************************************************************
 bool SB_Loader::Wavefront_Obj_File()
 {
-	App->Get_Current_Document();
+	/*App->Get_Current_Document();
 
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
@@ -838,132 +829,132 @@ bool SB_Loader::Wavefront_Obj_File()
 	}
 
 	int Count = 0;
-	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;*/
 
-	while (Count < GroupCount)
-	{
-		int FaceCount = 0;
-		int A = 0;
-		int B = 0;
-		int C = 0;
+	//while (Count < GroupCount)
+	//{
+	//	int FaceCount = 0;
+	//	int A = 0;
+	//	int B = 0;
+	//	int C = 0;
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
-		{
-			geVec3d FaceVerts[3];
-			Ogre::Vector2 UV_Cords[3];
+	//	while (FaceCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
+	//	{
+	//		geVec3d FaceVerts[3];
+	//		Ogre::Vector2 UV_Cords[3];
 
-			A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
-			B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
-			C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
+	//		A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
+	//		B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
+	//		C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
 
-			//----------------------- Vertices 1
-			FaceVerts[2].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x;
-			FaceVerts[2].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].y;
-			FaceVerts[2].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].z;
+	//		//----------------------- Vertices 1
+	//		FaceVerts[2].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x;
+	//		FaceVerts[2].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].y;
+	//		FaceVerts[2].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].z;
 
-			UV_Cords[2].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].u;
-			UV_Cords[2].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].v;
+	//		UV_Cords[2].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].u;
+	//		UV_Cords[2].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].v;
 
-			//----------------------- Vertices 2
-			FaceVerts[1].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x;
-			FaceVerts[1].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].y;
-			FaceVerts[1].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].z;
+	//		//----------------------- Vertices 2
+	//		FaceVerts[1].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x;
+	//		FaceVerts[1].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].y;
+	//		FaceVerts[1].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].z;
 
-			UV_Cords[1].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].u;
-			UV_Cords[1].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].v;
+	//		UV_Cords[1].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].u;
+	//		UV_Cords[1].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].v;
 
-			//----------------------- Vertices 3
-			FaceVerts[0].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x;
-			FaceVerts[0].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].y;
-			FaceVerts[0].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].z;
+	//		//----------------------- Vertices 3
+	//		FaceVerts[0].X = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x;
+	//		FaceVerts[0].Y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].y;
+	//		FaceVerts[0].Z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].z;
 
-			UV_Cords[0].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].u;
-			UV_Cords[0].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].v;
-			//-----------------------------------------------
-			f = Face_Create(3, FaceVerts, 0);
+	//		UV_Cords[0].x = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].u;
+	//		UV_Cords[0].y = App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].v;
+	//		//-----------------------------------------------
+	//		f = Face_Create(3, FaceVerts, 0);
 
-			if (f)
-			{
-				strcpy(f->Tex.Name, "Dummy");
-				f->Tex.Dib = Level_GetDibId(App->CLSB_Doc->pLevel, "Dummy");
+	//		if (f)
+	//		{
+	//			strcpy(f->Tex.Name, "Dummy");
+	//			f->Tex.Dib = Level_GetDibId(App->CLSB_Doc->pLevel, "Dummy");
 
-				f->Tex.TVecs.uVec.X = 0;
-				f->Tex.TVecs.uVec.Y = 0;
-				f->Tex.TVecs.uVec.Z = 0;
+	//			f->Tex.TVecs.uVec.X = 0;
+	//			f->Tex.TVecs.uVec.Y = 0;
+	//			f->Tex.TVecs.uVec.Z = 0;
 
-				f->Tex.txSize = 256;
-				f->Tex.tySize = 256;
+	//			f->Tex.txSize = 256;
+	//			f->Tex.tySize = 256;
 
-				float x = 256 / 20;
-				float y = 256 / 20;
+	//			float x = 256 / 20;
+	//			float y = 256 / 20;
 
-				x = x / 100;
-				y = y / 100;
+	//			x = x / 100;
+	//			y = y / 100;
 
-				x = x / 1.55;
-				y = y / 1.55;
+	//			x = x / 1.55;
+	//			y = y / 1.55;
 
-				//App->Say_Float(x);
+	//			//App->Say_Float(x);
 
-				f->Tex.xScale = x;
-				f->Tex.yScale = y;
+	//			f->Tex.xScale = x;
+	//			f->Tex.yScale = y;
 
-				f->Tex.xShift = 256/2;
-				f->Tex.yShift = 4;
+	//			f->Tex.xShift = 256/2;
+	//			f->Tex.yShift = 4;
 
-				//f->Tex.TVecs.uVec.
-				Face_SetTextureLock(f, true);
-	
-				FaceList_AddFace(fl, f);
+	//			//f->Tex.TVecs.uVec.
+	//			Face_SetTextureLock(f, true);
+	//
+	//			FaceList_AddFace(fl, f);
 
-				//Face_UpdateLockedTextureVecs();
-			}
-			else
-			{
-				App->Say("Error create Face");
-			}
+	//			//Face_UpdateLockedTextureVecs();
+	//		}
+	//		else
+	//		{
+	//			App->Say("Error create Face");
+	//		}
 
-			FaceCount++;
-			//-----------------------------------------------
-		}
+	//		FaceCount++;
+	//		//-----------------------------------------------
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	Brush* NewBrush;
+	/*Brush* NewBrush;
 
 	NewBrush = Brush_Create(BRUSH_LEAF, fl, NULL);
 	if (!NewBrush)
 	{
 		App->Say("Failed to Create Brush");
-	}
+	}*/
 
-	geVec3d	mOrigin;
+	//geVec3d	mOrigin;
 
-	mOrigin.X = 0;
-	mOrigin.Y = 0;
-	mOrigin.Z = 0;
+	//mOrigin.X = 0;
+	//mOrigin.Y = 0;
+	//mOrigin.Z = 0;
 
-	Brush_Move(NewBrush, &mOrigin);
+	//Brush_Move(NewBrush, &mOrigin);
 
-	Level_AppendBrush(App->CLSB_Doc->pLevel, NewBrush);
-	Brush_SetVisible(NewBrush, GE_TRUE);
-	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, NewBrush);
+	//Level_AppendBrush(App->CLSB_Doc->pLevel, NewBrush);
+	//Brush_SetVisible(NewBrush, GE_TRUE);
+	//SelBrushList_Add(App->CLSB_Doc->pSelBrushes, NewBrush);
 
-	//App->m_pDoc->SetDefaultBrushTexInfo(NewBrush);
-	Brush_Bound(NewBrush);
-	Brush_Center(NewBrush, &mOrigin);
+	////App->m_pDoc->SetDefaultBrushTexInfo(NewBrush);
+	//Brush_Bound(NewBrush);
+	//Brush_Center(NewBrush, &mOrigin);
 
-	Brush_SetName(NewBrush, "TestXX");
+	//Brush_SetName(NewBrush, "TestXX");
 
-	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+	//App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	//App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
 
-	App->m_pDoc->SetModifiedFlag();
+	//App->m_pDoc->SetModifiedFlag();
 
-	App->Say("Added");
+	//App->Say("Added");
 	return 1;
 }
 

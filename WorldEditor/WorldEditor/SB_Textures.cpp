@@ -54,77 +54,77 @@ SB_Textures::~SB_Textures()
 // *************************************************************************
 void SB_Textures::Load_Textures_Assimp()
 {
-	int v = 0;
-	int Count = 0;
-	bool DummyCreated = 0;
+	//int v = 0;
+	//int Count = 0;
+	//bool DummyCreated = 0;
 
-	int mGroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+	//int mGroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
-	while (Count < mGroupCount)
-	{
-		char JustFileName[MAX_PATH];
-		GetFileTitleA(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, JustFileName, MAX_PATH);
-		strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, JustFileName);
+	//while (Count < mGroupCount)
+	//{
+	//	char JustFileName[MAX_PATH];
+	//	GetFileTitleA(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, JustFileName, MAX_PATH);
+	//	strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, JustFileName);
 
-		int Test = strcmp(JustFileName, "No_Texture");
-		if (Test != 0) // not a match
-		{
+	//	int Test = strcmp(JustFileName, "No_Texture");
+	//	if (Test != 0) // not a match
+	//	{
 
-			char ImageFullPath[MAX_PATH];
-			strcpy(ImageFullPath, App->CLSB_Model->Texture_FolderPath);
-			strcat(ImageFullPath, App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName);
+	//		char ImageFullPath[MAX_PATH];
+	//		strcpy(ImageFullPath, App->CLSB_Model->Texture_FolderPath);
+	//		strcat(ImageFullPath, App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName);
 
-			strcpy(App->CLSB_Assimp->Assimp_Group[v]->Texture_PathFileName, ImageFullPath);
+	//		strcpy(App->CLSB_Assimp->Assimp_Group[v]->Texture_PathFileName, ImageFullPath);
 
-			strcpy(TextureFileName, ImageFullPath);
+	//		strcpy(TextureFileName, ImageFullPath);
 
-			//Windows_Preview_FullPath(v, ImageFullPath);
+	//		//Windows_Preview_FullPath(v, ImageFullPath);
 
-			bool test = Load_OpenGL_Textures(App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
-			if (test == 0)
-			{
-				App->Error_ToFile("Loading Dummy Texture Instead");
-				App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
+	//		bool test = Load_OpenGL_Textures(App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
+	//		if (test == 0)
+	//		{
+	//			App->Error_ToFile("Loading Dummy Texture Instead");
+	//			App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
 
-				char buf[MAX_PATH];
-				strcpy(buf, App->CLSB_Model->Texture_FolderPath);
-				strcat(buf, "TTemp.bmp");
-				UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
-				Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
+	//			char buf[MAX_PATH];
+	//			strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+	//			strcat(buf, "TTemp.bmp");
+	//			UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
+	//			Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
 
-				App->CLSB_Loader->LoadError = 1;
-				DummyCreated = 1;
-			}
-			v++;
-		}
-		else
-		{
-			App->Error_ToFile("No Texture in File");
-			App->Error_ToFile("Loading Dummy Texture Instead");
-			App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
+	//			App->CLSB_Loader->LoadError = 1;
+	//			DummyCreated = 1;
+	//		}
+	//		v++;
+	//	}
+	//	else
+	//	{
+	//		App->Error_ToFile("No Texture in File");
+	//		App->Error_ToFile("Loading Dummy Texture Instead");
+	//		App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
 
-			char buf[MAX_PATH];
-			strcpy(buf, App->CLSB_Model->Texture_FolderPath);
-			strcat(buf, "TTemp.bmp");
-			UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
-			Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
+	//		char buf[MAX_PATH];
+	//		strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+	//		strcat(buf, "TTemp.bmp");
+	//		UINT* Texture_List = App->CLSB_Ogre_Setup->RenderListener->g_Texture;
+	//		Soil_Load_Texture(Texture_List, buf, App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex);
 
-			App->CLSB_Loader->LoadError = 1;
-			DummyCreated = 1;
+	//		App->CLSB_Loader->LoadError = 1;
+	//		DummyCreated = 1;
 
-			v++;
-		}
+	//		v++;
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	if (DummyCreated == 1)
-	{
-		char buf[MAX_PATH];
-		strcpy(buf, App->CLSB_Model->Texture_FolderPath);
-		strcat(buf, "TTemp.bmp");
-		remove(buf);
-	}
+	//if (DummyCreated == 1)
+	//{
+	//	char buf[MAX_PATH];
+	//	strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+	//	strcat(buf, "TTemp.bmp");
+	//	remove(buf);
+	//}
 }
 
 // *************************************************************************
@@ -178,7 +178,7 @@ void SB_Textures::Load_Textures_Ogre3D(void)
 					int TextureUnitCount = pass->getNumTextureUnitStates();
 					if (TextureUnitCount == 0)
 					{
-						strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, "No_Texture");
+						//strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, "No_Texture");
 						//App->S_MeshGroup[Count]->IsValid = 0;
 						App->CLSB_Ogre3D->NoTexture = 1;
 					}
@@ -190,7 +190,7 @@ void SB_Textures::Load_Textures_Ogre3D(void)
 
 						strcpy(TextureName, TxtName.c_str());
 
-						strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, TextureName);
+						//strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, TextureName);
 
 						App->CLSB_Ogre3D->NoTexture = 0;
 
@@ -208,13 +208,13 @@ void SB_Textures::Load_Textures_Ogre3D(void)
 
 							strcpy(App->CLSB_Textures->TextureFileName, ImageFullPath);
 
-							strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Texture_FolderPath, ImageFullPath);
-							strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, TextureName);
+							//strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Texture_FolderPath, ImageFullPath);
+							//strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, TextureName);
 
 							App->CLSB_Textures->Windows_Preview_FullPath(Count, ImageFullPath);
 
 							//App->CL_Textures->TexureToWinPreviewFullPath(Count, TextureName);
-							App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex = mMaterialindex;
+							//App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex = mMaterialindex;
 
 							App->CLSB_Textures->Load_OpenGL_Textures(mMaterialindex);
 							//App->CL_Textures->Soil_DecodeTextures(mMaterialindex);

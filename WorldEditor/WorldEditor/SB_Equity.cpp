@@ -385,7 +385,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		
 		if (LOWORD(wParam) == ID_IMPORT_AUTODESK3DS_EQUITY)
 		{
-			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			/*App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			bool test = App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
 			if (test == 0){return TRUE;}
 
@@ -395,7 +395,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Dimensions->Rotate_Z_Assimp(90);
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 
-			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
+			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);*/
 
 			return TRUE;
 		}
@@ -417,7 +417,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ_EQUITY)
 		{
-			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			/*App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			bool test = App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 			if (test == 0){return TRUE;}
 
@@ -425,7 +425,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Grid->Reset_View();
 			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
 		
-			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
+			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);*/
 
 			return TRUE;
 		}
@@ -884,8 +884,6 @@ void SB_Equity::Set_Title_Bar(char* Title)
 // *************************************************************************
 void SB_Equity::Clear_Model()
 {
-	App->CLSB_Assimp->Clear_Data();
-
 	App->CLSB_Model->Render_Type = Enums::Render_Nothing;
 	App->CLSB_Grid->Reset_View();
 }

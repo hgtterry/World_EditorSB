@@ -241,7 +241,7 @@ void SB_Model::Set_Paths(void)
 // *************************************************************************
 void SB_Model::Set_BondingBox_Assimp(bool Create)
 {
-	BB_Min.x = App->CLSB_Assimp->Assimp_Group[0]->vertex_Data[0].x;
+	/*BB_Min.x = App->CLSB_Assimp->Assimp_Group[0]->vertex_Data[0].x;
 	BB_Min.y = App->CLSB_Assimp->Assimp_Group[0]->vertex_Data[0].y;
 	BB_Min.z = App->CLSB_Assimp->Assimp_Group[0]->vertex_Data[0].z;
 
@@ -277,7 +277,7 @@ void SB_Model::Set_BondingBox_Assimp(bool Create)
 
 	Centre.x = (BB_Min.x + BB_Max.x) / 2.0f;
 	Centre.y = (BB_Min.y + BB_Max.y) / 2.0f;
-	Centre.z = (BB_Min.z + BB_Max.z) / 2.0f;
+	Centre.z = (BB_Min.z + BB_Max.z) / 2.0f;*/
 }
 
 // *************************************************************************

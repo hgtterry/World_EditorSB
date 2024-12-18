@@ -642,47 +642,6 @@ void SB_Ogre3D::Create_MeshGroups()
 	char GroupNum[255];
 
 	int SubMeshCount = OgreModel_Ent->getNumSubEntities();
-
-	int Count = 0;
-	while (Count < SubMeshCount)
-	{
-		App->CLSB_Assimp->Create_Assimp_Mesh_Group(Count);
-		
-		App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount = 0;
-		App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex = -1;
-
-		strcpy(App->CLSB_Assimp->Assimp_Group[Count]->Text_FileName, "No_Texture");
-
-		itoa(Count, GroupNum, 10);
-		strcpy(GroupName, "Group_");
-		strcat(GroupName, GroupNum);
-
-		strcpy(App->CLSB_Assimp->Assimp_Group[Count]->GroupName, GroupName);
-
-		//---------------
-		Ogre::SubMesh const* subMesh = OgreModel_Ent->getSubEntity(Count)->getSubMesh();
-
-
-		//---------------
-		char JustName[MAX_PATH];
-		strcpy(JustName, subMesh->getMaterialName().c_str());
-
-		char TestName;
-		//App->CL_FileIO->CheckPath(JustName, JustName, &TestName);
-		strcpy(App->CLSB_Assimp->Assimp_Group[Count]->MaterialName, &TestName);
-		//---------------
-
-		App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
-		App->CLSB_Assimp->Assimp_Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
-
-		//---------------
-		//App->CLSB_Assimp->Assimp_Group[Count]->ListView_Item = App->CL_FileView->Add_Group(GroupName, Count);
-
-		Count++;
-	}
-
-	//App->CL_Model->TextureCount = SubMeshCount;
-	App->CLSB_Assimp->Total_Assimp_GroupCount = SubMeshCount;
 }
 
 // *************************************************************************
@@ -708,80 +667,80 @@ bool SB_Ogre3D::Extract_Mesh_Two()
 	unsigned int Faceloop = 0;
 	int Count = 0;
 
-	while (Count < SubMeshCount)
-	{
-		Get_SubPoseMeshInstance(OgreModel_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
+	//while (Count < SubMeshCount)
+	//{
+	//	Get_SubPoseMeshInstance(OgreModel_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
 
-		int mUVTest = NewGet_SubPoseTextureUV(OgreModel_Ent->getMesh(), Count);
+	//	int mUVTest = NewGet_SubPoseTextureUV(OgreModel_Ent->getMesh(), Count);
 
-		NewGet_SubPoseNormals(OgreModel_Ent->getMesh(), vertex_count, normals, Count);
-
-
-		App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data.resize(index_count);
-		App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data.resize(index_count);
-		App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data.resize(index_count);
-		App->CLSB_Assimp->Assimp_Group[Count]->Face_Data.resize(index_count);
-		App->CLSB_Assimp->Assimp_Group[Count]->FaceIndex_Data.resize(index_count);
-
-		App->CLSB_Assimp->Assimp_Group[Count]->BoneIndex_Data.resize(index_count);
-
-		FaceIndexNum = 0;
-		int Faceit = 0;
-		FaceCount = 0;
-		Vertloop = 0;
-		xx = 0;
-		while (Vertloop < vertex_count) // Process Vertices
-		{
-			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
-			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
-			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
-
-			App->CLSB_Assimp->Assimp_Group[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
-
-			if (mUVTest)
-			{
-				App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
-				App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
-			}
-
-			App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
-			App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
-			App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
-
-			Vertloop++;
-		}
-
-		FaceIndexNum = 0;
-		Faceloop = 0;
-		while (Faceloop < index_count) // Process Faces
-		{
-			App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
-			Faceloop++;
-			App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
-			Faceloop++;
-			App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
-			Faceloop++;
-
-			FaceIndexNum++;
-
-			App->CLSB_Assimp->Assimp_Group[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
-
-			xx++;
-			mFaceIndex++;
-		}
-
-		App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount = FaceIndexNum;
-		App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount = Vertloop;
-		App->CLSB_Assimp->Assimp_Group[Count]->IndicesCount = Vertloop;
-
-		App->CLSB_Assimp->Total_Assimp_VerticeCount = App->CLSB_Assimp->Total_Assimp_VerticeCount + Vertloop;
-		App->CLSB_Assimp->Total_Assimp_FaceCount = App->CLSB_Assimp->Total_Assimp_FaceCount + FaceIndexNum;
+	//	NewGet_SubPoseNormals(OgreModel_Ent->getMesh(), vertex_count, normals, Count);
 
 
-		//GetBoneAssignment(OgreModel_Ent->getMesh(), Count, 0);
+	//	App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data.resize(index_count);
+	//	App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data.resize(index_count);
+	//	App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data.resize(index_count);
+	//	App->CLSB_Assimp->Assimp_Group[Count]->Face_Data.resize(index_count);
+	//	App->CLSB_Assimp->Assimp_Group[Count]->FaceIndex_Data.resize(index_count);
 
-		Count++;
-	}
+	//	App->CLSB_Assimp->Assimp_Group[Count]->BoneIndex_Data.resize(index_count);
+
+	//	FaceIndexNum = 0;
+	//	int Faceit = 0;
+	//	FaceCount = 0;
+	//	Vertloop = 0;
+	//	xx = 0;
+	//	while (Vertloop < vertex_count) // Process Vertices
+	//	{
+	//		App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
+
+	//		App->CLSB_Assimp->Assimp_Group[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
+
+	//		if (mUVTest)
+	//		{
+	//			App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
+	//			App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
+	//		}
+
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
+
+	//		Vertloop++;
+	//	}
+
+	//	FaceIndexNum = 0;
+	//	Faceloop = 0;
+	//	while (Faceloop < index_count) // Process Faces
+	//	{
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
+	//		Faceloop++;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
+	//		Faceloop++;
+	//		App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
+	//		Faceloop++;
+
+	//		FaceIndexNum++;
+
+	//		App->CLSB_Assimp->Assimp_Group[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
+
+	//		xx++;
+	//		mFaceIndex++;
+	//	}
+
+	//	App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount = FaceIndexNum;
+	//	App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount = Vertloop;
+	//	App->CLSB_Assimp->Assimp_Group[Count]->IndicesCount = Vertloop;
+
+	//	App->CLSB_Assimp->Total_Assimp_VerticeCount = App->CLSB_Assimp->Total_Assimp_VerticeCount + Vertloop;
+	//	App->CLSB_Assimp->Total_Assimp_FaceCount = App->CLSB_Assimp->Total_Assimp_FaceCount + FaceIndexNum;
+
+
+	//	//GetBoneAssignment(OgreModel_Ent->getMesh(), Count, 0);
+
+	//	Count++;
+	//}
 
 	return 1;
 }

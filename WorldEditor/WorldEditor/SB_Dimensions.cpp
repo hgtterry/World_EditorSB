@@ -1039,60 +1039,60 @@ void SB_Dimensions::Rotate_Y_Model(float Y)
 // *************************************************************************
 void SB_Dimensions::Rotate_Z_Assimp(float Z)
 {
-	if (App->CLSB_Model->Model_Loaded == 1)
-	{
+	//if (App->CLSB_Model->Model_Loaded == 1)
+	//{
 
-		Ogre::Vector3 Centre;
+	//	Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->Centre.x;
-		Centre.y = App->CLSB_Model->Centre.y;
-		Centre.z = App->CLSB_Model->Centre.z;
+	//	Centre.x = App->CLSB_Model->Centre.x;
+	//	Centre.y = App->CLSB_Model->Centre.y;
+	//	Centre.z = App->CLSB_Model->Centre.z;
 
-		Ogre::Vector3 Rotate;
-		Rotate.x = 0;
-		Rotate.y = 0;
-		Rotate.z = Z;
+	//	Ogre::Vector3 Rotate;
+	//	Rotate.x = 0;
+	//	Rotate.y = 0;
+	//	Rotate.z = Z;
 
 
-		int Count = 0;
-		int VertCount = 0;
+	//	int Count = 0;
+	//	int VertCount = 0;
 
-		int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+	//	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
-		while (Count < GroupCount)
-		{
-			VertCount = 0;
-			while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount)
-			{
-				Ogre::Vector3 VertPos;
-				Ogre::Vector3 RotatedVert;
+	//	while (Count < GroupCount)
+	//	{
+	//		VertCount = 0;
+	//		while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupVertCount)
+	//		{
+	//			Ogre::Vector3 VertPos;
+	//			Ogre::Vector3 RotatedVert;
 
-				VertPos.x = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x;
-				VertPos.y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y;
-				VertPos.z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z;
+	//			VertPos.x = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x;
+	//			VertPos.y = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y;
+	//			VertPos.z = App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z;
 
-				if (Rotate.z != 0) // Dont bother if Zero
-				{
-					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
-				}
-				else
-				{
-					RotatedVert = VertPos - Centre;
-				}
+	//			if (Rotate.z != 0) // Dont bother if Zero
+	//			{
+	//				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
+	//			}
+	//			else
+	//			{
+	//				RotatedVert = VertPos - Centre;
+	//			}
 
-				RotatedVert += Centre;
+	//			RotatedVert += Centre;
 
-				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
-				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
-				App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+	//			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+	//			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+	//			App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
-				VertCount++;
-			}
-			Count++;
-		}
+	//			VertCount++;
+	//		}
+	//		Count++;
+	//	}
 
-		App->CLSB_Model->Set_BondingBox_Assimp(0);
-	}
+	//	App->CLSB_Model->Set_BondingBox_Assimp(0);
+	//}
 }
 
 // *************************************************************************
@@ -1100,7 +1100,7 @@ void SB_Dimensions::Rotate_Z_Assimp(float Z)
 // *************************************************************************
 void SB_Dimensions::Centre_Model_Mid_Assimp(void)
 {
-	if (App->CLSB_Model->Model_Loaded == 1)
+	/*if (App->CLSB_Model->Model_Loaded == 1)
 	{
 		float X = -App->CLSB_Model->Centre.x;
 		float Y = -App->CLSB_Model->Centre.y;
@@ -1127,7 +1127,7 @@ void SB_Dimensions::Centre_Model_Mid_Assimp(void)
 
 		App->CLSB_Model->Set_BondingBox_Assimp(0);
 
-	}
+	}*/
 }
 
 // *************************************************************************

@@ -278,10 +278,10 @@ void SB_Render::Render_Loop()
 			// Equity View
 			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 			{
-				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				/*if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
 				{
 					New_Assimp_Render_Textures();
-				}
+				}*/
 			}
 
 		}
@@ -293,10 +293,10 @@ void SB_Render::Render_Loop()
 
 			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 			{
-				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				/*if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
 				{
 					Assimp_Render_Faces();
-				}
+				}*/
 			}
 
 			//if (App->CLSB_Model->Render_Type == Enums::LoadedFile_Brushes)
@@ -352,10 +352,10 @@ void SB_Render::Render_Loop()
 		{
 			if (App->CLSB_Model->Render_Type == Enums::Render_Assimp)
 			{
-				if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
+				/*if (App->CLSB_Assimp->Assimp_Model_Loaded == 1)
 				{
 					Render_BoundingBoxModel();
-				}
+				}*/
 			}
 
 			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
@@ -870,13 +870,13 @@ bool SB_Render::Assimp_Render_Faces(void)
 
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+	/*int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
 	while (Count<GroupCount)
 	{
 		Assimp_Face_Parts(Count);
 		Count++;
-	}
+	}*/
 
 	return 1;
 }
@@ -892,27 +892,27 @@ bool SB_Render::Assimp_Face_Parts(int Count)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount<App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
-	{
-		A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
-		B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
-		C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
+	//while (FaceCount<App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
+	//{
+	//	A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].a;
+	//	B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].b;
+	//	C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[FaceCount].c;
 
-		glBegin(GL_POLYGON);
+	//	glBegin(GL_POLYGON);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
-		FaceCount++;
-		//-----------------------------------------------
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
+	//	FaceCount++;
+	//	//-----------------------------------------------
 
-		glEnd();
-	}
+	//	glEnd();
+	//}
 
 	return 1;
 }
@@ -1933,14 +1933,14 @@ bool SB_Render::New_Assimp_Render_Textures(void)
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
+	/*int GroupCount = App->CLSB_Assimp->Total_Assimp_GroupCount;
 
 	Count = 0;
 	while (Count < GroupCount)
 	{
 		New_Assimp_Textured_Parts(Count);
 		Count++;
-	}
+	}*/
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -1956,48 +1956,48 @@ bool SB_Render::New_Assimp_Textured_Parts(int Count)
 	int B = 0;
 	int C = 0;
 
-	if (App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex > -1)
-	{
-		glEnable(GL_TEXTURE_2D);
-		glColor3f(1, 1, 1);
+	//if (App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex > -1)
+	//{
+	//	glEnable(GL_TEXTURE_2D);
+	//	glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex]);
-		//glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex]);
+	//	glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex]);
+	//	//glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Assimp->Assimp_Group[Count]->MaterialIndex]);
 
-	}
-	else
-	{
-		glDisable(GL_TEXTURE_2D);
-	}
+	//}
+	//else
+	//{
+	//	glDisable(GL_TEXTURE_2D);
+	//}
 
-	while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
-	{
-		A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].a;
-		B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].b;
-		C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].c;
+	//while (VertCount < App->CLSB_Assimp->Assimp_Group[Count]->GroupFaceCount)
+	//{
+	//	A = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].a;
+	//	B = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].b;
+	//	C = App->CLSB_Assimp->Assimp_Group[Count]->Face_Data[VertCount].c;
 
-		glBegin(GL_POLYGON);
+	//	glBegin(GL_POLYGON);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].v);
-		glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[A].x);
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[A].v);
+	//	glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[A].x);
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[A].x);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].v);
-		glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[B].x);
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[B].v);
+	//	glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[B].x);
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[B].x);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].v);
-		glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[C].x);
-		glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
-		VertCount++;
-		//-----------------------------------------------
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].u, App->CLSB_Assimp->Assimp_Group[Count]->MapCord_Data[C].v);
+	//	glNormal3fv(&App->CLSB_Assimp->Assimp_Group[Count]->Normal_Data[C].x);
+	//	glVertex3fv(&App->CLSB_Assimp->Assimp_Group[Count]->vertex_Data[C].x);
+	//	VertCount++;
+	//	//-----------------------------------------------
 
-		glEnd();
+	//	glEnd();
 
-	}
+	//}
 
 	return 1;
 }

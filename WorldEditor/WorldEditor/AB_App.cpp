@@ -64,7 +64,6 @@ SB_App::SB_App()
 	CLSB_Equity =				nullptr;
 	CLSB_Keyboard =				nullptr;
 	CLSB_Camera_EQ =			nullptr;
-	CLSB_Assimp =				nullptr;
 	CLSB_Model =				nullptr;
 	CLSB_Loader =				nullptr;
 	CLSB_Ini =					nullptr;
@@ -289,7 +288,6 @@ bool SB_App::InitApp(void)
 	CLSB_Equity =					new SB_Equity();
 	CLSB_Keyboard =					new SB_Keyboard();
 	CLSB_Camera_EQ =				new SB_Camera_EQ();
-	CLSB_Assimp =					new SB_Assimp();
 	CLSB_Model =					new SB_Model();
 	CLSB_Loader =					new SB_Loader();
 	CLSB_Ini =						new SB_Ini();
@@ -591,8 +589,6 @@ void SB_App::Close_WorldEditor()
 	}
 
 	delete App->CLSB_Doc;
-
-	App->CLSB_Assimp->Clear_Data();
 
 	App->CLSB_Mesh_Mgr->Delete_Brush_List();
 	App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
