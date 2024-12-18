@@ -1726,8 +1726,8 @@ bool SB_Mesh_Mgr::Update_World()
 	App->CLSB_Ogre_Setup->RenderFrame();
 
 	WE_Build_Brush_List(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 	WE_Convert_All_Texture_Groups();
+
 	App->CLSB_Ogre3D->Convert_ToOgre3D(1);
 
 	return 1;

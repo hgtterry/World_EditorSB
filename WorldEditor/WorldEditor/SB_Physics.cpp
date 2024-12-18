@@ -45,11 +45,7 @@ void SB_Physics::Set_Physics(int Index)
 	float y = App->CLSB_Game_Editor->V_Object[Index]->Physics_Quat.y;
 	float z = App->CLSB_Game_Editor->V_Object[Index]->Physics_Quat.z;
 
-	App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-	App->CLSB_Game_Editor->V_Object[Index]->Object_Node->setScale(App->CLSB_Game_Editor->V_Object[Index]->Mesh_Scale);
-
-	Ogre::Vector3 Scale = App->CLSB_Game_Editor->V_Object[Index]->Object_Node->getScale();
-	App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	
 
 	UpDate_Physics_And_Visuals(Index);
 
@@ -87,9 +83,5 @@ void SB_Physics::UpDate_Physics_And_Visuals(int Index)
 // *************************************************************************
 void SB_Physics::Set_Physics_Position(int Index)
 {
-	AxisAlignedBox worldAAB = App->CLSB_Game_Editor->V_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->CLSB_Game_Editor->V_Object[Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-	App->CLSB_Game_Editor->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->CLSB_Game_Editor->V_Object[Index]->Physics_Pos = Centre;
+	
 }

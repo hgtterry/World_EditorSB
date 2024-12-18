@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -54,13 +54,13 @@
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <IgnoreSpecificDefaultLibraries>nafxcw.lib;Libcmt.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\..\Bin\GD_WorldEditorX.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Bullet\lib;..\..\Anim19_OSDN\Common\Devil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Devil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <StackReserveSize>2097152</StackReserveSize>
     </Link>
@@ -167,8 +167,6 @@
     <ClCompile Include="SB_Base_Group.cpp" />
     <ClCompile Include="SB_Brushes.cpp" />
     <ClCompile Include="SB_BR_Render.cpp" />
-    <ClCompile Include="SB_Bt_Render.cpp" />
-    <ClCompile Include="SB_Bullet.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Doc.cpp" />
@@ -273,8 +271,6 @@
     <ClInclude Include="SB_Base_Group.h" />
     <ClInclude Include="SB_Brushes.h" />
     <ClInclude Include="SB_BR_Render.h" />
-    <ClInclude Include="SB_Bt_Render.h" />
-    <ClInclude Include="SB_Bullet.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Doc.h" />

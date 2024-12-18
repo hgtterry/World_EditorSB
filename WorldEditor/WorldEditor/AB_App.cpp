@@ -86,8 +86,6 @@ SB_App::SB_App()
 	CLSB_Scene_Data =			nullptr;
 	CLSB_ViewMgrDlg =			nullptr;
 
-
-	CLSB_Bullet =				nullptr;
 	CLSB_Player =				nullptr;
 
 	CLSB_Object =				nullptr;
@@ -304,9 +302,7 @@ bool SB_App::InitApp(void)
 	CLSB_Scene_Data =				new SB_Scene_Data();
 	CLSB_ViewMgrDlg =				new SB_ViewMgrDlg();
 	
-	CLSB_Bullet =					new SB_Bullet();
 	CLSB_Player =					new SB_Player();
-
 	CLSB_Object =					new SB_Object();
 	CLSB_Project =					new SB_Project();
 	CLSB_Objects_Create =			new SB_Objects_Create();

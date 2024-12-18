@@ -41,9 +41,6 @@ void Base_Object::Init_Object(void)
 	Object_Ent = nullptr;
 	Object_Node = nullptr;
 
-	Phys_Body = nullptr;
-	Phys_Shape = nullptr;
-
 	strcpy(Mesh_Name, "None");
 	strcpy(Mesh_FileName, "None");
 	Mesh_Resource_Path[0] = 0;

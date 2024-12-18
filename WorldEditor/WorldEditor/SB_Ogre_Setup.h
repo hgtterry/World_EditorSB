@@ -28,7 +28,6 @@ distribution.
 #include <OgreParticleSystem.h>
 
 #include "SB_Render.h"
-#include "SB_Bt_Render.h"
 
 //#include <chrono>
 
@@ -91,8 +90,6 @@ public:
 
 	SB_OgreListener*	OgreListener;
 	SB_Render*			RenderListener;
-
-	GD_Bt_Render*		BulletListener;
 
 	//HWND Ogre_Window_hWnd;
 

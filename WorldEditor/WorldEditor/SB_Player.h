@@ -39,15 +39,10 @@ public:
 
 	void Adjust_Capsule(void);
 
-	void updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
-	void updateVelocity(float dt);
-	btVector3 mMoveDirection;
-	btVector3 mWorld_Height;
 	bool mJump;
 	bool AddGravity;
 	bool Is_On_Ground;
-	bool Get_Height(void);
-
+	
 	int Col_numManifolds;
 	int Col_Player_Index;
 	int Col_Usage_Index;
@@ -71,9 +66,7 @@ public:
 	// Strucure to be
 
 	Ogre::Vector3 Current_Position;
-	btVector3 Physics_Position;
-	btQuaternion Physics_Rotation;
-
+	
 protected:
 
 	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

@@ -64,9 +64,7 @@ public:
 
 	Ogre::SceneNode* Object_Node;
 	Ogre::Entity* Object_Ent;
-	btRigidBody* Phys_Body;
-	btCollisionShape* Phys_Shape;
-
+	
 	char Mesh_Name[MAX_PATH];				// Mesh Name Mesh.mesh
 	char Mesh_FileName[MAX_PATH];
 	char Mesh_Resource_Path[MAX_PATH];

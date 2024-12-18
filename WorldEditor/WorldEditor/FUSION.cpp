@@ -374,9 +374,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_RecentFiles->Init_History();
 
-	App->CLSB_Bullet->Init_Bullet();
-
-	
 	App->CLSB_Equity->Start_Equity_Dialog_New();
 
 	//App->CLSB_Doc->Render_WE_World = 0;

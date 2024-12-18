@@ -1112,12 +1112,7 @@ bool SB_Project::Save_Player_Data()
 		Pos.x = App->CLSB_Scene_Data->B_Player[Count]->StartPos.x;
 		Pos.y = App->CLSB_Scene_Data->B_Player[Count]->StartPos.y;
 		Pos.z = App->CLSB_Scene_Data->B_Player[Count]->StartPos.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
-
-		W = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getW();
-		X = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getX();
-		Y = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getY();
-		Z = App->CLSB_Scene_Data->B_Player[Count]->Physics_Rotation.getZ();
+		
 
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
 

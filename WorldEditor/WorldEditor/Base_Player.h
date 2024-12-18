@@ -42,15 +42,9 @@ public:
 	int	Selected_Entity_Index;
 	float Compenstate;
 
-
-	btRigidBody *Phys_Body;
-	btCollisionShape *Phys_Shape;
-
 	Ogre::Vector3 StartPos;
-	btQuaternion Physics_Rotation;
-
+	
 	bool mJump;
-	btVector3 mJumpDir;
 	float mJumpSpeed;
 
 	float Forward_Timer;
@@ -77,11 +71,5 @@ public:
 
 	char Player_Name[255]; // Players Name must be unique [171221]
 
-
-	btVector3 mMoveDirection;
-
-	btScalar mSpeedDamping = 10.1;
-	btScalar mMaxLinearVelocity2 = pow(15 / 3.6, 2);
-	btScalar mWalkAccel = 25.0;
 };
 

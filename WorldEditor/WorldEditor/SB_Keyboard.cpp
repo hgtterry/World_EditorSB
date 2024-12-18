@@ -219,10 +219,7 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		
 		if (App->CLSB_Scene_Data->Player_Added == 1)
 		{
-			//App->Flash_Window();
-			App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
-			//App->CL_Player->Check_Collisions_New();
-			App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
+			
 		}
 	}
 
@@ -292,21 +289,11 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//	------------------------------------------------ Forward
 		if (GetAsyncKeyState(VK_UP) < 0)// && App->CLSB_Scene->Player_Added == 1 && App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
 		{
-			//App->Flash_Window();
-			if (App->CLSB_Scene_Data->Player_Added == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
-				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
-			}
+			
 		}
 		else
 		{
-			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving == 1 && App->CLSB_Ogre_Setup->OgreListener->GD_CameraMode == Enums::CamDetached)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 0;
-			}
+			
 		}
 		//	------------------------------------------------ Back
 		//	if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
@@ -431,20 +418,13 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 
 			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
-				//App->Flash_Window();
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, -1));
-				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 1;
+				
 			}
 
 		}
 		else
 		{
-			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving = 0;
-			}
+			
 		}
 
 		//	if (App->CL_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
@@ -466,41 +446,23 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(83) < 0) // S Key	
 		{
 
-			if (App->CLSB_Scene_Data->Player_Added == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 1));
-				//App->SBC_Player->Check_Collisions_New();
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back = 1;
-			}
+			
 
 		}
 		else
 		{
-			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Back = 0;
-			}
+			
 		}
 
 		//	------------------------------------------------ Move Right
 		if (GetAsyncKeyState(65) < 0)
 		{
 
-			if (App->CLSB_Scene_Data->Player_Added == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
-				//App->CL_Player->Check_Collisions_New();
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right = 1;
-			}
+			
 		}
 		else
 		{
-			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right == 1)
-			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Right = 0;
-			}
+			
 		}
 
 		//	------------------------------------------------ Move Left
@@ -509,7 +471,7 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 
 			if (App->CLSB_Scene_Data->Player_Added == 1)
 			{
-				App->CLSB_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
+				//App->CLSB_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
 				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left = 1;
 			}
@@ -519,7 +481,7 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		{
 			if (App->CLSB_Scene_Data->Player_Added == 1 && App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left == 1)
 			{
-				App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
+				//App->CLSB_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->CLSB_Scene_Data->B_Player[0]->IsMOving_Left = 0;
 			}
 		}

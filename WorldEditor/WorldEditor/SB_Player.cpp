@@ -51,10 +51,7 @@ SB_Player::SB_Player()
 	Last_Message_Index = 0;
 	mJump = 0;
 	Current_Position.ZERO;
-	Physics_Position.setZero();
-	Physics_Rotation = btQuaternion(1, 0, 0, 0);
-
-	mMoveDirection.setValue(0, 0, 0);
+	
 	Is_On_Ground = 0;
 	AddGravity = 0;
 }
@@ -147,35 +144,6 @@ void SB_Player::Initialize()
 	Pos.z = pBase->StartPos.z;
 
 	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
-
-	//// ------------------------ Bulet
-	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
-	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(0,1,0,0);
-	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
-
-	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
-	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
-	//pBase->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
-	pBase->Phys_Body->setSleepingThresholds(0.0, 0.0);
-	pBase->Phys_Body->setAngularFactor(0.0);
-
-	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
-
-	pBase->Phys_Body->setUserIndex(18);// Enums::Usage_Player);
-
-
-	int f = pBase->Phys_Body->getCollisionFlags();
-	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-	pBase->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-
-	App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Scene_Data->B_Player[0]->Physics_Rotation);
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
-
-	// Save for later
-	Current_Position = pBase->Player_Node->getPosition();
-	Physics_Position = pBase->Phys_Body->getWorldTransform().getOrigin();
-	Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
 
 	App->CLSB_Scene_Data->Player_Added = 1;
 
@@ -429,107 +397,4 @@ bool SB_Player::OnGround() const
 	return 0;
 }
 
-// *************************************************************************
-// *							updateAction							   *
-// *************************************************************************
-void SB_Player::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
-{
-	mWorld_Height = App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-
-	Get_Height();
-	//FindGroundAndSteps groundSteps(this, collisionWorld);
-	//collisionWorld->contactTest(mRigidBody, groundSteps);
-
-	//Is_On_Ground = groundSteps.mHaveGround;
-	//mGroundPoint = groundSteps.mGroundPoint;
-	//mWorld_Height = mRigidBody->getWorldTransform().getOrigin();
-
-	updateVelocity(deltaTimeStep);
-	//if (mStepping || groundSteps.mHaveStep) {
-	//	if (!mStepping) {
-	//		mSteppingTo = groundSteps.mStepPoint;
-	//		mSteppingInvNormal = groundSteps.getInvNormal();
-	//	}
-	//	stepUp(deltaTimeStep);
-	//}
-
-	/*if (mOnGround || mStepping) {
-		mRigidBody->setGravity({ 0, 0, 0 });
-	} else {
-		mRigidBody->setGravity(mGravity);
-	}*/
-}
-
-// *************************************************************************
-// *							updateVelocity							   *
-// *************************************************************************
-void SB_Player::updateVelocity(float dt)
-{
-	btTransform transform;
-	App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
-	btMatrix3x3& basis = transform.getBasis();
-
-	btMatrix3x3 inv = basis.transpose();
-
-	btVector3 linearVelocity = inv * App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getLinearVelocity();
-
-
-	if (Is_On_Ground == 1)// || mJump == 1)
-	{
-		btVector3 dv = mMoveDirection * (App->CLSB_Scene_Data->B_Player[0]->Ground_speed * dt);
-		linearVelocity = dv;
-	}
-	else
-	{
-		if (AddGravity == 1)
-		{
-			linearVelocity[1] = 100;
-			
-		}
-		else
-		{
-			linearVelocity[1] = 10;
-		}
-	}
-
-	/*if (mJump)
-	{
-		Get_Height();
-		linearVelocity += mJumpSpeed * mJumpDir;
-
-		if (App->CL_Ogre->OgreListener->DistanceToCollision > 30)
-		{
-			mJump = false;
-		}
-		cancelStep();
-	}*/
-	
-	App->CLSB_Scene_Data->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
-
-}
-
-// *************************************************************************
-// *					Get_Height   Terry Bernie						   *
-// *************************************************************************
-bool SB_Player::Get_Height(void)
-{
-	btVector3 Origin = App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
-	btVector3 to = btVector3(Origin.getX(), Origin.getY()-15, Origin.getZ());
-
-	btCollisionWorld::ClosestRayResultCallback resultCallback(from, to);
-	App->CLSB_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);
-	if (resultCallback.hasHit())
-	{
-		AddGravity = 0;
-		Is_On_Ground = 1;
-	}
-	else
-	{
-		AddGravity = 1;
-		Is_On_Ground = 0;
-	}
-
-	return 1;
-}
 

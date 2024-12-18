@@ -34,16 +34,16 @@ Base_Player::Base_Player()
 	Player_Ent =	nullptr;
 	Player_Node =	nullptr;
 
-	Phys_Body =		nullptr;
-	Phys_Shape =	nullptr;
+	//Phys_Body =		nullptr;
+	//Phys_Shape =	nullptr;
 
-	mMoveDirection.setValue(0, 0, 0);
+	//mMoveDirection.setValue(0, 0, 0);
 
 	StartPos.x = 0;
 	StartPos.y = 0;
 	StartPos.z = 0;
 
-	Physics_Rotation = btQuaternion(0, 0, 1, 0);
+	//Physics_Rotation = btQuaternion(0, 0, 1, 0);
 
 	Forward_Timer = 0;
 	Ground_speed = 5000;
@@ -92,11 +92,11 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 {
 	float test = (delta * 180) / 3.14159265359;
 
-	btTransform xform = Phys_Body->getWorldTransform();
-	btMatrix3x3 R = xform.getBasis();
-	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), test));
+	//btTransform xform = Phys_Body->getWorldTransform();
+	//btMatrix3x3 R = xform.getBasis();
+	//R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), test));
 
-	xform.setBasis(R);
-	Phys_Body->setWorldTransform(xform);
+	//xform.setBasis(R);
+	//Phys_Body->setWorldTransform(xform);
 }
 

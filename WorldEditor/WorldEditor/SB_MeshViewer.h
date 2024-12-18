@@ -55,8 +55,6 @@ public:
 	Ogre::ManualObject*		btDebug_Manual;
 	Ogre::SceneNode*		btDebug_Node;
 
-	btRigidBody*			Phys_Body;
-	
 	int Physics_Type;
 	int Physics_Shape;
 	int Last_Selected_Physics_Shape;
@@ -147,8 +145,6 @@ private:
 	HWND ListHwnd;
 	HWND MeshView_3D_hWnd;
 	HWND CB_hWnd;
-
-	btCollisionShape	*Phys_Shape;
 
 };
 

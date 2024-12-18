@@ -277,19 +277,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_PHYSICS_DEBUGDRAW)
 		{
-			int f = App->CLSB_Bullet->Phys_Body->getCollisionFlags();
-			
-			if (App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll == 1)
-			{
-				App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll = 0;
-				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f | (1 << 5));
-			}
-			else
-			{
-				App->CLSB_Ogre_Setup->OgreListener->Dubug_Physics_DrawAll = 1;
-				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f& (~(1 << 5)));
-			}
-			
 			return TRUE;
 		}
 
@@ -676,11 +663,6 @@ void SB_Equity::Set_Mode_Equity()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
-	if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
-	{
-		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-	}
-
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -716,11 +698,6 @@ void SB_Equity::Go_Equity()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
-
-		if (App->CLSB_Ogre_Setup->OgreIsRunning == 1)
-		{
-			App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-		}
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		
@@ -816,8 +793,6 @@ void SB_Equity::Do_Preview_Selected()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
-
-		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
 
 		App->CLSB_Camera_EQ->Reset_View();
 

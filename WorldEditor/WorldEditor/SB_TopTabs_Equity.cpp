@@ -531,12 +531,6 @@ void SB_TopTabs_Equity::Camera_Set_Free(void)
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 	App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 0;
 
-	if (App->CLSB_Scene_Data->Player_Added == 1)
-	{
-		int f = App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getCollisionFlags();
-		App->CLSB_Scene_Data->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-	}
-
 	RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -553,15 +547,6 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
 
 		App->CLSB_Scene_Data->B_Player[0]->Player_Node->setVisible(false);
-
-		int f = App->CLSB_Scene_Data->B_Player[0]->Phys_Body->getCollisionFlags();
-		App->CLSB_Scene_Data->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
-
-		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-		App->CLSB_Ogre_Setup->RenderFrame();
-		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-
-		App->CLSB_Ogre_Setup->OgreListener->GD_Run_Physics = 1;
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}

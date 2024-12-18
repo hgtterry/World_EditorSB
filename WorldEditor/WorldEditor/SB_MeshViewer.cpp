@@ -35,8 +35,7 @@ SB_MeshViewer::SB_MeshViewer()
 
 	MvEnt = NULL;
 	MvNode = NULL;
-	Phys_Body = NULL;
-
+	
 	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
 
 	// ------------------------------------------------ 
@@ -793,12 +792,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			
-			if (App->CLSB_Meshviewer->Phys_Body)
-			{
-				App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
-				App->CLSB_Meshviewer->Phys_Body = nullptr;
-			}
-
 			App->CLSB_Meshviewer->Stop_Render();
 			App->CLSB_Meshviewer->Mesh_Render_Running = 0;
 
@@ -839,12 +832,6 @@ bool SB_MeshViewer::Close_MeshViewer(bool Add_Mesh)
 	GetDlgItemText(MainDlgHwnd, IDC_OBJECTNAME, (LPTSTR)buff, 256);
 	strcpy(App->CLSB_Meshviewer->Object_Name, buff);
 
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(App->CLSB_Meshviewer->Phys_Body);
-		Phys_Body = nullptr;
-	}
-
 	Stop_Render();
 	Mesh_Render_Running = 0;
 
@@ -880,8 +867,7 @@ void SB_MeshViewer::Start_Render(void)
 {
 	MvEnt = NULL;
 	MvNode = NULL;
-	Phys_Body = NULL;
-
+	
 	MvEnt = App->CLSB_Ogre_Setup->mSceneMgr->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
 	MvNode = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
@@ -899,7 +885,7 @@ void SB_MeshViewer::Start_Render(void)
 	btDebug_Node = App->CLSB_Ogre_Setup->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
-	Saved_btDebug_Manual = App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual;
+	
 
 }
 
@@ -926,16 +912,6 @@ void SB_MeshViewer::Stop_Render(void)
 		App->CLSB_Ogre_Setup->mSceneMgr->destroyManualObject("MVManual");
 		btDebug_Manual = NULL;
 		btDebug_Node = NULL;
-	}
-
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = Saved_btDebug_Manual;
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
 	}
 
 	Mesh_Render_Running = 0;
@@ -1539,8 +1515,7 @@ void SB_MeshViewer::Set_Debug_Shapes()
 	{
 		if (App->CLSB_Scene_Data->B_Player[Count]->Physics_Debug_On == 1)
 		{
-			int f = App->CLSB_Scene_Data->B_Player[Count]->Phys_Body->getCollisionFlags();
-			App->CLSB_Scene_Data->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			
 		}
 
 		Count++;
@@ -1558,9 +1533,6 @@ void SB_MeshViewer::Set_Debug_Shapes()
 		Count++;
 	}*/
 
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 0;
-	App->CLSB_Ogre_Setup->RenderFrame();
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -1594,11 +1566,7 @@ void SB_MeshViewer::Show_Physics_None()
 	btDebug_Manual->colour(1, 1, 1);
 	btDebug_Manual->end();
 
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
+	
 }
 
 // *************************************************************************
@@ -1613,53 +1581,7 @@ void SB_MeshViewer::Show_Physics_Box()
 	btDebug_Manual->colour(1,1,1);
 	btDebug_Manual->end();
 
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	worldAAB.transformAffine(MvNode->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
-
-	btScalar mass;
-	mass = 0.0f;
 	
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-	
-	Physics_Rotation();
 
 }
 
@@ -1668,63 +1590,7 @@ void SB_MeshViewer::Show_Physics_Box()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Capsule()
 {
-	btDebug_Manual->beginUpdate(0);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->end();
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	worldAAB.transformAffine(MvNode->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	btScalar mass;
-	mass = 0.0f;
 	
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	float Radius = GetMesh_BB_Radius(MvNode);
-	
-	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-
-	Physics_Rotation();
 
 }
 
@@ -1733,63 +1599,7 @@ void SB_MeshViewer::Show_Physics_Capsule()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Cone()
 {
-	btDebug_Manual->beginUpdate(0);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->end();
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	worldAAB.transformAffine(MvNode->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	btScalar mass;
-	mass = 0.0f;
 	
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
-	float sx = Size.x / 2;
-	float sy = Size.y;// / 2;
-	float sz = Size.z / 2;
-
-	float Radius = GetMesh_BB_Radius(MvNode);
-	
-	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-
-	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1797,59 +1607,7 @@ void SB_MeshViewer::Show_Physics_Cone()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Sphere()
 {
-	btDebug_Manual->beginUpdate(0);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->end();
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	worldAAB.transformAffine(MvNode->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	btScalar mass;
-	mass = 0.0f;
 	
-
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	startTransform.setOrigin(initialPosition);
-
-	float Radius = GetMesh_BB_Radius(MvNode);
-	
-	btCollisionShape* newRigidShape = new btSphereShape(Radius);
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	//App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-
-	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1857,64 +1615,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Cylinder()
 {
-	btDebug_Manual->beginUpdate(0);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->end();
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
-	worldAAB.transformAffine(MvNode->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
 	
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	btScalar mass;
-	mass = 0.0f;
-	
-
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = GetMesh_BB_Size(MvNode);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	float Radius = GetMesh_BB_Radius(MvNode);
-	
-	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(MvNode);
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-	
-	Physics_Rotation();
 }
 
 // *************************************************************************
@@ -1922,138 +1623,7 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 // *************************************************************************
 void SB_MeshViewer::Show_Physics_Trimesh()
 {
-	btDebug_Manual->beginUpdate(0);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1);
-	btDebug_Manual->end();
-
-	if (Phys_Body)
-	{
-		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
-		Phys_Body = nullptr;
-	}
-
-	// Get the mesh from the entity
-	Ogre::MeshPtr myMesh = MvEnt->getMesh();
-	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
-
-	// Create the triangle mesh
-	btTriangleMesh* triMesh = NULL;
-	btVector3 vert0, vert1, vert2;
-	int i = 0;
-
-	while (SubMeshIter.hasMoreElements())
-	{
-		i = 0;
-		Ogre::SubMesh* subMesh = SubMeshIter.getNext();
-		Ogre::IndexData* indexData = subMesh->indexData;
-		Ogre::VertexData* vertexData = subMesh->vertexData;
-
-		const Ogre::VertexElement* posElem = vertexData->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
-		
-		Ogre::HardwareVertexBufferSharedPtr vBuffer = vertexData->vertexBufferBinding->getBuffer(posElem->getSource());
-
-		Ogre::HardwareIndexBufferSharedPtr iBuffer = indexData->indexBuffer;
-
-		// Set Sizes
-		std::vector<Ogre::Vector3> vertices;
-		vertices.reserve(vertexData->vertexCount);
-		std::vector<unsigned long> indices;
-		indices.reserve(indexData->indexCount);
-
-		// Lock the Vertex Buffer (READ ONLY)
-		unsigned char* vertex = static_cast<unsigned char*> (vBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-		float* pReal = NULL;
-
-		for (size_t j = 0; j < vertexData->vertexCount; ++j, vertex += vBuffer->getVertexSize()) {
-			posElem->baseVertexPointerToElement(vertex, &pReal);
-			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
-
-			vertices.push_back(pt);
-		}
-		vBuffer->unlock();
-		
-		bool use32bitindexes = (iBuffer->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
-
-		// Lock the Index Buffer (READ ONLY)
-		unsigned long* pLong = static_cast<unsigned long*> (iBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-		unsigned short* pShort = reinterpret_cast<unsigned short*> (pLong);
-
-		if (use32bitindexes) {
-			for (size_t k = 0; k < indexData->indexCount; ++k) {
-				//
-				indices.push_back(pLong[k]);
-			}
-		}
-		else {
-			for (size_t k = 0; k < indexData->indexCount; ++k) {
-				//
-				indices.push_back(static_cast<unsigned long> (pShort[k]));
-			}
-		}
-		iBuffer->unlock();
-
-		// Add Vertices
-		if (triMesh == nullptr)
-		{
-			triMesh = new btTriangleMesh(use32bitindexes);
-		}
-
-		for (size_t y = 0; y < indexData->indexCount / 3; y++) {
-			// Set each vertex
-			vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
-			vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
-			vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
-
-			// Add the triangle into the triangle mesh
-			triMesh->addTriangle(vert0, vert1, vert2);
-
-			i += 3;
-		}
-	}
-
-	const bool useQuantizedAABB = true;
-	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
-	//mShape->buildOptimizedBvh();
-
-	float x = MvNode->getPosition().x;
-	float y = MvNode->getPosition().y;
-	float z = MvNode->getPosition().z;
-
-	btVector3 inertia(0, 0, 0);
-	mShape->calculateLocalInertia(0.0, inertia);
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-	btVector3 initialPosition(x, y, z);
-	startTransform.setOrigin(initialPosition);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-
-	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
-	(
-		0,  // mass
-		myMotionState,// initial position
-		mShape,      // collision shape of body
-		inertia   // local inertia
-	);
-
-	Phys_Body = new btRigidBody(rigidBodyCI);
-	Phys_Body->clearForces();
-	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
-	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
-	Phys_Body->setWorldTransform(startTransform);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
-
-	App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-	App->CLSB_Ogre_Setup->BulletListener->btDebug_Manual = btDebug_Manual;
-
-	Physics_Rotation();
+	
 }
 
 // *************************************************************************
@@ -2259,27 +1829,6 @@ float SB_MeshViewer::GetMesh_BB_Radius(SceneNode* mNode)
 // *************************************************************************
 void SB_MeshViewer::Physics_Rotation(void)
 {
-	if (App->CLSB_Meshviewer->Phys_Body)
-	{
-		Ogre::Quaternion Physics_Quat;
-		Physics_Quat.w = App->CLSB_Meshviewer->MvNode->getOrientation().w;
-		Physics_Quat.x = App->CLSB_Meshviewer->MvNode->getOrientation().x;
-		Physics_Quat.y = App->CLSB_Meshviewer->MvNode->getOrientation().y;
-		Physics_Quat.z = App->CLSB_Meshviewer->MvNode->getOrientation().z;
-
-		App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setRotation(btQuaternion(Physics_Quat.x, Physics_Quat.y, Physics_Quat.z, Physics_Quat.w));
-
-		AxisAlignedBox worldAAB = App->CLSB_Meshviewer->MvEnt->getBoundingBox();
-		worldAAB.transformAffine(App->CLSB_Meshviewer->MvNode->_getFullTransform());
-
-		if (Physics_Type == Enums::Bullet_Type_TriMesh)
-		{
-		}
-		else
-		{
-			Ogre::Vector3 Centre = worldAAB.getCenter();
-			App->CLSB_Meshviewer->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-		}
-	}
+	
 }
 

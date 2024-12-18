@@ -189,8 +189,6 @@ void SB_Game_Editor::Go_Game_Editor()
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
 		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
 
-		App->CLSB_Ogre_Setup->BulletListener->Render_Debug_Flag = 1;
-
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		//------------------------------------------------------
