@@ -243,8 +243,6 @@ void SB_Game_Editor::Go_Game_Editor()
 		if (App->CLSB_Game_Editor->Project_Loaded == 0)
 		{
 			App->CLSB_Project->Load_Project();
-			App->CLSB_Environment->Add_New_Environ_Entity(true);
-			App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene_Data->Object_Count - 1);
 		}
 
 		//Set_Camera();

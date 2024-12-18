@@ -754,8 +754,7 @@ void SB_Equity::Go_Equity()
 		EquitySB_Dialog_Visible = 1;
 		ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		//->CLSB_Environment->SetSky(false);
-		App->CLSB_Environment->EnableFog(false);
-
+		
 		App->CLSB_Game_Editor->Show_Objects(false);
 
 		App->CLSB_Ogre_Setup->mSceneMgr->setSkyDome(0, "Examples/CloudySky", 10, 10, 1000);

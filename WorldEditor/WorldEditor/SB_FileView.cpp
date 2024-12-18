@@ -194,15 +194,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_ENVIRONMENT)
 		{
-			int Index = App->CLSB_Environment->Get_First_Environ();
-			if (Index == -1)
-			{
-				App->Say("Cant Find First Environment");
-				return TRUE;
-			}
-
-			App->CLSB_Properties->Current_Selected_Object = Index;
-			App->CLSB_Environment->Start_Environment_Editor(Index, 0);
 			return TRUE;
 		}
 
