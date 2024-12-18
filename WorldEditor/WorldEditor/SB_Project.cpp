@@ -435,7 +435,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->CLSB_Project->m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->CLSB_Project->m_Level_Name);
-	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CLSB_Build->GameName);
+	
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -455,12 +455,6 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CLSB_Scene_Data->UniqueID_Counters_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", "[Config]");
-	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CLSB_Build->GameOptions->Show_FPS);
-	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CLSB_Build->GameOptions->FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CLSB_Build->GameOptions->Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CLSB_Build->GameOptions->Front_Dialog_Flag);
 
 	fclose(WriteFile);
 

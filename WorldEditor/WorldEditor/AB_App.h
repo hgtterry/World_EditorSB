@@ -82,7 +82,6 @@ distribution.
 #include "SB_Brushes.h"
 #include "SB_RecentFiles.h"
 #include "SB_TopTabs_Equity.h"
-#include "SB_Dimensions.h"
 #include "SB_Preferences.h"
 #include "SB_Doc.h"
 #include "SB_Panels.h"
@@ -108,7 +107,6 @@ distribution.
 
 #include "SB_Game_Editor.h"
 #include "SB_MeshViewer.h"
-#include "SB_Build.h"
 #include "SB_Project_Create.h"
 
 class SB_App
@@ -170,7 +168,6 @@ public:
 	SB_Brushes*					CLSB_Brushes;
 	SB_RecentFiles*				CLSB_RecentFiles;
 	SB_TopTabs_Equity*			CLSB_TopTabs_Equity;
-	SB_Dimensions*				CLSB_Dimensions;
 	SB_Preferences*				CLSB_Preferences;
 	SB_Doc*						CLSB_Doc;
 	SB_Panels*					CLSB_Panels;
@@ -195,7 +192,6 @@ public:
 	Base_Faces*					CLSB_BaseFaces;
 	SB_Game_Editor*				CLSB_Game_Editor;
 	SB_MeshViewer*				CLSB_Meshviewer;
-	SB_Build*					CLSB_Build;
 	SB_Project_Create*			CLSB_Project_Create;
 
 	bool InitApp(void);

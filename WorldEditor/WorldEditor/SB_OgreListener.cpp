@@ -142,8 +142,6 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 		return true;
 	}
 
-	App->CLSB_Dimensions->Dimesions_Select();
-
 	//if (GD_Run_Physics == 1)
 	{
 		App->CLSB_Bullet->dynamicsWorld->debugDrawWorld();

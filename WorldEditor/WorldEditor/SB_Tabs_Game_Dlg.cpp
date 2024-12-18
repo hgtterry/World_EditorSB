@@ -242,7 +242,6 @@ LRESULT CALLBACK SB_Tabs_Game_Dlg::Game_Settings_Proc(HWND hDlg, UINT message, W
 		
 		if (LOWORD(wParam) == IDC_BT_BUILDGAME)
 		{
-			App->CLSB_Build->Start_Project_Build();
 			return TRUE;
 		}
 		

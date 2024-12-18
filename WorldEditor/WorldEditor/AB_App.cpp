@@ -79,7 +79,6 @@ SB_App::SB_App()
 	CLSB_Brushes =				nullptr;
 	CLSB_RecentFiles =			nullptr;
 	CLSB_TopTabs_Equity =		nullptr;
-	CLSB_Dimensions =			nullptr;
 	CLSB_Preferences =			nullptr;
 	CLSB_Doc =					nullptr;
 	CLSB_Panels =				nullptr;
@@ -105,7 +104,6 @@ SB_App::SB_App()
 	CLSB_BaseFaces =			nullptr;
 	CLSB_Game_Editor =			nullptr;
 	CLSB_Meshviewer =			nullptr;
-	CLSB_Build =				nullptr;
 	CLSB_Project_Create =		nullptr;
 
 	AppBackground = NULL;
@@ -299,7 +297,6 @@ bool SB_App::InitApp(void)
 	CLSB_Brushes =					new SB_Brushes();
 	CLSB_RecentFiles =				new SB_RecentFiles();
 	CLSB_TopTabs_Equity =			new SB_TopTabs_Equity();
-	CLSB_Dimensions =				new SB_Dimensions();
 	CLSB_Preferences =				new SB_Preferences();
 	CLSB_Doc =						new SB_Doc();
 	CLSB_Panels =					new	SB_Panels();
@@ -321,7 +318,6 @@ bool SB_App::InitApp(void)
 	CLSB_BaseFaces =				new Base_Faces();
 	CLSB_Game_Editor =				new SB_Game_Editor();
 	CLSB_Meshviewer =				new SB_MeshViewer();
-	CLSB_Build =					new SB_Build();
 	CLSB_Project_Create =			new SB_Project_Create();
 
 	InitCommonControls();

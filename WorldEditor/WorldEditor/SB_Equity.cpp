@@ -402,8 +402,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Model->Render_Type = Enums::Render_Assimp;
 
 			App->CLSB_Grid->Reset_View();
-			App->CLSB_Dimensions->Centre_Model_Mid_Assimp();
-
 			App->CLSB_Equity->Set_Title_Bar(App->CLSB_Loader->Path_FileName);
 
 			return TRUE;
@@ -836,8 +834,7 @@ void SB_Equity::Do_Preview_Selected()
 
 		//App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		//App->CLSB_Model->Set_BondingBox_Brushes();
-		App->CLSB_Dimensions->Centre_Model_Mid_Brushes();
-
+		
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre_Setup->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre_Setup->RenderListener->ShowTextured = 1;
