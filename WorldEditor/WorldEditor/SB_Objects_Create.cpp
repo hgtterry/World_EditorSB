@@ -49,17 +49,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 			App->CLSB_Objects_Create->Add_New_Object(Count, 0);
 			App->CLSB_Game_Editor->V_Object[Count]->Altered = 0;
 			App->CLSB_Game_Editor->V_Object[Count]->Folder = Enums::Folder_Objects;
-			App->CLSB_Game_Editor->V_Object[Count]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder, App->CLSB_Game_Editor->V_Object[Count]->Mesh_Name, Count, false);
 		}
 
 		Count++;
-	}
-
-	if (Object_Count > 0)
-	{
-		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Objects_Folder);
-		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->CLSB_FileView->SelectItem(App->CLSB_Game_Editor->V_Object[0]->FileViewItem);
 	}
 
 	return 1;
@@ -96,9 +88,6 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CLSB_Objects_Create->Dispatch_MeshViewer();
 
-	App->CLSB_FileView->SelectItem(App->CLSB_Game_Editor->V_Object[Index]->FileViewItem);
-
-
 	App->CLSB_Scene_Data->UniqueID_Object_Counter++; // Unique ID
 	App->CLSB_Scene_Data->Object_Count++;  // Must be last line
 
@@ -122,9 +111,6 @@ void SB_Objects_Create::Dispatch_MeshViewer()
 		Add_New_Object(Index, 1);
 		App->CLSB_Game_Editor->V_Object[Index]->Altered = 1;
 		App->CLSB_Game_Editor->V_Object[Index]->Folder = Enums::Folder_Objects;
-		App->CLSB_Game_Editor->V_Object[Index]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Objects_Folder,
-		App->CLSB_Game_Editor->V_Object[Index]->Mesh_Name, Index, true);
-
 	}
 }
 

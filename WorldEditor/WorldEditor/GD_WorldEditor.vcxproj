@@ -180,7 +180,6 @@
     <ClCompile Include="SB_Export_Milkshape.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
     <ClCompile Include="SB_Export_World.cpp" />
-    <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_File_WE.cpp" />
     <ClCompile Include="SB_Game_Editor.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
@@ -291,7 +290,6 @@
     <ClInclude Include="SB_Export_Milkshape.h" />
     <ClInclude Include="SB_Export_Object.h" />
     <ClInclude Include="SB_Export_World.h" />
-    <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_File_WE.h" />
     <ClInclude Include="SB_Game_Editor.h" />
     <ClInclude Include="SB_Grid.h" />

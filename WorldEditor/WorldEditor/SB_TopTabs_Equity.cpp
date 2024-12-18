@@ -485,8 +485,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 0;
 
 				//App->CLSB_ImGui->Show_Face_Selection = 0;
-				App->CLSB_FileView->Show_FileView(1);
-
+			
 				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 0;
 			}
 			else
@@ -495,8 +494,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 				App->CLSB_TopTabs_Equity->Picking_Active_Flag = 1;
 
 				//App->CLSB_ImGui->Show_Face_Selection = 1;
-				App->CLSB_FileView->Show_FileView(0);
-
+				
 				App->CLSB_Ogre_Setup->RenderListener->Show_Marker_Face = 1;
 			}
 

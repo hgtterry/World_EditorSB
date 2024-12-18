@@ -152,11 +152,6 @@ bool SB_Project::Load_Project()
 
 		App->CLSB_Player->Create_Player_Object();
 		App->CLSB_Properties->Update_ListView_Player();
-
-		App->CLSB_Scene_Data->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
-		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Players_Folder);
-		App->CLSB_FileView->SelectItem(App->CLSB_FileView->FV_Players_Folder);
-		App->CLSB_FileView->ExpandRoot();
 	}
 	
 	//// ------------------------------------- Camera
@@ -284,22 +279,22 @@ bool SB_Project::Load_Project_Objects()
 
 		// ------------- Pos
 		App->CLSB_Ini->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void) sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
 
 		// ------------- Scale
 		App->CLSB_Ini->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void) sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
 
 		// ------------- Rotation
 		App->CLSB_Ini->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void) sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
 
 		// ------------- Mesh_Quat
 		App->CLSB_Ini->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		(void) sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Mesh_Quat.w = w;
 		V_Object->Mesh_Quat.x = x;
@@ -308,7 +303,7 @@ bool SB_Project::Load_Project_Objects()
 
 		// ------------- Physics_Quat
 		App->CLSB_Ini->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		(void) sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Physics_Quat.w = w;
 		V_Object->Physics_Quat.x = x;

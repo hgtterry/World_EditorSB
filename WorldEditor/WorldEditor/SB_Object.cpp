@@ -175,8 +175,6 @@ void SB_Object::Delete_Object()
 		App->CLSB_Bullet->dynamicsWorld->removeCollisionObject(body);
 	}
 
-	App->CLSB_FileView->DeleteItem();
-
 	App->CLSB_Game_Editor->V_Object[MeshIndex]->Deleted = 1;
 	App->CLSB_Game_Editor->V_Object[MeshIndex]->Object_Node->setVisible(false);
 
@@ -204,7 +202,5 @@ void SB_Object::Rename_Object(int Index)
 
 	Object->Altered = 1;
 	App->CLSB_Scene_Data->Scene_Modified = 1;
-	App->CLSB_FileView->Mark_Altered(Object->FileViewItem);
 
-	App->CLSB_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
 }

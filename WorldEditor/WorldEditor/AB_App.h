@@ -93,7 +93,6 @@ distribution.
 #include "SB_Bullet.h"
 #include "SB_Player.h"
 
-#include "SB_FileView.h"
 #include "SB_Properties.h"
 #include "SB_Object.h"
 #include "SB_Project.h"
@@ -184,7 +183,6 @@ public:
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;
 
-	SB_FileView*				CLSB_FileView;
 	SB_Properties*				CLSB_Properties;
 	SB_Object*					CLSB_Object;
 	SB_Project*					CLSB_Project;

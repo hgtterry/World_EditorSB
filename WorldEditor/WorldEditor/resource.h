@@ -161,7 +161,6 @@
 #define IDB_BMPXYZ                      329
 #define IDB_FULLSCREEN                  330
 #define IDD_SB_VIEWMANAGER              331
-#define IDD_SB_LIST                     334
 #define IDD_SB_PROPERTIES               336
 #define IDB_FILECHANGED                 338
 #define IDB_FILECHANGEDSELECTED         339
@@ -860,9 +859,7 @@
 #define IDC_BT_BOXCUTBRUSH              1534
 #define IDC_BOXDEFAULTS                 1535
 #define IDC_BTFACENEXT                  1536
-#define IDC_TREE1                       1537
 #define IDC_BT_VIEWUPDATE               1538
-#define IDC_BT_ENVIRONMENT              1539
 #define IDC_TITLENAME                   1540
 #define IDC_CHECKYES                    1541
 #define IDC_SOUNDLIST                   1542

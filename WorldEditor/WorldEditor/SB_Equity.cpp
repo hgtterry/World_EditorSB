@@ -116,7 +116,6 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		Resize_3DView();
 
-		App->CLSB_FileView->Start_FileView();
 		App->CLSB_Panels->Move_FileView_Window();
 		App->CLSB_Panels->MovePhysicsView();
 
@@ -263,7 +262,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_EDIT_DELETEMENU)
 		{
-			App->CLSB_FileView->Context_Delete(App->ListPanel);
 			return TRUE;
 		}
 		
