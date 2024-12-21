@@ -111,19 +111,7 @@ bool A_MainView::Init_Views()
 // *************************************************************************
 void A_MainView::Start_Splitter()
 {
-	//Spliter_Main_Hwnd = 
-		
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_TESTDIALOG, App->MainHwnd, (DLGPROC)Splitter_Proc);
-
-	//Init_Views();
-
-	//Create_Left_Window();
-	//Create_Right_Window();
-
-	//Create_Bottom_Left_Window();
-	//Create_Bottom_Right_Window();
-
-	//Resize_Windows(Spliter_Main_Hwnd, nleftWnd_width, nleftWnd_Depth);
 }
 
 // *************************************************************************
@@ -638,7 +626,7 @@ void A_MainView::Draw_Screen(HWND hwnd)
 
 	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	SelectObject(MemoryhDC, pen2);
-	Draw_Grid(MemoryhDC, 64, Rect); // Grid
+	Draw_Grid(MemoryhDC, 128, Rect); // Grid
 
 	HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	SelectObject(MemoryhDC, pen3);

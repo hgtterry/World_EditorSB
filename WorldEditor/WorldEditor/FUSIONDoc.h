@@ -97,7 +97,8 @@ protected: // create from serialization only
 	DECLARE_SERIAL(CFusionDoc);
 
 public:
-	
+	Level* pLevel;
+
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;
 	

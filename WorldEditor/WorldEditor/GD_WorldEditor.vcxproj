@@ -208,6 +208,7 @@
     <ClCompile Include="SB_Tabs_Game_Dlg.cpp" />
     <ClCompile Include="SB_Tabs_Templates_Dlg.cpp" />
     <ClCompile Include="SB_Tabs_Texture_Dlg.cpp" />
+    <ClCompile Include="SB_Test_View.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="SB_TopTabs_Equity.cpp" />
     <ClCompile Include="SB_ViewMgrDlg.cpp" />
@@ -309,6 +310,7 @@
     <ClInclude Include="SB_Tabs_Game_Dlg.h" />
     <ClInclude Include="SB_Tabs_Templates_Dlg.h" />
     <ClInclude Include="SB_Tabs_Texture_Dlg.h" />
+    <ClInclude Include="SB_Test_View.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="SB_TopTabs_Equity.h" />
     <ClInclude Include="SB_ViewMgrDlg.h" />
