@@ -862,7 +862,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		
 		if (LOWORD(wParam) == IDC_BT_TB_NEWVIEW)
 		{
-			//App->CL_Main_View->Start_Main_View_Dlg();
 			App->CL_Test_View->Start_Main_View_Dlg();
 			return TRUE;
 		}
@@ -952,7 +951,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_BT_TB_NEWVIEW)
 		{
-			App->CL_Main_View->Start_Main_View_Dlg();
+			//App->CL_Main_View->Start_Main_View_Dlg();
+			App->CL_Test_View->Start_Main_View_Dlg();
 			return TRUE;
 		}
 

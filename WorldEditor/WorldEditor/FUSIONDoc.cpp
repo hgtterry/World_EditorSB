@@ -6451,7 +6451,7 @@ void CFusionDoc::OnViewTypeTexture()
 
 void CFusionDoc::OnEquity_SetView() // GD_Terry [090123]
 {
-    App->CL_Main_View->Start_Main_View_Dlg();
+   // App->CL_Main_View->Start_Main_View_Dlg();
 }
 
 void CFusionDoc::Start_QuickView()

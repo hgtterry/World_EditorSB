@@ -399,26 +399,8 @@ LRESULT CALLBACK SB_Test_View::Left_Window_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_STBANNERTL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
-
-	/*case WM_CTLCOLORSTATIC:
-	{
-		if (GetDlgItem(hDlg, IDC_STBANNERTL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}
-		return FALSE;
-	}*/
-
-	/*case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->CL_Main_View->BackGround_Brush;
-	}*/
 
 	case WM_ERASEBKGND:
 	{
@@ -427,7 +409,7 @@ LRESULT CALLBACK SB_Test_View::Left_Window_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_PAINT:
 	{
-		App->CL_Main_View->Draw_Screen(hDlg);
+		App->CL_Test_View->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -468,7 +450,7 @@ LRESULT CALLBACK SB_Test_View::Right_Window_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_PAINT:
 	{
-		App->CL_Main_View->Draw_Screen(hDlg);
+		App->CL_Test_View->Draw_Screen(hDlg);
 		return 0;
 	}
 
