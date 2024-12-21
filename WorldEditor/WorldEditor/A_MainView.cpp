@@ -80,9 +80,7 @@ A_MainView::~A_MainView(void)
 // *************************************************************************
 bool A_MainView::Start_Main_View_Dlg()
 {
-	//DialogBox(App->hInst, (LPCTSTR)IDD_SB_TESTDIALOG, App->MainHwnd, (DLGPROC)Main_View_Proc);
 	Start_Splitter();
-
 	return 1;
 }
 

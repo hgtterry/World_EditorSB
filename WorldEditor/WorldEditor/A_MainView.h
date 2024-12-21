@@ -75,8 +75,6 @@ private:
 
 	HBRUSH BackGround_Brush;
 
-	//int	left_Wnd_clr[3] = { 255, 255, 255 };
-
 	int LEFT_WINDOW_WIDTH;
 
 	int LEFT_WINDOW_DEPTH;
