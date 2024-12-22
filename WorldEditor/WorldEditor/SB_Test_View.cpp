@@ -54,6 +54,9 @@ SB_Test_View::SB_Test_View()
 	Do_All = 0;
 	m_View = 0;
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
+
+	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
+	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 }
 
 SB_Test_View::~SB_Test_View()
@@ -550,6 +553,23 @@ LRESULT CALLBACK SB_Test_View::Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM
 }
 
 // *************************************************************************
+// *			Get_View:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Test_View::Get_View()
+{
+	App->Get_Current_Document();
+
+	POSITION		pos;
+	CFusionView* pView;
+
+	pos = App->m_pDoc->GetFirstViewPosition();
+	while (pos != NULL)
+	{
+		pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+	}
+}
+
+// *************************************************************************
 // *			Resize_Windowns:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Test_View::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
@@ -801,6 +821,11 @@ static geBoolean fdocBrushNotDetail(const Brush* b)
 	return !Brush_IsDetail(b);
 }
 
+static geBoolean fdocBrushIsSubtract(const Brush* b)
+{
+	return (Brush_IsSubtract(b) && !Brush_IsHollowCut(b));
+}
+
 struct tag_BrushList
 {
 	Brush* First;
@@ -926,7 +951,15 @@ void SB_Test_View::Draw_Screen(HWND hwnd)
 			((GroupVis == Group_ShowVisible) && (Group_IsVisible(Groups, GroupId)))
 		)
 		{
+			HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
+			SelectObject(MemoryhDC, pen3);
 			Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw); // Draw Brushes
+		
+			// render cut brushes
+			SelectObject(MemoryhDC, Pen_CutBrush);
+			brushDrawData.FlagTest = fdocBrushIsSubtract;
+			Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw);
+		
 		}
 
 		b = b->Next;
@@ -938,10 +971,14 @@ void SB_Test_View::Draw_Screen(HWND hwnd)
 
 	if ((pCameraEntity != NULL))
 	{
-		/*if (pCameraEntity->IsSelected())
-			pDC->SelectObject(&PenSelected);
+		if (pCameraEntity->IsSelected())
+		{
+			//pDC->SelectObject(&PenSelected);
+		}
 		else
-			pDC->SelectObject(&PenCamera);*/
+		{
+			SelectObject(MemoryhDC, Pen_Camera);
+		}
 
 		fdocDrawEntity(pCameraEntity, pFusionView->VCam, MemoryhDC, Level_GetEntityDefs(App->CLSB_Doc->pLevel), GE_TRUE);
 	}

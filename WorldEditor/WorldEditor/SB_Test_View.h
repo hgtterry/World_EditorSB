@@ -37,6 +37,10 @@ private:
 	void Create_Bottom_Right_Window();
 
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+	void Get_View();
+
+	HPEN Pen_CutBrush;
+	HPEN Pen_Camera;
 
 	HWND Spliter_Main_Hwnd;
 	HWND Left_Window_Hwnd;
