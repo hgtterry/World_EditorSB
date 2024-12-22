@@ -1460,7 +1460,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.0.3 - [21-12-24] -19 ND"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.0.3 - [22-12-24] -19 ND"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2067,12 +2067,10 @@ BEGIN
 END
 
 IDD_SB_TESTDIALOG DIALOGEX 0, 0, 553, 269
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_NOFAILCREATE | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_NOFAILCREATE | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,241,248,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,310,248,50,14
 END
 
 IDD_SB_LEFTTOP DIALOGEX 0, 0, 188, 129

@@ -339,11 +339,12 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_TB_TEST2)
 		{
-			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CL_Test_View->Start_Main_View_Dlg();
+			/*App->CLSB_TopTabs->Reset_Tabs_Buttons();
 			App->CLSB_TopTabs->Header_Test_Flag = 1;
 			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			ShowWindow(App->CLSB_TopTabs->Test_Panel_Hwnd, SW_SHOW);
+			ShowWindow(App->CLSB_TopTabs->Test_Panel_Hwnd, SW_SHOW);*/
 
 			return TRUE;
 		}

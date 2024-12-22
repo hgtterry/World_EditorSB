@@ -1,4 +1,7 @@
 #pragma once
+
+#include "FUSIONView.h"
+
 class SB_Test_View
 {
 public:
@@ -8,7 +11,13 @@ public:
 	bool Start_Main_View_Dlg();
 	void Start_Splitter();
 	void Draw_Screen(HWND hwnd);
-	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
+	bool m_Draw_Grid(HDC hDC, int Interval, RECT Rect);
+	static geBoolean m_BrushDraw(Brush* pBrush, void* lParam);
+	static void m_Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
+
+	static POINT SB_Test_View::m_Render_OrthoWorldToView(const ViewVars* v, geVec3d const* wp);
+
+	//CFusionView* p_View;
 
 private:
 	static LRESULT CALLBACK Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -37,6 +46,8 @@ private:
 	HWND Bottom_Right_Hwnd;
 
 	HBRUSH BackGround_Brush;
+
+	int m_View;
 
 	int LEFT_WINDOW_WIDTH;
 

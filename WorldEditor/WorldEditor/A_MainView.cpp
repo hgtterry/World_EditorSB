@@ -389,6 +389,9 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 
 		GridSize = Render_GetFineGrid(v, (Level_GetGridType (App->CLSB_Doc->pLevel) == GridTexel) ? GRID_TYPE_TEXEL : GRID_TYPE_METRIC);
+
+	
+		
 		if (Level_GetGridType (App->CLSB_Doc->pLevel) == GridMetric)
 		{
 			GridSize /= 2.54f;
@@ -430,6 +433,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 			pDC->SelectObject (&PenThisGroup);
 			Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw); // Draw Brushes
+			
 			if(App->CLSB_Doc->mShowEntities == GE_TRUE )
 			{
 				Level_EnumEntities (App->CLSB_Doc->pLevel, &brushDrawData, EntityDraw);
@@ -470,6 +474,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 			pDC->SelectObject (&PenAllItems);
 		}
+
 		GroupId	=Group_GetNextId(Groups, &gi);	
 	}
 
