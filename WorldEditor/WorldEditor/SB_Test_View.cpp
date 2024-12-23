@@ -55,6 +55,8 @@ SB_Test_View::SB_Test_View()
 	m_View = 0;
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
+	m_Cam = nullptr;
+
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 }
@@ -566,6 +568,12 @@ void SB_Test_View::Get_View()
 	while (pos != NULL)
 	{
 		pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+		CFusionView* pFusionView = (CFusionView*)pView;
+
+		if (pFusionView->mViewType == ID_VIEW_TOPVIEW)
+		{
+
+		}
 	}
 }
 
@@ -849,6 +857,7 @@ void SB_Test_View::Draw_Screen(HWND hwnd)
 	RECT		Rect;
 
 	POSITION pos = m_pDoc->GetFirstViewPosition();
+	m_pDoc->GetNextView(pos);
 	CView* pView = m_pDoc->GetNextView(pos);
 	CFusionView* pFusionView = (CFusionView*)pView;
 

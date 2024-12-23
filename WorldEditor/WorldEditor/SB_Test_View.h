@@ -17,6 +17,8 @@ public:
 
 	static POINT SB_Test_View::m_Render_OrthoWorldToView(const ViewVars* v, geVec3d const* wp);
 
+	ViewVars* m_Cam;
+
 	//CFusionView* p_View;
 
 private:
