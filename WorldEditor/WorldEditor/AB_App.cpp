@@ -103,6 +103,7 @@ SB_App::SB_App()
 	CLSB_Game_Editor =			nullptr;
 	CLSB_Project_Create =		nullptr;
 	CL_Test_View =				nullptr;
+	CL_Maths =					nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -315,6 +316,7 @@ bool SB_App::InitApp(void)
 	CLSB_Game_Editor =				new SB_Game_Editor();
 	CLSB_Project_Create =			new SB_Project_Create();
 	CL_Test_View =					new SB_Test_View();
+	CL_Maths =						new SB_Maths();
 
 	InitCommonControls();
 

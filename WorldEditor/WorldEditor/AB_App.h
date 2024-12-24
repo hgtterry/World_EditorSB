@@ -107,6 +107,7 @@ distribution.
 #include "SB_Game_Editor.h"
 #include "SB_Project_Create.h"
 #include "SB_Test_View.h"
+#include "SB_Maths.h"
 
 class SB_App
 {
@@ -191,6 +192,8 @@ public:
 	SB_Game_Editor*				CLSB_Game_Editor;
 	SB_Project_Create*			CLSB_Project_Create;
 	SB_Test_View*				CL_Test_View;
+	SB_Maths*					CL_Maths;
+
 
 	bool InitApp(void);
 	void InitMFC(void);

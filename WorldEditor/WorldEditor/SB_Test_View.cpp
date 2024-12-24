@@ -29,6 +29,35 @@ typedef struct tagBrushDrawData
 	Ogre::uint32		Color;
 } BrushDrawData;
 
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	GPlane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
 SB_Test_View::SB_Test_View()
 {
 	Spliter_Main_Hwnd = NULL;
@@ -1108,8 +1137,8 @@ void SB_Test_View::m_Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 	for (i = 0; i < Brush_GetNumFaces(b); i++)
 	{
 		Face* f = Brush_GetFace(b, i);
-		const geVec3d* pnts = Face_GetPoints(f);
-		for (j = 0; j < Face_GetNumPoints(f); j++)
+		const geVec3d* pnts = f->Points;// Face_GetPoints(f);
+		for (j = 0; j < f->NumPoints; j++)
 		{
 			plist[j] = m_Render_OrthoWorldToView(Cam, &pnts[j]);
 		}
