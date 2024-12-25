@@ -11,7 +11,7 @@ public:
 	bool Start_Main_View_Dlg();
 	void Start_Splitter();
 	void Draw_Screen(HWND hwnd);
-	bool m_Draw_Grid(HDC hDC, int Interval, RECT Rect);
+	bool m_Draw_Grid(ViewVars* v, geFloat Interval, HDC ViewDC, RECT Rect);
 	static geBoolean m_BrushDraw(Brush* pBrush, void* lParam);
 	static void m_Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 

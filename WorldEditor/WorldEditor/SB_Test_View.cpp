@@ -955,13 +955,13 @@ void SB_Test_View::Draw_Screen(HWND hwnd)
 	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	SelectObject(MemoryhDC, pen);
 
-	m_Draw_Grid(MemoryhDC, GridSnapSize, Rect); // Snap grid
+	m_Draw_Grid(pFusionView->VCam, GridSnapSize, MemoryhDC, Rect); // Snap grid
 
 
 	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	SelectObject(MemoryhDC, pen2);
 
-	m_Draw_Grid(MemoryhDC, 128, Rect); // Big grid
+	m_Draw_Grid(pFusionView->VCam, 128, MemoryhDC, Rect); // Big grid
 
 	int BrushCount = App->CL_Brush->Get_Brush_Count();
 
@@ -1049,36 +1049,88 @@ void SB_Test_View::Draw_Screen(HWND hwnd)
 	DeleteDC(MemoryhDC);
 }
 
+static const geVec3d	VecOrigin = { 0.0f, 0.0f, 0.0f };
+#define Units_Round(n) ((int)Units_FRound((n)))
+#define Units_Trunc(n) ((int)(n))
+#define Units_FRound(n)	((geFloat)floor((n)+0.5f))
+#define	VectorToSUB(a, b) (*((((geFloat *)(&a))) + (b)))
+
 // *************************************************************************
 // *	  			Draw_Grid:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Test_View::m_Draw_Grid(HDC hDC, int Interval, RECT Rect)
+bool SB_Test_View::m_Draw_Grid(ViewVars* v, geFloat Interval, HDC ViewDC, RECT Rect)
 {
-	int cnt = Rect.bottom / Interval;
+	geVec3d		ystep, xstep, Delt, Delt2;
+	int			i, cnt, xaxis, yaxis, inidx;
+	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
+	geFloat	gsinv;
+	Box3d ViewBox;
+	POINT		sp;
+
+	inidx = (v->ViewType >> 3) & 0x3;
+
+	xaxis = axidx[inidx][0];
+	yaxis = axidx[inidx][1];
+
+	Render_ViewToWorld(v, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	Render_ViewToWorld(v, Units_Round(v->Width + Interval), Units_Round(v->Height + Interval), &Delt2);
+
+	Box3d_Set(&ViewBox, Delt.X, Delt.Y, Delt.Z, Delt2.X, Delt2.Y, Delt2.Z);
+
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	gsinv = 1.0f / (geFloat)Interval;
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(ViewBox.Min, i) = (geFloat)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+		VectorToSUB(ViewBox.Max, i) = (geFloat)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	}
+
+	geVec3d_Copy(&VecOrigin, &xstep);
+	geVec3d_Copy(&VecOrigin, &ystep);
+	VectorToSUB(ystep, yaxis) = (geFloat)Interval;
+	VectorToSUB(xstep, xaxis) = (geFloat)Interval;
+
+	// --------------------------------------------------
+
+	//cnt = Rect.bottom / Interval;
 
 	int SP = 0;
 	int Count = 0;
 
 	// horizontal lines
+	geVec3d_Copy(&ViewBox.Min, &Delt);
+	geVec3d_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
+
 	while (Count < cnt + 1)
 	{
-		MoveToEx(hDC, 0, SP, NULL);
-		LineTo(hDC, Rect.right, SP);
-
-		SP = SP + Interval;
+		sp = Render_OrthoWorldToView(v, &Delt);
+		MoveToEx(ViewDC, 0, sp.y, NULL);
+		sp = Render_OrthoWorldToView(v, &Delt2);
+		LineTo(ViewDC, v->Width, sp.y);
+		geVec3d_Add(&Delt, &ystep, &Delt);
+		geVec3d_Add(&Delt2, &ystep, &Delt2);
 		Count++;
 	}
 
-	cnt = Rect.right / Interval;
-	SP = 0;
-	Count = 0;
 	// vertical lines
+	Count = 0;
+	geVec3d_Copy(&ViewBox.Min, &Delt);
+	geVec3d_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
+
 	while (Count < cnt + 1)
 	{
-		MoveToEx(hDC, SP, 0, NULL);
-		LineTo(hDC, SP, Rect.bottom);
-
-		SP = SP + Interval;
+		sp = Render_OrthoWorldToView(v, &Delt);
+		MoveToEx(ViewDC, sp.x, 0, NULL);
+		sp = Render_OrthoWorldToView(v, &Delt2);
+		LineTo(ViewDC, sp.x, v->Height);
+		geVec3d_Add(&Delt, &xstep, &Delt);
+		geVec3d_Add(&Delt2, &xstep, &Delt2);
 		Count++;
 	}
 
@@ -1153,32 +1205,47 @@ void SB_Test_View::m_Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 POINT SB_Test_View::m_Render_OrthoWorldToView(const ViewVars* v, geVec3d const* wp)
 {
 	POINT	sc = { 0, 0 };
-	geVec3d ptView;
+	
+	Ogre::Vector3 ptView;
+
+
+	Ogre::Vector3 m_CamPos;
+	m_CamPos.x = v->CamPos.X;
+	m_CamPos.y = v->CamPos.Y;
+	m_CamPos.z = v->CamPos.Z;
+
+	Ogre::Vector3 m_wp;
+	m_wp.x = wp->X;
+	m_wp.y = wp->Y;
+	m_wp.z = wp->Z;
 
 	switch (v->ViewType)
 	{
 	case VIEWTOP:
 	{
-		geVec3d_Subtract(wp, &v->CamPos, &ptView);
-		geVec3d_Scale(&ptView, v->ZoomFactor, &ptView);
-		sc.x = (int)(v->XCenter + ptView.X);
-		sc.y = (int)(v->YCenter + ptView.Z);
+		App->CL_Maths->Vector3_Subtract(&m_wp, &m_CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, v->ZoomFactor, &ptView);
+
+		sc.x = (int)(v->XCenter + ptView.x);
+		sc.y = (int)(v->YCenter + ptView.z);
 		break;
 	}
 	case VIEWFRONT:
 	{
-		geVec3d_Subtract(wp, &v->CamPos, &ptView);
-		geVec3d_Scale(&ptView, v->ZoomFactor, &ptView);
-		sc.x = (int)(v->XCenter + ptView.X);
-		sc.y = (int)(v->YCenter - ptView.Y);
+		App->CL_Maths->Vector3_Subtract(&m_wp, &m_CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, v->ZoomFactor, &ptView);
+
+		sc.x = (int)(v->XCenter + ptView.x);
+		sc.y = (int)(v->YCenter - ptView.y);
 		break;
 	}
 	case VIEWSIDE:
 	{
-		geVec3d_Subtract(wp, &v->CamPos, &ptView);
-		geVec3d_Scale(&ptView, v->ZoomFactor, &ptView);
-		sc.x = (int)(v->XCenter + ptView.Z);
-		sc.y = (int)(v->YCenter - ptView.Y);
+		App->CL_Maths->Vector3_Subtract(&m_wp, &m_CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, v->ZoomFactor, &ptView);
+
+		sc.x = (int)(v->XCenter + ptView.z);
+		sc.y = (int)(v->YCenter - ptView.y);
 		break;
 	}
 	default:
